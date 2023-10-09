@@ -5,7 +5,7 @@ public class Equipment {
     private String name;
     private Effect effect;
     private int damage;
-    private ArrayList<Equipment> equipments = new ArrayList<>();
+
 
 
     public Equipment(String name, Effect effect, int damage) {
@@ -26,27 +26,5 @@ public class Equipment {
         SPEED, HEALTH, DAMAGE
     }
 
-    public void add(Equipment e) {
-        equipments.add(e);
-    }
 
-    public void drop(Equipment e){
-        equipments.remove(e);
-    }
-
-    public ArrayList<Equipment> getEquipments() {
-        return equipments;
-    }
-
-    public void removeAllEquipments() {
-        equipments.clear();
-    }
-
-    public String toString(){
-        String s = "";
-        for(Equipment e: equipments){
-            s += e + "\n";
-        }
-        return s;
-    }
 }

@@ -22,32 +22,5 @@ public class EquipmentTest {
         assertEquals(Equipment.Effect.DAMAGE, e.getEffect());
     }
 
-    @Test
-    @DisplayName("Testar att lägga till equipment")
-    public void testAddEquipment() {
-        Equipment e1 = new Equipment("test1", Equipment.Effect.SPEED, 15);
-        Equipment e2 = new Equipment("test2", Equipment.Effect.HEALTH, 60);
-        Equipment e3 = new Equipment("test3", Equipment.Effect.DAMAGE, 100);
-        ArrayList<Equipment> equipments = new ArrayList<>();
-        equipments.add(e1);
-        equipments.add(e2);
-        equipments.add(e3);
-        assertEquals("test +15% Speed\ntest2 +60% Health\ntest3 +100% Damage\n", equipments.toString());
-    }
 
-    @Test
-    @DisplayName("Testar att ta bort equipment")
-    public void testDropEquipment(){
-        Equipment e1 = new Equipment("test1", Equipment.Effect.SPEED, 15);
-        Equipment e2 = new Equipment("test2", Equipment.Effect.HEALTH, 60);
-        Equipment e3 = new Equipment("test3", Equipment.Effect.DAMAGE, 100);
-        ArrayList<Equipment> equipments = new ArrayList<>();
-        equipments.add(e1);
-        equipments.add(e2);
-        equipments.add(e3);
-        equipments.remove(e1);
-        equipments.remove(e2);
-        assertEquals("test3", equipments);
-
-    }
 }
