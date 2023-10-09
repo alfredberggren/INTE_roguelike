@@ -17,7 +17,7 @@ public class EntityTest {
 
     @Test
     public void testEntityPosition(){
-        Entity entity1 = new Entity(0, 0, 0, new Position(1, 2));
+        Entity entity1 = new Entity("test", 0, new Position(1, 2));
         assertEquals(new Position(1, 2), entity1.getPosition());
         assertEquals(1, entity1.getPosition().getX());
         assertEquals(2, entity1.getPosition().getY());

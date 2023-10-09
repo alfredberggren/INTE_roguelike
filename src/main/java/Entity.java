@@ -7,6 +7,11 @@ public class Entity {
     private int health;
     private Position position;
 
+    public Entity(String name, int health){
+        this.name = name;
+        this. health = health;
+        position = new Position(0,0);
+    }
     public Entity(String name, int health, Position pos){
         this.name = name;
         this. health = health;
