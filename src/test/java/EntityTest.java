@@ -2,6 +2,7 @@ package src.test.java;
 
 import org.junit.jupiter.api.Test;
 import src.main.java.Entity;
+import src.main.java.Position;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
