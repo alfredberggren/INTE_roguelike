@@ -9,7 +9,7 @@ public class EntityTest {
 
     @Test
     public void testEntityHealth(){
-      Entity entity1 = new Entity("one", 100);
+      Entity entity1 = new Entity("one", 100, 10);
       assertEquals(100, entity1.getHealth());
 
     }
