@@ -22,7 +22,7 @@ public class EquipmentTest {
         assertEquals(Equipment.Effect.DAMAGE, e.getEffect());
     }
 
-    @Disabled //inte klar
+    @Test
     @DisplayName("Testar att lägga till equipment")
     public void testAddEquipment() {
         Equipment e1 = new Equipment("test1", Equipment.Effect.SPEED, 15);
