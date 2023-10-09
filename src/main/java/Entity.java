@@ -1,29 +1,26 @@
 package src.main.java;
-import src.main.java.Position;
 
 public class Entity {
 
     private String name;
     private int health;
-    private Position position;
+    private int speed;
 
-    public Entity(String name, int health){
+    public Entity(String name, int health, int speed){
         this.name = name;
         this. health = health;
-        position = new Position(0,0);
-    }
-    public Entity(String name, int health, Position pos){
-        this.name = name;
-        this. health = health;
-        position = pos;
+        this.speed = speed;
     }
 
 
+    public String getName(){
+        return name;
+    }
     public int getHealth() {
         return health;
     }
 
-    public Position getPosition() {
-        return position;
+    public int getSpeed() {
+        return speed;
     }
 }

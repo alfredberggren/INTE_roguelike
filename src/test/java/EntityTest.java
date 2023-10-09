@@ -12,7 +12,7 @@ public class EntityTest {
     @Test
     @DisplayName("Testar att entitetens hälsa blir korrekt")
     public void testEntityHealth(){
-      Entity entity1 = new Entity("one", 100);
+      Entity entity1 = new Entity("one", 100, 10);
       assertEquals(100, entity1.getHealth());
 
     }
