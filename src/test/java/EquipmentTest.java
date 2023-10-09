@@ -28,7 +28,7 @@ public class EquipmentTest {
         Equipment e1 = new Equipment("test1", Equipment.Effect.SPEED, 15);
         Equipment e2 = new Equipment("test2", Equipment.Effect.HEALTH, 60);
         Equipment e3 = new Equipment("test3", Equipment.Effect.DAMAGE, 100);
-        ArrayList<Equipment> equipments = new ArrayList<Equipment>();
+        ArrayList<Equipment> equipments = new ArrayList<>();
         equipments.add(e1);
         equipments.add(e2);
         equipments.add(e3);

@@ -5,7 +5,7 @@ public class Equipment {
     private String name;
     private Effect effect;
     private int damage;
-    private ArrayList<Equipment> equipments = new ArrayList<Equipment>();
+    private ArrayList<Equipment> equipments = new ArrayList<>();
 
 
     public Equipment(String name, Effect effect, int damage) {
