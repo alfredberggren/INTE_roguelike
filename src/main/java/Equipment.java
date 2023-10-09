@@ -30,6 +30,10 @@ public class Equipment {
         equipments.add(e);
     }
 
+    public void drop(Equipment e){
+        equipments.remove(e);
+    }
+
     public ArrayList<Equipment> getEquipments() {
         return equipments;
     }
