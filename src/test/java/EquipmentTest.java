@@ -11,4 +11,11 @@ public class EquipmentTest {
         Equipment e = new Equipment("test", Equipment.Effect.DAMAGE, 10);
         assertEquals("test", e.getName());
     }
+
+    @Test
+    @DisplayName("Testar att en equipment har effekt")
+    public void testEquipmentEffect() {
+        Equipment e = new Equipment("test", Equipment.Effect.DAMAGE, 100);
+        assertEquals(Equipment.Effect.DAMAGE, e.getEffect());
+    }
 }
