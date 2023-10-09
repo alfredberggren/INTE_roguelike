@@ -1,7 +1,17 @@
 package src.main.java;
 
 public class Entity {
-    public static void main(String[] args) {
-        System.out.println("Hello World!");
+
+    private String name;
+    private int health;
+
+    public Entity(String name, int health){
+        this.name = name;
+        this. health = health;
+    }
+
+
+    public int getHealth() {
+        return health;
     }
 }
