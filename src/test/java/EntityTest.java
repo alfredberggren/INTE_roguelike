@@ -8,6 +8,7 @@ public class EntityTest {
     public void testEntityHealth(){
       Entity entity1 = new Entity(one, 100);
       assertEquals(100, entity.getHealth());
+      blabla
     }
 
 
