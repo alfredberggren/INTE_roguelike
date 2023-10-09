@@ -1,5 +1,3 @@
-import src.main.java.Position;
-
 public class Entity {
 
     private String name;
