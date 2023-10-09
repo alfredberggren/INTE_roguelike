@@ -16,4 +16,13 @@ public class Position {
     public int getY() {
         return y;
     }
+
+    @Override
+    public boolean equals(Object o){
+        if (o instanceof Position p) {
+            if (p.getX() == x && p.getY() == y)
+                return true;
+        }
+        return false;
+    }
 }
