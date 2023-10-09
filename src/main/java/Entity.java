@@ -1,3 +1,4 @@
+
 public class Entity {
 
     private String name;
@@ -6,6 +7,9 @@ public class Entity {
     private Position pos;
 
     public Entity(String name, int health, int speed){
+        if (speed < 0 || health < 0 || speed < 0) {
+            throw new IllegalArgumentException("Speed, health and speed needs to be 0 or more");
+        }
         this.name = name;
         this.health = health;
         this.speed = speed;
@@ -13,6 +17,9 @@ public class Entity {
     }
 
     public Entity(String name, int health, int speed, Position pos){
+        if (speed < 0 || health < 0 || speed < 0) {
+            throw new IllegalArgumentException("Speed, health and speed needs to be 0 or more");
+        }
         this.name = name;
         this. health = health;
         this.speed = speed;
