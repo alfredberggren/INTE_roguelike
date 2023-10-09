@@ -1,6 +1,8 @@
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class EquipmentTest {
@@ -17,5 +19,18 @@ public class EquipmentTest {
     public void testEquipmentEffect() {
         Equipment e = new Equipment("test", Equipment.Effect.DAMAGE, 100);
         assertEquals(Equipment.Effect.DAMAGE, e.getEffect());
+    }
+
+    @Test
+    @DisplayName("Testar att lägga till equipment")
+    public void testAddEquipment() {
+        Equipment e1 = new Equipment("test1", Equipment.Effect.SPEED, 15);
+        Equipment e2 = new Equipment("test2", Equipment.Effect.HEALTH, 60);
+        Equipment e3 = new Equipment("test3", Equipment.Effect.DAMAGE, 100);
+        ArrayList<Equipment> equipments = new ArrayList<Equipment>();
+        equipments.add(e1);
+        equipments.add(e2);
+        equipments.add(e3);
+        System.err.print(equipments);
     }
 }

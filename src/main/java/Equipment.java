@@ -1,8 +1,11 @@
+import java.util.ArrayList;
+
 public class Equipment {
 
     private String name;
     private Effect effect;
     private int damage;
+    private ArrayList<Equipment> equipments = new ArrayList<Equipment>();
 
 
     public Equipment(String name, Effect effect, int damage) {
@@ -22,5 +25,21 @@ public class Equipment {
     public enum Effect {
         SPEED, HEALTH, DAMAGE
     }
+
+    public void add(Equipment e) {
+        equipments.add(e);
+    }
+
+    public ArrayList<Equipment> getEquipments() {
+        return equipments;
+    }
+
+    public void removeAllEquipments() {
+        equipments.clear();
+    }
+
+    /*public String toString() {
+        return Effect.SPEED, Effect.DAMAGE, Effect.HEALTH;
+    }*/
 
 }
