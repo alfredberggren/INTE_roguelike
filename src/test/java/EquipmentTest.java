@@ -8,7 +8,7 @@ public class EquipmentTest {
     @Test
     @DisplayName("Testar att en equipment har ett namn")
     public void testEquipmentName() {
-        Equipment e = new Equipment("test", 100, 10);
+        Equipment e = new Equipment("test", Equipment.Effect.DAMAGE, 10);
         assertEquals("test", e.getName());
     }
 }
