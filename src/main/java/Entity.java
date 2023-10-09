@@ -15,6 +15,13 @@ public class Entity {
         this.pos = new Position(0, 0);
     }
 
+    public Entity(String name, int health, int speed, Position pos){
+        this.name = name;
+        this. health = health;
+        this.speed = speed;
+        this.pos = pos;
+    }
+
 
     public String getName(){
         return name;
