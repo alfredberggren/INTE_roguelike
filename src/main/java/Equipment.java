@@ -26,5 +26,10 @@ public class Equipment {
         SPEED, HEALTH, DAMAGE
     }
 
+    public String toString() {
+        String s = name + " + " + damage + " + " + effect;
+        return s;
+    }
+
 
 }
