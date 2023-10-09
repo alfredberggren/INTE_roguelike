@@ -5,6 +5,7 @@ public class Entity {
     private int health;
     private int speed;
     private Position pos;
+    private boolean isDead = true;
 
     public Entity(String name, int health, int speed){
         if (speed < 0 || health < 0 || speed < 0) {
@@ -14,6 +15,9 @@ public class Entity {
         this.health = health;
         this.speed = speed;
         this.pos = new Position(0, 0);
+        if(health > 0) {
+            isDead = false;
+        }
     }
 
     public Entity(String name, int health, int speed, Position pos){
@@ -40,5 +44,9 @@ public class Entity {
 
     public int getSpeed() {
         return speed;
+    }
+
+    public boolean isDead() {
+        return isDead;
     }
 }
