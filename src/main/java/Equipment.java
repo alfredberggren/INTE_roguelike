@@ -1,10 +1,11 @@
 public class Equipment {
 
     private String name;
-    private int effect;
+    private Effect effect;
     private int damage;
 
-    public Equipment(String name, int effect, int damage) {
+
+    public Equipment(String name, Effect effect, int damage) {
         this.name = name;
         this.effect = effect;
         this.damage = damage;
@@ -12,6 +13,14 @@ public class Equipment {
 
     public String getName(){
         return name;
+    }
+
+    public Effect getEffect() {
+        return effect;
+    }
+
+    public enum Effect {
+        SPEED, HEALTH, DAMAGE
     }
 
 }

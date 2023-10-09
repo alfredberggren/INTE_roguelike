@@ -1,4 +1,3 @@
-package src.main.java;
 import src.main.java.Position;
 
 public class Entity {
@@ -10,7 +9,7 @@ public class Entity {
 
     public Entity(String name, int health, int speed){
         this.name = name;
-        this. health = health;
+        this.health = health;
         this.speed = speed;
         this.pos = new Position(0, 0);
     }
