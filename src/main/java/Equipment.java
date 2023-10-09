@@ -42,6 +42,13 @@ public class Equipment {
         equipments.clear();
     }
 
+    public String toString(){
+        String s = "";
+        for(Equipment e: equipments){
+            s += e + "\n";
+        }
+        return s;
+    }
     /*public String toString() {
         return Effect.SPEED, Effect.DAMAGE, Effect.HEALTH;
     }*/
