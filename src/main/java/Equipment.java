@@ -49,8 +49,4 @@ public class Equipment {
         }
         return s;
     }
-    /*public String toString() {
-        return Effect.SPEED, Effect.DAMAGE, Effect.HEALTH;
-    }*/
-
 }

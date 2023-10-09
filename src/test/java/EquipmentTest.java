@@ -32,7 +32,7 @@ public class EquipmentTest {
         equipments.add(e1);
         equipments.add(e2);
         equipments.add(e3);
-        System.err.print(equipments);
+        assertEquals("test +15% Speed\ntest2 +60% Health\ntest3 +100% Damage\n", equipments.toString());
     }
 
     @Test
