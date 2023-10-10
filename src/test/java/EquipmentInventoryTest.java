@@ -1,8 +1,6 @@
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class EquipmentInventoryTest {
@@ -43,8 +41,8 @@ public class EquipmentInventoryTest {
         inventory.add(e1);
         inventory.add(e2);
         inventory.add(e3);
-        inventory.drop(e1);
-        inventory.drop(e2);
+        inventory.discard(e1);
+        inventory.discard(e2);
         assertEquals("test3 +100% Damage\n", inventory.toString());
 
     }

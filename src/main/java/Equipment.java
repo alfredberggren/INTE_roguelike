@@ -5,6 +5,7 @@ public class Equipment extends NonLivingEntity{
     private int damage;
 
     private Ability ability;
+    private Position pos;
 
     public Equipment(String name, Set<Action> possibleActions, Effect effect, int damage, Ability ability) {
         super(name, possibleActions);
@@ -23,6 +24,14 @@ public class Equipment extends NonLivingEntity{
 
     public Set<Action> getPossibleActions() {
         return possibleActions;
+    }
+
+    public Position getPos() {
+        return pos;
+    }
+
+    public void setPos(Position pos) {
+        this.pos = pos;
     }
 
     public enum Effect {

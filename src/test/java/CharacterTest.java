@@ -40,14 +40,23 @@ public class CharacterTest {
         });
     }
 
-
     @Test
     @DisplayName("Test to decrease health")
     public void testToDecreaseHealth() {
         Character character1 = new Character("one", 100, 10);
-        int healthAfter = character1.decreaseHealth(20);
+        character1.decreaseHealth(20);
         assertEquals(80, character1.getHealth());
     }
+
+    @Test
+    @DisplayName("Test to increase health")
+    public void testToIncreaseHealth() {
+        Character character1 = new Character("one", 80, 10);
+        character1.increaseHealth(20);
+        assertEquals(100, character1.getHealth());
+    }
+
+
 
 
 }
