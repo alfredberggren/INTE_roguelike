@@ -52,7 +52,7 @@ public class Equipment extends NonLivingEntity{
     }
 
     public String toString() {
-        String s = name + " + " + damage + " + " + effect;
+        String s = name + " +" + damage + "% " + effect;
         return s;
     }
 }

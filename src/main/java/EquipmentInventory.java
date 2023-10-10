@@ -11,6 +11,7 @@ public class EquipmentInventory {
     /*public void discard(Equipment e){
         equipments.remove(e);
         Position current = e.getPos();   // ?? Hämta spelarens position och sätta den till equipment
+                                         //om utrustning slängs ska den hamna på kartan
         e.setPos(current);
     }*/
 
