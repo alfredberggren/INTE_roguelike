@@ -19,7 +19,7 @@ public class Character {
         this.name = name;
         this.health = health;
         this.speed = speed;
-        this.magicAbility = new MagicAbility("No Magic"); //standard magisk förmåga
+        this.magicAbility = new MagicAbility("Hands",1,"No Magic"); //standard magisk förmåga
         this.pos = new Position(0, 0);
         if(health > 0) {
             isDead = false;

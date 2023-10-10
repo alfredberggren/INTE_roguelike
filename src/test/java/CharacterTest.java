@@ -62,7 +62,7 @@ public class CharacterTest {
     @DisplayName("Test that character get Magic Ability")
     public void testCharacterMagicAbility() {
         Character c = new Character("Wizard", 100, 10);
-        MagicAbility fireMagic = new MagicAbility("Fireball");
+        MagicAbility fireMagic = new MagicAbility("Fireball",20,"Magic");
         c.setMagicAbility(fireMagic);
         assertEquals("Wizard", c.getName());
         assertEquals("Fireball", c.getMagicAbility().toString());

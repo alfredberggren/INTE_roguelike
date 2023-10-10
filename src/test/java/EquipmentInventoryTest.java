@@ -14,9 +14,9 @@ public class EquipmentInventoryTest {
     @Test
     @DisplayName("Testar att ta bort all equipment")
     public void testRemoveAllEquipment() {
-        Equipment e1 = new Equipment("test1", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.SPEED, 15, new MagicAbility("Magic"));
-        Equipment e2 = new Equipment("test2", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.HEALTH, 60, new MagicAbility("Magic"));
-        Equipment e3 = new Equipment("test3", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 100, new MagicAbility("Magic"));
+        Equipment e1 = new Equipment("test1", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.SPEED, 15, new MagicAbility("Fireball",20,"Magic"));
+        Equipment e2 = new Equipment("test2", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.HEALTH, 60, new MagicAbility("Fireball",20,"Magic"));
+        Equipment e3 = new Equipment("test3", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 100, new MagicAbility("Fireball",20,"Magic"));
         EquipmentInventory inventory= new EquipmentInventory();
         inventory.add(e1);
         inventory.add(e2);
@@ -28,9 +28,9 @@ public class EquipmentInventoryTest {
     @Test
     @DisplayName("Testar att lägga till equipment")
     public void testAddEquipment() {
-        Equipment e1 = new Equipment("test1", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.SPEED, 15, new MagicAbility("Magic"));
-        Equipment e2 = new Equipment("test2", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.HEALTH, 60, new MagicAbility("Magic"));
-        Equipment e3 = new Equipment("test3", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 100, new MagicAbility("Magic"));
+        Equipment e1 = new Equipment("test1", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.SPEED, 15, new MagicAbility("Fireball",20,"Magic"));
+        Equipment e2 = new Equipment("test2", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.HEALTH, 60, new MagicAbility("Fireball",20,"Magic"));
+        Equipment e3 = new Equipment("test3", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 100, new MagicAbility("Fireball",20,"Magic"));
         EquipmentInventory inventory= new EquipmentInventory();
         inventory.add(e1);
         inventory.add(e2);
@@ -41,9 +41,9 @@ public class EquipmentInventoryTest {
     @Disabled
     @DisplayName("Test to discard equipment")
     public void testToDiscardEquipment(){
-        Equipment e1 = new Equipment("test1", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.SPEED, 15, new MagicAbility("Magic"));
-        Equipment e2 = new Equipment("test2", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.HEALTH, 60, new MagicAbility("Magic"));
-        Equipment e3 = new Equipment("test3", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 100, new MagicAbility("Magic"));
+        Equipment e1 = new Equipment("test1", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.SPEED, 15, new MagicAbility("Fireball",20,"Magic"));
+        Equipment e2 = new Equipment("test2", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.HEALTH, 60, new MagicAbility("Fireball",20,"Magic"));
+        Equipment e3 = new Equipment("test3", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 100, new MagicAbility("Fireball",20,"Magic"));
         EquipmentInventory inventory= new EquipmentInventory();
         inventory.add(e1);
         inventory.add(e2);
@@ -57,7 +57,7 @@ public class EquipmentInventoryTest {
     @Test
     @DisplayName ("Test to get equipment")
     public void testGetEquipment(){
-        Equipment e = new Equipment("test", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.HEALTH, 60, new MagicAbility("Magic"));
+        Equipment e = new Equipment("test", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.HEALTH, 60, new MagicAbility("Fireball",20,"Magic"));
         EquipmentInventory inventory = new EquipmentInventory();
         inventory.add(e);
         Equipment equipment = inventory.getEquipment(0);
