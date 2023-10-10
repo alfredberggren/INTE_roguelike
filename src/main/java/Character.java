@@ -19,6 +19,7 @@ public class Character {
         this.name = name;
         this.health = health;
         this.speed = speed;
+        this.magicAbility = new MagicAbility("No Magic"); //standard magisk förmåga
         this.pos = new Position(0, 0);
         if(health > 0) {
             isDead = false;
@@ -41,7 +42,12 @@ public class Character {
     public int getSpeed() {return speed;}
     public ArrayList<Ability> getAbilities() {return abilities;}
     public EquipmentInventory getEquipments() {return equipments;}
-    public MagicAbility getMagicAbility() {return magicAbility;}
+    public MagicAbility getMagicAbility() {
+        return magicAbility;
+    }
+    public void setMagicAbility(MagicAbility magicAbility) {
+        this.magicAbility = magicAbility;
+    }
     public PhysicalAbility getPhysicalAbility() {return physicalAbility;}
     public void setHealth(int health) {this.health = health;}
     public void setPos(Position pos) {this.pos = pos;}
