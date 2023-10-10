@@ -24,9 +24,9 @@ public class EquipmentTest {
     @Test
     @DisplayName("Testar att possibleActions blir korrekt")
     public void testPossibleActions() {
-        HashSet<Interactable.Action> possibleActions = new HashSet<>();
-        possibleActions.add(Interactable.Action.LOOT);
-        possibleActions.add(Interactable.Action.DROP);
+        HashSet<Interactable.InteractableAction> possibleActions = new HashSet<>();
+        possibleActions.add(Interactable.InteractableAction.LOOT);
+        possibleActions.add(Interactable.InteractableAction.DROP);
         Equipment e = new Equipment("test", possibleActions, Equipment.Effect.HEALTH, 100, new MagicAbility("Magic"));
         assertEquals(possibleActions, e.getPossibleActions());
     }

@@ -6,7 +6,7 @@ public class Equipment extends NonLivingEntity{
     private Ability ability;
     private double damageBar;
 
-    public Equipment(String name, Set<Action> possibleActions, Effect effect, int damage, Ability ability) {
+    public Equipment(String name, Set<InteractableAction> possibleActions, Effect effect, int damage, Ability ability) {
         super(name, possibleActions);
         this.effect = effect;
         this.damage = damage;
@@ -21,7 +21,7 @@ public class Equipment extends NonLivingEntity{
         return effect;
     }
 
-    public Set<Action> getPossibleActions() {
+    public Set<InteractableAction> getPossibleActions() {
         return possibleActions;
     }
 
