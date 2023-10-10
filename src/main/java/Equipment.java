@@ -22,7 +22,7 @@ public class Equipment extends NonLivingEntity{
     }
 
     public Set<InteractableAction> getPossibleActions() {
-        return possibleActions;
+        return possibleInteractableActions;
     }
 
     public enum Effect {

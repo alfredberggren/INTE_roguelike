@@ -35,7 +35,7 @@ public class EquipmentInventoryTest {
         inventory.add(e1);
         inventory.add(e2);
         inventory.add(e3);
-        assertEquals("test +15% Speed\ntest2 +60% Health\ntest3 +100% Damage\n", inventory.toString());
+        assertEquals("test1 +15% SPEED\ntest2 +60% HEALTH\ntest3 +100% DAMAGE\n", inventory.toString());
     }
 
     @Disabled
