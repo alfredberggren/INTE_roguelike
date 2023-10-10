@@ -8,4 +8,5 @@ public class Room {
         this.pos = p;
         this.interactables = interactables;
     }
+
 }
