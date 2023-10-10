@@ -1,3 +1,3 @@
-public class TextUI {
+public class TextUI extends IO{
     
 }

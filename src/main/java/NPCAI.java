@@ -1,3 +1,3 @@
-public class NPCAI {
+public class NPCAI extends IO{
     
 }
