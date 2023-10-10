@@ -1,7 +1,6 @@
 
 public abstract class Ability {
 
-    public int field;
-
-    abstract public int type();
+    public String type;
+    abstract public String type();
 }

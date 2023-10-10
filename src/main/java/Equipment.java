@@ -7,6 +7,8 @@ public class Equipment extends NonLivingEntity{
     private Effect effect;
     private int damage;
 
+    private Ability ability;
+
 
 
     public Equipment(String name, Set<Action> possibleActions, Effect effect, int damage) {
@@ -29,6 +31,10 @@ public class Equipment extends NonLivingEntity{
 
     public enum Effect {
         SPEED, HEALTH, DAMAGE
+    }
+
+    public double damageModifier(double percentage) {
+        return percentage;
     }
 
     public String toString() {
