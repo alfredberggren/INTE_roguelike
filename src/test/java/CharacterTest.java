@@ -23,5 +23,10 @@ public class CharacterTest {
         assertEquals(2, character1.getPosition().getY());
     }
 
+    @Test
+    @DisplayName(""){
+
+    }
+
 
 }
