@@ -18,21 +18,21 @@ public class PositionTest {
     //TODO: might need parameterized tests for both X and Y
     @Test
     @DisplayName("assert right X-value when constructing Position")
-    void assertConstructorSetsCorrectX(){
+    public void testConstructorSetsCorrectX(){
         Position pos = new Position(DEFAULT_X, DEFAULT_Y);
         assertEquals(DEFAULT_X, pos.getX());
     }
 
     @Test
     @DisplayName("assert right Y-value when constructing Position")
-    void assertConstructorSetsCorrectY(){
+    public void testConstructorSetsCorrectY(){
         Position pos = new Position(DEFAULT_X, DEFAULT_Y);
         assertEquals(DEFAULT_Y, pos.getY());
     }
 
     @Test
     @DisplayName("assert two Positions where p1.x == p2.y and p1.y == p2.x returns different HashCodes")
-    void assertDifferentHashCodes() {
+    public void testDifferentHashCodes() {
         Position pos1 = new Position(DEFAULT_POSITIVE_X, DEFAULT_Y);
         //Intentionally placing Y-value into X and vice versa, for testings' sake
         Position pos2 = new Position(DEFAULT_Y, DEFAULT_POSITIVE_X);
@@ -41,7 +41,7 @@ public class PositionTest {
 
     @Test
     @DisplayName("assert two positions with same X&Y equals true")
-    void assertEqualsMethodSameValues() {
+    public void testEqualsMethodSameValues() {
         Position pos1 = new Position(DEFAULT_NEGATIVE_X, DEFAULT_NEGATIVE_Y);
         Position pos2 = new Position(DEFAULT_NEGATIVE_X, DEFAULT_NEGATIVE_Y);
         assertEquals(true, pos1.equals(pos2));
@@ -49,7 +49,7 @@ public class PositionTest {
 
     @Test
     @DisplayName("assert two positions with different X&Y equals false")
-    void assertEqualsMethodDifferentValues() {
+    public void testEqualsMethodDifferentValues() {
         Position pos1 = new Position(DEFAULT_NEGATIVE_X, DEFAULT_NEGATIVE_Y);
         Position pos2 = new Position(DEFAULT_POSITIVE_X, DEFAULT_NEGATIVE_Y);
         assertEquals(false, pos1.equals(pos2));
