@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -24,6 +25,17 @@ public class AbilityTest {
         MagicAbility magicAbility = new MagicAbility("Fireball", 20,"Magic");
         PhysicalAbility physicalAbility = new PhysicalAbility("Sword", 10, "Physical");
         assertEquals("Magic" + "Physical", magicAbility.toString() + physicalAbility);
+    }
+
+    @Disabled
+    @DisplayName("Test calculating damage for Fireball")
+    public void testCalculateDamageForFireball() {
+        MagicAbility fireBall = new MagicAbility("Fireball",10, "Magic");
+        Character player = new Character("Player", 100, 10);
+        player.setLevel(2);
+        player.setExperience(50);
+        int damage = fireBall.calculateDamage(player);
+        assertEquals(20, damage);
     }
 
 }

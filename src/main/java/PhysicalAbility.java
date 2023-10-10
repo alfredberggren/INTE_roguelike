@@ -7,7 +7,7 @@ public class PhysicalAbility extends Ability{
     }
 
     @Override
-    public int calculateDamage(int playerLevel, int playerExperience) {
+    public int calculateDamage(Character character) {
         return 0;
     }
 

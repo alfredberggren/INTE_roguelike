@@ -8,7 +8,7 @@ public abstract class Ability {
         this.name = name;
         this.baseDamage = baseDamage;
     }
-    abstract public int calculateDamage(int playerLevel, int playerExperience);
+    abstract public int calculateDamage(Character character);
 
     abstract public String typeOfAbility();
 

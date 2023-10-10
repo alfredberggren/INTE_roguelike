@@ -7,9 +7,13 @@ public class MagicAbility extends Ability{
         this.magicAbility = magicAbility;
     }
 
-    @Override
-    public int calculateDamage(int playerLevel, int playerExperience) {
-        return 0;
+    @Override //ska lägga till bonus för Magic är starkare än physical
+    public int calculateDamage(Character character) {
+        int baseDamage = 10;
+        int levelBonus = character.getLevel() * 5;
+        int experienceBonus = character.getExperience() / 10;
+        int totalDamage = baseDamage + levelBonus + experienceBonus;
+        return totalDamage;
     }
 
     @Override
