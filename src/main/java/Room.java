@@ -22,6 +22,8 @@ public class Room {
         this(position, new HashMap<>());
     }
 
+
+
     public Position getPosition(){
         return position;
     }

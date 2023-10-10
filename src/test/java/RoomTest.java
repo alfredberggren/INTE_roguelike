@@ -36,15 +36,32 @@ public class RoomTest {
         assertEquals(true, r.getInteractables().isEmpty());
     }
 
+
     @Test
     public void testConstructorThrowsNullPointerExceptionWhenPositionIsNull() {
         setUpDefaultInteractables();
-        assertThrows(NullPointerException.class, () -> {new Room(null, DEFAULT_INTERACTABLES);});
+        assertThrows(NullPointerException.class, () -> {
+            new Room(null, DEFAULT_INTERACTABLES);});
     }
 
     @Test
     public void testConstructorThrowsNullPointerExceptionWhenInteractablesIsNull(){
-        assertThrows(NullPointerException.class, () -> new Room(DEFAULT_POSITION, null));
+        assertThrows(NullPointerException.class, () ->
+                new Room(DEFAULT_POSITION, null));
+    }
+
+    @Test
+    public void testAddMethodAddsInteractableToRoom(){
+        setUpDefaultInteractables();
+        Equipment e = new Equipment("Axe", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 20);
+        Room r = new Room(DEFAULT_POSITION, DEFAULT_INTERACTABLES);
+        r.addInteractable(e, 1);
+        assertEquals(true, r.getInteractables().containsKey(e));
+    }
+
+    @Test
+    public void testRemoveMethodRemovesOnlyOneInteractable(){
+
     }
 
     private void setUpDefaultInteractables(){
