@@ -1,7 +1,7 @@
 import java.util.Set;
 
 public abstract class NonLivingEntity implements Interactable {
-    private String name;
+    String name;
     Set<Action> possibleActions;
 
     public NonLivingEntity(String name, Set<Action> possibleActions) {
