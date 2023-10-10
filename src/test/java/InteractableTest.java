@@ -11,7 +11,7 @@ public class InteractableTest {
     @Test
     @DisplayName("Testar att skapa en icke-levande entitet och kollar om den har korrekt actions")
     public void testNLEHasCorrectActions() {
-        Set<Interactable.Action> possibleActions = new HashSet<>(Arrays.asList(Interactable.Action.FIGHT, Interactable.Action.TALK));
+        Set<Interactable.InteractableAction> possibleActions = new HashSet<>(Arrays.asList(Interactable.InteractableAction.FIGHT, Interactable.InteractableAction.TALK));
         Interactable i1 = new Prop("Tree", possibleActions);
         assertEquals(possibleActions, i1.getPossibleActions());
     }
@@ -19,24 +19,24 @@ public class InteractableTest {
     @Test
     @DisplayName("Testar en NPC-karaktärs actions")
     public void testNPCHasCorrectActions() {
-        Set<Interactable.Action> possibleActions = new HashSet<>(Arrays.asList(Interactable.Action.FIGHT, Interactable.Action.TALK));
-        Interactable i1 = new NPC("Fido", 10, 100, possibleActions);
-        assertEquals(possibleActions, i1.getPossibleActions());
+        Set<Interactable.InteractableAction> possibleInteractableActions = new HashSet<>(Arrays.asList(Interactable.InteractableAction.FIGHT, Interactable.InteractableAction.TALK));
+        Interactable i1 = new NPC("Fido", 10, 100, possibleInteractableActions);
+        assertEquals(possibleInteractableActions, i1.getPossibleActions());
     }
 
     @Test
     @DisplayName("Testar Equipments actions")
     public void testEquipmentHasCorrectActions() {
-        Set<Interactable.Action> possibleActions = new HashSet<>(Arrays.asList(Interactable.Action.LOOT, Interactable.Action.DROP, Interactable.Action.WEAR));
-        Interactable i1 = new Equipment("Steel Sword", possibleActions, Equipment.Effect.HEALTH, 0, new MagicAbility("Magic"));
-        assertEquals(possibleActions, i1.getPossibleActions());
+        Set<Interactable.InteractableAction> possibleInteractableActions = new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP, Interactable.InteractableAction.WEAR));
+        Interactable i1 = new Equipment("Steel Sword", possibleInteractableActions, Equipment.Effect.HEALTH, 0);
+        assertEquals(possibleInteractableActions, i1.getPossibleActions());
     }
 
     @Test
     @DisplayName("Testar att en interactables inte har actions som vi inte gav den")
     public void interactableDoesNotHaveUnassignedActions() {
-        Set<Interactable.Action> possibleActions = new HashSet<>(Arrays.asList(Interactable.Action.LOOT, Interactable.Action.WEAR));
-        Interactable i1 = new Prop("Stone", possibleActions);
-        assertFalse(i1.getPossibleActions().contains(Interactable.Action.FIGHT));
+        Set<Interactable.InteractableAction> possibleInteractableActions = new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.WEAR));
+        Interactable i1 = new Prop("Stone", possibleInteractableActions);
+        assertFalse(i1.getPossibleActions().contains(Interactable.InteractableAction.FIGHT));
     }
 }

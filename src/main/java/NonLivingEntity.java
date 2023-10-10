@@ -2,10 +2,10 @@ import java.util.Set;
 
 public abstract class NonLivingEntity implements Interactable {
     String name;
-    Set<Action> possibleActions;
+    Set<InteractableAction> possibleInteractableActions;
 
-    public NonLivingEntity(String name, Set<Action> possibleActions) {
+    public NonLivingEntity(String name, Set<InteractableAction> possibleInteractableActions) {
         this.name = name;
-        this.possibleActions = possibleActions;
+        this.possibleInteractableActions = possibleInteractableActions;
     }
 }

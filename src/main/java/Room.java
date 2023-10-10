@@ -1,9 +1,14 @@
 
 
 public class Room {
+    private Position position;
 
-    public Room() {
+    public Room(Position position) {
+        this.position = position;
+    }
 
+    public Position getPosition(){
+        return position;
     }
 
 }
