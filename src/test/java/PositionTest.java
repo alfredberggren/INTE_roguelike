@@ -14,6 +14,8 @@ public class PositionTest {
     static final int DEFAULT_POSITIVE_X = 5;
     static final int DEFAULT_POSITIVE_Y = 5;
 
+
+    //TODO: might need parameterized tests for both X and Y
     @Test
     @DisplayName("assert right X-value when constructing Position")
     void assertConstructorSetsCorrectX(){
