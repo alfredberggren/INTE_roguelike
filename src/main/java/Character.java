@@ -14,7 +14,7 @@ public class Character {
 
     public Character(String name, int health, int speed){
         if (speed < 0 || health < 0 || speed < 0) {
-            throw new IllegalArgumentException("Speed, health and speed needs to be 0 or more");
+            throw new IllegalArgumentException("Speed and health needs to be 0 or more");
         }
         this.name = name;
         this.health = health;
@@ -27,7 +27,7 @@ public class Character {
 
     public Character(String name, int health, int speed, Position pos){
         if (speed < 0 || health < 0 || speed < 0) {
-            throw new IllegalArgumentException("Speed, health and speed needs to be 0 or more");
+            throw new IllegalArgumentException("Speed and health needs to be 0 or more");
         }
         this.name = name;
         this. health = health;
