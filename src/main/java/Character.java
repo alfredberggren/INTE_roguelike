@@ -8,7 +8,7 @@ public class Character {
     private Position pos;
     private boolean isDead = true;
     private ArrayList <Ability> abilities;
-    private EquipmentInventory equipment;
+    private EquipmentInventory equipments;
     private PhysicalAbility physicalAbility;
     private MagicAbility magicAbility;
 
@@ -35,7 +35,6 @@ public class Character {
         this.pos = pos;
     }
 
-
     public String getName(){
         return name;
     }
@@ -49,6 +48,22 @@ public class Character {
 
     public int getSpeed() {
         return speed;
+    }
+
+    public ArrayList<Ability> getAbilities() {
+        return abilities;
+    }
+
+    public EquipmentInventory getEquipments() {
+        return equipments;
+    }
+
+    public MagicAbility getMagicAbility() {
+        return magicAbility;
+    }
+
+    public PhysicalAbility getPhysicalAbility() {
+        return physicalAbility;
     }
 
     public boolean isDead() {
