@@ -1,4 +1,5 @@
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -21,6 +22,15 @@ public class CharacterTest {
         assertEquals(new Position(1, 2), character1.getPosition());
         assertEquals(1, character1.getPosition().getX());
         assertEquals(2, character1.getPosition().getY());
+    }
+
+    @Test
+    @DisplayName("assert throws exception if health<0")
+    public void testEntityWithNegativeHealth(){
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            new Character("one", -100, 10);
+        });
+
     }
 
 
