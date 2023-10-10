@@ -31,6 +31,12 @@ public class RoomTest {
     }
 
     @Test
+    public void testConstructorWithoutInteractableArgSetsEmptyRoom(){
+        Room r = new Room(DEFAULT_POSITION);
+        assertEquals(true, r.getInteractables().isEmpty());
+    }
+
+    @Test
     public void testConstructorThrowsNullPointerExceptionWhenPositionIsNull() {
         setUpDefaultInteractables();
         assertThrows(NullPointerException.class, () -> {new Room(null, DEFAULT_INTERACTABLES);});
