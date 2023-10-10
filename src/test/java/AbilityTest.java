@@ -23,7 +23,7 @@ public class AbilityTest {
     public void testBothMagicAndPhysicalAbility() {
         MagicAbility magicAbility = new MagicAbility("Magic");
         PhysicalAbility physicalAbility = new PhysicalAbility("Physical");
-        assertEquals("Magic" + "Physical", magicAbility.toString() + physicalAbility.toString());
+        assertEquals("Magic" + "Physical", magicAbility.toString() + physicalAbility);
     }
 
 }
