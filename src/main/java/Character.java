@@ -46,24 +46,30 @@ public class Character {
         return health;
     }
 
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
     public int getSpeed() {
         return speed;
     }
-
-    public ArrayList<Ability> getAbilities() {
-        return abilities;
+    public ArrayList<Ability> getAbilities() {return abilities;}
+    public EquipmentInventory getEquipments() {return equipments;}
+    public MagicAbility getMagicAbility() {return magicAbility;}
+    public PhysicalAbility getPhysicalAbility() {return physicalAbility;}
+    public int increaseHealth(int add){
+        return health + add;
     }
 
-    public EquipmentInventory getEquipments() {
-        return equipments;
-    }
-
-    public MagicAbility getMagicAbility() {
-        return magicAbility;
-    }
-
-    public PhysicalAbility getPhysicalAbility() {
-        return physicalAbility;
+    public int decreaseHealth(int decrease) {
+        int result = health - decrease;
+        if(result<=0) {
+            isDead = true;
+            setHealth(0);
+            return 0;
+        }
+        setHealth(result);
+        return result;
     }
 
     public boolean isDead() {
