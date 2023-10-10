@@ -14,17 +14,19 @@ public class RoomTest {
     static final Set<Interactable.InteractableAction> DEFAULT_EQUIPMENT_ACTIONS = new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP));
     static final NPC DEFAULT_NPC = new NPC("Harald", 100, 50, DEFAULT_NPC_ACTIONS);
 
-    //static final Equipment DEFAULT_EQUIPMENT = new Equipment("Sword", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 40, );
-    //static final ArrayList<Interactable> DEFAULT_INTERACTABLES = new ArrayList<>(Arrays.asList(DEFAULT_NPC, DEFAULT_EQUIPMENT));
+    static final Equipment DEFAULT_EQUIPMENT = new Equipment("Sword", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 40);
+    static final ArrayList<Interactable> DEFAULT_INTERACTABLES = new ArrayList<>(Arrays.asList(DEFAULT_NPC, DEFAULT_EQUIPMENT));
 
     @Test
     public void testConstructorSetsCorrectPosition() {
-        Room r = new Room(DEFAULT_POSITION);
+        Room r = new Room(DEFAULT_POSITION, DEFAULT_INTERACTABLES);
         assertEquals(DEFAULT_POSITION, r.getPosition());
     }
 
     @Test
-    public void testConstructorSets() {
+    public void testConstructorSetsInteractablesCorrectly() {
+        Room r = new Room(DEFAULT_POSITION, DEFAULT_INTERACTABLES);
+        assertEquals(DEFAULT_INTERACTABLES, r.getInteractables());
 
     }
 
