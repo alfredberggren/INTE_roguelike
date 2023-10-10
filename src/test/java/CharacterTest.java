@@ -1,5 +1,6 @@
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -66,6 +67,17 @@ public class CharacterTest {
         c.setMagicAbility(fireMagic);
         assertEquals("Wizard", c.getName());
         assertEquals("Fireball", c.getMagicAbility().toString());
+    }
+
+    @Disabled
+    @DisplayName("Test that character level up")
+    public void testCharacterLevelUpWhenExperienceReaches100() {
+        Character c = new Character("Player", 100, 10);
+        assertEquals(1, c.getLevel());
+        assertEquals(0, c.getExperience());
+        c.increaseExperience(100);
+        assertEquals(2, c.getLevel());
+        assertEquals(0, c.getExperience());
     }
 
 

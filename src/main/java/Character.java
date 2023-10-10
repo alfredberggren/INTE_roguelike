@@ -5,6 +5,8 @@ public class Character {
     protected String name;
     private int health;
     private int speed;
+    private int level;
+    private int experience;
     private Position pos;
     private boolean isDead = true;
     private ArrayList <Ability> abilities;
@@ -31,7 +33,7 @@ public class Character {
             throw new IllegalArgumentException("Speed and health needs to be 0 or more");
         }
         this.name = name;
-        this. health = health;
+        this.health = health;
         this.speed = speed;
         this.pos = pos;
     }
@@ -65,6 +67,37 @@ public class Character {
             setHealth(0);
         }else {
             setHealth(result);
+        }
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setExperience(int experience) {
+        this.experience = experience;
+    }
+
+    public int getExperience() {
+        return experience;
+    }
+
+    public void increaseExperience(int experiencePoints) {
+        experience += experiencePoints;
+        checkLevelUp();
+    }
+
+    public void checkLevelUp() {
+        //kolla om spelaren ska gå upp i nivå baserat på erfarenhet
+        int experiencePerLevelUp = 100;
+        while(experience >= experiencePerLevelUp && level < 10) {
+            experience -= experiencePerLevelUp;
+            level++;
+            System.out.println("Congratulations! You've reached level " + level + "!");
         }
     }
 
