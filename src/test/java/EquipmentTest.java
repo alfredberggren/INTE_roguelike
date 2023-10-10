@@ -14,21 +14,21 @@ public class EquipmentTest {
     @Test
     @DisplayName("Testar att en equipment har ett namn")
     public void testEquipmentName() {
-        Equipment e = new Equipment("test", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 10);
+        Equipment e = new Equipment("test", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 10, new MagicAbility("Physical"));
         assertEquals("test", e.getName());
     }
 
     @Test
     @DisplayName("Testar att en equipment har effekt")
     public void testEquipmentEffect() {
-        Equipment e = new Equipment("test", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 100);
+        Equipment e = new Equipment("test", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 100, new MagicAbility("Physical"));
         assertEquals(Equipment.Effect.DAMAGE, e.getEffect());
     }
 
     @Test
     @DisplayName("Testar att possibleActions blir korrekt")
     public void testPossibleActions() {
-        Equipment e = new Equipment("test", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.HEALTH, 100);
+        Equipment e = new Equipment("test", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.HEALTH, 100, new MagicAbility("Physical"));
         assertEquals(DEFAULT_EQUIPMENT_ACTIONS, e.getPossibleActions());
     }
 
