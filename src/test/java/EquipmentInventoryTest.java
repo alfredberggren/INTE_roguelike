@@ -50,7 +50,7 @@ public class EquipmentInventoryTest {
         inventory.add(e3);
         //inventory.discard(e1);
         //inventory.discard(e2);
-        assertEquals("test3 +100% Damage\n", inventory.toString());
+        assertEquals("test3 +100% DAMAGE\n", inventory.toString());
 
     }
 
@@ -61,7 +61,7 @@ public class EquipmentInventoryTest {
         EquipmentInventory inventory = new EquipmentInventory();
         inventory.add(e);
         Equipment equipment = inventory.getEquipment(0);
-        assertEquals("test + 60% Health\n", equipment.toString());
+        assertEquals("test +60% HEALTH", equipment.toString());
 
     }
 }

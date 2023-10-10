@@ -1,4 +1,6 @@
 import java.util.Set;
+import java.util.ArrayList;
+import java.util.Objects;
 
 public class Equipment extends NonLivingEntity{
     private Effect effect;
@@ -51,8 +53,22 @@ public class Equipment extends NonLivingEntity{
         return damageBar;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Equipment equipment = (Equipment) o;
+        return name.equals(equipment.getName()) && damage == equipment.damage && effect == equipment.effect && Objects.equals(ability, equipment.ability);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, effect, damage, ability);
+    }
+
+    @Override
     public String toString() {
-        String s = name + " + " + damage + " + " + effect;
+        String s = name + " +" + damage + "% " + effect;
         return s;
     }
 }

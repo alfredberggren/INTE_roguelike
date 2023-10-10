@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Character {
 
-    private String name;
+    protected String name;
     private int health;
     private int speed;
     private Position pos;
