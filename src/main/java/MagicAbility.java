@@ -10,4 +10,9 @@ public class MagicAbility extends Ability{
         return magicAbility;
     }
 
+    @Override
+    public String toString() {
+        return magicAbility;
+    }
+
 }

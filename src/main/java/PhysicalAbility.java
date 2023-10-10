@@ -9,4 +9,9 @@ public class PhysicalAbility extends Ability{
     public String typeOfAbility() {
         return physicalAbility;
     }
+
+    @Override
+    public String toString() {
+        return "Physical";
+    }
 }
