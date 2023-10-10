@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 public class Character {
 
@@ -6,6 +7,8 @@ public class Character {
     private int speed;
     private Position pos;
     private boolean isDead = true;
+    private ArrayList <Ability> abilities;
+    private EquipmentInventory equipment;
 
     public Character(String name, int health, int speed){
         if (speed < 0 || health < 0 || speed < 0) {
