@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Position {
     private int x;
     private int y;
@@ -23,4 +25,10 @@ public class Position {
         }
         return false;
     }
+    @Override
+    public int hashCode() {
+        String codeString = Integer.toString(x) + y;
+        return Objects.hashCode(codeString);
+    }
+
 }
