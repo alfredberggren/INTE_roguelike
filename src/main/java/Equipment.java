@@ -58,12 +58,12 @@ public class Equipment extends NonLivingEntity{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Equipment equipment = (Equipment) o;
-        return name.equals(equipment.getName()) && damage == equipment.damage && effect == equipment.effect && Objects.equals(ability, equipment.ability) && Objects.equals(pos, equipment.pos);
+        return name.equals(equipment.getName()) && damage == equipment.damage && effect == equipment.effect && Objects.equals(ability, equipment.ability);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, effect, damage, ability, pos);
+        return Objects.hash(name, effect, damage, ability);
     }
 
     @Override
