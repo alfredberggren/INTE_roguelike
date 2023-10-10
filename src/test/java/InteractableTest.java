@@ -77,4 +77,28 @@ public class InteractableTest {
     public void testTwoUnequalPropsShouldHaveUnequalHashCodes() {
         assertNotEquals(new Prop("test1234", DEFAULT_INTERACTABLE_ACTIONS).hashCode(), new Prop("test123", DEFAULT_INTERACTABLE_ACTIONS).hashCode());
     }
+
+    @Test
+    @DisplayName("Två NPC:s med samma namn ska vara lika")
+    public void testTwoNPCsWithSameNameAreEqual() {
+        assertEquals(new NPC("test123", 10, 10, DEFAULT_INTERACTABLE_ACTIONS), new NPC("test123", 13, 23, DEFAULT_INTERACTABLE_ACTIONS));
+    }
+
+    @Test
+    @DisplayName("Två NPC:s med samma namn ska ha samma hashCode")
+    public void testTwoNPCsWithSameNameShouldHaveSameHashCode() {
+        assertEquals(new NPC("test123", 10, 10, DEFAULT_INTERACTABLE_ACTIONS).hashCode(), new NPC("test123", 13, 23, DEFAULT_INTERACTABLE_ACTIONS).hashCode());
+    }
+
+    @Test
+    @DisplayName("Två NPCs som är olika")
+    public void testTwoUnequalNPCs() {
+        assertNotEquals(new NPC("test1234", 10, 10, DEFAULT_INTERACTABLE_ACTIONS), new NPC("test123", 13, 23, DEFAULT_INTERACTABLE_ACTIONS));
+    }
+
+    @Test
+    @DisplayName("Två olika NPCs har olika hashCode")
+    public void testTwoUnequalNPCsShouldHaveUnequalHashCodes() {
+        assertNotEquals(new NPC("test1234", 10, 10, DEFAULT_INTERACTABLE_ACTIONS).hashCode(), new NPC("test123", 13, 23, DEFAULT_INTERACTABLE_ACTIONS).hashCode());
+    }
 }
