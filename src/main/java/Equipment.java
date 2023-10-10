@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Set;
 
 public class Equipment extends NonLivingEntity{
@@ -7,8 +8,8 @@ public class Equipment extends NonLivingEntity{
     private Ability ability;
     private Position pos;
 
-    public Equipment(String name, Set<Action> possibleActions, Effect effect, int damage, Ability ability) {
-        super(name, possibleActions);
+    public Equipment(String name, Set<InteractableAction> possibleInteractableActions, Effect effect, int damage) {
+        super(name, possibleInteractableActions);
         this.effect = effect;
         this.damage = damage;
         this.ability = ability;
@@ -22,8 +23,8 @@ public class Equipment extends NonLivingEntity{
         return effect;
     }
 
-    public Set<Action> getPossibleActions() {
-        return possibleActions;
+    public Set<InteractableAction> getPossibleActions() {
+        return possibleInteractableActions;
     }
 
     public Position getPos() {
