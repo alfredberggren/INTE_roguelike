@@ -3,5 +3,5 @@ public abstract class Ability {
 
     public int field;
 
-    abstract public int type();
+    abstract public String type();
 }

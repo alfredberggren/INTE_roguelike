@@ -9,6 +9,8 @@ public class Character {
     private boolean isDead = true;
     private ArrayList <Ability> abilities;
     private EquipmentInventory equipment;
+    private PhysicalAbility physicalAbility;
+    private MagicAbility magicAbility;
 
     public Character(String name, int health, int speed){
         if (speed < 0 || health < 0 || speed < 0) {
