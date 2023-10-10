@@ -10,4 +10,11 @@ public class Player extends Character {
 //
 //    }
 
+    public void increaseXP(){
+    }
+
+    public void decreaseXP(){
+    }
+
+    
 }
