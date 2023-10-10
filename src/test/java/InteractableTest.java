@@ -34,7 +34,7 @@ public class InteractableTest {
 
     @Test
     @DisplayName("Testar att en interactables inte har actions som vi inte gav den")
-    public void interactableDoesNotHaveUnassignedActions() {
+    public void testInteractableDoesNotHaveUnassignedActions() {
         Set<Interactable.InteractableAction> possibleInteractableActions = new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.WEAR));
         Interactable i1 = new Prop("Stone", possibleInteractableActions);
         assertFalse(i1.getPossibleActions().contains(Interactable.InteractableAction.FIGHT));
