@@ -8,11 +8,12 @@ public class EquipmentInventory {
         equipments.add(e);
     }
 
-    public void discard(Equipment e){
+    /*public void discard(Equipment e){
         equipments.remove(e);
         Position current = e.getPos();   // ?? Hämta spelarens position och sätta den till equipment
+                                         //om utrustning slängs ska den hamna på kartan
         e.setPos(current);
-    }
+    }*/
 
     public ArrayList<Equipment> getEquipments() {
         return equipments;

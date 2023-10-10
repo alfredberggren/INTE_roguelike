@@ -10,10 +10,27 @@ public class Player extends Character {
 //
 //    }
 
-    public void increaseXP(){
+
+    public int getExperiencePoint() {
+        return experiencePoint;
     }
 
-    public void decreaseXP(){
+    public void setExperiencePoint(int experiencePoint) {
+        this.experiencePoint = experiencePoint;
+    }
+
+    public void increaseXP(int add){
+        int result = experiencePoint + add;
+        setExperiencePoint(result);
+    }
+
+    public void decreaseXP(int decrease){
+        int result = experiencePoint - decrease;
+        if(result<0){
+            setExperiencePoint(0);
+        }else {
+            setExperiencePoint(result);
+        }
     }
 
     

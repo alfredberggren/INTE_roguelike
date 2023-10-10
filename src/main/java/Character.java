@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Character {
 
-    private String name;
+    protected String name;
     private int health;
     private int speed;
     private Position pos;
@@ -52,15 +52,14 @@ public class Character {
         return result;
     }
 
-    public int decreaseHealth(int decrease) {
+    public void decreaseHealth(int decrease) {
         int result = health - decrease;
         if(result<=0) {
             isDead = true;
             setHealth(0);
-            return 0;
+        }else {
+            setHealth(result);
         }
-        setHealth(result);
-        return result;
     }
 
     public boolean isDead() {
