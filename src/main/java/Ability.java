@@ -1,5 +1,5 @@
 
-abstract public class Ability {
+public abstract class Ability {
 
     public int field;
 
