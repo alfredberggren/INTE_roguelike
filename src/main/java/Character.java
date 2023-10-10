@@ -1,5 +1,5 @@
 
-public class Entity {
+public class Character {
 
     private String name;
     private int health;
@@ -7,7 +7,7 @@ public class Entity {
     private Position pos;
     private boolean isDead = true;
 
-    public Entity(String name, int health, int speed){
+    public Character(String name, int health, int speed){
         if (speed < 0 || health < 0 || speed < 0) {
             throw new IllegalArgumentException("Speed, health and speed needs to be 0 or more");
         }
@@ -20,7 +20,7 @@ public class Entity {
         }
     }
 
-    public Entity(String name, int health, int speed, Position pos){
+    public Character(String name, int health, int speed, Position pos){
         if (speed < 0 || health < 0 || speed < 0) {
             throw new IllegalArgumentException("Speed, health and speed needs to be 0 or more");
         }

@@ -1,4 +1,4 @@
-public class Player extends Entity{
+public class Player extends Character {
 
     private int experiencePoint;
     public Player(String name, int health, int speed, int experiencePoint) {
