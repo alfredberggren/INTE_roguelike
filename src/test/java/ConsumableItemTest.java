@@ -10,12 +10,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 //Ska testa olika typer av consumables (potions, mat etc.)
 public class ConsumableItemTest {
-    private static final Set<Interactable.InteractableAction> DEFAULT_CONSUMABLE_INTERACTABLE_ACTIONS = new HashSet<>(Arrays.asList(
-            Interactable.InteractableAction.USE,
-            Interactable.InteractableAction.DROP,
-            Interactable.InteractableAction.LOOT)
-    );
-
     @Test
     @DisplayName("Testar att ett Food har korrekt healing-värde")
     public void testFoodHasCorrectHealValueTest() {

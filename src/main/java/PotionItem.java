@@ -1,3 +1,4 @@
+import java.util.Objects;
 import java.util.Set;
 
 public class PotionItem extends ConsumableItem {
@@ -26,5 +27,18 @@ public class PotionItem extends ConsumableItem {
 
     public Equipment.Effect getEffect() {
         return effect;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PotionItem that = (PotionItem) o;
+        return name.equals(that.getName()) && turnLimit == that.turnLimit && effect == that.effect;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, turnLimit, effect);
     }
 }

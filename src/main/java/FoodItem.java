@@ -1,3 +1,4 @@
+import java.util.Objects;
 import java.util.Set;
 
 public class FoodItem extends ConsumableItem {
@@ -17,5 +18,18 @@ public class FoodItem extends ConsumableItem {
 
     public int getHealValue() {
         return healValue;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof FoodItem f) {
+            return f.getHealValue() == healValue && f.getName().equals(name);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, healValue);
     }
 }
