@@ -19,7 +19,7 @@ public class InteractableTest {
     @Test
     @DisplayName("Testar en NPC-karaktärs actions")
     public void testNPCHasCorrectActions() {
-        Set<Interactable.Action> possibleInteractableActions = new HashSet<>(Arrays.asList(Interactable.InteractableAction.FIGHT, Interactable.InteractableAction.TALK));
+        Set<Interactable.InteractableAction> possibleInteractableActions = new HashSet<>(Arrays.asList(Interactable.InteractableAction.FIGHT, Interactable.InteractableAction.TALK));
         Interactable i1 = new NPC("Fido", 10, 100, possibleInteractableActions);
         assertEquals(possibleInteractableActions, i1.getPossibleActions());
     }
@@ -28,7 +28,7 @@ public class InteractableTest {
     @DisplayName("Testar Equipments actions")
     public void testEquipmentHasCorrectActions() {
         Set<Interactable.InteractableAction> possibleInteractableActions = new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP, Interactable.InteractableAction.WEAR));
-        Interactable i1 = new Equipment("Steel Sword", possibleInteractableActions, Equipment.Effect.HEALTH, 0, new MagicAbility("Magic"));
+        Interactable i1 = new Equipment("Steel Sword", possibleInteractableActions, Equipment.Effect.HEALTH, 0);
         assertEquals(possibleInteractableActions, i1.getPossibleActions());
     }
 
