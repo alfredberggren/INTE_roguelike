@@ -1,8 +1,8 @@
 public class PhysicalAbility extends Ability{
 
-
+    private Ability physicalAbility;
     @Override
-    public String type() {
-        return null;
+    public Ability typeOfAbility() {
+        return physicalAbility;
     }
 }
