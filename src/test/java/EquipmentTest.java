@@ -44,4 +44,12 @@ public class EquipmentTest {
         Equipment e = new Equipment("test", null, Equipment.Effect.DAMAGE, 100, new MagicAbility("Physical"));
         assertEquals("Physical", e.getAbility());
     }
+
+    @Test
+    @DisplayName("Check that damage has been modified")
+    public void testDamageModified() {
+        Equipment e = new Equipment("test", null, Equipment.Effect.DAMAGE, 50, new MagicAbility("Magic"));
+        double newPercentage = e.damageModifier(60);
+        assertEquals(50, e.getDamageOnEquipment());
+    }
 }

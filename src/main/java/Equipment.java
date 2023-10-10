@@ -3,8 +3,8 @@ import java.util.Set;
 public class Equipment extends NonLivingEntity{
     private Effect effect;
     private int damage;
-
     private Ability ability;
+    private double damageBar;
 
     public Equipment(String name, Set<Action> possibleActions, Effect effect, int damage, Ability ability) {
         super(name, possibleActions);
@@ -33,8 +33,22 @@ public class Equipment extends NonLivingEntity{
          return ability.getTypeOfAbility();
     }
 
-    public double damageModifier(double percentage) {
-        return percentage;
+    public double damageModifier(double damageBar) {
+        double decreaseBy = 10;
+        if(10 <= damageBar || damageBar <= 100) {
+            setDamageOnEquipment(damageBar - decreaseBy);
+            return damageBar;
+        }
+        setDamageOnEquipment(damageBar);
+        return damageBar;
+    }
+
+    public void setDamageOnEquipment(double damageBar){
+        this.damageBar = damageBar;
+    }
+
+    public double getDamageOnEquipment(){
+        return damageBar;
     }
 
     public String toString() {
