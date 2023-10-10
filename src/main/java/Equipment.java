@@ -35,14 +35,18 @@ public class Equipment extends NonLivingEntity{
          return ability.getTypeOfAbility();
     }
 
-    public double damageModifier(double damageBar) {
+    public void damageModifier(double damageBar) {
         double decreaseBy = 10;
-        if(10 <= damageBar || damageBar <= 100) {
-            setDamageOnEquipment(damageBar - decreaseBy);
-            return damageBar;
+        if(damageBar >= 10 && damageBar <= 100) {
+            damageBar -= decreaseBy;
+            if(damageBar <= 0) {
+                setDamageOnEquipment(0);
+            }
         }
         setDamageOnEquipment(damageBar);
-        return damageBar;
+        if(damageBar == 0) {
+            throw new RuntimeException("Equipment has been destroyed!");
+        }
     }
 
     public void setDamageOnEquipment(double damageBar){

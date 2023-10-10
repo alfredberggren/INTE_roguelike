@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class EquipmentTest {
     static final Set<Interactable.InteractableAction> DEFAULT_EQUIPMENT_ACTIONS = new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP));
@@ -35,22 +36,29 @@ public class EquipmentTest {
     @Test
     @DisplayName("Checking that Equipment have Magic Ability")
     public void testEquipmentHaveMagicAbility() {
-        Equipment e = new Equipment("test", null, Equipment.Effect.HEALTH, 100, new MagicAbility("Magic"));
+        Equipment e = new Equipment("test", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.HEALTH, 100, new MagicAbility("Magic"));
         assertEquals("Magic", e.getAbility());
     }
 
     @Test
     @DisplayName("Checking that Equipment have Physical Ability")
     public void testEquipmentHavePhysicalAbility() {
-        Equipment e = new Equipment("test", null, Equipment.Effect.DAMAGE, 100, new MagicAbility("Physical"));
+        Equipment e = new Equipment("test", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 100, new MagicAbility("Physical"));
         assertEquals("Physical", e.getAbility());
     }
 
     @Test
     @DisplayName("Check that damage has been modified")
     public void testDamageModified() {
-        Equipment e = new Equipment("test", null, Equipment.Effect.DAMAGE, 50, new MagicAbility("Magic"));
-        double newPercentage = e.damageModifier(60);
+        Equipment e = new Equipment("test", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 50, new MagicAbility("Magic"));
+        e.damageModifier(60);
         assertEquals(50, e.getDamageOnEquipment());
+    }
+
+    @Test
+    @DisplayName("Check if method throws exception when damageBar is 0 and equipment is destroyed")
+    public void testEquipmentDisappearWhenDamageBarReachesZero(){
+        Equipment e = new Equipment("Sword", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Physical"));
+        assertThrows(RuntimeException.class, () -> e.damageModifier(0));
     }
 }
