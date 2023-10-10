@@ -1,6 +1,7 @@
 import java.util.ArrayList;
+import java.util.Set;
 
-public class Equipment {
+public class Equipment extends NonLivingEntity{
 
     private String name;
     private Effect effect;
@@ -8,8 +9,8 @@ public class Equipment {
 
 
 
-    public Equipment(String name, Effect effect, int damage) {
-        this.name = name;
+    public Equipment(String name, Set<Action> possibleActions, Effect effect, int damage) {
+        super(name, possibleActions);
         this.effect = effect;
         this.damage = damage;
     }
@@ -20,6 +21,10 @@ public class Equipment {
 
     public Effect getEffect() {
         return effect;
+    }
+
+    public Set<Action> getPossibleActions() {
+        return possibleActions;
     }
 
     public enum Effect {
