@@ -5,6 +5,9 @@ public class FoodItem extends ConsumableItem {
 
     public FoodItem(String name, int healValue) {
         super(name);
+        if (healValue <= 0) {
+            throw new IllegalArgumentException();
+        }
         this.healValue = healValue;
     }
 

@@ -6,6 +6,12 @@ public class PotionItem extends ConsumableItem {
 
     public PotionItem(String name, Equipment.Effect effect, int turnLimit) {
         super(name);
+        if (effect == null) {
+            throw new NullPointerException("Effect cannot be null!");
+        }
+        if (turnLimit <= 0) {
+            throw new IllegalArgumentException("Turn limit cannot be <=0!");
+        }
         this.effect = effect;
         this.turnLimit = turnLimit;
     }

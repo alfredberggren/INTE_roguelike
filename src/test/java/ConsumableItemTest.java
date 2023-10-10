@@ -36,21 +36,41 @@ public class ConsumableItemTest {
 
     @Test
     @DisplayName("Ett namn som är null ska hanteras av FoodItem")
-    public void testNullNameShouldBeHandledByFoodItemCtr() {
+    public void testCtrNullNameShouldThrowException() {
         assertThrows(NullPointerException.class, () -> {
-            new FoodItem(null, 10);
-        });
-    }
-
-    @Test
-    @DisplayName("Ett namn som är null ska hanteras av PotionItem")
-    public void testNullNameShouldBeHandledByPotionItemCtr() {
-        assertThrows(NullPointerException.class, () -> {
-            new PotionItem(null, Equipment.Effect.DAMAGE, 10);
+            ConsumableItem c1 = new FoodItem(null, 10);
         });
     }
 
     @Test
     @DisplayName("Ett tomt namn ska hanteras")
+    public void testEmptyNameShouldThrowException() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            ConsumableItem c1 = new PotionItem("", Equipment.Effect.DAMAGE, 100);
+        });
+    }
 
+    @Test
+    @DisplayName("Ett healvalue som är mindre än 0 ska hanteras")
+    public void testNullHealValueShouldThrowException() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            ConsumableItem c1 = new FoodItem("Test", -1);
+        });
+    }
+
+    @Test
+    @DisplayName("En effekt som är null ska kasta undantag")
+    public void testNullEffectShouldThrowException() {
+        assertThrows(NullPointerException.class, () -> {
+            ConsumableItem c1 = new PotionItem("Test", null, 19);
+        });
+    }
+
+    @Test
+    @DisplayName("En turnlimit som är mindre än eller lika med 0 ska kasta undantag")
+    public void testZeroOrLessTurnLimitShouldThrowException() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            ConsumableItem c1 = new PotionItem("Test", Equipment.Effect.DAMAGE, -10);
+        } );
+    }
 }
