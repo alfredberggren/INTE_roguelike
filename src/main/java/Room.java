@@ -1,12 +1,11 @@
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Map;
 
 public class Room {
     private Position position;
-    private HashMap<Interactable, Integer> interactables;
+    private Map<Interactable, Integer> interactables;
 
-    public Room(Position position, HashMap<Interactable, Integer> interactables) {
+    public Room(Position position, Map<Interactable, Integer> interactables) {
         if (position == null)
             throw new NullPointerException("Position can't be null!");
         this.position = position;
@@ -18,7 +17,7 @@ public class Room {
         return position;
     }
 
-    public HashMap<Interactable, Integer> getInteractables(){
+    public Map<Interactable, Integer> getInteractables(){
         return interactables;
     }
 
