@@ -1,7 +1,13 @@
 public class MagicAbility extends Ability{
 
-    @Override
-    public String type() {
-        return null;
+    private String magicAbility;
+
+    MagicAbility(String magicAbility){
+        this.magicAbility = magicAbility;
     }
+    @Override
+    public String typeOfAbility() {
+        return magicAbility;
+    }
+
 }
