@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Set;
 
 public class Equipment extends NonLivingEntity{
@@ -7,10 +6,11 @@ public class Equipment extends NonLivingEntity{
 
     private Ability ability;
 
-    public Equipment(String name, Set<Action> possibleActions, Effect effect, int damage) {
+    public Equipment(String name, Set<Action> possibleActions, Effect effect, int damage, Ability ability) {
         super(name, possibleActions);
         this.effect = effect;
         this.damage = damage;
+        this.ability = ability;
     }
 
     public String getName(){
@@ -27,6 +27,10 @@ public class Equipment extends NonLivingEntity{
 
     public enum Effect {
         SPEED, HEALTH, DAMAGE
+    }
+
+    public String getAbility(){
+         return ability.getTypeOfAbility();
     }
 
     public double damageModifier(double percentage) {

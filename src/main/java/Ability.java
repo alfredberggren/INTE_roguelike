@@ -5,6 +5,10 @@ public abstract class Ability {
 
     abstract public String typeOfAbility();
 
+    public String getTypeOfAbility(){
+        return typeOfAbility();
+    }
+
     abstract public String toString();
 
 }
