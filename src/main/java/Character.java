@@ -13,7 +13,7 @@ public class Character {
     private MagicAbility magicAbility;
 
     public Character(String name, int health, int speed){
-        if (speed < 0 || health < 0 || speed < 0) {
+        if (health < 0 || speed < 0) {
             throw new IllegalArgumentException("Speed and health needs to be 0 or more");
         }
         this.name = name;
@@ -26,7 +26,7 @@ public class Character {
     }
 
     public Character(String name, int health, int speed, Position pos){
-        if (speed < 0 || health < 0 || speed < 0) {
+        if (health < 0 || speed < 0) {
             throw new IllegalArgumentException("Speed and health needs to be 0 or more");
         }
         this.name = name;
