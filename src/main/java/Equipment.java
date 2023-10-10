@@ -1,16 +1,15 @@
+import java.util.Set;
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.Set;
 
 public class Equipment extends NonLivingEntity{
     private Effect effect;
     private int damage;
-
     private Ability ability;
-    private Position pos;
+    private double damageBar;
 
-    public Equipment(String name, Set<InteractableAction> possibleInteractableActions, Effect effect, int damage) {
-        super(name, possibleInteractableActions);
+    public Equipment(String name, Set<InteractableAction> possibleActions, Effect effect, int damage, Ability ability) {
+        super(name, possibleActions);
         this.effect = effect;
         this.damage = damage;
         this.ability = ability;
@@ -25,15 +24,7 @@ public class Equipment extends NonLivingEntity{
     }
 
     public Set<InteractableAction> getPossibleActions() {
-        return possibleInteractableActions;
-    }
-
-    public Position getPos() {
-        return pos;
-    }
-
-    public void setPos(Position pos) {
-        this.pos = pos;
+        return possibleActions;
     }
 
     public enum Effect {
@@ -44,8 +35,22 @@ public class Equipment extends NonLivingEntity{
          return ability.getTypeOfAbility();
     }
 
-    public double damageModifier(double percentage) {
-        return percentage;
+    public double damageModifier(double damageBar) {
+        double decreaseBy = 10;
+        if(10 <= damageBar || damageBar <= 100) {
+            setDamageOnEquipment(damageBar - decreaseBy);
+            return damageBar;
+        }
+        setDamageOnEquipment(damageBar);
+        return damageBar;
+    }
+
+    public void setDamageOnEquipment(double damageBar){
+        this.damageBar = damageBar;
+    }
+
+    public double getDamageOnEquipment(){
+        return damageBar;
     }
 
     @Override
@@ -63,7 +68,7 @@ public class Equipment extends NonLivingEntity{
 
     @Override
     public String toString() {
-        String s = name + " + " + damage + " + " + effect;
+        String s = name + " +" + damage + "% " + effect;
         return s;
     }
 }

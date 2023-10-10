@@ -1,3 +1,4 @@
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -29,5 +30,27 @@ public class EquipmentTest {
     public void testPossibleActions() {
         Equipment e = new Equipment("test", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.HEALTH, 100);
         assertEquals(DEFAULT_EQUIPMENT_ACTIONS, e.getPossibleActions());
+    }
+
+    @Test
+    @DisplayName("Checking that Equipment have Magic Ability")
+    public void testEquipmentHaveMagicAbility() {
+        Equipment e = new Equipment("test", null, Equipment.Effect.HEALTH, 100, new MagicAbility("Magic"));
+        assertEquals("Magic", e.getAbility());
+    }
+
+    @Test
+    @DisplayName("Checking that Equipment have Physical Ability")
+    public void testEquipmentHavePhysicalAbility() {
+        Equipment e = new Equipment("test", null, Equipment.Effect.DAMAGE, 100, new MagicAbility("Physical"));
+        assertEquals("Physical", e.getAbility());
+    }
+
+    @Test
+    @DisplayName("Check that damage has been modified")
+    public void testDamageModified() {
+        Equipment e = new Equipment("test", null, Equipment.Effect.DAMAGE, 50, new MagicAbility("Magic"));
+        double newPercentage = e.damageModifier(60);
+        assertEquals(50, e.getDamageOnEquipment());
     }
 }
