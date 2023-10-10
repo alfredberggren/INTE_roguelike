@@ -9,12 +9,15 @@ public class EquipmentInventory {
     }
 
     public void drop(Equipment e){
-
         equipments.remove(e);
     }
 
-    public ArrayList<Equipment> getEquipments() {
+    public ArrayList<Equipment> getEquipments() {  //?
         return equipments;
+    }
+
+    public Equipment getEquipment(int index){
+        return equipments.get(index);
     }
 
     public void removeAllEquipments() {
