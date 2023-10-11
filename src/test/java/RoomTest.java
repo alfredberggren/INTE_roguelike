@@ -12,8 +12,12 @@ public class RoomTest {
     static final Set<Interactable.InteractableAction> DEFAULT_EQUIPMENT_ACTIONS = new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP));
     static final NPC DEFAULT_NPC = new NPC("Harald", 100, 50, DEFAULT_NPC_ACTIONS);
 
-    static final Equipment DEFAULT_EQUIPMENT = new Equipment("Sword", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 40);
+    static final Equipment DEFAULT_EQUIPMENT = new Equipment("Sword", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 40, new PhysicalAbility("Slash"));
     static final HashMap<Interactable, Integer> DEFAULT_INTERACTABLES = new HashMap<>();
+
+    static Room DEFAULT_ROOM;
+
+    static final Integer DEFAULT_INTERACTABLE_ADDEND = 1;
 
     @Test
     public void testConstructorSetsCorrectPosition() {
@@ -52,11 +56,29 @@ public class RoomTest {
 
     @Test
     public void testAddMethodAddsInteractableToRoom(){
-        setUpDefaultInteractables();
-        Equipment e = new Equipment("Axe", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 20);
-        Room r = new Room(DEFAULT_POSITION, DEFAULT_INTERACTABLES);
-        r.addInteractable(e, 1);
-        assertEquals(true, r.getInteractables().containsKey(e));
+        setUpDefaultRoom();
+        Equipment e = new Equipment("Axe", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 20, new PhysicalAbility("Slash"));
+        DEFAULT_ROOM.addInteractable(e, DEFAULT_INTERACTABLE_ADDEND);
+        assertEquals(true, DEFAULT_ROOM.getInteractables().containsKey(e));
+    }
+
+    @Test
+    public void testAddMethodIncreasesValueOfAlreadyExistingInteractable() {
+        setUpDefaultRoom();
+        DEFAULT_ROOM.addInteractable(DEFAULT_EQUIPMENT, DEFAULT_INTERACTABLE_ADDEND);
+        assertEquals(2, DEFAULT_ROOM.getInteractables().get(DEFAULT_EQUIPMENT));
+    }
+
+    @Test
+    public void testAddMethodThrowsWhenInteractableArgIsNull(){
+        setUpDefaultRoom();
+        assertThrows(NullPointerException.class, () -> DEFAULT_ROOM.addInteractable(null));
+    }
+
+    @Test
+    public void testAddMethodThrowsWhenIntegerArgIsNull(){
+        setUpDefaultRoom();
+        assertThrows(NullPointerException.class, () -> DEFAULT_ROOM.addInteractable(DEFAULT_EQUIPMENT, null));
     }
 
     @Test
@@ -65,8 +87,13 @@ public class RoomTest {
     }
 
     private void setUpDefaultInteractables(){
-        DEFAULT_INTERACTABLES.put(DEFAULT_EQUIPMENT, 4);
-        DEFAULT_INTERACTABLES.put(DEFAULT_NPC, 1);
+        DEFAULT_INTERACTABLES.put(DEFAULT_EQUIPMENT, DEFAULT_INTERACTABLE_ADDEND);
+        DEFAULT_INTERACTABLES.put(DEFAULT_NPC, DEFAULT_INTERACTABLE_ADDEND);
+    }
+
+    private void setUpDefaultRoom() {
+        setUpDefaultInteractables();
+        DEFAULT_ROOM = new Room(DEFAULT_POSITION, DEFAULT_INTERACTABLES);
     }
 
 

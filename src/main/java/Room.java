@@ -2,6 +2,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Room {
+
+    private static final Integer INTERACTABLE_ADDEND = 1;
     private Position position;
     private Map<Interactable, Integer> interactables;
 
@@ -31,5 +33,21 @@ public class Room {
     public Map<Interactable, Integer> getInteractables(){
         return interactables;
     }
+
+    public void addInteractable(Interactable i, Integer amount){
+        if (i == null)
+            throw new NullPointerException("Interactable can not be null!");
+
+        if (interactables.containsKey(i))
+            interactables.put(i, interactables.get(i)+amount);
+        else
+            interactables.put(i, amount);
+    }
+
+    public void addInteractable(Interactable i) {
+        addInteractable(i, INTERACTABLE_ADDEND);
+    }
+
+
 
 }
