@@ -12,7 +12,7 @@ public class CharacterTest {
     @Test
     @DisplayName("Testar att entitetens hälsa blir korrekt")
     public void testCharacterHealth() {
-        Character character1 = new Character(CharacterType.PLAYER,"Rudolf", 100, 10);
+        Character character1 = new Character("Rudolf", 100, 10);
         assertEquals(100, character1.getHealth());
 
     }
@@ -20,7 +20,7 @@ public class CharacterTest {
     @Test
     @DisplayName("Testar att en entitets position blir korrekt")
     public void testCharacterPosition() {
-        Character character1 = new Character(CharacterType.PLAYER, "Rudolf", 0, 9, new Position(1, 2));
+        Character character1 = new Character("Rudolf", 0, 9, new Position(1, 2));
         assertEquals(new Position(1, 2), character1.getPosition());
         assertEquals(1, character1.getPosition().getX());
         assertEquals(2, character1.getPosition().getY());
@@ -30,7 +30,7 @@ public class CharacterTest {
     @DisplayName("assert throws exception if health<0")
     public void testCharacterWithNegativeHealth() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            new Character(CharacterType.PLAYER, "Rudolf", -100, 10);
+            new Character("Rudolf", -100, 10);
         });
     }
 
@@ -38,14 +38,14 @@ public class CharacterTest {
     @DisplayName("assert throws exception if speed<0")
     public void testCharacterWithNegativeSpeed() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            new Character(CharacterType.PLAYER,"Rudolf", 100, -10);
+            new Character("Rudolf", 100, -10);
         });
     }
 
     @Test
     @DisplayName("Test to decrease health to 0")
     public void testToDecreaseHealth() {
-        Character character1 = new Character(CharacterType.PLAYER, "Rudolf", 100, 10);
+        Character character1 = new Character("Rudolf", 100, 10);
         character1.decreaseHealth(100);
         assertEquals(0, character1.getHealth());
         assertTrue(character1.isDead());
@@ -54,7 +54,7 @@ public class CharacterTest {
     @Test
     @DisplayName("Test to increase health")
     public void testToIncreaseHealth() {
-        Character character1 = new Character(CharacterType.PLAYER,"Rudolf", 80, 10);
+        Character character1 = new Character("Rudolf", 80, 10);
         character1.increaseHealth(20);
         assertEquals(100, character1.getHealth());
     }
@@ -62,7 +62,7 @@ public class CharacterTest {
     @Test
     @DisplayName("Test that character get Magic Ability")
     public void testCharacterMagicAbility() {
-        Character c = new Character(CharacterType.NPC,"Wizard", 100, 10);
+        Character c = new Character("Wizard", 100, 10);
         MagicAbility fireMagic = new MagicAbility("Fireball",20,"Magic");
         c.setMagicAbility(fireMagic);
         assertEquals("Wizard", c.getName());
@@ -72,7 +72,7 @@ public class CharacterTest {
     @Disabled
     @DisplayName("Test that character level up")
     public void testCharacterLevelUpWhenExperienceReaches100() {
-        Character c = new Character(CharacterType.PLAYER,"Player", 100, 10);
+        Character c = new Character("Player", 100, 10);
         assertEquals(1, c.getLevel());
         assertEquals(0, c.getExperience());
         c.increaseExperience(100);

@@ -31,7 +31,7 @@ public class AbilityTest {
     @DisplayName("Test calculating damage for Fireball")
     public void testCalculateDamageForFireball() {
         MagicAbility fireBall = new MagicAbility("Fireball",10, "Magic");
-        Character player = new Character(CharacterType.NPC,"Player", 100, 10);
+        Character player = new Character("Player", 100, 10);
         player.setLevel(2);
         player.setExperience(50);
         int damage = fireBall.calculateDamage(player);

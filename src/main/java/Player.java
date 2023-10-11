@@ -1,4 +1,6 @@
-public class Player extends Character {
+import java.util.Set;
+
+public class Player extends Character implements Interactable{
 
     private int experiencePoint;
     public Player(String name, int health, int speed, int experiencePoint) {
@@ -9,7 +11,6 @@ public class Player extends Character {
 //    public void setDefaultValues(){  // ?defaultPosition
 //
 //    }
-
 
     public int getExperiencePoint() {
         return experiencePoint;
@@ -31,8 +32,10 @@ public class Player extends Character {
         }else {
             setExperiencePoint(result);
         }
-
     }
 
-    
+    @Override
+    public Set<InteractableAction> getPossibleActions() {
+        return null;
+    }
 }
