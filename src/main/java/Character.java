@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Set;
 
 public class Character {
     public CharacterType type;
@@ -10,7 +11,7 @@ public class Character {
     private int experience;
     private Position pos;
     private boolean isDead = true;
-    private ArrayList <Ability> abilities;
+    protected Set<Ability> possibleAbilities;
     private EquipmentInventory equipments;
     private PhysicalAbility physicalAbility;
     private MagicAbility magicAbility;
@@ -19,6 +20,7 @@ public class Character {
         if (health < 0 || speed < 0) {
             throw new IllegalArgumentException("Speed and health needs to be 0 or more");
         }
+        this.type = type;
         this.name = name;
         this.health = health;
         this.speed = speed;
@@ -45,7 +47,9 @@ public class Character {
     public Position getPosition() {return pos;}
     public int getHealth() {return health;}
     public int getSpeed() {return speed;}
-    public ArrayList<Ability> getAbilities() {return abilities;}
+
+    public Set<Ability> getPossibleAbilities() {return possibleAbilities;}
+
     public EquipmentInventory getEquipments() {return equipments;}
     public MagicAbility getMagicAbility() {
         return magicAbility;
@@ -67,6 +71,7 @@ public class Character {
         int result = health - decrease;
         if(result<=0) {
             isDead = true;
+
             //nollställa allt
             setHealth(0);
         }else {
