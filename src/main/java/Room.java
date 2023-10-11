@@ -38,6 +38,9 @@ public class Room {
         if (i == null)
             throw new NullPointerException("Interactable can not be null!");
 
+        if (amount <= 0)
+            throw new IllegalArgumentException("Amount can not be less than 1!");
+
         if (interactables.containsKey(i))
             interactables.put(i, interactables.get(i)+amount);
         else
@@ -46,6 +49,26 @@ public class Room {
 
     public void addInteractable(Interactable i) {
         addInteractable(i, INTERACTABLE_ADDEND);
+    }
+
+    /**
+     * Removes the Interactable object including its amount from room
+     * @param i
+     * The interactable to remove
+     */
+    public void removeInteractable(Interactable i) {
+        interactables.remove(i);
+    }
+
+    /**
+     * Removes the amount specified of Interactable object
+     * @param i
+     * The interactable item to subtract from
+     * @param amount
+     * Amount to subtract
+     */
+    public void removeInteractable(Interactable i, Integer amount){
+        interactables.put(i, interactables.get(i)-amount);
     }
 
 

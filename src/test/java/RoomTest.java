@@ -18,6 +18,7 @@ public class RoomTest {
     static Room DEFAULT_ROOM;
 
     static final Integer DEFAULT_INTERACTABLE_ADDEND = 1;
+    static final Integer DEFAULT_INTERACTABLE_SUBTRAHEND = 1;
 
     @Test
     public void testConstructorSetsCorrectPosition() {
@@ -82,8 +83,24 @@ public class RoomTest {
     }
 
     @Test
-    public void testRemoveMethodRemovesOnlyOneInteractable(){
+    public void testAddMethodOnlyAcceptsPositiveIntegers() {
+        setUpDefaultRoom();
+        assertThrows(IllegalArgumentException.class, () -> DEFAULT_ROOM.addInteractable(DEFAULT_EQUIPMENT, -1));
+    }
 
+    @Test
+    public void testRemoveMethodRemovesAllCopiesOfInteractable(){
+        setUpDefaultRoom();
+        DEFAULT_ROOM.addInteractable(DEFAULT_EQUIPMENT,  DEFAULT_INTERACTABLE_ADDEND);
+        DEFAULT_ROOM.removeInteractable(DEFAULT_EQUIPMENT);
+        assertEquals(false, DEFAULT_ROOM.getInteractables().containsKey(DEFAULT_EQUIPMENT));
+    }
+
+    @Test
+    public void testRemoveMethodWithAmountRemovesCorrectAmount(){
+        setUpDefaultRoom();
+        DEFAULT_ROOM .removeInteractable(DEFAULT_EQUIPMENT, DEFAULT_INTERACTABLE_SUBTRAHEND);
+        assertEquals(0, DEFAULT_ROOM.getInteractables().get(DEFAULT_EQUIPMENT));
     }
 
     private void setUpDefaultInteractables(){
