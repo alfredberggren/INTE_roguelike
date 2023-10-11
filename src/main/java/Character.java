@@ -1,8 +1,9 @@
 import java.util.ArrayList;
 
 public class Character {
+    public CharacterType type;
 
-    protected String name;
+    private String name;
     private int health;
     private int speed;
     private int level;
@@ -14,7 +15,7 @@ public class Character {
     private PhysicalAbility physicalAbility;
     private MagicAbility magicAbility;
 
-    public Character(String name, int health, int speed){
+    public Character(CharacterType type, String name, int health, int speed){
         if (health < 0 || speed < 0) {
             throw new IllegalArgumentException("Speed and health needs to be 0 or more");
         }
@@ -28,16 +29,18 @@ public class Character {
         }
     }
 
-    public Character(String name, int health, int speed, Position pos){
+    public Character(CharacterType type, String name, int health, int speed, Position pos){
         if (health < 0 || speed < 0) {
             throw new IllegalArgumentException("Speed and health needs to be 0 or more");
         }
+        this.type = type;
         this.name = name;
         this.health = health;
         this.speed = speed;
         this.pos = pos;
     }
 
+    public CharacterType getType() {return type;}
     public String getName(){return name;}
     public Position getPosition() {return pos;}
     public int getHealth() {return health;}
@@ -64,6 +67,7 @@ public class Character {
         int result = health - decrease;
         if(result<=0) {
             isDead = true;
+            //nollställa allt
             setHealth(0);
         }else {
             setHealth(result);
