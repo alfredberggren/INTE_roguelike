@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 public class MapBuilder {
@@ -11,6 +13,7 @@ public class MapBuilder {
 
     // Bestämmer sannolikheten i procent för att ett rum kommer att innehålla något.
     private static final int INTERACTABLE_PERCENTAGE = 10;
+    private static final int[] XY_POSSIBLE_ADDEND = {-1, 1};
     private int difficultyScale;
     private int amountOfRooms;
     private MapController mapController;
@@ -31,7 +34,13 @@ public class MapBuilder {
         dynPos = new Position(START_XY, START_XY);
         HashMap<Interactable, Integer> dynInteractables = new HashMap<>();
         int randomInteractableDeterminator;
+        mapController.add(dynPos, new Room(dynPos, dynInteractables));
         for (int i = 0; i < amountOfRooms; i++) {
+            List<CardinalDirection> tempAvailableDirections = mapController.getUnavailableDirections(dynPos);
+            int nextDir = r.nextInt(tempAvailableDirections.size());
+            CardinalDirection c = tempAvailableDirections.get(nextDir);
+            dynPos = getNextPosition(c, dynPos);
+
             randomInteractableDeterminator = r.nextInt(INTERACTABLE_PERCENTAGE);
             if (randomInteractableDeterminator == 1) {
                 dynInteractables = generateInteractables();
@@ -39,6 +48,23 @@ public class MapBuilder {
                 dynInteractables.clear();
             }
             mapController.add(dynPos, new Room(dynPos, dynInteractables));
+        }
+    }
+
+    private Position getNextPosition(CardinalDirection cardinalDirection, Position oldPos) {
+        switch (cardinalDirection) {
+            case EAST -> {
+                return new Position(oldPos.getX() + 1, oldPos.getY());
+            }
+            case WEST -> {
+                return new Position(oldPos.getX() - 1, oldPos.getY());
+            }
+            case NORTH -> {
+                return new Position(oldPos.getX(), oldPos.getY() + 1);
+            }
+            case SOUTH -> {
+                return new Position(oldPos.getX(), oldPos.getY() - 1);
+            }
         }
     }
 
