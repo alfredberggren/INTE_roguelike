@@ -31,10 +31,12 @@ public class MapBuilder {
 
     public void build() {
         dynPos = new Position(START_XY, START_XY);
-        HashMap<Interactable, Integer> dynInteractables = new HashMap<>();
+        InteractableInventory dynInteractables;
         int randomInteractableDeterminator;
-        mapController.add(dynPos, new Room(dynPos, dynInteractables));
+        mapController.add(dynPos, new Room(dynPos));
+
         for (int i = 0; i < amountOfRooms; i++) {
+            dynInteractables = new InteractableInventory();
             List<CardinalDirection> tempAvailableDirections = mapController.getUnavailableDirections(dynPos);
             int nextDir = r.nextInt(tempAvailableDirections.size());
             CardinalDirection c = tempAvailableDirections.get(nextDir);
@@ -43,8 +45,6 @@ public class MapBuilder {
             randomInteractableDeterminator = r.nextInt(INTERACTABLE_PERCENTAGE);
             if (randomInteractableDeterminator == 1) {
                 dynInteractables = generateInteractables();
-            } else {
-                dynInteractables.clear();
             }
             mapController.add(dynPos, new Room(dynPos, dynInteractables));
         }
@@ -70,15 +70,27 @@ public class MapBuilder {
         }
     }
 
-    private HashMap<Interactable, Integer> generateInteractables() {
-        HashMap<Interactable, Integer> interactables = new HashMap<>();
-        int interactableDeterminator = r.nextInt(10) + 1;
-        boolean positiveInteractable = interactableDeterminator > difficultyScale;
-        if (positiveInteractable) {
-            interactables.put(interactableBuilder.getPositiveInteractable(), 1);
-        } else {
-            interactables.put(interactableBuilder.getNegativeInteractable(), 1);
+    private InteractableInventory generateInteractables() {
+        InteractableInventory interactables = new InteractableInventory();
+        int interactableDeterminator;
+        boolean positiveInteractable;
+        int amountOfInteractables = generateAmountOfInteractables();
+
+        for (int i = 0; i < amountOfInteractables; i++){
+            interactableDeterminator = r.nextInt(10) + 1;
+            positiveInteractable= interactableDeterminator > difficultyScale;
+
+            if (positiveInteractable) {
+                interactables.add(interactableBuilder.getPositiveInteractable());
+            } else {
+                interactables.add(interactableBuilder.getNegativeInteractable());
+            }
         }
         return interactables;
+    }
+
+    //Gaussian madness 9000
+    private int generateAmountOfInteractables(){
+        return Math.abs((int)r.nextGaussian(0.0, 1.2)) + 1;
     }
 }
