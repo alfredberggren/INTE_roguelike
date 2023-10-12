@@ -7,6 +7,8 @@ public class Room {
     private Position position;
     private InteractableInventory interactables;
 
+    private
+
     //TODO: Implementera "possible routes", set och get
 
     public Room(Position position, InteractableInventory interactables) {
