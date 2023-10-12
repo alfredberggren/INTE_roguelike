@@ -20,6 +20,11 @@ public class PhysicalAbility extends Ability{
     }
 
     @Override
+    public String affectAbility() {
+        return null;
+    }
+
+    @Override
     public String toString() {
         return "Physical";
     }

@@ -14,6 +14,7 @@ public class Character implements Interactable{
     private EquipmentInventory equipments;
     private PhysicalAbility physicalAbility;
     private MagicAbility magicAbility;
+    private boolean spell;
 
     public Character(int health, int speed){
         if (health < 0 || speed < 0) {
@@ -55,6 +56,9 @@ public class Character implements Interactable{
     public Position getPosition() {return pos;}
     public int getHealth() {return health;}
     public int getSpeed() {return speed;}
+    public boolean getSpell() {
+        return spell;
+    }
 
     public Set<Ability> getPossibleAbilities() {return possibleAbilities;}
 

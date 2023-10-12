@@ -49,4 +49,13 @@ public class AbilityTest {
         assertEquals(14, damage);
     }
 
+    @Test
+    @DisplayName("Testing that magic ability is affected")
+    public void testMagicAbilityAffected() {
+        MagicAbility ability = new MagicAbility("Fire",10,"Magic");
+        ability.calculateAffect();
+        String affectedDamage = ability.affectAbility();
+        assertEquals("Forgotten spell", affectedDamage);
+    }
+
 }

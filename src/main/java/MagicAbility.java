@@ -1,6 +1,7 @@
 public class MagicAbility extends Ability{
 
     private String magicAbility;
+    private Character character = new Character(100,10,new Position(1, 1));
 
     MagicAbility(String name, int baseDamage, String magicAbility){
         super(name, baseDamage);
@@ -18,6 +19,19 @@ public class MagicAbility extends Ability{
     @Override
     public String typeOfAbility() {
         return magicAbility;
+    }
+
+    @Override
+    public String affectAbility() {
+        if(!character.getSpell()) {
+            return "Forgotten spell";
+        } else {
+            return "The death spell";
+        }
+    }
+
+    public String calculateAffect() {
+        return "You have forgotten spell";
     }
 
     @Override

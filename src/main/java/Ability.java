@@ -13,6 +13,8 @@ public abstract class Ability {
 
     abstract public String typeOfAbility();
 
+    abstract public String affectAbility();
+
     public String getTypeOfAbility(){
         return typeOfAbility();
     }
