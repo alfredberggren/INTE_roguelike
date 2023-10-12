@@ -7,7 +7,7 @@ public class MagicAbility extends Ability{
         this.magicAbility = magicAbility;
     }
 
-    @Override //ska lägga till bonus för Magic är starkare än physical
+    @Override
     public int calculateDamage(Player player) {
         int baseDamage = 10;
         int levelBonus = player.getLevel() * 5;
