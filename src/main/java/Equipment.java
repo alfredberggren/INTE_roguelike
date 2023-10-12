@@ -6,13 +6,15 @@ public class Equipment extends NonLivingEntity{
     private Effect effect;
     private int damage;
     private Ability ability;
+    private Position pos;
     private double damageBar;
 
-    public Equipment(String name, Set<InteractableAction> possibleActions, Effect effect, int damage, Ability ability) {
+    public Equipment(String name, Set<InteractableAction> possibleActions, Effect effect, int damage, Ability ability, Position pos) {
         super(name, possibleActions);
         this.effect = effect;
         this.damage = damage;
         this.ability = ability;
+        this.pos = new Position(0,0);
     }
 
     public String getName(){
@@ -29,6 +31,10 @@ public class Equipment extends NonLivingEntity{
 
     public enum Effect {
         SPEED, HEALTH, DAMAGE
+    }
+
+    public enum Armor {
+        HELMET, CHEST_ARMOR, LEGGING, BOOTS
     }
 
     public String getAbility(){

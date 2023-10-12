@@ -1,16 +1,22 @@
 import java.util.Objects;
 import java.util.Set;
 
-public class NPC extends Character implements Interactable {
+public class NPC extends Character {
     private Set<InteractableAction> possibleInteractableActions;
+    private String name;
 
     public NPC(String name, int health, int speed, Set<InteractableAction> possibleInteractableActions) {
-        super(name, health, speed);
+        super(health, speed);
+        this.name = name;
         this.possibleInteractableActions = possibleInteractableActions;
     }
 
     public Set<InteractableAction> getPossibleActions() {
         return possibleInteractableActions;
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override

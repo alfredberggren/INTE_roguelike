@@ -7,8 +7,11 @@ public class PhysicalAbility extends Ability{
     }
 
     @Override
-    public int calculateDamage(Character character) {
-        return 0;
+    public int calculateDamage(Player player) {
+        int baseDamage = 5;
+        int levelBonus = player.getLevel() * 2;
+        int experienceBonus = player.getExperiencePoint() / 10;
+        return baseDamage + levelBonus + experienceBonus;
     }
 
     @Override
