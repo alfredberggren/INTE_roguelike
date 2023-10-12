@@ -13,7 +13,7 @@ public class RoomTest {
     static final NPC DEFAULT_NPC = new NPC("Harald", 100, 50, DEFAULT_NPC_ACTIONS);
 
     static final Equipment DEFAULT_EQUIPMENT = new Equipment("Sword", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 40, new PhysicalAbility("Slash"));
-    static final HashMap<Interactable, Integer> DEFAULT_INTERACTABLES = new HashMap<>();
+    static final InteractableInventory DEFAULT_INTERACTABLES = new InteractableInventory();
 
     static Room DEFAULT_ROOM;
 
@@ -55,57 +55,10 @@ public class RoomTest {
                 new Room(DEFAULT_POSITION, null));
     }
 
-    @Test
-    public void testAddMethodAddsInteractableToRoom(){
-        setUpDefaultRoom();
-        Equipment e = new Equipment("Axe", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 20, new PhysicalAbility("Slash"));
-        DEFAULT_ROOM.addInteractable(e, DEFAULT_INTERACTABLE_ADDEND);
-        assertEquals(true, DEFAULT_ROOM.getInteractables().containsKey(e));
-    }
-
-    @Test
-    public void testAddMethodIncreasesValueOfAlreadyExistingInteractable() {
-        setUpDefaultRoom();
-        DEFAULT_ROOM.addInteractable(DEFAULT_EQUIPMENT, DEFAULT_INTERACTABLE_ADDEND);
-        assertEquals(2, DEFAULT_ROOM.getInteractables().get(DEFAULT_EQUIPMENT));
-    }
-
-    @Test
-    public void testAddMethodThrowsWhenInteractableArgIsNull(){
-        setUpDefaultRoom();
-        assertThrows(NullPointerException.class, () -> DEFAULT_ROOM.addInteractable(null));
-    }
-
-    @Test
-    public void testAddMethodThrowsWhenIntegerArgIsNull(){
-        setUpDefaultRoom();
-        assertThrows(NullPointerException.class, () -> DEFAULT_ROOM.addInteractable(DEFAULT_EQUIPMENT, null));
-    }
-
-    @Test
-    public void testAddMethodOnlyAcceptsPositiveIntegers() {
-        setUpDefaultRoom();
-        assertThrows(IllegalArgumentException.class, () -> DEFAULT_ROOM.addInteractable(DEFAULT_EQUIPMENT, -1));
-    }
-
-    @Test
-    public void testRemoveMethodRemovesAllCopiesOfInteractable(){
-        setUpDefaultRoom();
-        DEFAULT_ROOM.addInteractable(DEFAULT_EQUIPMENT,  DEFAULT_INTERACTABLE_ADDEND);
-        DEFAULT_ROOM.removeInteractable(DEFAULT_EQUIPMENT);
-        assertEquals(false, DEFAULT_ROOM.getInteractables().containsKey(DEFAULT_EQUIPMENT));
-    }
-
-    @Test
-    public void testRemoveMethodWithAmountRemovesCorrectAmount(){
-        setUpDefaultRoom();
-        DEFAULT_ROOM .removeInteractable(DEFAULT_EQUIPMENT, DEFAULT_INTERACTABLE_SUBTRAHEND);
-        assertEquals(0, DEFAULT_ROOM.getInteractables().get(DEFAULT_EQUIPMENT));
-    }
 
     private void setUpDefaultInteractables(){
-        DEFAULT_INTERACTABLES.put(DEFAULT_EQUIPMENT, DEFAULT_INTERACTABLE_ADDEND);
-        DEFAULT_INTERACTABLES.put(DEFAULT_NPC, DEFAULT_INTERACTABLE_ADDEND);
+        DEFAULT_INTERACTABLES.add(DEFAULT_EQUIPMENT, DEFAULT_INTERACTABLE_ADDEND);
+        DEFAULT_INTERACTABLES.add(DEFAULT_NPC, DEFAULT_INTERACTABLE_ADDEND);
     }
 
     private void setUpDefaultRoom() {

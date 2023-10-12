@@ -5,11 +5,13 @@ public class Room {
 
     private static final Integer INTERACTABLE_ADDEND = 1;
     private Position position;
-    private Map<Interactable, Integer> interactables;
+    private InteractableInventory interactables;
 
+    private
 
+    //TODO: Implementera "possible routes", set och get
 
-    public Room(Position position, Map<Interactable, Integer> interactables) {
+    public Room(Position position, InteractableInventory interactables) {
         if (position == null)
             throw new NullPointerException("Position can't be null!");
         if (interactables == null)
@@ -21,7 +23,7 @@ public class Room {
     }
 
     public Room(Position position){
-        this(position, new HashMap<>());
+        this(position, new InteractableInventory());
     }
 
 
@@ -30,21 +32,12 @@ public class Room {
         return position;
     }
 
-    public Map<Interactable, Integer> getInteractables(){
+    public InteractableInventory getInteractables(){
         return interactables;
     }
 
     public void addInteractable(Interactable i, Integer amount){
-        if (i == null)
-            throw new NullPointerException("Interactable can not be null!");
-
-        if (amount <= 0)
-            throw new IllegalArgumentException("Amount can not be less than 1!");
-
-        if (interactables.containsKey(i))
-            interactables.put(i, interactables.get(i)+amount);
-        else
-            interactables.put(i, amount);
+        interactables.add(i, amount);
     }
 
     public void addInteractable(Interactable i) {
@@ -68,7 +61,7 @@ public class Room {
      * Amount to subtract
      */
     public void removeInteractable(Interactable i, Integer amount){
-        interactables.put(i, interactables.get(i)-amount);
+        interactables.remove(i, amount);
     }
 
 
