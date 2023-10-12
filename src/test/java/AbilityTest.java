@@ -27,13 +27,13 @@ public class AbilityTest {
         assertEquals("Magic" + "Physical", magicAbility.toString() + physicalAbility);
     }
 
-    @Disabled
+    @Test
     @DisplayName("Test calculating damage for Fireball")
     public void testCalculateDamageForFireball() {
         MagicAbility fireBall = new MagicAbility("Fireball",10, "Magic");
-        Character player = new Character("Player", 100, 10);
+        Player player = new Player(100, 10, 50);
         player.setLevel(2);
-        player.setExperience(50);
+        player.setExperiencePoint(50);
         int damage = fireBall.calculateDamage(player);
         assertEquals(20, damage);
     }

@@ -3,8 +3,9 @@ import java.util.Set;
 public class Player extends Character implements Interactable{
 
     private int experiencePoint;
-    public Player(String name, int health, int speed, int experiencePoint) {
-        super(name, health, speed);
+    private int level;
+    public Player(int health, int speed, int experiencePoint) {
+        super(health, speed);
         this.experiencePoint = experiencePoint;
     }
 
@@ -12,7 +13,23 @@ public class Player extends Character implements Interactable{
 //
 //    }
 
+    public void checkLevelUp() {
+        //kolla om spelaren ska gå upp i nivå baserat på erfarenhet
+        int experiencePerLevelUp = 100;
+        while(experiencePoint >= experiencePerLevelUp && level < 10) {
+            experiencePoint -= experiencePerLevelUp;
+            level++;
+            System.out.println("Congratulations! You've reached level " + level + "!");
+        }
+    }
 
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public int getLevel() {
+        return level;
+    }
     public int getExperiencePoint() {
         return experiencePoint;
     }

@@ -1,4 +1,5 @@
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +11,7 @@ public class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        DEFAULT_PLAYER = new Player("Rudolf", 80, 20, 10);
+        DEFAULT_PLAYER = new Player( 80, 20, 10);
     }
 
     /*public class NameTest {
@@ -45,6 +46,16 @@ public class PlayerTest {
     public void testToDecreaseXP(){
         DEFAULT_PLAYER.decreaseXP(10);
         assertEquals(10, DEFAULT_PLAYER.getExperiencePoint());
+    }
+
+    @Disabled //ens nödvändig?
+    @DisplayName("Test that character level up")
+    public void testCharacterLevelUpWhenExperienceReaches100() {
+        assertEquals(1, DEFAULT_PLAYER.getLevel());
+        assertEquals(0, DEFAULT_PLAYER.getExperiencePoint());
+        DEFAULT_PLAYER.increaseXP(100);
+        assertEquals(2, DEFAULT_PLAYER.getLevel());
+        assertEquals(0, DEFAULT_PLAYER.getExperiencePoint());
     }
 
 }
