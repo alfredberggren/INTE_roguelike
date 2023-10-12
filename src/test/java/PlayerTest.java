@@ -77,7 +77,7 @@ public class PlayerTest {
 
     @Test
     @DisplayName("Test that character level up")
-    public void testCharacterLevelUpWhenExperienceReaches100() {
+    public void testCharacterLevelUpWhenXPReaches100() {
         DEFAULT_PLAYER.setLevel(0);
         DEFAULT_PLAYER.setExperiencePoint(100);
         DEFAULT_PLAYER.checkLevelUp();
