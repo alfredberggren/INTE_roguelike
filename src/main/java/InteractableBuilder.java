@@ -23,40 +23,41 @@ public class InteractableBuilder {
     }
 
     private void setBaseProbabilities() {
+        probabilityMaps = new ArrayList<>();
         matProbabilities = new LinkedHashMap<>(){{
             put("Steel", 10);
-            put("Iron", 15);
-            put("Stone", 30);
-            put("Wood", 50);
+            put("Iron", 25);
+            put("Stone", 55);
+            put("Wood", 100);
         }};
         probabilityMaps.add(matProbabilities);
         posNpcProbabilities = new LinkedHashMap<>(){{
             put("Wizard", 10);
-            put("Merchant", 15);
-            put("Traveller", 75);
+            put("Merchant", 25);
+            put("Traveller", 100);
         }};
         probabilityMaps.add(posNpcProbabilities);
         posFoodProbabilities = new LinkedHashMap<>(){{
             put("Steak", 10);
-            put("Porkchop", 15);
-            put("Soup", 15);
-            put("Mushroom", 20);
-            put("Bread", 40);
+            put("Porkchop", 25);
+            put("Soup", 40);
+            put("Mushroom", 60);
+            put("Bread", 100);
         }};
         probabilityMaps.add(posFoodProbabilities);
         posPotionProbabilities = new LinkedHashMap<>(){{
             put(Equipment.Effect.HEALTH, 25);
-            put(Equipment.Effect.SPEED, 25);
-            put(Equipment.Effect.DAMAGE, 25);
-            put(Equipment.Effect.ARMOR, 25);
+            put(Equipment.Effect.SPEED, 50);
+            put(Equipment.Effect.DAMAGE, 75);
+            put(Equipment.Effect.ARMOR, 100);
         }};
         probabilityMaps.add(posPotionProbabilities);
         negativeNpcProbabilities = new LinkedHashMap<>(){{
             put("Wolf", 30);
-            put("Troll", 20);
-            put("Giant", 25);
-            put("Ghost", 15);
-            put("Dragon", 10);
+            put("Troll", 50);
+            put("Giant", 75);
+            put("Ghost", 90);
+            put("Dragon", 100);
         }};
         probabilityMaps.add(negativeNpcProbabilities);
     }

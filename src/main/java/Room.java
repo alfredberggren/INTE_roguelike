@@ -63,5 +63,11 @@ public class Room {
     }
 
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Room={ ").append(position).append(interactables).append(" }");
+        return sb.toString();
+    }
 
 }

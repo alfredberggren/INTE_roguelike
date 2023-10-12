@@ -12,7 +12,7 @@ public class MapBuilder {
     private static final int START_XY = 0;
 
     // Bestämmer sannolikheten i procent för att ett rum kommer att innehålla något.
-    private static final int INTERACTABLE_PERCENTAGE = 10;
+    private static final int INTERACTABLE_PERCENTAGE = 3;
     private int difficultyScale;
     private int amountOfRooms;
     private MapController mapController;
@@ -42,7 +42,7 @@ public class MapBuilder {
             CardinalDirection c = tempAvailableDirections.get(nextDir);
             dynPos = getNextPosition(c, dynPos);
 
-            randomInteractableDeterminator = r.nextInt(INTERACTABLE_PERCENTAGE);
+            randomInteractableDeterminator = r.nextInt(INTERACTABLE_PERCENTAGE) + 1;
             if (randomInteractableDeterminator == 1) {
                 dynInteractables = generateInteractables();
             }

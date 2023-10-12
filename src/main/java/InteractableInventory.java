@@ -84,8 +84,14 @@ public class InteractableInventory {
         }
     }
 
-
-
-
-
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Inventory=[ ");
+        for (Interactable i : inventory) {
+            sb.append(i).append(", ");
+        }
+        sb.append(" ]");
+        return sb.toString();
+    }
 }

@@ -2,6 +2,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * TODO: Mindre hårdkodade grunkor
+ * TODO: Items som genereras på mappen ska skickas in som en map med interactables som har en key för sannolikhetsvärdet.
+ * TODO: De interactables som väljs ut ska baseras på gausskurvan.
+ */
+
 public class MapController {
     private HashMap<Position, Room> gameMap;
 
@@ -44,5 +50,14 @@ public class MapController {
         List<CardinalDirection> directions = getAvailableDirections(position);
         allDirections.removeAll(directions);
         return allDirections;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (Position p : gameMap.keySet()) {
+            sb.append("Map={ ").append(gameMap.get(p)).append(" }\n");
+        }
+        return sb.toString();
     }
 }
