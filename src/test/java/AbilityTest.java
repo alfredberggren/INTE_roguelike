@@ -35,7 +35,18 @@ public class AbilityTest {
         player.setLevel(2);
         player.setExperiencePoint(50);
         int damage = fireBall.calculateDamage(player);
-        assertEquals(20, damage);
+        assertEquals(25, damage);
+    }
+
+    @Test
+    @DisplayName("Test calculating damage for Sword")
+    public void testCalculateDamageForSword() {
+        PhysicalAbility sword = new PhysicalAbility("Sword",5, "Physical");
+        Player player = new Player(100, 10, 50);
+        player.setLevel(2);
+        player.setExperiencePoint(50);
+        int damage = sword.calculateDamage(player);
+        assertEquals(14, damage);
     }
 
 }

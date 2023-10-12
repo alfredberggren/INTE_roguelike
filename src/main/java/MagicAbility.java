@@ -12,8 +12,7 @@ public class MagicAbility extends Ability{
         int baseDamage = 10;
         int levelBonus = player.getLevel() * 5;
         int experienceBonus = player.getExperiencePoint() / 10;
-        int totalDamage = baseDamage + levelBonus + experienceBonus;
-        return totalDamage;
+        return baseDamage + levelBonus + experienceBonus;
     }
 
     @Override
