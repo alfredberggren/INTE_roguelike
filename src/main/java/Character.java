@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 public class Character implements Interactable{
@@ -15,6 +17,7 @@ public class Character implements Interactable{
     private PhysicalAbility physicalAbility;
     private MagicAbility magicAbility;
     private boolean spell;
+    private List<Spell> knownSpells = new ArrayList<>();
 
     public Character(int health, int speed){
         if (health < 0 || speed < 0) {
@@ -58,6 +61,16 @@ public class Character implements Interactable{
     public int getSpeed() {return speed;}
     public boolean getSpell() {
         return spell;
+    }
+
+    public void forgetSpell(Spell spell) {
+        if(!knownSpells.isEmpty()) {
+            knownSpells.remove(spell);
+        }
+    }
+
+    public void addSpell(Spell spell) {
+        knownSpells.add(spell);
     }
 
     public Set<Ability> getPossibleAbilities() {return possibleAbilities;}

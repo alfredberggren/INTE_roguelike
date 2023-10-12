@@ -1,7 +1,9 @@
 public class MagicAbility extends Ability{
 
     private String magicAbility;
+    private int MINIMUM_XP_TO_RETAIN_SPELL = 100;
     private Character character = new Character(100,10,new Position(1, 1));
+    private Player player = new Player(100, 10, 100);
 
     MagicAbility(String name, int baseDamage, String magicAbility){
         super(name, baseDamage);
@@ -31,7 +33,12 @@ public class MagicAbility extends Ability{
     }
 
     public String calculateAffect() {
-        return "You have forgotten spell";
+        if(character.getSpell() && player.getExperiencePoint() < MINIMUM_XP_TO_RETAIN_SPELL) {
+            character.forgetSpell(new Spell("Fire"));
+            return "You have forgotten a spell due to losing experience points";
+        } else {
+            return "You have not forgotten any spells";
+        }
     }
 
     @Override

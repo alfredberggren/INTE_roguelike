@@ -52,9 +52,15 @@ public class AbilityTest {
     @Test
     @DisplayName("Testing that magic ability is affected")
     public void testMagicAbilityAffected() {
-        MagicAbility ability = new MagicAbility("Fire",10,"Magic");
-        ability.calculateAffect();
-        String affectedDamage = ability.affectAbility();
+        Character character = new Character(100, 10,new Position(1, 1));
+        Player player = new Player(100, 10,10);
+        Spell fireSpell = new Spell("Fire");
+        character.addSpell(fireSpell);
+        player.setExperiencePoint(10);
+        MagicAbility ability = new MagicAbility(fireSpell.getName(), 10,"Magic");
+        player.decreaseXP(5);
+        character.forgetSpell(fireSpell);
+        String affectedDamage = ability.calculateAffect();
         assertEquals("Forgotten spell", affectedDamage);
     }
 
