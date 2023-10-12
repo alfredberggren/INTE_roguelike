@@ -12,8 +12,6 @@ public abstract class Ability {
 
     abstract public String typeOfAbility();
 
-    abstract public String calculateAffect();
-
     public String getTypeOfAbility(){
         return typeOfAbility();
     }

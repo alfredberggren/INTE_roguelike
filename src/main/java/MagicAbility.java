@@ -30,7 +30,6 @@ public class MagicAbility extends Ability{
         return magicAbility;
     }
 
-    @Override
     public String calculateAffect() {
         if(!character.getSpell() && player.getExperiencePoint() < MINIMUM_XP_TO_RETAIN_SPELL) {
             character.forgetSpell(new Spell("Fire"));
