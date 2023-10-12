@@ -2,21 +2,22 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+// import java.util.ArrayList;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class IOTest {
 
     private InputStream defaultInputStream;
 
-    @BeforeAll
+    @BeforeEach
     public void setDefaultInputStream() {
         defaultInputStream = System.in;
     }
-
-    @AfterAll
+  
+    @AfterEach
     public void resetInputStream() {
         System.setIn(defaultInputStream);
     }
@@ -42,7 +43,7 @@ public class IOTest {
     }
 
     @Test
-    public void testRequestMoveAllDirections() {
+    public void testRequestMoveInAllDirections() {
         TextUI tempTextUI = new TextUI();
 
         // Needs updating when Room constructor is updated
@@ -52,18 +53,16 @@ public class IOTest {
         Character tempCharacter = new Character("name", 0, 0, new Position(0, 0));
 
         String[] movableDirections = {"north", "east", "south", "west"};
-        for (int i = 0; i > 4; i++){
+        int correctDirections = 0;
+        for (int i = 0; i < 4; i++){
             InputStream tempInputStream = new ByteArrayInputStream(movableDirections[i].getBytes());
             System.setIn(tempInputStream);
 
-            CardinalDirection direction = CardinalDirection.values()[i];
-            assertEquals(direction, tempTextUI.requestMove(tempRoom, tempCharacter),
-                    "When trying to perform requestMove() in all directions it could not request the direction "
-                    + direction);
+            if(CardinalDirection.values()[i].equals(tempTextUI.requestMove(tempRoom, tempCharacter))){
+                correctDirections++;
+            }
         }
-        
-        
-
+        assertEquals(4, correctDirections);
     }
 
     @Test
