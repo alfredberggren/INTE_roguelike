@@ -59,7 +59,7 @@ public class Room {
      * Amount to subtract
      */
     public void removeInteractable(Interactable i, Integer amount){
-
+        interactables.remove(i, amount);
     }
 
 
