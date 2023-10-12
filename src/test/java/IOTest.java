@@ -1,4 +1,5 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -23,6 +24,21 @@ public class IOTest {
     }
 
     @Test
+    public void testRequestTurnCommand() {
+
+    }
+
+    @Test
+    public void testRequestTurnCommandsAllTurnCommands() {
+
+    }
+
+    @Test
+    public void testRequestTurnCommandIsNotAllowed() {
+
+    }
+
+    @Test
     public void testRequestMove() {
         String inputString = "north";
         InputStream tempInputStream = new ByteArrayInputStream(inputString.getBytes());
@@ -38,8 +54,8 @@ public class IOTest {
 
         // requestMove(Room room, Character character) has it parameters so it knows
         // where from and who preforms the move.
-        //assertEquals(CardinalDirection.NORTH, tempTextUI.requestMove(tempRoom, tempCharacter),
-         //       "Could not request move");
+        assertEquals(CardinalDirection.NORTH, tempTextUI.requestMove(tempRoom, tempCharacter),
+               "Could not request move");
     }
 
     @Test
@@ -67,7 +83,28 @@ public class IOTest {
 
     @Test
     public void testRequestedMoveIsNotAllowed() {
+        String inputString = "not a direction";
+        InputStream tempInputStream = new ByteArrayInputStream(inputString.getBytes());
+        System.setIn(tempInputStream);
 
+        TextUI tempTextUI = new TextUI();
+        // Needs updating when Room constructor is updated
+        Room tempRoom = new Room(new Position(0, 0));
+        // Needs updating when Character constructor is updated
+        Character tempCharacter = new Character(0, 0, new Position(0, 0));
+
+        CardinalDirection requestedDirection = tempTextUI.requestMove(tempRoom, tempCharacter);
+        
+        //Asks for a second input
+        String inputStringTwo = "north";
+        var tempInputStreamTwo = new ByteArrayInputStream(inputStringTwo.getBytes());
+        System.setIn(tempInputStreamTwo);
+        
+        assertEquals(CardinalDirection.NORTH, requestedDirection, "");
+
+    }
+
+    private void assertEqual() {
     }
 
     @Test
