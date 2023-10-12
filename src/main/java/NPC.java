@@ -1,7 +1,7 @@
 import java.util.Objects;
 import java.util.Set;
 
-public class NPC extends Character implements Interactable {
+public class NPC extends Character {
     private Set<InteractableAction> possibleInteractableActions;
     private String name;
 

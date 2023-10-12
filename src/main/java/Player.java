@@ -1,6 +1,6 @@
 import java.util.Set;
 
-public class Player extends Character implements Interactable{
+public class Player extends Character{
 
     private int experiencePoint;
     private int level;
@@ -52,8 +52,4 @@ public class Player extends Character implements Interactable{
         }
     }
 
-    @Override
-    public Set<InteractableAction> getPossibleActions() {
-        return null;
-    }
 }

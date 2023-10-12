@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Set;
 
-public class Character {
+public class Character implements Interactable{
 
     private String name;
     private int health;
@@ -17,7 +17,6 @@ public class Character {
         if (health < 0 || speed < 0) {
             throw new IllegalArgumentException("Speed and health needs to be 0 or more");
         }
-        this.name = name;
         this.health = health;
         this.speed = speed;
         this.magicAbility = new MagicAbility("Hands",1,"No Magic"); //standard magisk förmåga
@@ -27,19 +26,18 @@ public class Character {
         }
     }
 
-    public Character(String name, int health, int speed, Position pos){
+    public Character(int health, int speed, Position pos){
         if (health < 0 || speed < 0) {
             throw new IllegalArgumentException("Speed and health needs to be 0 or more");
         }
-        this.name = name;
         this.health = health;
         this.speed = speed;
         this.pos = pos;
     }
     public String getName(){return name;}
 
-/*    public void setName(String name) {
-        // inmatning av namn, kontroll
+    public void setName(String name) {
+        // inmatning av namn
         if (name == null){
             throw new NullPointerException("error");
         }
@@ -50,7 +48,7 @@ public class Character {
 
         if (name.length() < 1 || name.length() > 11)
             System.err.println("error");
-    }*/
+    }
 
     public Position getPosition() {return pos;}
     public int getHealth() {return health;}
@@ -89,5 +87,10 @@ public class Character {
 
     public boolean isDead() {
         return isDead;
+    }
+
+    @Override
+    public Set<InteractableAction> getPossibleActions() {
+        return null;
     }
 }

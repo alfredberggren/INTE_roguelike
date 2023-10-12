@@ -14,7 +14,7 @@ public class PlayerTest {
         DEFAULT_PLAYER = new Player( 80, 20, 10);
     }
 
-    /*public class NameTest {
+    public class NameTest {
         @Test
         void nameInputIsNull() {
             assertThrows(NullPointerException.class, () -> {
@@ -33,7 +33,7 @@ public class PlayerTest {
         }
 
 
-    }*/
+    }
 
     @Test
     @DisplayName("Test to increase XP")

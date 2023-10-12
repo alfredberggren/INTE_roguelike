@@ -20,7 +20,7 @@ public class CharacterTest {
     @Test
     @DisplayName("Testar att en entitets position blir korrekt")
     public void testCharacterPosition() {
-        Character character1 = new Character("Rudolf", 0, 9, new Position(1, 2));
+        Character character1 = new Character(0, 9, new Position(1, 2));
         assertEquals(new Position(1, 2), character1.getPosition());
         assertEquals(1, character1.getPosition().getX());
         assertEquals(2, character1.getPosition().getY());
