@@ -27,4 +27,9 @@ public abstract class NonLivingEntity implements Interactable {
 
     @Override
     public abstract int hashCode();
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }
