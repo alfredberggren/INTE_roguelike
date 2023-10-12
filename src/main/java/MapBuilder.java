@@ -7,14 +7,6 @@ public class MapBuilder {
         put(Difficulty.MEDIUM, 5);
         put(Difficulty.HARD, 7);
     }};
-    private static final String[] WEAPON_ARMOR_MATS = {
-            "Steel",
-            "Iron",
-            "Bronze"
-    };
-    private static final Interactable[] POSITIVE_INTERACTABLES = {
-
-    }
     private static final int START_XY = 0;
 
     // Bestämmer sannolikheten i procent för att ett rum kommer att innehålla något.
@@ -55,7 +47,9 @@ public class MapBuilder {
         int interactableDeterminator = r.nextInt(10) + 1;
         boolean positiveInteractable = interactableDeterminator > difficultyScale;
         if (positiveInteractable) {
-            interactables.put()
+            interactables.put(interactableBuilder.getPositiveInteractable(), 1);
+        } else {
+            interactables.put(interactableBuilder.getNegativeInteractable(), 1);
         }
     }
 }

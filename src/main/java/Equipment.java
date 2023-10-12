@@ -28,7 +28,7 @@ public class Equipment extends NonLivingEntity{
     }
 
     public enum Effect {
-        SPEED, HEALTH, DAMAGE
+        SPEED, HEALTH, DAMAGE, ARMOR
     }
 
     public String getAbility(){

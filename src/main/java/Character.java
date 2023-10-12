@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Player {
+public class Character {
 
     protected String name;
     private int health;
