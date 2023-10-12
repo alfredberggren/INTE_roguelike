@@ -17,7 +17,7 @@ public class Character implements Interactable{
     private PhysicalAbility physicalAbility;
     private MagicAbility magicAbility;
     private boolean spell;
-    private List<Spell> knownSpells = new ArrayList<>();
+    private ArrayList<Spell> knownSpells = new ArrayList<>();
 
     public Character(int health, int speed){
         if (health < 0 || speed < 0) {

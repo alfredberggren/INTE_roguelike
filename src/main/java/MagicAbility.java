@@ -10,6 +10,13 @@ public class MagicAbility extends Ability{
         this.magicAbility = magicAbility;
     }
 
+    MagicAbility(String name, int baseDamage, String magicAbility, Character character, Player player){
+        super(name, baseDamage);
+        this.magicAbility = magicAbility;
+        this.character = character;
+        this.player = player;
+    }
+
     @Override
     public int calculateDamage(Player player) {
         int baseDamage = 10;

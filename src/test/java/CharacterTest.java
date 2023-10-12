@@ -9,6 +9,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CharacterTest {
 
+    static Character DEFAULT_CHARACTER;
+    static Player DEFAULT_PLAYER;
+
     @Test
     @DisplayName("Testar att entitetens hälsa blir korrekt")
     public void testCharacterHealth() {
@@ -63,7 +66,7 @@ public class CharacterTest {
     @DisplayName("Test that character get Magic Ability")
     public void testCharacterMagicAbility() {
         Character c = new Character(100, 10);
-        MagicAbility fireMagic = new MagicAbility("Fireball",20,"Magic");
+        MagicAbility fireMagic = new MagicAbility("Fireball",20,"Magic", DEFAULT_CHARACTER, DEFAULT_PLAYER);
         c.setMagicAbility(fireMagic);
         assertEquals("Wizard", c.getName());
         assertEquals("Fireball", c.getMagicAbility().toString());

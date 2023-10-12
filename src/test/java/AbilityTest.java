@@ -5,10 +5,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AbilityTest {
 
+    static Player DEFAULT_PLAYER;
+    static Character DEFAULT_CHARACTER;
+
     @Test
     @DisplayName("Returns if it is a Magic Ability")
     public void testOnlyMagicAbility() {
-        MagicAbility magicAbility = new MagicAbility("Fireball",25,"Magic");
+        MagicAbility magicAbility = new MagicAbility("Fireball",25,"Magic", DEFAULT_CHARACTER, DEFAULT_PLAYER);
         assertEquals("Magic", magicAbility.toString());
     }
 
@@ -22,7 +25,7 @@ public class AbilityTest {
     @Test
     @DisplayName("Returns if it is a Magic Ability and a Physical Ability")
     public void testBothMagicAndPhysicalAbility() {
-        MagicAbility magicAbility = new MagicAbility("Fireball", 20,"Magic");
+        MagicAbility magicAbility = new MagicAbility("Fireball", 20,"Magic", DEFAULT_CHARACTER, DEFAULT_PLAYER);
         PhysicalAbility physicalAbility = new PhysicalAbility("Sword", 10, "Physical");
         assertEquals("Magic" + "Physical", magicAbility.toString() + physicalAbility);
     }
@@ -30,11 +33,10 @@ public class AbilityTest {
     @Test
     @DisplayName("Test calculating damage for Fireball")
     public void testCalculateDamageForFireball() {
-        MagicAbility fireBall = new MagicAbility("Fireball",10, "Magic");
-        Player player = new Player(100, 10, 50);
-        player.setLevel(2);
-        player.setExperiencePoint(50);
-        int damage = fireBall.calculateDamage(player);
+        MagicAbility fireBall = new MagicAbility("Fireball",10, "Magic", DEFAULT_CHARACTER, DEFAULT_PLAYER);
+        DEFAULT_PLAYER.setLevel(2);
+        DEFAULT_PLAYER.setExperiencePoint(50);
+        int damage = fireBall.calculateDamage(DEFAULT_PLAYER);
         assertEquals(25, damage);
     }
 
@@ -42,25 +44,23 @@ public class AbilityTest {
     @DisplayName("Test calculating damage for Sword")
     public void testCalculateDamageForSword() {
         PhysicalAbility sword = new PhysicalAbility("Sword",5, "Physical");
-        Player player = new Player(100, 10, 50);
-        player.setLevel(2);
-        player.setExperiencePoint(50);
-        int damage = sword.calculateDamage(player);
+        DEFAULT_PLAYER.setLevel(2);
+        DEFAULT_PLAYER.setExperiencePoint(50);
+        int damage = sword.calculateDamage(DEFAULT_PLAYER);
         assertEquals(14, damage);
     }
 
     @Test
     @DisplayName("Testing that magic ability is affected")
     public void testMagicAbilityAffected() {
-        Character character = new Character(100, 10,new Position(1, 1));
-        Player player = new Player(100, 10,10);
         Spell fireSpell = new Spell("Fire");
-        character.addSpell(fireSpell);
-        player.setExperiencePoint(10);
-        MagicAbility ability = new MagicAbility(fireSpell.getName(), 10,"Magic");
-        player.decreaseXP(5);
-        character.forgetSpell(fireSpell);
-        String affectedDamage = ability.calculateAffect();
+        DEFAULT_CHARACTER.addSpell(fireSpell);
+        DEFAULT_PLAYER.setExperiencePoint(10);
+        MagicAbility ability = new MagicAbility(fireSpell.getName(), 10,"Magic", DEFAULT_CHARACTER, DEFAULT_PLAYER);
+        DEFAULT_PLAYER.decreaseXP(5);
+        DEFAULT_CHARACTER.forgetSpell(fireSpell);
+        ability.calculateAffect();
+        String affectedDamage = ability.affectAbility();
         assertEquals("Forgotten spell", affectedDamage);
     }
 
