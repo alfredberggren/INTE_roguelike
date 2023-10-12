@@ -1,9 +1,8 @@
-import java.util.Set;
 
 public abstract class Ability {
 
     protected String name;
-    protected int baseDamage; //skadan abilityn gör
+    protected int baseDamage;
 
     public Ability(String name, int baseDamage) {
         this.name = name;
@@ -13,7 +12,7 @@ public abstract class Ability {
 
     abstract public String typeOfAbility();
 
-    abstract public String affectAbility();
+    abstract public String calculateAffect();
 
     public String getTypeOfAbility(){
         return typeOfAbility();

@@ -20,7 +20,7 @@ public class PhysicalAbility extends Ability{
     }
 
     @Override
-    public String affectAbility() {
+    public String calculateAffect() {
         return null;
     }
 

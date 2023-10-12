@@ -31,15 +31,8 @@ public class MagicAbility extends Ability{
     }
 
     @Override
-    public String affectAbility() {
-        if(!character.getSpell()) {
-            return "Forgotten spell";
-        } else {
-            return "The death spell";
-        }
-    }
     public String calculateAffect() {
-        if(character.getSpell() && player.getExperiencePoint() < MINIMUM_XP_TO_RETAIN_SPELL) {
+        if(!character.getSpell() && player.getExperiencePoint() < MINIMUM_XP_TO_RETAIN_SPELL) {
             character.forgetSpell(new Spell("Fire"));
             return "You have forgotten a spell due to losing experience points";
         } else {

@@ -64,9 +64,8 @@ public class AbilityTest {
         MagicAbility ability = new MagicAbility(fireSpell.getName(), 10,"Magic", DEFAULT_CHARACTER, DEFAULT_PLAYER);
         DEFAULT_PLAYER.decreaseXP(20);
         DEFAULT_CHARACTER.forgetSpell(fireSpell);
-        ability.calculateAffect();
-        String affectedDamage = ability.affectAbility();
-        assertEquals("Forgotten spell", affectedDamage);
+        String affectedDamage = ability.calculateAffect();
+        assertEquals("You have forgotten a spell due to losing experience points", affectedDamage);
     }
 
 }
