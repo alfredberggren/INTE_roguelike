@@ -14,21 +14,21 @@ public class AbilityTest {
         DEFAULT_CHARACTER = new Character(100,10);
     }
     @Test
-    @DisplayName("Returns if it is a Magic Ability")
+    @DisplayName("Returns if a Magic Ability exist")
     public void testOnlyMagicAbility() {
         MagicAbility magicAbility = new MagicAbility("Fireball",25,"Magic", DEFAULT_CHARACTER, DEFAULT_PLAYER);
         assertEquals("Magic", magicAbility.toString());
     }
 
     @Test
-    @DisplayName("Returns if it is a Physical Ability")
+    @DisplayName("Returns if a Physical Ability exist")
     public void testOnlyPhysicalAbility() {
         PhysicalAbility physicalAbility = new PhysicalAbility("Sword",15,"Physical");
         assertEquals("Physical", physicalAbility.toString());
     }
 
     @Test
-    @DisplayName("Returns if it is a Magic Ability and a Physical Ability")
+    @DisplayName("Returns if both Magic Ability and Physical Ability exist")
     public void testBothMagicAndPhysicalAbility() {
         MagicAbility magicAbility = new MagicAbility("Fireball", 20,"Magic", DEFAULT_CHARACTER, DEFAULT_PLAYER);
         PhysicalAbility physicalAbility = new PhysicalAbility("Sword", 10, "Physical");
