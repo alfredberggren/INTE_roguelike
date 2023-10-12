@@ -7,11 +7,11 @@ public class Character implements Interactable{
 
     //variabel för turnsystem
 
-    private String name;
+    //private String name;
     private int health;
     private int speed;
     private Position pos;
-    private boolean isDead = true;
+    private boolean isDead = false;
     protected Set<Ability> possibleAbilities;
     private EquipmentInventory equipments;
     private PhysicalAbility physicalAbility;
@@ -23,10 +23,12 @@ public class Character implements Interactable{
         if (health < 0 || speed < 0) {
             throw new IllegalArgumentException("Speed and health needs to be 0 or more");
         }
+
         this.health = health;
         this.speed = speed;
         this.magicAbility = new MagicAbility("Hands",1,"No Magic"); //standard magisk förmåga
         this.pos = new Position(0, 0);
+        //health = 100;     //fixa
         if(health > 0) {
             isDead = false;
         }
@@ -40,21 +42,7 @@ public class Character implements Interactable{
         this.speed = speed;
         this.pos = pos;
     }
-    public String getName(){return name;}
 
-    public void setName(String name) {
-        // inmatning av namn
-        if (name == null){
-            throw new NullPointerException("error");
-        }
-        if (name == ""){
-            System.out.println("error");
-            return;
-        }
-
-        if (name.length() < 1 || name.length() > 11)
-            System.err.println("error");
-    }
 
     public Position getPosition() {return pos;}
     public int getHealth() {return health;}

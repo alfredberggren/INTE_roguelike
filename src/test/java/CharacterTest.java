@@ -1,32 +1,30 @@
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CharacterTest {
-
     static Character DEFAULT_CHARACTER;
-    static Player DEFAULT_PLAYER;
+    static Character DEFAULT_CHARACTER_WITH_POS = new Character(0, 9, new Position(1, 2));
+    @BeforeEach
+    void setUp() {
+        DEFAULT_CHARACTER = new Character(80, 20);
+    }
 
     @Test
     @DisplayName("Testar att entitetens hälsa blir korrekt")
     public void testCharacterHealth() {
-        Character character1 = new Character(100, 10);
-        assertEquals(100, character1.getHealth());
+        assertEquals(80, DEFAULT_CHARACTER.getHealth());
 
     }
 
     @Test
     @DisplayName("Testar att en entitets position blir korrekt")
     public void testCharacterPosition() {
-        Character character1 = new Character(0, 9, new Position(1, 2));
-        assertEquals(new Position(1, 2), character1.getPosition());
-        assertEquals(1, character1.getPosition().getX());
-        assertEquals(2, character1.getPosition().getY());
+        assertEquals(new Position(1, 2), DEFAULT_CHARACTER_WITH_POS.getPosition());
+        assertEquals(1, DEFAULT_CHARACTER_WITH_POS.getPosition().getX());
+        assertEquals(2, DEFAULT_CHARACTER_WITH_POS.getPosition().getY());
     }
 
     @Test
@@ -48,18 +46,16 @@ public class CharacterTest {
     @Test
     @DisplayName("Test to decrease health to 0")
     public void testToDecreaseHealth() {
-        Character character1 = new Character(100, 10);
-        character1.decreaseHealth(100);
-        assertEquals(0, character1.getHealth());
-        assertTrue(character1.isDead());
+        DEFAULT_CHARACTER.decreaseHealth(80);
+        assertEquals(0, DEFAULT_CHARACTER.getHealth());
+        assertTrue(DEFAULT_CHARACTER.isDead());
     }
 
     @Test
     @DisplayName("Test to increase health")
     public void testToIncreaseHealth() {
-        Character character1 = new Character(80, 10);
-        character1.increaseHealth(20);
-        assertEquals(100, character1.getHealth());
+        DEFAULT_CHARACTER.increaseHealth(20);
+        assertEquals(100, DEFAULT_CHARACTER.getHealth());
     }
 
    /* @Test
