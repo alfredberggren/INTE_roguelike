@@ -13,7 +13,6 @@ public class MapBuilder {
 
     // Bestämmer sannolikheten i procent för att ett rum kommer att innehålla något.
     private static final int INTERACTABLE_PERCENTAGE = 10;
-    private static final int[] XY_POSSIBLE_ADDEND = {-1, 1};
     private int difficultyScale;
     private int amountOfRooms;
     private MapController mapController;
@@ -65,6 +64,9 @@ public class MapBuilder {
             case SOUTH -> {
                 return new Position(oldPos.getX(), oldPos.getY() - 1);
             }
+            default -> {
+                return null;
+            }
         }
     }
 
@@ -77,5 +79,6 @@ public class MapBuilder {
         } else {
             interactables.put(interactableBuilder.getNegativeInteractable(), 1);
         }
+        return interactables;
     }
 }
