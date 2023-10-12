@@ -15,7 +15,7 @@ public class Character {
     private PhysicalAbility physicalAbility;
     private MagicAbility magicAbility;
 
-    public Character(String name, int health, int speed){
+    public Character(int health, int speed){
         if (health < 0 || speed < 0) {
             throw new IllegalArgumentException("Speed and health needs to be 0 or more");
         }
@@ -39,6 +39,21 @@ public class Character {
         this.pos = pos;
     }
     public String getName(){return name;}
+
+/*    public void setName(String name) {
+        // inmatning av namn, kontroll
+        if (name == null){
+            throw new NullPointerException("error");
+        }
+        if (name == ""){
+            System.out.println("error");
+            return;
+        }
+
+        if (name.length() < 1 || name.length() > 11)
+            System.err.println("error");
+    }*/
+
     public Position getPosition() {return pos;}
     public int getHealth() {return health;}
     public int getSpeed() {return speed;}

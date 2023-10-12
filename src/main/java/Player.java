@@ -4,13 +4,14 @@ public class Player extends Character implements Interactable{
 
     private int experiencePoint;
     public Player(String name, int health, int speed, int experiencePoint) {
-        super(CharacterType.PLAYER, name, health, speed);
+        super(name, health, speed);
         this.experiencePoint = experiencePoint;
     }
 
 //    public void setDefaultValues(){  // ?defaultPosition
 //
 //    }
+
 
     public int getExperiencePoint() {
         return experiencePoint;

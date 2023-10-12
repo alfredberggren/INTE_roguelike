@@ -3,9 +3,11 @@ import java.util.Set;
 
 public class NPC extends Character implements Interactable {
     private Set<InteractableAction> possibleInteractableActions;
+    private String name;
 
     public NPC(String name, int health, int speed, Set<InteractableAction> possibleInteractableActions) {
-        super(name, health, speed);
+        super(health, speed);
+        this.name = name;
         this.possibleInteractableActions = possibleInteractableActions;
     }
 
