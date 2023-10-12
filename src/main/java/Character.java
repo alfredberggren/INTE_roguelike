@@ -3,6 +3,8 @@ import java.util.Set;
 
 public class Character implements Interactable{
 
+    //variabel för turnsystem
+
     private String name;
     private int health;
     private int speed;
