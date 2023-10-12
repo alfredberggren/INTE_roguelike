@@ -1,13 +1,18 @@
-import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AbilityTest {
 
-    static Player DEFAULT_PLAYER;
     static Character DEFAULT_CHARACTER;
+    static Player DEFAULT_PLAYER;
 
+    @BeforeEach
+    void setUp() {
+        DEFAULT_PLAYER = new Player(100, 20, 100);
+        DEFAULT_CHARACTER = new Character(100,10);
+    }
     @Test
     @DisplayName("Returns if it is a Magic Ability")
     public void testOnlyMagicAbility() {
@@ -55,9 +60,9 @@ public class AbilityTest {
     public void testMagicAbilityAffected() {
         Spell fireSpell = new Spell("Fire");
         DEFAULT_CHARACTER.addSpell(fireSpell);
-        DEFAULT_PLAYER.setExperiencePoint(10);
+        DEFAULT_PLAYER.setExperiencePoint(100);
         MagicAbility ability = new MagicAbility(fireSpell.getName(), 10,"Magic", DEFAULT_CHARACTER, DEFAULT_PLAYER);
-        DEFAULT_PLAYER.decreaseXP(5);
+        DEFAULT_PLAYER.decreaseXP(20);
         DEFAULT_CHARACTER.forgetSpell(fireSpell);
         ability.calculateAffect();
         String affectedDamage = ability.affectAbility();

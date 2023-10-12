@@ -11,6 +11,7 @@ public class Character implements Interactable{
     private int health;
     private int speed;
     private Position pos;
+    private Player player;
     private boolean isDead = true;
     protected Set<Ability> possibleAbilities;
     private EquipmentInventory equipments;
@@ -64,8 +65,10 @@ public class Character implements Interactable{
     }
 
     public void forgetSpell(Spell spell) {
+        //player.decreaseXP(20);
         if(!knownSpells.isEmpty()) {
             knownSpells.remove(spell);
+
         }
     }
 

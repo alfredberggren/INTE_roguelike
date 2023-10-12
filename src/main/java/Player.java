@@ -4,6 +4,7 @@ public class Player extends Character{
 
     private int experiencePoint;
     private int level;
+
     public Player(int health, int speed, int experiencePoint) {
         super(health, speed);
         this.experiencePoint = experiencePoint;
@@ -37,7 +38,6 @@ public class Player extends Character{
     public void setExperiencePoint(int experiencePoint) {
         this.experiencePoint = experiencePoint;
     }
-
     public void increaseXP(int add){
         int result = experiencePoint + add;
         setExperiencePoint(result);
