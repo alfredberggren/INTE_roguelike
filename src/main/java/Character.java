@@ -1,15 +1,16 @@
 import java.util.ArrayList;
+import java.util.Set;
 
 public class Character {
 
-    protected String name;
+    private String name;
     private int health;
     private int speed;
     private int level;
     private int experience;
     private Position pos;
     private boolean isDead = true;
-    private ArrayList <Ability> abilities;
+    protected Set<Ability> possibleAbilities;
     private EquipmentInventory equipments;
     private PhysicalAbility physicalAbility;
     private MagicAbility magicAbility;
@@ -37,12 +38,13 @@ public class Character {
         this.speed = speed;
         this.pos = pos;
     }
-
     public String getName(){return name;}
     public Position getPosition() {return pos;}
     public int getHealth() {return health;}
     public int getSpeed() {return speed;}
-    public ArrayList<Ability> getAbilities() {return abilities;}
+
+    public Set<Ability> getPossibleAbilities() {return possibleAbilities;}
+
     public EquipmentInventory getEquipments() {return equipments;}
     public MagicAbility getMagicAbility() {
         return magicAbility;
@@ -64,6 +66,8 @@ public class Character {
         int result = health - decrease;
         if(result<=0) {
             isDead = true;
+
+            //nollställa allt
             setHealth(0);
         }else {
             setHealth(result);
