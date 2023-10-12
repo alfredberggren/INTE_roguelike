@@ -10,13 +10,12 @@ public class Player extends Character{
     private static final String NAME_PATTERN = "^[A-Za-z]\\w{1,11}$";
     public Player(int health, int speed, int experiencePoint) {
         super(health, speed);
-
         this.experiencePoint = experiencePoint;
     }
 
-//    public void setDefaultValues(){  // ?defaultPosition
-//
-//    }
+    /*public void setDefaultValues(){  // ?defaultPosition
+
+    }*/
 
     public String getName(){return name;}
 

@@ -75,12 +75,16 @@ public class PlayerTest {
         assertEquals(0, DEFAULT_PLAYER.getExperiencePoint());
     }
 
-    @Disabled //ens nödvändig?
+    @Test
     @DisplayName("Test that character level up")
     public void testCharacterLevelUpWhenExperienceReaches100() {
+        DEFAULT_PLAYER.setLevel(0);
+        DEFAULT_PLAYER.setExperiencePoint(100);
+        DEFAULT_PLAYER.checkLevelUp();
         assertEquals(1, DEFAULT_PLAYER.getLevel());
         assertEquals(0, DEFAULT_PLAYER.getExperiencePoint());
-        DEFAULT_PLAYER.increaseXP(100);
+        DEFAULT_PLAYER.setExperiencePoint(100);
+        DEFAULT_PLAYER.checkLevelUp();
         assertEquals(2, DEFAULT_PLAYER.getLevel());
         assertEquals(0, DEFAULT_PLAYER.getExperiencePoint());
     }
