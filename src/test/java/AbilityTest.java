@@ -10,7 +10,7 @@ public class AbilityTest {
 
     @BeforeEach
     void setUp() {
-        DEFAULT_PLAYER = new Player(100, 10, new Position(0,0), 50);
+        DEFAULT_PLAYER = new Player(100, 10, new Position(0,0));
         DEFAULT_CHARACTER = new Character(100,10, 50);
     }
     @Test

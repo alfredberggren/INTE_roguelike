@@ -7,13 +7,23 @@ public class Player extends Character{
     private MagicAbility magicAbility;
     private String name;
     private Position pos;
+    private int experiencePoint;
     private static final String NAME_PATTERN = "^[A-Za-z]\\w{1,11}$";
-    public Player(int health, int speed, Position pos, int experiencePoint) {
+    public Player(int health, int speed, Position pos) {
         super(health, speed, pos);
+        experiencePoint=0;
     }
 
     public String getName(){return name;}
     public Position getPos() {return pos;}
+
+    @Override
+    public int getExperiencePoint() {return experiencePoint;}
+
+    @Override
+    public void setExperiencePoint(int experiencePoint) {
+        this.experiencePoint = experiencePoint;
+    }
 
     public void setName(String name) {
         // user input

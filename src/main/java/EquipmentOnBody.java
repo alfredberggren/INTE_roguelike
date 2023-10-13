@@ -10,6 +10,7 @@ public class EquipmentOnBody {
         this.equipmentOnBody = equipmentOnBody;
     }
 
+
     public void putEquipment(EquipmentSlot slot, Equipment equipment) {
         if (!slotContainsEquipment(slot))
             equipmentOnBody.put(slot, equipment);
