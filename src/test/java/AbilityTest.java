@@ -16,7 +16,7 @@ public class AbilityTest {
     @Test
     @DisplayName("Returns if a Magic Ability exist")
     public void testOnlyMagicAbility() {
-        MagicAbility magicAbility = new MagicAbility("Fireball",25,"Magic", DEFAULT_CHARACTER, DEFAULT_PLAYER);
+        MagicAbility magicAbility = new MagicAbility("Fireball",25,"Magic");
         assertEquals("Magic", magicAbility.toString());
     }
 
@@ -30,7 +30,7 @@ public class AbilityTest {
     @Test
     @DisplayName("Returns if both Magic Ability and Physical Ability exist")
     public void testBothMagicAndPhysicalAbility() {
-        MagicAbility magicAbility = new MagicAbility("Fireball", 20,"Magic", DEFAULT_CHARACTER, DEFAULT_PLAYER);
+        MagicAbility magicAbility = new MagicAbility("Fireball", 20,"Magic");
         PhysicalAbility physicalAbility = new PhysicalAbility("Sword", 10, "Physical");
         assertEquals("Magic" + "Physical", magicAbility.toString() + physicalAbility);
     }
@@ -38,7 +38,7 @@ public class AbilityTest {
     @Test
     @DisplayName("Test calculating damage for Fireball")
     public void testCalculateDamageForFireball() {
-        MagicAbility fireBall = new MagicAbility("Fireball",10, "Magic", DEFAULT_CHARACTER, DEFAULT_PLAYER);
+        MagicAbility fireBall = new MagicAbility("Fireball",10, "Magic");
         DEFAULT_PLAYER.setLevel(2);
         DEFAULT_PLAYER.setExperiencePoint(50);
         int damage = fireBall.calculateDamage(DEFAULT_PLAYER);
@@ -61,7 +61,7 @@ public class AbilityTest {
         Spell fireSpell = new Spell("Fire");
         DEFAULT_CHARACTER.addSpell(fireSpell);
         DEFAULT_PLAYER.setExperiencePoint(100);
-        MagicAbility ability = new MagicAbility(fireSpell.getName(), 10,"Magic", DEFAULT_CHARACTER, DEFAULT_PLAYER);
+        MagicAbility ability = new MagicAbility(fireSpell.getName(), 10,"Magic");
         DEFAULT_PLAYER.decreaseXP(20);
         DEFAULT_CHARACTER.forgetSpell(fireSpell);
         String affectedDamage = ability.calculateAffect();
@@ -73,7 +73,7 @@ public class AbilityTest {
     public void testMagicAbilityNotAffected() {
         Spell iceSpell = new Spell("Ice");
         DEFAULT_CHARACTER.addSpell(iceSpell);
-        MagicAbility ability = new MagicAbility(iceSpell.getName(), 10,"Magic", DEFAULT_CHARACTER, DEFAULT_PLAYER);
+        MagicAbility ability = new MagicAbility(iceSpell.getName(), 10,"Magic");
         String affectedDamage = ability.calculateAffect();
         assertEquals("You have not forgotten any spells", affectedDamage);
     }
