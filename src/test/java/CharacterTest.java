@@ -13,13 +13,13 @@ public class CharacterTest {
 
     @Test
     @DisplayName("Testar att entitetens hälsa blir korrekt")
-    public void testCharacterHealth() {
+    public void testCharactersHealth() {
         assertEquals(80, DEFAULT_CHARACTER.getHealth());
     }
 
     @Test
     @DisplayName("Testar att en entitets position blir korrekt")
-    public void testCharacterPosition() {
+    public void testCharactersPosition() {
         assertEquals(new Position(1, 2), DEFAULT_CHARACTER_WITH_POS.getPosition());
         assertEquals(1, DEFAULT_CHARACTER_WITH_POS.getPosition().getX());
         assertEquals(2, DEFAULT_CHARACTER_WITH_POS.getPosition().getY());

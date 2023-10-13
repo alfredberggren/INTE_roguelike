@@ -59,5 +59,10 @@ public class PlayerTest {
     }
 //name tests
 
+    @Test
+    @DisplayName("Test that new player has 0 XP")
+    public void testCharactersXP(){
+        assertEquals(0, DEFAULT_PLAYER.getExperiencePoint());
+    }
 
 }
