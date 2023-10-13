@@ -19,8 +19,6 @@ public class RoomTest {
 
     static Room DEFAULT_ROOM;
 
-    static final Integer DEFAULT_INTERACTABLE_ADDEND = 1;
-    static final Integer DEFAULT_INTERACTABLE_SUBTRAHEND = 1;
 
     @Test
     public void testConstructorSetsCorrectPosition() {
@@ -66,8 +64,7 @@ public class RoomTest {
 
 
     private void setUpDefaultInteractables(){
-        DEFAULT_INTERACTABLES.add(DEFAULT_EQUIPMENT, DEFAULT_INTERACTABLE_ADDEND);
-        DEFAULT_INTERACTABLES.add(DEFAULT_NPC, DEFAULT_INTERACTABLE_ADDEND);
+        DEFAULT_INTERACTABLES.add(DEFAULT_EQUIPMENT, DEFAULT_NPC);
     }
 
     private void setUpDefaultRoom() {

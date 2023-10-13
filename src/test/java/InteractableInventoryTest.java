@@ -27,53 +27,16 @@ public class InteractableInventoryTest {
     }
 
     @Test
-    public void testAddMethodIncreasesValueOfAlreadyExistingInteractable() {
-        setUpDefaultInventory();
-        inventory.add(DEFAULT_EQUIPMENT);
-        assertEquals(2, inventory.getAmountOf(DEFAULT_EQUIPMENT));
-    }
-
-    @Test
     public void testAddMethodThrowsWhenInteractableArgIsNull(){
         setUpDefaultInventory();
         assertThrows(NullPointerException.class, () -> inventory.add(null));
     }
 
     @Test
-    public void testAddMethodOnlyAcceptsPositiveIntegers() {
-        setUpDefaultInventory();
-        assertThrows(IllegalArgumentException.class, () -> inventory.add(DEFAULT_EQUIPMENT, -1));
-    }
-
-    @Test
-    public void testRemoveAllMethodRemovesAllCopiesOfInteractable(){
-        setUpDefaultInventory();
-        inventory.add(DEFAULT_EQUIPMENT);
-        inventory.removeAll(DEFAULT_EQUIPMENT);
-        assertEquals(0, inventory.getAmountOf(DEFAULT_EQUIPMENT));
-    }
-
-    @Test
-    public void testRemoveMethodRemovesOnlyOne(){
-        setUpDefaultInventory();
-        inventory.add(DEFAULT_EQUIPMENT);
-        inventory.remove(DEFAULT_EQUIPMENT);
-        assertEquals(1, inventory.getAmountOf(DEFAULT_EQUIPMENT));
-    }
-
-    @Test
-    public void testRemoveMethodWithAmountOverTotalRemovesAll(){
-        setUpDefaultInventory();
-        inventory.add(DEFAULT_EQUIPMENT);
-        inventory.remove(DEFAULT_EQUIPMENT, 4);
-        assertEquals(0, inventory.getAmountOf(DEFAULT_EQUIPMENT));
-    }
-
-    @Test
     public void testTransferMethodTransfersInteractableWhenInInventory() {
         setUpDefaultInventory();
         InteractableInventory inventory2 = new InteractableInventory();
-        inventory.transferInteractableTo(DEFAULT_EQUIPMENT, inventory2);
+        inventory.transfer(DEFAULT_EQUIPMENT, inventory2);
         assertEquals(true, inventory2.contains(DEFAULT_EQUIPMENT));
     }
 
@@ -81,7 +44,7 @@ public class InteractableInventoryTest {
     public void testTransferMethodRemovesInteractableFromInventoryWhenInInventory(){
         setUpDefaultInventory();
         InteractableInventory inventory2 = new InteractableInventory();
-        inventory.transferInteractableTo(DEFAULT_EQUIPMENT, inventory2);
+        inventory.transfer(DEFAULT_EQUIPMENT, inventory2);
         assertEquals(false, inventory.contains(DEFAULT_EQUIPMENT));
     }
 
@@ -90,15 +53,14 @@ public class InteractableInventoryTest {
         setUpDefaultInventory();
         InteractableInventory inventory2 = new InteractableInventory();
         Equipment e = new Equipment("Potion", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.HEALTH, 0, new MagicAbility("Heal",10,"Magic"));
-        inventory.transferInteractableTo(e, inventory2);
+        inventory.transfer(e, inventory2);
         assertEquals(false, inventory2.contains(DEFAULT_EQUIPMENT));
     }
 
 
     private void setUpDefaultInventory(){
         inventory = new InteractableInventory();
-        inventory.add(DEFAULT_EQUIPMENT);
-        inventory.add(DEFAULT_NPC);
+        inventory.add(DEFAULT_EQUIPMENT, DEFAULT_NPC);
     }
 }
 
