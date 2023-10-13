@@ -1,6 +1,5 @@
 public class MagicAbility extends Ability{
     private Character character;
-    private final int MINIMUM_XP_TO_RETAIN_SPELL = 100; //man glömmer spells
     //ifall man förlorar XP eftersom man går ju inte ner i level
     //bara för att man förlorar ex en fight men XP kan ju minska?
 
@@ -13,14 +12,16 @@ public class MagicAbility extends Ability{
     }
 
     @Override
-    public int calculateDamage(Character character) {
+    public int calculateDamageOfAbility(Character character) {
         int baseDamage = 10;
         int levelBonus = character.getLevel() * 5;
         int experienceBonus = character.getExperiencePoint() / 10;
         return baseDamage + levelBonus + experienceBonus;
     }
 
-    public boolean calculateAffect() {
+    public boolean calculateImpactOnAbility() {
+        //man glömmer spells
+        int MINIMUM_XP_TO_RETAIN_SPELL = 100;
         if(!character.getSpell() && character.getExperiencePoint() < MINIMUM_XP_TO_RETAIN_SPELL) {
             character.forgetSpell(new Spell("Fire"));
             return false;
@@ -31,7 +32,7 @@ public class MagicAbility extends Ability{
 
     @Override
     public String toString() {
-        return "Magical";
+        return String.valueOf(AbilityType.MAGICAL);
     }
 
 }

@@ -12,7 +12,7 @@ public abstract class Ability {
         this.minimumLevel = minimumLevel;
         this.type = type;
     }
-    abstract public int calculateDamage(Character character);
+    abstract public int calculateDamageOfAbility(Character character);
 
     public enum AbilityType {
         PHYSICAL, MAGICAL

@@ -5,7 +5,7 @@ public class PhysicalAbility extends Ability{
     }
 
     @Override
-    public int calculateDamage(Character character) {
+    public int calculateDamageOfAbility(Character character) {
         int baseDamage = 5;
         int levelBonus = character.getLevel() * 2;
         int experienceBonus = character.getExperiencePoint() / 10;
@@ -14,6 +14,6 @@ public class PhysicalAbility extends Ability{
 
     @Override
     public String toString() {
-        return "Physical";
+        return String.valueOf(AbilityType.PHYSICAL);
     }
 }
