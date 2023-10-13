@@ -18,6 +18,7 @@ public class InteractableInventoryTest {
 
     InteractableInventory inventory;
 
+    //TODO: might need more rigourous testing
     @Test
     public void testAddMethodAddsInteractable(){
         inventory = new InteractableInventory();

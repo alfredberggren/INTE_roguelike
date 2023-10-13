@@ -20,6 +20,8 @@ public class RoomTest {
     static Room DEFAULT_ROOM;
 
 
+    //TODO: might need more rigourous testing
+
     @Test
     public void testConstructorSetsCorrectPosition() {
         setUpDefaultInteractables();
@@ -59,7 +61,16 @@ public class RoomTest {
     public void testSetDirectionsSetsDirectionsCorrectly(){
         setUpDefaultRoom();
         DEFAULT_ROOM.setPossibleRoutes(DEFAULT_DIRECTIONS);
-        assertSame(DEFAULT_DIRECTIONS, DEFAULT_ROOM.getPossibleRoutes());
+        for (int i = 0; i < DEFAULT_DIRECTIONS.size(); i++){
+            assertEquals(DEFAULT_DIRECTIONS.get(i), DEFAULT_ROOM.getPossibleRoutes().get(i));
+        }
+    }
+
+    @Test
+    public void testAddDirectionSetsDirectionCorrectly(){
+        setUpDefaultRoom();
+        DEFAULT_ROOM.addPossibleRoute(CardinalDirection.NORTH);
+        assertEquals(CardinalDirection.NORTH, DEFAULT_ROOM.getPossibleRoutes().get(0));
     }
 
 

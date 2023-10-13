@@ -1,12 +1,11 @@
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class Room {
-
-    private static final int INTERACTABLE_DEFAULT_ADDEND = 1;
     private final Position position;
     private final InteractableInventory interactables;
-
     private List<CardinalDirection> possibleRoutes;
 
     public Room(Position position, InteractableInventory interactables) {
@@ -41,7 +40,20 @@ public class Room {
      * Returns an empty list if room has no possible routes.
      */
     public List<CardinalDirection> getPossibleRoutes(){
-        return possibleRoutes;
+        return Collections.unmodifiableList(possibleRoutes);
+    }
+
+    public void addPossibleRoute(CardinalDirection... routes){
+        for (CardinalDirection r: routes){
+            if (!possibleRoutes.contains(r))
+                possibleRoutes.add(r);
+        }
+    }
+
+    public void removePossibleRoute(CardinalDirection... routes){
+        for (CardinalDirection r: routes){
+            possibleRoutes.remove(r);
+        }
     }
 
 
