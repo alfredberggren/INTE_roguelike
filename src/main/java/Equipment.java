@@ -1,6 +1,4 @@
-import java.util.Set;
-import java.util.ArrayList;
-import java.util.Objects;
+import java.util.*;
 
 public class Equipment extends NonLivingEntity{
     private Effect effect;
@@ -8,9 +6,14 @@ public class Equipment extends NonLivingEntity{
     private Ability ability;
     private Position pos;
     private double damageBar;
+    private static final Set<InteractableAction> STANDARD_INTERACTABLE_ACTIONS = new HashSet<>(Arrays.asList(
+            InteractableAction.DROP,
+            InteractableAction.LOOT,
+            InteractableAction.USE)
+    );
 
-    public Equipment(String name, Set<InteractableAction> possibleActions, Effect effect, int damage, Ability ability) {
-        super(name, possibleActions);
+    public Equipment(String name, Set<InteractableAction> STANDARD_INTERACTABLE_ACTIONS, Effect effect, int damage, Ability ability) {
+        super(name, STANDARD_INTERACTABLE_ACTIONS);
         this.effect = effect;
         this.damage = damage;
         this.ability = ability;
@@ -24,6 +27,12 @@ public class Equipment extends NonLivingEntity{
     public Effect getEffect() {
         return effect;
     }
+
+    public Position getPos() {return pos;}
+
+    public void setPos(Position pos) {this.pos = pos;}
+
+    public int getDamage() {return damage;}
 
     public Set<InteractableAction> getPossibleActions() {
         return possibleInteractableActions;

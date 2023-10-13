@@ -11,7 +11,7 @@ public class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        DEFAULT_PLAYER = new Player(80, 20, 100);
+        DEFAULT_PLAYER = new Player(80, 20, new Position(0,0), 10);
     }
 
 
