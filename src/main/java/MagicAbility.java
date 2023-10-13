@@ -1,7 +1,5 @@
 public class MagicAbility extends Ability{
     private Character character;
-    //ifall man förlorar XP eftersom man går ju inte ner i level
-    //bara för att man förlorar ex en fight men XP kan ju minska?
 
     MagicAbility(String name, int baseDamage, int minimumLevel){
         super(name, baseDamage, AbilityType.MAGICAL, minimumLevel);
