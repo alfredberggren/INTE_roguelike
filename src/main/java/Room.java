@@ -1,17 +1,12 @@
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 public class Room {
-
-    private static final Integer INTERACTABLE_ADDEND = 1;
-    private Position position;
-    private InteractableInventory interactables;
-
+    private final Position position;
+    private final InteractableInventory interactables;
     private List<CardinalDirection> possibleRoutes;
-
-    //TODO: Implementera "possible routes", set och get
 
     public Room(Position position, InteractableInventory interactables) {
         if (position == null)
@@ -24,12 +19,9 @@ public class Room {
         possibleRoutes = new ArrayList<>();
 
     }
-
     public Room(Position position){
         this(position, new InteractableInventory());
     }
-
-
 
     public Position getPosition(){
         return position;
@@ -39,44 +31,30 @@ public class Room {
         return interactables;
     }
 
-    public void addInteractable(Interactable i, Integer amount){
-        interactables.add(i, amount);
-    }
-
-    public void addInteractable(Interactable i) {
-        addInteractable(i, INTERACTABLE_ADDEND);
-    }
-
-    /**
-     * Removes the Interactable object including its amount from room
-     * @param i
-     * The interactable to remove
-     */
-    public void removeInteractable(Interactable i) {
-        interactables.remove(i);
-    }
-
-    /**
-     * Removes the amount specified of Interactable object
-     * @param i
-     * The interactable item to subtract from
-     * @param amount
-     * Amount to subtract
-     */
-    public void removeInteractable(Interactable i, Integer amount){
-        interactables.remove(i, amount);
-    }
-
     public void setPossibleRoutes(List<CardinalDirection> directions){
         possibleRoutes = directions;
     }
 
+    /**
+     * @return
+     * Returns an empty list if room has no possible routes.
+     */
     public List<CardinalDirection> getPossibleRoutes(){
-        return possibleRoutes;
+        return Collections.unmodifiableList(possibleRoutes);
     }
 
+    public void addPossibleRoute(CardinalDirection... routes){
+        for (CardinalDirection r: routes){
+            if (!possibleRoutes.contains(r))
+                possibleRoutes.add(r);
+        }
+    }
 
-
+    public void removePossibleRoute(CardinalDirection... routes){
+        for (CardinalDirection r: routes){
+            possibleRoutes.remove(r);
+        }
+    }
 
 
 }
