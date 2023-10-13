@@ -15,29 +15,29 @@ public class AbilityTest {
     @Test
     @DisplayName("Returns if a Magic Ability exist")
     public void testOnlyMagicAbility() {
-        MagicAbility magicAbility = new MagicAbility("Fireball",25,1,"Magic");
+        MagicAbility magicAbility = new MagicAbility("Fireball",25,1);
         assertEquals("Magic", magicAbility.toString());
     }
 
     @Test
     @DisplayName("Returns if a Physical Ability exist")
     public void testOnlyPhysicalAbility() {
-        PhysicalAbility physicalAbility = new PhysicalAbility("Sword",15,1,"Physical");
+        PhysicalAbility physicalAbility = new PhysicalAbility("Sword",15,1);
         assertEquals("Physical", physicalAbility.toString());
     }
 
     @Test
     @DisplayName("Returns if both Magic Ability and Physical Ability exist")
     public void testBothMagicAndPhysicalAbility() {
-        MagicAbility magicAbility = new MagicAbility("Fireball", 20,1,"Magic");
-        PhysicalAbility physicalAbility = new PhysicalAbility("Sword", 10,1, "Physical");
+        MagicAbility magicAbility = new MagicAbility("Fireball", 20,1);
+        PhysicalAbility physicalAbility = new PhysicalAbility("Sword", 10,1);
         assertEquals("Magic" + "Physical", magicAbility.toString() + physicalAbility);
     }
 
     @Test
     @DisplayName("Test calculating damage for Fireball")
     public void testCalculateDamageForFireball() {
-        MagicAbility fireBall = new MagicAbility("Fireball",10,1, "Magic");
+        MagicAbility fireBall = new MagicAbility("Fireball",10,1);
         DEFAULT_CHARACTER.setLevel(2);
         DEFAULT_CHARACTER.setExperiencePoint(50);
         int damage = fireBall.calculateDamage(DEFAULT_CHARACTER);
@@ -47,7 +47,7 @@ public class AbilityTest {
     @Test
     @DisplayName("Test calculating damage for Sword")
     public void testCalculateDamageForSword() {
-        PhysicalAbility sword = new PhysicalAbility("Sword",5,1, "Physical");
+        PhysicalAbility sword = new PhysicalAbility("Sword",5,1);
         DEFAULT_CHARACTER.setLevel(2);
         DEFAULT_CHARACTER.setExperiencePoint(50);
         int damage = sword.calculateDamage(DEFAULT_CHARACTER);
@@ -60,7 +60,7 @@ public class AbilityTest {
         Spell fireSpell = new Spell("Fire");
         DEFAULT_CHARACTER.addSpell(fireSpell);
         DEFAULT_CHARACTER.setExperiencePoint(100);
-        MagicAbility ability = new MagicAbility(fireSpell.getName(), 10,1,"Magic");
+        MagicAbility ability = new MagicAbility(fireSpell.getName(), 10,1);
         ability.setCharacter(DEFAULT_CHARACTER);
         DEFAULT_CHARACTER.decreaseXP(20);
         DEFAULT_CHARACTER.forgetSpell(fireSpell);
@@ -73,7 +73,7 @@ public class AbilityTest {
     public void testMagicAbilityNotAffected() {
         Spell iceSpell = new Spell("Ice");
         DEFAULT_CHARACTER.addSpell(iceSpell);
-        MagicAbility ability = new MagicAbility(iceSpell.getName(), 10,1,"Magic");
+        MagicAbility ability = new MagicAbility(iceSpell.getName(), 10,1);
         ability.setCharacter(DEFAULT_CHARACTER);
         //boolean affectedDamage = ability.calculateAffect();
         assertTrue(ability.calculateAffect());
@@ -82,7 +82,7 @@ public class AbilityTest {
     @Test
     @DisplayName("Test for calculating damage for Magic Ability when character has low level")
     public void testMagicCalculateDamageForLowLevelPlayer() {
-        MagicAbility fireBall = new MagicAbility("Fireball",10,1,"Magic");
+        MagicAbility fireBall = new MagicAbility("Fireball",10,1);
         DEFAULT_CHARACTER.setLevel(1);
         DEFAULT_CHARACTER.setExperiencePoint(0);
         int damage = fireBall.calculateDamage(DEFAULT_CHARACTER);
@@ -92,7 +92,7 @@ public class AbilityTest {
     @Test
     @DisplayName("Test for calculating damage for Magic Ability when character has high level")
     public void testMagicCalculateDamageForHighLevelPlayer() {
-        MagicAbility fireBall = new MagicAbility("Fireball",10,1,"Magic");
+        MagicAbility fireBall = new MagicAbility("Fireball",10,1);
         DEFAULT_CHARACTER.setLevel(10);
         DEFAULT_CHARACTER.setExperiencePoint(100);
         int damage = fireBall.calculateDamage(DEFAULT_CHARACTER);
@@ -102,7 +102,7 @@ public class AbilityTest {
     @Test
     @DisplayName("Test for calculating damage for Physical Ability when character has low level")
     public void testPhysicalCalculateDamageForLowLevelPlayer() {
-        PhysicalAbility sword = new PhysicalAbility("Sword", 5,1, "Physical");
+        PhysicalAbility sword = new PhysicalAbility("Sword", 5,1);
         DEFAULT_CHARACTER.setLevel(1);
         DEFAULT_CHARACTER.setExperiencePoint(0);
         int damage = sword.calculateDamage(DEFAULT_CHARACTER);
@@ -112,7 +112,7 @@ public class AbilityTest {
     @Test
     @DisplayName("Test for calculating damage for Physical Ability when character has high level")
     public void testPhysicalCalculateDamageForHighLevelPlayer() {
-        PhysicalAbility sword = new PhysicalAbility("Sword", 5,1, "Physical");
+        PhysicalAbility sword = new PhysicalAbility("Sword", 5,1);
         DEFAULT_CHARACTER.setLevel(10);
         DEFAULT_CHARACTER.setExperiencePoint(100);
         int damage = sword.calculateDamage(DEFAULT_CHARACTER);

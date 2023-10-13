@@ -34,7 +34,7 @@ public class InteractableTest {
     @DisplayName("Testar Equipments actions")
     public void testEquipmentHasCorrectActions() {
         Set<Interactable.InteractableAction> possibleInteractableActions = new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP, Interactable.InteractableAction.WEAR));
-        Interactable i1 = new Equipment("Steel Sword", possibleInteractableActions, Equipment.Effect.HEALTH, 0, new PhysicalAbility("SuperArrow",15,"Physical"));
+        Interactable i1 = new Equipment("Steel Sword", possibleInteractableActions, Equipment.Effect.HEALTH, 0, new PhysicalAbility("SuperArrow",15,1));
         assertEquals(possibleInteractableActions, i1.getPossibleActions());
     }
 
