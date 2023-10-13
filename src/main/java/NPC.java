@@ -5,8 +5,8 @@ public class NPC extends Character {
     private Set<InteractableAction> possibleInteractableActions;
     private String name;
 
-    public NPC(String name, int health, int speed, Set<InteractableAction> possibleInteractableActions) {
-        super(health, speed);
+    public NPC(String name, int health, int speed, int experiencePoint, Set<InteractableAction> possibleInteractableActions) {
+        super(health, speed, experiencePoint);
         this.name = name;
         this.possibleInteractableActions = possibleInteractableActions;
     }

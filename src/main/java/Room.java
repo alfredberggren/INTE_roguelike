@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Room {
@@ -6,6 +8,8 @@ public class Room {
     private static final Integer INTERACTABLE_ADDEND = 1;
     private Position position;
     private InteractableInventory interactables;
+
+    private List<CardinalDirection> possibleRoutes;
 
     //TODO: Implementera "possible routes", set och get
 
@@ -17,6 +21,7 @@ public class Room {
 
         this.position = position;
         this.interactables = interactables;
+        possibleRoutes = new ArrayList<>();
 
     }
 
@@ -61,6 +66,16 @@ public class Room {
     public void removeInteractable(Interactable i, Integer amount){
         interactables.remove(i, amount);
     }
+
+    public void setPossibleRoutes(List<CardinalDirection> directions){
+        possibleRoutes = directions;
+    }
+
+    public List<CardinalDirection> getPossibleRoutes(){
+        return possibleRoutes;
+    }
+
+
 
 
 
