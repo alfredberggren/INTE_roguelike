@@ -29,26 +29,46 @@ public class MapBuilder {
         interactableBuilder = new InteractableBuilder(difficultyScale);
     }
 
-    //TODO: implementera något som gör att rummen inte går in i varandra!
+    //TODO: implementera något som gör att rummen inte går in i varandra! Eller vad som händer om det inte finns några directions att gå längre (direction = null)
     public void build() {
+        //Set up first room
         dynPos = new Position(START_XY, START_XY);
         InteractableInventory dynInteractables;
         int randomInteractableDeterminator;
         mapController.add(dynPos, new Room(dynPos));
 
+        //Set up rest of rooms
         for (int i = 0; i < amountOfRooms; i++) {
             dynInteractables = new InteractableInventory();
-            List<CardinalDirection> tempAvailableDirections = mapController.getUnavailableDirections(dynPos);
-            int nextDir = r.nextInt(tempAvailableDirections.size());
-            CardinalDirection c = tempAvailableDirections.get(nextDir);
-            dynPos = getNextPosition(c, dynPos);
 
+            //Check where rooms can be created from current room
+            List<CardinalDirection> tempAvailableDirections = mapController.getUnavailableDirections(dynPos);
+
+            //choose random direction
+            int nextDir = r.nextInt(tempAvailableDirections.size());
+            CardinalDirection direction = tempAvailableDirections.get(nextDir);
+            //Position oldPos = dynPos;
+
+            //Generate new XY-position from direction and current position
+            dynPos = getNextPosition(direction, dynPos);
+
+//            if (dynPos == null) {
+//              do what?!
+//            }
+
+//            if (mapController.roomExists(dynPos)){
+//                mapController.getRoom(dynPos).addPossibleRoute(something with oldPos);
+//            }
+
+            //Check if interactables should generate in new room
             randomInteractableDeterminator = r.nextInt(INTERACTABLE_PERCENTAGE) + 1;
             if (randomInteractableDeterminator == 1) {
                 dynInteractables = generateInteractables();
             }
             mapController.add(dynPos, new Room(dynPos, dynInteractables));
         }
+        //Set all rooms in maps available directions
+        mapController.setAvailableDirectionsInRooms();
 
 
     }

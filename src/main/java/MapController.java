@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * TODO: Mindre hårdkodade grunkor
@@ -50,6 +51,16 @@ public class MapController {
         List<CardinalDirection> directions = getAvailableDirections(position);
         allDirections.removeAll(directions);
         return allDirections;
+    }
+
+    public void setAvailableDirectionsInRooms(){
+        for (Map.Entry<Position, Room> e: gameMap){
+            e.getValue().setPossibleRoutes(getAvailableDirections(e.getKey()));
+        }
+    }
+
+    public Room getRoom(Position pos){
+        return gameMap.get(pos);
     }
 
     @Override
