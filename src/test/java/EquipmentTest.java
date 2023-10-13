@@ -14,42 +14,42 @@ public class EquipmentTest {
     @Test
     @DisplayName("Testar att en equipment har ett namn")
     public void testEquipmentName() {
-        Equipment e = new Equipment("test", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 10, new MagicAbility("Arrow",4,"Physical"));
+        Equipment e = new Equipment("test", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 10, new MagicAbility("Arrow",4,1,"Physical"));
         assertEquals("test", e.getName());
     }
 
     @Test
     @DisplayName("Testar att en equipment har effekt")
     public void testEquipmentEffect() {
-        Equipment e = new Equipment("test", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 100, new MagicAbility("MiniSword",2,"Physical"));
+        Equipment e = new Equipment("test", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 100, new MagicAbility("MiniSword",2,1,"Physical"));
         assertEquals(Equipment.Effect.DAMAGE, e.getEffect());
     }
 
     @Test
     @DisplayName("Testar att possibleActions blir korrekt")
     public void testPossibleActions() {
-        Equipment e = new Equipment("test", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.HEALTH, 100, new MagicAbility("MegaSword",40,"Physical"));
+        Equipment e = new Equipment("test", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.HEALTH, 100, new MagicAbility("MegaSword",40,1,"Physical"));
         assertEquals(DEFAULT_EQUIPMENT_ACTIONS, e.getPossibleActions());
     }
 
     @Test
     @DisplayName("Checking that Equipment have Magic Ability")
     public void testEquipmentHaveMagicAbility() {
-        Equipment e = new Equipment("test", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.HEALTH, 100, new MagicAbility("IceBall", 5,"Magic"));
+        Equipment e = new Equipment("test", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.HEALTH, 100, new MagicAbility("IceBall", 5,1,"Magic"));
         assertEquals("Magic", e.getAbility());
     }
 
     @Test
     @DisplayName("Checking that Equipment have Physical Ability")
     public void testEquipmentHavePhysicalAbility() {
-        Equipment e = new Equipment("test", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 100, new MagicAbility("Knife",5,"Physical"));
+        Equipment e = new Equipment("test", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 100, new MagicAbility("Knife",5,1,"Physical"));
         assertEquals("Physical", e.getAbility());
     }
 
     @Test
     @DisplayName("Check that damage has been modified")
     public void testDamageModified() {
-        Equipment e = new Equipment("test", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 50, new MagicAbility("Fireball", 30,"Magic"));
+        Equipment e = new Equipment("test", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 50, new MagicAbility("Fireball", 30,1,"Magic"));
         e.damageModifier(60);
         assertEquals(50, e.getDamageOnEquipment());
     }
@@ -57,7 +57,7 @@ public class EquipmentTest {
     @Test
     @DisplayName("Check if method throws exception when damageBar is 0 and equipment is destroyed")
     public void testEquipmentDisappearWhenDamageBarReachesZero(){
-        Equipment e = new Equipment("Sword", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword",10,"Physical"));
+        Equipment e = new Equipment("Sword", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword",10,1,"Physical"));
         assertThrows(RuntimeException.class, () -> e.damageModifier(0));
     }
    /* @Test

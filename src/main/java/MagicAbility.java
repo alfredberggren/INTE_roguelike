@@ -6,8 +6,8 @@ public class MagicAbility extends Ability{
     //ifall man förlorar XP eftersom man går ju inte ner i level
     //bara för att man förlorar ex en fight men XP kan ju minska?
 
-    MagicAbility(String name, int baseDamage, String magicAbility){
-        super(name, baseDamage);
+    MagicAbility(String name, int baseDamage, int minimumLevel, String magicAbility){
+        super(name, baseDamage, minimumLevel);
         this.magicAbility = magicAbility;
     }
 
@@ -25,10 +25,6 @@ public class MagicAbility extends Ability{
     // character då player är den som har level/XP, en character är både players eller NPCs
     //annars måste level/XP finnas i character klassen
 
-    public boolean isLearnable(Character character) {
-        return true;
-    }
-
     @Override
     public String typeOfAbility() {
         return magicAbility;
@@ -41,11 +37,6 @@ public class MagicAbility extends Ability{
         } else {
             return true;
         }
-    }
-
-    @Override
-    public String toString() {
-        return magicAbility;
     }
 
 }
