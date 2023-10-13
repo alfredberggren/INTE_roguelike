@@ -29,6 +29,7 @@ public class MapBuilder {
         interactableBuilder = new InteractableBuilder(difficultyScale);
     }
 
+    //TODO: implementera något som gör att rummen inte går in i varandra!
     public void build() {
         dynPos = new Position(START_XY, START_XY);
         InteractableInventory dynInteractables;
@@ -48,21 +49,23 @@ public class MapBuilder {
             }
             mapController.add(dynPos, new Room(dynPos, dynInteractables));
         }
+
+
     }
 
-    private Position getNextPosition(CardinalDirection cardinalDirection, Position oldPos) {
+    private Position getNextPosition(CardinalDirection cardinalDirection, Position currentPos) {
         switch (cardinalDirection) {
             case EAST -> {
-                return new Position(oldPos.getX() + 1, oldPos.getY());
+                return new Position(currentPos.getX() + 1, currentPos.getY());
             }
             case WEST -> {
-                return new Position(oldPos.getX() - 1, oldPos.getY());
+                return new Position(currentPos.getX() - 1, currentPos.getY());
             }
             case NORTH -> {
-                return new Position(oldPos.getX(), oldPos.getY() + 1);
+                return new Position(currentPos.getX(), currentPos.getY() + 1);
             }
             case SOUTH -> {
-                return new Position(oldPos.getX(), oldPos.getY() - 1);
+                return new Position(currentPos.getX(), currentPos.getY() - 1);
             }
             default -> {
                 return null;
