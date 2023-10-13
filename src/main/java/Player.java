@@ -18,7 +18,9 @@ public class Player extends Character{
     public Position getPos() {return pos;}
 
     @Override
-    public int getExperiencePoint() {return experiencePoint;}
+    public int getExperiencePoint() {
+        return experiencePoint;
+    }
 
     @Override
     public void setExperiencePoint(int experiencePoint) {

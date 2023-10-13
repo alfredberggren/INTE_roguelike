@@ -1,4 +1,5 @@
 enum EquipmentSlot {
+
     HEAD, SHOULDERS, CHEST, WRIST, LEFT_HAND,
     RIGHT_HAND, NECK, BACK, BELT;
 }

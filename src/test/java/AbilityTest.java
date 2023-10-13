@@ -64,7 +64,6 @@ public class AbilityTest {
         ability.setCharacter(DEFAULT_CHARACTER);
         DEFAULT_CHARACTER.decreaseXP(20);
         DEFAULT_CHARACTER.forgetSpell(fireSpell);
-        //boolean affectedDamage = ability.calculateAffect();
         assertFalse(ability.calculateImpactOnAbility());
     }
 
@@ -75,7 +74,7 @@ public class AbilityTest {
         DEFAULT_CHARACTER.addSpell(iceSpell);
         MagicAbility ability = new MagicAbility(iceSpell.getName(), 10,1);
         ability.setCharacter(DEFAULT_CHARACTER);
-        //boolean affectedDamage = ability.calculateAffect();
+        DEFAULT_CHARACTER.setExperiencePoint(150);
         assertTrue(ability.calculateImpactOnAbility());
     }
 
@@ -117,6 +116,22 @@ public class AbilityTest {
         DEFAULT_CHARACTER.setExperiencePoint(100);
         int damage = sword.calculateDamageOfAbility(DEFAULT_CHARACTER);
         assertEquals(35, damage);
+    }
+
+    @Test
+    @DisplayName("Test that a character is able to learn Magic")
+    public void testCharacterCanLearnMagicAbility() {
+        DEFAULT_CHARACTER.setLevel(10);
+        MagicAbility fireMagic = new MagicAbility("Fireball", 10, 5);
+        assertTrue(fireMagic.isLearnable(DEFAULT_CHARACTER));
+    }
+
+    @Test
+    @DisplayName("Test that a character is not able to learn Magic")
+    public void testCharacterCannotLearnMagicAbility() {
+        DEFAULT_CHARACTER.setLevel(3);
+        MagicAbility fireMagic = new MagicAbility("Fireball", 10, 5);
+        assertFalse(fireMagic.isLearnable(DEFAULT_CHARACTER));
     }
 
 }
