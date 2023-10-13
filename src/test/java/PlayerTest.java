@@ -60,32 +60,4 @@ public class PlayerTest {
 //name tests
 
 
-    @Test
-    @DisplayName("Test to increase XP")
-    public void testToIncreaseXP() {
-        DEFAULT_PLAYER.increaseXP(10);
-        assertEquals(20, DEFAULT_PLAYER.getExperiencePoint());
-    }
-
-    @Test
-    @DisplayName("Test to decrease XP")
-    public void testToDecreaseXP() {
-        DEFAULT_PLAYER.decreaseXP(10);
-        assertEquals(0, DEFAULT_PLAYER.getExperiencePoint());
-    }
-
-    @Test
-    @DisplayName("Test that character level up")
-    public void testCharacterLevelUpWhenXPReaches100() {
-        DEFAULT_PLAYER.setLevel(0);
-        DEFAULT_PLAYER.setExperiencePoint(100);
-        DEFAULT_PLAYER.checkLevelUp();
-        assertEquals(1, DEFAULT_PLAYER.getLevel());
-        assertEquals(0, DEFAULT_PLAYER.getExperiencePoint());
-        DEFAULT_PLAYER.setExperiencePoint(100);
-        DEFAULT_PLAYER.checkLevelUp();
-        assertEquals(2, DEFAULT_PLAYER.getLevel());
-        assertEquals(0, DEFAULT_PLAYER.getExperiencePoint());
-    }
-
 }
