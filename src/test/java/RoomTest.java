@@ -20,8 +20,8 @@ public class RoomTest {
 
     static Room DEFAULT_ROOM;
 
-    static final Integer DEFAULT_INTERACTABLE_ADDEND = 1;
-    static final Integer DEFAULT_INTERACTABLE_SUBTRAHEND = 1;
+
+    //TODO: might need more rigourous testing
 
     @Test
     public void testConstructorSetsCorrectPosition() {
@@ -62,13 +62,21 @@ public class RoomTest {
     public void testSetDirectionsSetsDirectionsCorrectly(){
         setUpDefaultRoom();
         DEFAULT_ROOM.setPossibleRoutes(DEFAULT_DIRECTIONS);
-        assertSame(DEFAULT_DIRECTIONS, DEFAULT_ROOM.getPossibleRoutes());
+        for (int i = 0; i < DEFAULT_DIRECTIONS.size(); i++){
+            assertEquals(DEFAULT_DIRECTIONS.get(i), DEFAULT_ROOM.getPossibleRoutes().get(i));
+        }
+    }
+
+    @Test
+    public void testAddDirectionSetsDirectionCorrectly(){
+        setUpDefaultRoom();
+        DEFAULT_ROOM.addPossibleRoute(CardinalDirection.NORTH);
+        assertEquals(CardinalDirection.NORTH, DEFAULT_ROOM.getPossibleRoutes().get(0));
     }
 
 
     private void setUpDefaultInteractables(){
-        DEFAULT_INTERACTABLES.add(DEFAULT_EQUIPMENT, DEFAULT_INTERACTABLE_ADDEND);
-        DEFAULT_INTERACTABLES.add(DEFAULT_NPC, DEFAULT_INTERACTABLE_ADDEND);
+        DEFAULT_INTERACTABLES.add(DEFAULT_EQUIPMENT, DEFAULT_NPC);
     }
 
     private void setUpDefaultRoom() {
