@@ -9,7 +9,11 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class EquipmentTest {
-    static final Set<Interactable.InteractableAction> DEFAULT_EQUIPMENT_ACTIONS = new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP));
+    private static final Set<Interactable.InteractableAction> DEFAULT_EQUIPMENT_ACTIONS = new HashSet<>(Arrays.asList(
+            Interactable.InteractableAction.DROP,
+            Interactable.InteractableAction.LOOT,
+            Interactable.InteractableAction.USE)
+    );
 
     @Test
     @DisplayName("Testar att en equipment har ett namn")
