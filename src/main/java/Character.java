@@ -117,7 +117,6 @@ public class Character implements Interactable{
     }
     public boolean canUseMagic(){return canUseMagic;}
     public void checkLevelUp() {
-        //kolla om spelaren ska gå upp i nivå baserat på erfarenhet
         int experiencePerLevelUp = 100;
         while(experiencePoint >= experiencePerLevelUp && level < 10) {
             experiencePoint -= experiencePerLevelUp;

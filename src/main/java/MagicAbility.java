@@ -15,8 +15,8 @@ public class MagicAbility extends Ability{
     @Override
     public int calculateDamage(Character character) {
         int baseDamage = 10;
-        int levelBonus = player.getLevel() * 5;
-        int experienceBonus = player.getExperiencePoint() / 10;
+        int levelBonus = character.getLevel() * 5;
+        int experienceBonus = character.getExperiencePoint() / 10;
         return baseDamage + levelBonus + experienceBonus;
     } //har player här ist för
     // character då player är den som har level/XP, en character är både players eller NPCs
