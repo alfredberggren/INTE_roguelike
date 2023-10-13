@@ -1,8 +1,7 @@
 
 import org.junit.jupiter.api.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CharacterTest {
     static Character DEFAULT_CHARACTER;
@@ -16,7 +15,6 @@ public class CharacterTest {
     @DisplayName("Testar att entitetens hälsa blir korrekt")
     public void testCharacterHealth() {
         assertEquals(80, DEFAULT_CHARACTER.getHealth());
-
     }
 
     @Test
@@ -36,7 +34,7 @@ public class CharacterTest {
     }
 
     @Test
-    @DisplayName("assert throws exception if speed<0")
+    @DisplayName("Test throws exception if speed<0")
     public void testCharacterWithNegativeSpeed() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             new Character(100, -10);
@@ -58,6 +56,19 @@ public class CharacterTest {
         assertEquals(100, DEFAULT_CHARACTER.getHealth());
     }
 
+    @Test
+    @DisplayName("Test to increase mana")
+    public void testToIncreaseMana() {
+        DEFAULT_CHARACTER.increaseMana(20);
+        assertEquals(120, DEFAULT_CHARACTER.getMana());
+    }
+    @Test
+    @DisplayName("Test to decrease mana and use magic if mana=0")
+    public void testToDecreaseMana(){
+        DEFAULT_CHARACTER.decreaseMana(100);
+        assertEquals(0, DEFAULT_CHARACTER.getMana());
+        assertFalse(DEFAULT_CHARACTER.canUseMagic());
+    }
    /* @Test
     @DisplayName("Test that character get Magic Ability")
     public void testCharacterMagicAbility() {

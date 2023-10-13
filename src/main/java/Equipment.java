@@ -9,7 +9,7 @@ public class Equipment extends NonLivingEntity{
     private Position pos;
     private double damageBar;
 
-    public Equipment(String name, Set<InteractableAction> possibleActions, Effect effect, int damage, Ability ability, Position pos) {
+    public Equipment(String name, Set<InteractableAction> possibleActions, Effect effect, int damage, Ability ability) {
         super(name, possibleActions);
         this.effect = effect;
         this.damage = damage;

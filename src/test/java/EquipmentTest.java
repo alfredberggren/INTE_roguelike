@@ -1,4 +1,5 @@
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -6,8 +7,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class EquipmentTest {
     static final Set<Interactable.InteractableAction> DEFAULT_EQUIPMENT_ACTIONS = new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP));
@@ -63,4 +63,17 @@ public class EquipmentTest {
         Equipment e = new Equipment("Sword", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword",10,"Physical"));
         assertThrows(RuntimeException.class, () -> e.damageModifier(0));
     }
+   /* @Test
+    @DisplayName("Två olika utrustningar har olika hashcode")
+    public void testTwoUnequalEquipmentsHaveUnequalHashCode(){
+        assertNotEquals(new Equipment("test", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 100, new MagicAbility("Knife",5,"Physical", DEFAULT_CHARACTER, DEFAULT_PLAYER)).hashCode(), new Equipment("Knife", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.HEALTH, 50, new PhysicalAbility("Sword",10,"Physical")).hashCode());
+    }
+    @Test
+    @DisplayName("Två utrustningar som är olika")
+    public void testTwoUnequalEquipments() {
+        assertNotEquals(new Equipment("test", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 100, new MagicAbility("Knife",5,"Physical", DEFAULT_CHARACTER, DEFAULT_PLAYER)), new Equipment("test", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.HEALTH, 100, new MagicAbility("IceBall", 5,"Magic", DEFAULT_CHARACTER, DEFAULT_PLAYER)));
+    }*/
+
+
 }
+

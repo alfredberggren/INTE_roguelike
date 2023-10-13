@@ -6,6 +6,7 @@ public class Player extends Character{
 
     private int experiencePoint;
     private int level;
+    private MagicAbility magicAbility;
     private String name;
     private static final String NAME_PATTERN = "^[A-Za-z]\\w{1,11}$";
     public Player(int health, int speed, int experiencePoint) {
@@ -49,6 +50,7 @@ public class Player extends Character{
         while(experiencePoint >= experiencePerLevelUp && level < 10) {
             experiencePoint -= experiencePerLevelUp;
             level++;
+            //this.magicAbility = new MagicAbility("New magic ability", 10, "magic ability");
             System.out.println("Congratulations! You've reached level " + level + "!");
         }
     }

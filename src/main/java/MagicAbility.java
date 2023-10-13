@@ -25,6 +25,7 @@ public class MagicAbility extends Ability{
         return baseDamage + levelBonus + experienceBonus;
     }
 
+
     @Override
     public String typeOfAbility() {
         return magicAbility;
