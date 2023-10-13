@@ -68,4 +68,54 @@ public class AbilityTest {
         assertEquals("You have forgotten a spell due to losing experience points", affectedDamage);
     }
 
+    @Test
+    @DisplayName("Testing that magic ability is not affected")
+    public void testMagicAbilityNotAffected() {
+        Spell iceSpell = new Spell("Ice");
+        DEFAULT_CHARACTER.addSpell(iceSpell);
+        MagicAbility ability = new MagicAbility(iceSpell.getName(), 10,"Magic", DEFAULT_CHARACTER, DEFAULT_PLAYER);
+        String affectedDamage = ability.calculateAffect();
+        assertEquals("You have not forgotten any spells", affectedDamage);
+    }
+
+    @Test
+    @DisplayName("Test for calculating damage for Magic Ability when player has low level")
+    public void testMagicCalculateDamageForLowLevelPlayer() {
+        MagicAbility fireBall = new MagicAbility("Fireball",10,"Magic");
+        DEFAULT_PLAYER.setLevel(1);
+        DEFAULT_PLAYER.setExperiencePoint(0);
+        int damage = fireBall.calculateDamage(DEFAULT_PLAYER);
+        assertEquals(15, damage);
+    }
+
+    @Test
+    @DisplayName("Test for calculating damage for Magic Ability when player has high level")
+    public void testMagicCalculateDamageForHighLevelPlayer() {
+        MagicAbility fireBall = new MagicAbility("Fireball",10,"Magic");
+        DEFAULT_PLAYER.setLevel(10);
+        DEFAULT_PLAYER.setExperiencePoint(100);
+        int damage = fireBall.calculateDamage(DEFAULT_PLAYER);
+        assertEquals(70, damage);
+    }
+
+    @Test
+    @DisplayName("Test for calculating damage for Physical Ability when player has low level")
+    public void testPhysicalCalculateDamageForLowLevelPlayer() {
+        PhysicalAbility sword = new PhysicalAbility("Sword", 5, "Physical");
+        DEFAULT_PLAYER.setLevel(1);
+        DEFAULT_PLAYER.setExperiencePoint(0);
+        int damage = sword.calculateDamage(DEFAULT_PLAYER);
+        assertEquals(7, damage);
+    }
+
+    @Test
+    @DisplayName("Test for calculating damage for Physical Ability when player has high level")
+    public void testPhysicalCalculateDamageForHighLevelPlayer() {
+        PhysicalAbility sword = new PhysicalAbility("Sword", 5, "Physical");
+        DEFAULT_PLAYER.setLevel(10);
+        DEFAULT_PLAYER.setExperiencePoint(100);
+        int damage = sword.calculateDamage(DEFAULT_PLAYER);
+        assertEquals(35, damage);
+    }
+
 }
