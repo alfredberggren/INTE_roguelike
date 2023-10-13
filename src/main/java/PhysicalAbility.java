@@ -1,6 +1,6 @@
 public class PhysicalAbility extends Ability{
 
-    private String physicalAbility;
+    private String physicalAbility; //representerar typen av physical ability
     PhysicalAbility(String name, int baseDamage, String physicalAbility){
         super(name, baseDamage);
         this.physicalAbility = physicalAbility;
