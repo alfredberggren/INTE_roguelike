@@ -20,7 +20,6 @@ public class MagicAbility extends Ability{
     }
 
     public boolean calculateImpactOnAbility() {
-        //man glömmer spells
         int MINIMUM_XP_TO_RETAIN_SPELL = 100;
         if(!character.getSpell() && character.getExperiencePoint() < MINIMUM_XP_TO_RETAIN_SPELL) {
             character.forgetSpell(new Spell("Fire"));
