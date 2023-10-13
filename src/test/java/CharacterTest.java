@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CharacterTest {
     static Character DEFAULT_CHARACTER;
     static Character DEFAULT_CHARACTER_WITH_POS = new Character(0, 9, new Position(1, 2));
+
     @BeforeEach
     void setUp() {
         DEFAULT_CHARACTER = new Character(80, 20, 10);
@@ -62,9 +63,10 @@ public class CharacterTest {
         DEFAULT_CHARACTER.increaseMana(20);
         assertEquals(120, DEFAULT_CHARACTER.getMana());
     }
+
     @Test
     @DisplayName("Test to decrease mana and use magic if mana=0")
-    public void testToDecreaseMana(){
+    public void testToDecreaseMana() {
         DEFAULT_CHARACTER.decreaseMana(100);
         assertEquals(0, DEFAULT_CHARACTER.getMana());
         assertFalse(DEFAULT_CHARACTER.canUseMagic());
@@ -98,18 +100,28 @@ public class CharacterTest {
         assertEquals(0, DEFAULT_CHARACTER.getExperiencePoint());
     }
 
-   @Test
+    @Test
     @DisplayName("Test that character get Magic Ability")
     public void testCharacterMagicAbility() {
-        Character c = new Character(100, 10,10);
-        MagicAbility fireMagic = new MagicAbility("Fireball",20,1);
+        Character c = new Character(100, 10, 10);
+        MagicAbility fireMagic = new MagicAbility("Fireball", 20, 1);
         c.setMagicAbility(fireMagic);
         //assertEquals("Wizard", c.getName());
         assertEquals("Fireball", fireMagic.name);
     }
 
+    @Test
+    @DisplayName("Test set-method at health=0")
+    public void testIfCharacterIsDeadWhenHealthIsZero() {
+        DEFAULT_CHARACTER.setHealth(0);
+        assertTrue(DEFAULT_CHARACTER.isDead());
+    }
 
+    @Test
+    @DisplayName("Test set-method at health<0")
+    public void testThrowsExceptionWithNegativeHealth() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            DEFAULT_CHARACTER.setHealth(-10);
+        });
+    }
 }
-
-
-
