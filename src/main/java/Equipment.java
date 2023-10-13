@@ -6,6 +6,7 @@ public class Equipment extends NonLivingEntity{
     private Effect effect;
     private int damage;
     private Ability ability;
+    private Position pos;
     private double damageBar;
 
     public Equipment(String name, Set<InteractableAction> possibleActions, Effect effect, int damage, Ability ability) {
@@ -13,6 +14,7 @@ public class Equipment extends NonLivingEntity{
         this.effect = effect;
         this.damage = damage;
         this.ability = ability;
+        this.pos = new Position(0,0);
     }
 
     public String getName(){
@@ -31,18 +33,26 @@ public class Equipment extends NonLivingEntity{
         SPEED, HEALTH, DAMAGE, ARMOR
     }
 
+    public enum Armor {
+        HELMET, CHEST_ARMOR, LEGGING, BOOTS
+    }
+
     public String getAbility(){
          return ability.getTypeOfAbility();
     }
 
-    public double damageModifier(double damageBar) {
+    public void damageModifier(double damageBar) {
         double decreaseBy = 10;
-        if(10 <= damageBar || damageBar <= 100) {
-            setDamageOnEquipment(damageBar - decreaseBy);
-            return damageBar;
+        if(damageBar >= 10 && damageBar <= 100) {
+            damageBar -= decreaseBy;
+            if(damageBar <= 0) {
+                setDamageOnEquipment(0);
+            }
         }
         setDamageOnEquipment(damageBar);
-        return damageBar;
+        if(damageBar == 0) {
+            throw new RuntimeException("Equipment has been destroyed!");
+        }
     }
 
     public void setDamageOnEquipment(double damageBar){

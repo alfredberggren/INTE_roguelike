@@ -1,7 +1,14 @@
 
 public abstract class Ability {
 
-    public String ability;
+    protected String name;
+    protected int baseDamage;
+
+    public Ability(String name, int baseDamage) {
+        this.name = name;
+        this.baseDamage = baseDamage;
+    }
+    abstract public int calculateDamage(Player player);
 
     abstract public String typeOfAbility();
 
