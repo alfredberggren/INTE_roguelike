@@ -104,7 +104,7 @@ public class IOTest {
         Room tempRoom = new Room(new Position(0, 0));
         // Needs updating when Character constructor is updated
         Character tempCharacter = new Character(0, 0, new Position(0, 0));
-        assertEquals(IO.TurnCommand.ACTION, tempTextUI.requestAnotherCommand(tempRoom, tempCharacter));
+        assertEquals(IO.TurnCommand.ACTION, tempTextUI.requestAnotherTurnCommand(tempRoom, tempCharacter));
         InputStream outputStreamRead = new ByteArrayInputStream(outputStream.toByteArray());
 
         Scanner scanner = new Scanner(outputStreamRead);
@@ -255,4 +255,28 @@ public class IOTest {
         });
     }
 
+    @Test
+    public void testRequestAnotherActionAfterFail() {
+        String inputString = "loot";
+        String failedMoveString = "Action is not allowed";
+        InputStream tempInputStream = new ByteArrayInputStream(inputString.getBytes());
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(outputStream);
+        System.setIn(tempInputStream);
+        System.setOut(printStream);
+
+        TextUI tempTextUI = new TextUI();
+        // Needs updating when Room constructor is updated
+        Room tempRoom = new Room(new Position(0, 0));
+        // Needs updating when Character constructor is updated
+        Character tempCharacter = new Character(0, 0, new Position(0, 0));
+        assertEquals(Interactable.InteractableAction.LOOT, tempTextUI.requestAnotherAction(tempRoom, tempCharacter));
+        
+        //Checks the method outputs the correct string
+        InputStream outputStreamRead = new ByteArrayInputStream(outputStream.toByteArray());
+        Scanner scanner = new Scanner(outputStreamRead);
+        String scannedLine = scanner.nextLine();
+        scanner.close();
+        assertEquals(failedMoveString, scannedLine);
+    }
 }
