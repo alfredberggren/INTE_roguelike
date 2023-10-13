@@ -14,7 +14,6 @@ public class Character implements Interactable{
     private Position pos;
     private boolean isDead = false;
     protected Set<Ability> possibleAbilities;
-    private EquipmentInventory equipments;
     private PhysicalAbility physicalAbility;
     private MagicAbility magicAbility;
     private boolean spell;
@@ -67,7 +66,6 @@ public class Character implements Interactable{
 
     public Set<Ability> getPossibleAbilities() {return possibleAbilities;}
 
-    public EquipmentInventory getEquipments() {return equipments;}
     public MagicAbility getMagicAbility() {
         return magicAbility;
     }
