@@ -14,14 +14,14 @@ public class InteractableInventoryTest {
 
     static final NPC DEFAULT_NPC = new NPC("Harald", 100, 50, DEFAULT_NPC_ACTIONS);
 
-    static final Equipment DEFAULT_EQUIPMENT = new Equipment("Sword", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 40, new PhysicalAbility("Slash"));
+    static final Equipment DEFAULT_EQUIPMENT = new Equipment("Sword", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 40, new PhysicalAbility("Slash",10,"Physical"));
 
     InteractableInventory inventory;
 
     @Test
     public void testAddMethodAddsInteractable(){
         inventory = new InteractableInventory();
-        Equipment e = new Equipment("Axe", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 20, new PhysicalAbility("Slash"));
+        Equipment e = new Equipment("Axe", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 20, new PhysicalAbility("Slash",10,"Physical"));
         inventory.add(e);
         assertEquals(true, inventory.contains(e));
     }
@@ -89,7 +89,7 @@ public class InteractableInventoryTest {
     public void testTransferMethodDoesNotTransferWhenInteractableNotInInventory(){
         setUpDefaultInventory();
         InteractableInventory inventory2 = new InteractableInventory();
-        Equipment e = new Equipment("Potion", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.HEALTH, 0, new MagicAbility("Heal"));
+        Equipment e = new Equipment("Potion", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.HEALTH, 0, new MagicAbility("Heal",10,"Magic"));
         inventory.transferInteractableTo(e, inventory2);
         assertEquals(false, inventory2.contains(DEFAULT_EQUIPMENT));
     }
