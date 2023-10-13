@@ -21,7 +21,7 @@ public class TextUI extends IO{
             case "east": return CardinalDirection.EAST;
             case "south": return CardinalDirection.SOUTH;
             case "west": return CardinalDirection.WEST;
-            default: return null;
+            default: throw new IllegalArgumentException(input + " is not a valid move.");
         }
     }
 
