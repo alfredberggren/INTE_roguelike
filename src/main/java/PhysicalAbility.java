@@ -1,14 +1,11 @@
 public class PhysicalAbility extends Ability{
 
-    private String physicalAbility; //representerar typen av physical ability
-
-    PhysicalAbility(String name, int baseDamage, int minimumLevel, String physicalAbility){
-        super(name, baseDamage, minimumLevel);
-        this.physicalAbility = physicalAbility;
+    PhysicalAbility(String name, int baseDamage, int minimumLevel){
+        super(name, baseDamage, AbilityType.PHYSICAL, minimumLevel);
     }
 
     @Override
-    public int calculateDamage(Character character) {
+    public int calculateDamageOfAbility(Character character) {
         int baseDamage = 5;
         int levelBonus = character.getLevel() * 2;
         int experienceBonus = character.getExperiencePoint() / 10;
@@ -16,12 +13,7 @@ public class PhysicalAbility extends Ability{
     }
 
     @Override
-    public String typeOfAbility() {
-        return physicalAbility;
-    }
-
-    @Override
     public String toString() {
-        return "Physical";
+        return String.valueOf(AbilityType.PHYSICAL);
     }
 }

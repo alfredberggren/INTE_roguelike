@@ -46,7 +46,7 @@ public class Equipment extends NonLivingEntity{
         HELMET, CHEST_ARMOR, LEGGING, BOOTS
     }
 
-    public String getAbility(){
+    public Ability.AbilityType getAbility(){
          return ability.getTypeOfAbility();
     }
 

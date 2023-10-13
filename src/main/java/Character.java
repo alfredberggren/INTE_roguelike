@@ -30,7 +30,7 @@ public class Character implements Interactable{
         this.speed = speed;
         this.experiencePoint = experiencePoint;
         mana = 100;
-        this.magicAbility = new MagicAbility("Hands",1,1,"No Magic"); //standard magisk förmåga
+        this.magicAbility = new MagicAbility("Hands",1,1);
         this.pos = new Position(0, 0);
         if(health > 0) {
             isDead = false;
