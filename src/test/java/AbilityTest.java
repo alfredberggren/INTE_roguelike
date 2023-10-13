@@ -64,7 +64,6 @@ public class AbilityTest {
         ability.setCharacter(DEFAULT_CHARACTER);
         DEFAULT_CHARACTER.decreaseXP(20);
         DEFAULT_CHARACTER.forgetSpell(fireSpell);
-        //boolean affectedDamage = ability.calculateAffect();
         assertFalse(ability.calculateImpactOnAbility());
     }
 
@@ -75,7 +74,7 @@ public class AbilityTest {
         DEFAULT_CHARACTER.addSpell(iceSpell);
         MagicAbility ability = new MagicAbility(iceSpell.getName(), 10,1);
         ability.setCharacter(DEFAULT_CHARACTER);
-        //boolean affectedDamage = ability.calculateAffect();
+        DEFAULT_CHARACTER.setExperiencePoint(150);
         assertTrue(ability.calculateImpactOnAbility());
     }
 
