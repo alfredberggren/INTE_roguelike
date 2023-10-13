@@ -53,9 +53,8 @@ public class EquipmentOnBodyTest {
     @Disabled
     @DisplayName("Test to drop non-existent equipment")
     public void testToDropNonExistentEquipment() {
-        EQUIPMENT_ON_BODY.putEquipment(DEFAULT_EQUIPMENT_SLOT, DEFAULT_EQUIPMENT);
-        EQUIPMENT_ON_BODY.dropEquipment(EquipmentSlot.RIGHT_HAND);
-        assertEquals("LEFT_HAND: Sword +50% DAMAGE", EQUIPMENT_ON_BODY.toString());
+        EQUIPMENT_ON_BODY.dropEquipment(DEFAULT_EQUIPMENT_SLOT);
+        assertEquals(null, EQUIPMENT_ON_BODY.toString());
     }
 
     @Test
