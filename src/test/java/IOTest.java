@@ -83,7 +83,7 @@ public class IOTest {
         Character tempCharacter = new Character(0, 0, new Position(0, 0));
 
         assertThrows(IllegalArgumentException.class, () ->{
-            tempTextUI.requestMove(tempRoom, tempCharacter);
+            tempTextUI.requestTurnCommand(tempRoom, tempCharacter);
         });
     }
 

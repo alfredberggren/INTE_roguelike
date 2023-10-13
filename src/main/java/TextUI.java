@@ -13,9 +13,7 @@ public class TextUI extends IO{
 
 
     public CardinalDirection requestMove(Room room, Character character){
-        Scanner scanner = new Scanner(System.in);
-        String input = scanner.nextLine();
-        scanner.close();
+        String input = getUserInput();
         switch(input){
             case "north": return CardinalDirection.NORTH;
             case "east": return CardinalDirection.EAST;
@@ -27,7 +25,7 @@ public class TextUI extends IO{
 
     public CardinalDirection requestAnotherMove(Room room, Character character){
         System.out.println("Move is not allowed");
-        return CardinalDirection.NORTH;
+        return requestMove(room, character);
     }
 
     public Interactable.InteractableAction requestAction(Room room, Character character){
@@ -38,5 +36,12 @@ public class TextUI extends IO{
     public Interactable.InteractableAction requestAnotherAction(Room room, Character character){
         System.out.println("Action is not allowed");
         return Interactable.InteractableAction.LOOT;
+    }
+
+    private String getUserInput(){
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
+        scanner.close();
+        return input;
     }
 }
