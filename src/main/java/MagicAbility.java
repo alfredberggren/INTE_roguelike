@@ -2,7 +2,6 @@ public class MagicAbility extends Ability{
 
     private String magicAbility; //representerar typen av magic ability
     private Character character;
-    private Player player;
     private final int MINIMUM_XP_TO_RETAIN_SPELL = 100; //man glömmer spells
     //ifall man förlorar XP eftersom man går ju inte ner i level
     //bara för att man förlorar ex en fight men XP kan ju minska?
@@ -10,6 +9,10 @@ public class MagicAbility extends Ability{
     MagicAbility(String name, int baseDamage, String magicAbility){
         super(name, baseDamage);
         this.magicAbility = magicAbility;
+    }
+
+    public void setCharacter(Character character) {
+        this.character = character;
     }
 
     @Override
@@ -31,12 +34,12 @@ public class MagicAbility extends Ability{
         return magicAbility;
     }
 
-    public String calculateAffect() {
-        if(!character.getSpell() && player.getExperiencePoint() < MINIMUM_XP_TO_RETAIN_SPELL) {
+    public boolean calculateAffect() {
+        if(!character.getSpell() && character.getExperiencePoint() < MINIMUM_XP_TO_RETAIN_SPELL) {
             character.forgetSpell(new Spell("Fire"));
-            return "You have forgotten a spell due to losing experience points";
+            return false;
         } else {
-            return "You have not forgotten any spells";
+            return true;
         }
     }
 

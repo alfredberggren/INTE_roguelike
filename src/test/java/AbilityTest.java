@@ -1,17 +1,16 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class AbilityTest {
 
     static Character DEFAULT_CHARACTER;
-    static Player DEFAULT_PLAYER;
 
     @BeforeEach
     void setUp() {
-        DEFAULT_PLAYER = new Player(100, 10, new Position(0,0), 50);
-        DEFAULT_CHARACTER = new Character(100,10, 50);
+        DEFAULT_CHARACTER = new Character(100,10, 100);
     }
     @Test
     @DisplayName("Returns if a Magic Ability exist")
@@ -62,10 +61,11 @@ public class AbilityTest {
         DEFAULT_CHARACTER.addSpell(fireSpell);
         DEFAULT_CHARACTER.setExperiencePoint(100);
         MagicAbility ability = new MagicAbility(fireSpell.getName(), 10,"Magic");
+        ability.setCharacter(DEFAULT_CHARACTER);
         DEFAULT_CHARACTER.decreaseXP(20);
         DEFAULT_CHARACTER.forgetSpell(fireSpell);
-        String affectedDamage = ability.calculateAffect();
-        assertEquals("You have forgotten a spell due to losing experience points", affectedDamage);
+        //boolean affectedDamage = ability.calculateAffect();
+        assertFalse(ability.calculateAffect());
     }
 
     @Test
@@ -74,12 +74,13 @@ public class AbilityTest {
         Spell iceSpell = new Spell("Ice");
         DEFAULT_CHARACTER.addSpell(iceSpell);
         MagicAbility ability = new MagicAbility(iceSpell.getName(), 10,"Magic");
-        String affectedDamage = ability.calculateAffect();
-        assertEquals("You have not forgotten any spells", affectedDamage);
+        ability.setCharacter(DEFAULT_CHARACTER);
+        //boolean affectedDamage = ability.calculateAffect();
+        assertTrue(ability.calculateAffect());
     }
 
     @Test
-    @DisplayName("Test for calculating damage for Magic Ability when player has low level")
+    @DisplayName("Test for calculating damage for Magic Ability when character has low level")
     public void testMagicCalculateDamageForLowLevelPlayer() {
         MagicAbility fireBall = new MagicAbility("Fireball",10,"Magic");
         DEFAULT_CHARACTER.setLevel(1);
@@ -89,7 +90,7 @@ public class AbilityTest {
     }
 
     @Test
-    @DisplayName("Test for calculating damage for Magic Ability when player has high level")
+    @DisplayName("Test for calculating damage for Magic Ability when character has high level")
     public void testMagicCalculateDamageForHighLevelPlayer() {
         MagicAbility fireBall = new MagicAbility("Fireball",10,"Magic");
         DEFAULT_CHARACTER.setLevel(10);
@@ -99,7 +100,7 @@ public class AbilityTest {
     }
 
     @Test
-    @DisplayName("Test for calculating damage for Physical Ability when player has low level")
+    @DisplayName("Test for calculating damage for Physical Ability when character has low level")
     public void testPhysicalCalculateDamageForLowLevelPlayer() {
         PhysicalAbility sword = new PhysicalAbility("Sword", 5, "Physical");
         DEFAULT_CHARACTER.setLevel(1);
@@ -109,7 +110,7 @@ public class AbilityTest {
     }
 
     @Test
-    @DisplayName("Test for calculating damage for Physical Ability when player has high level")
+    @DisplayName("Test for calculating damage for Physical Ability when character has high level")
     public void testPhysicalCalculateDamageForHighLevelPlayer() {
         PhysicalAbility sword = new PhysicalAbility("Sword", 5, "Physical");
         DEFAULT_CHARACTER.setLevel(10);
