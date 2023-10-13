@@ -79,7 +79,14 @@ public class Character implements Interactable{
         this.magicAbility = magicAbility;
     }
     public PhysicalAbility getPhysicalAbility() {return physicalAbility;}
-    public void setHealth(int health) {this.health = health;}
+    public void setHealth(int health) {
+        if(health<0){
+            throw new IllegalArgumentException("Health cannot be negative!");
+        }
+        if(health==0){
+            isDead = true;
+        }
+        this.health = health;}
     public void setPos(Position pos) {this.pos = pos;}
 
     public void setMana(int mana) {this.mana = mana;}
@@ -107,8 +114,6 @@ public class Character implements Interactable{
         int result = health - decrease;
         if(result<=0) {
             isDead = true;
-
-            //nollställa allt
             setHealth(0);
         }else {
             setHealth(result);
