@@ -119,4 +119,20 @@ public class AbilityTest {
         assertEquals(35, damage);
     }
 
+    @Test
+    @DisplayName("Test that a character is able to learn Magic")
+    public void testCharacterCanLearnMagicAbility() {
+        DEFAULT_CHARACTER.setLevel(10);
+        MagicAbility fireMagic = new MagicAbility("Fireball", 10, 5);
+        assertTrue(fireMagic.isLearnable(DEFAULT_CHARACTER));
+    }
+
+    @Test
+    @DisplayName("Test that a character is not able to learn Magic")
+    public void testCharacterCannotLearnMagicAbility() {
+        DEFAULT_CHARACTER.setLevel(3);
+        MagicAbility fireMagic = new MagicAbility("Fireball", 10, 5);
+        assertFalse(fireMagic.isLearnable(DEFAULT_CHARACTER));
+    }
+
 }
