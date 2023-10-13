@@ -39,7 +39,7 @@ public class IOTest {
         InputStream tempInputStream = new ByteArrayInputStream(inputString.getBytes());
         System.setIn(tempInputStream);
 
-        TextUI tempTextUI = new TextUI();
+        IO tempTextUI = new TextUI();
 
         // Needs updating when Room constructor is updated
         Room tempRoom = new Room(new Position(0, 0));
@@ -53,7 +53,7 @@ public class IOTest {
 
     @Test
     public void testRequestTurnCommandsAllTurnCommands() {
-        TextUI tempTextUI = new TextUI();
+        IO tempTextUI = new TextUI();
         // Needs updating when Room constructor is updated
         Room tempRoom = new Room(new Position(0, 0));
         // Needs updating when Character constructor is updated
@@ -78,7 +78,7 @@ public class IOTest {
         InputStream tempInputStream = new ByteArrayInputStream(inputString.getBytes());
         System.setIn(tempInputStream);
 
-        TextUI tempTextUI = new TextUI();
+        IO tempTextUI = new TextUI();
         // Needs updating when Room constructor is updated
         Room tempRoom = new Room(new Position(0, 0));
         // Needs updating when Character constructor is updated
@@ -91,7 +91,7 @@ public class IOTest {
 
     @Test
     public void testRequestTurnCommandIsNotAllowed() {
-         String inputString = "action";
+        String inputString = "action";
         String failedMoveString = "Command is not allowed";
         InputStream tempInputStream = new ByteArrayInputStream(inputString.getBytes());
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -119,7 +119,7 @@ public class IOTest {
         InputStream tempInputStream = new ByteArrayInputStream(inputString.getBytes());
         System.setIn(tempInputStream);
 
-        TextUI tempTextUI = new TextUI();
+        IO tempTextUI = new TextUI();
 
         // Needs updating when Room constructor is updated
         Room tempRoom = new Room(new Position(0, 0));
@@ -162,7 +162,7 @@ public class IOTest {
         InputStream tempInputStream = new ByteArrayInputStream(inputString.getBytes());
         System.setIn(tempInputStream);
 
-        TextUI tempTextUI = new TextUI();
+        IO tempTextUI = new TextUI();
         // Needs updating when Room constructor is updated
         Room tempRoom = new Room(new Position(0, 0));
         // Needs updating when Character constructor is updated
@@ -183,7 +183,7 @@ public class IOTest {
         System.setIn(tempInputStream);
         System.setOut(printStream);
 
-        TextUI tempTextUI = new TextUI();
+        IO tempTextUI = new TextUI();
         // Needs updating when Room constructor is updated
         Room tempRoom = new Room(new Position(0, 0));
         // Needs updating when Character constructor is updated
@@ -203,7 +203,7 @@ public class IOTest {
         InputStream tempInputStream = new ByteArrayInputStream(inputString.getBytes());
         System.setIn(tempInputStream);
 
-        TextUI tempTextUI = new TextUI();
+        IO tempTextUI = new TextUI();
 
         // Needs updating when Room constructor is updated
         Room tempRoom = new Room(new Position(0, 0));
@@ -217,7 +217,7 @@ public class IOTest {
 
     @Test
     public void testRequestActionAllActions() {
-        TextUI tempTextUI = new TextUI();
+        IO tempTextUI = new TextUI();
 
         // Needs updating when Room constructor is updated
         Room tempRoom = new Room(new Position(0, 0));
@@ -244,7 +244,7 @@ public class IOTest {
         InputStream tempInputStream = new ByteArrayInputStream(inputString.getBytes());
         System.setIn(tempInputStream);
 
-        TextUI tempTextUI = new TextUI();
+        IO tempTextUI = new TextUI();
         // Needs updating when Room constructor is updated
         Room tempRoom = new Room(new Position(0, 0));
         // Needs updating when Character constructor is updated
@@ -265,7 +265,7 @@ public class IOTest {
         System.setIn(tempInputStream);
         System.setOut(printStream);
 
-        TextUI tempTextUI = new TextUI();
+        IO tempTextUI = new TextUI();
         // Needs updating when Room constructor is updated
         Room tempRoom = new Room(new Position(0, 0));
         // Needs updating when Character constructor is updated
