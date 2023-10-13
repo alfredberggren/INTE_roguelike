@@ -26,8 +26,6 @@ public abstract class Ability {
         return character.getLevel() >= minimumLevel;
     }
 
-    public String toString(String s) {
-        return s;
-    }
+    abstract public String toString();
 
 }

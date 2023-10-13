@@ -18,11 +18,7 @@ public class MagicAbility extends Ability{
         int levelBonus = character.getLevel() * 5;
         int experienceBonus = character.getExperiencePoint() / 10;
         return baseDamage + levelBonus + experienceBonus;
-    } //har player här ist för
-    // character då player är den som har level/XP, en character är både players eller NPCs
-    //annars måste level/XP finnas i character klassen
-
-
+    }
 
     public boolean calculateAffect() {
         if(!character.getSpell() && character.getExperiencePoint() < MINIMUM_XP_TO_RETAIN_SPELL) {
@@ -31,6 +27,11 @@ public class MagicAbility extends Ability{
         } else {
             return true;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Magical";
     }
 
 }

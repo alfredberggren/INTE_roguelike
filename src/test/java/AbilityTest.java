@@ -16,7 +16,7 @@ public class AbilityTest {
     @DisplayName("Returns if a Magic Ability exist")
     public void testOnlyMagicAbility() {
         MagicAbility magicAbility = new MagicAbility("Fireball",25,1);
-        assertEquals("Magic", magicAbility.toString());
+        assertEquals("Magical", magicAbility.toString());
     }
 
     @Test
@@ -31,7 +31,7 @@ public class AbilityTest {
     public void testBothMagicAndPhysicalAbility() {
         MagicAbility magicAbility = new MagicAbility("Fireball", 20,1);
         PhysicalAbility physicalAbility = new PhysicalAbility("Sword", 10,1);
-        assertEquals("Magic" + "Physical", magicAbility.toString() + physicalAbility);
+        assertEquals("Magical" + "Physical", magicAbility.toString() + physicalAbility);
     }
 
     @Test
