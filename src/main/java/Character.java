@@ -11,6 +11,8 @@ public class Character implements Interactable{
     private int health;
     private int speed;
     private int mana;
+    private int experiencePoint;
+    private int level;
     private Position pos;
     private boolean isDead = false;
     protected Set<Ability> possibleAbilities;
@@ -20,12 +22,13 @@ public class Character implements Interactable{
     private ArrayList<Spell> knownSpells = new ArrayList<>();
     private boolean canUseMagic = true;
 
-    public Character(int health, int speed){
+    public Character(int health, int speed, int experiencePoint){
         if (health < 0 || speed < 0) {
             throw new IllegalArgumentException("Speed and health needs to be 0 or more");
         }
         this.health = health;
         this.speed = speed;
+        this.experiencePoint = experiencePoint;
         mana = 100;
         this.magicAbility = new MagicAbility("Hands",1,"No Magic"); //standard magisk förmåga
         this.pos = new Position(0, 0);
@@ -113,6 +116,45 @@ public class Character implements Interactable{
         return isDead;
     }
     public boolean canUseMagic(){return canUseMagic;}
+    public void checkLevelUp() {
+        //kolla om spelaren ska gå upp i nivå baserat på erfarenhet
+        int experiencePerLevelUp = 100;
+        while(experiencePoint >= experiencePerLevelUp && level < 10) {
+            experiencePoint -= experiencePerLevelUp;
+            level++;
+            //this.magicAbility = new MagicAbility("New magic ability", 10, "magic ability");
+            System.out.println("Congratulations! You've reached level " + level + "!");
+        }
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+    public int getExperiencePoint() {
+        return experiencePoint;
+    }
+
+    public void setExperiencePoint(int experiencePoint) {
+        this.experiencePoint = experiencePoint;
+    }
+
+    public void increaseXP(int add){
+        int result = experiencePoint + add;
+        setExperiencePoint(result);
+    }
+
+    public void decreaseXP(int decrease){
+        int result = experiencePoint - decrease;
+        if(result<0){
+            setExperiencePoint(0);
+        }else {
+            setExperiencePoint(result);
+        }
+    }
 
     @Override
     public Set<InteractableAction> getPossibleActions() {

@@ -8,7 +8,7 @@ public class CharacterTest {
     static Character DEFAULT_CHARACTER_WITH_POS = new Character(0, 9, new Position(1, 2));
     @BeforeEach
     void setUp() {
-        DEFAULT_CHARACTER = new Character(80, 20);
+        DEFAULT_CHARACTER = new Character(80, 20, 50);
     }
 
     @Test
@@ -29,7 +29,7 @@ public class CharacterTest {
     @DisplayName("assert throws exception if health<0")
     public void testCharacterWithNegativeHealth() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            new Character(-100, 10);
+            new Character(-100, 10, 50);
         });
     }
 
@@ -37,7 +37,7 @@ public class CharacterTest {
     @DisplayName("Test throws exception if speed<0")
     public void testCharacterWithNegativeSpeed() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            new Character(100, -10);
+            new Character(100, -10, 50);
         });
     }
 

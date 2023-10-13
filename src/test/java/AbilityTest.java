@@ -10,8 +10,8 @@ public class AbilityTest {
 
     @BeforeEach
     void setUp() {
-        DEFAULT_PLAYER = new Player(100, 10, 100);
-        DEFAULT_CHARACTER = new Character(100,10);
+        DEFAULT_PLAYER = new Player(100, 10, 50);
+        DEFAULT_CHARACTER = new Character(100,10, 50);
     }
     @Test
     @DisplayName("Returns if a Magic Ability exist")
