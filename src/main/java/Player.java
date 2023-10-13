@@ -8,22 +8,20 @@ public class Player extends Character{
     private int level;
     private MagicAbility magicAbility;
     private String name;
+    private Position pos;
     private static final String NAME_PATTERN = "^[A-Za-z]\\w{1,11}$";
-    public Player(int health, int speed, int experiencePoint) {
-        super(health, speed);
+    public Player(int health, int speed, Position pos, int experiencePoint) {
+        super(health, speed, pos);
         this.experiencePoint = experiencePoint;
     }
 
-    /*public void setDefaultValues(){  // ?defaultPosition
-
-    }*/
-
     public String getName(){return name;}
+    public Position getPos() {return pos;}
 
     public void setName(String name) {
         // user input
-        //the user name consists of 2 to 10 characters. If less - invalid username
-        //the usrname can only contain alphanumeric characters and underscores(_)
+        //the username consists of 2 to 10 characters. If less - invalid username
+        //the username can only contain alphanumeric characters and underscores(_)
         //uppercase, lowercase and digits (0-9)
         //the first character must be an alphabetic character
         if (name == null){
