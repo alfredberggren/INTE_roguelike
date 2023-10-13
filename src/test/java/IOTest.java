@@ -33,7 +33,7 @@ public class IOTest {
 
     @Test
     public void testRequestTurnCommand() {
-        String inputString = "move";
+        String inputString = "action";
         InputStream tempInputStream = new ByteArrayInputStream(inputString.getBytes());
         System.setIn(tempInputStream);
 

@@ -3,12 +3,18 @@ import java.util.Scanner;
 public class TextUI extends IO{
 
     public TurnCommand requestTurnCommand(Room room, Character character){
-        return TurnCommand.ACTION;
+        String input = getUserInput();
+        switch(input){
+            case "action": return TurnCommand.ACTION;
+            case "move": return TurnCommand.MOVE;
+            case "end turn": return TurnCommand.END;
+            default: throw new IllegalArgumentException(input + " is not a valid command.");
+        }
     }
 
     public IO.TurnCommand requestAnotherTurnCommand(Room room, Character character){
         System.out.println("Command is not allowed");
-        return TurnCommand.ACTION;
+        return requestTurnCommand(room, character);
     }
 
 
@@ -29,13 +35,21 @@ public class TextUI extends IO{
     }
 
     public Interactable.InteractableAction requestAction(Room room, Character character){
-        System.out.println("Action is not allowed");
-        return Interactable.InteractableAction.LOOT;
+        String input = getUserInput();
+        switch(input){
+            case "loot": return Interactable.InteractableAction.LOOT;
+            case "drop": return Interactable.InteractableAction.DROP;
+            case "fight": return Interactable.InteractableAction.FIGHT;
+            case "wear": return Interactable.InteractableAction.WEAR;
+            case "talk": return Interactable.InteractableAction.TALK;
+            case "use": return Interactable.InteractableAction.USE;
+            default: throw new IllegalArgumentException(input + " is not a valid action.");
+        }
     }
 
     public Interactable.InteractableAction requestAnotherAction(Room room, Character character){
         System.out.println("Action is not allowed");
-        return Interactable.InteractableAction.LOOT;
+        return requestAction(room, character);
     }
 
     private String getUserInput(){
