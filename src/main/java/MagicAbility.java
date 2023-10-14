@@ -20,6 +20,7 @@ public class MagicAbility extends Ability{
         int experienceBonus = character.getExperiencePoint() / 10;
         return baseDamage + levelBonus + experienceBonus;
     }
+
     /**Calculates the impact on the character's spellcasting ability,
      * if the character does not meet the required conditions to
      * retain the spell, the spell is forgotten*/

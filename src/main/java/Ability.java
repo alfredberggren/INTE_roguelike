@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 /**The Ability class represents an abstract concept of character abilities
  * It provides a foundation for creating various types of abilities */
 public abstract class Ability {
@@ -34,6 +36,24 @@ public abstract class Ability {
         return character.getLevel() >= minimumLevel;
     }
     /**Returns a string representation of the ability, its name*/
+
+    @Override
+    public boolean equals(Object o) {
+       if (this == o) {
+           return true;
+       }
+       if (o == null || getClass() != o.getClass()) {
+           return false;
+       }
+       Ability ability = (Ability) o;
+       return baseDamage == ability.baseDamage && minimumLevel == ability.minimumLevel &&
+               name.equals(ability.name) && type == ability.type;
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, baseDamage, type, minimumLevel);
+    }
+
     abstract public String toString();
 
 }

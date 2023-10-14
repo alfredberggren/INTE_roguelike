@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 /**The Spell class represents a magical spell with name, description, casting time and cool-down*/
 public class Spell {
 
@@ -43,5 +45,22 @@ public class Spell {
 
     public void setCoolDown(int coolDown) {
         this.coolDown = coolDown;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(this == o) {
+            return true;
+        }
+        if(o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Spell spell = (Spell) o;
+        return Objects.equals(name, spell.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }
