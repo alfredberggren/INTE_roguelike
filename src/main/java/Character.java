@@ -30,7 +30,7 @@ public class Character implements Interactable{
         this.speed = speed;
         this.experiencePoint= experiencePoint;
         mana = 100;
-        this.pos = new Position(0, 0);
+        pos = new Position(0, 0);
         if(health > 0) {
             isDead = false;
         }
@@ -43,7 +43,7 @@ public class Character implements Interactable{
         this.health = health;
         this.speed = speed;
         this.pos = pos;
-        this.experiencePoint=getExperiencePoint();
+        experiencePoint=0;
         if(health > 0) {
             isDead = false;
         }
