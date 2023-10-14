@@ -14,7 +14,7 @@ public class GameController {
 
     public static void main(String[] args) {
         MapController mapController = new MapController();
-        MapBuilder mapBuilder = new MapBuilder(Difficulty.HARD, 100, new Player("tet", 10, 10, 0), mapController);
+        MapBuilder mapBuilder = new MapBuilder(Difficulty.HARD, 10000, new Player(100, 10, 10), mapController);
         mapBuilder.build();
         System.out.println(mapController);
     }

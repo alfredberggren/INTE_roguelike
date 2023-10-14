@@ -55,4 +55,9 @@ public class InteractableInventory {
             throw new NullPointerException("Interactable can not be null!");
         }
     }
+
+    @Override
+    public String toString(){
+        return inventory.toString();
+    }
 }

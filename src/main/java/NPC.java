@@ -5,13 +5,17 @@ import java.util.Set;
 public class NPC extends Character implements Interactable {
     private Set<InteractableAction> possibleInteractableActions;
 
+    private String name;
+
     public NPC(String name, int health, int speed) {
-        super(name, health, speed);
+        super(health, speed);
         possibleInteractableActions = new HashSet<>(){{
             add(InteractableAction.TALK);
             add(InteractableAction.FIGHT);
             add(InteractableAction.LOOT);
         }};
+
+        this.name = name;
     }
 
     public Set<InteractableAction> getPossibleActions() {
@@ -29,5 +33,9 @@ public class NPC extends Character implements Interactable {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    public String getName(){
+        return name;
     }
 }

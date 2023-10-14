@@ -38,9 +38,9 @@ public class Position {
         return "Position [" + x + "." + y +"]";
     }
 
-    @Override
-    public String toString(){
-        return "Position=[ " + x + ", " + y + " ]";
-    }
+//    @Override
+//    public String toString(){
+//        return "Position=[ " + x + ", " + y + " ]";
+//    }
 
 }
