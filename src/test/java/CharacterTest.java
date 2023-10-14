@@ -73,6 +73,13 @@ public class CharacterTest {
     }
 
     @Test
+    @DisplayName("Test mana increase and ability to use magic")
+    public void testCharacterManaHandling() {
+        DEFAULT_CHARACTER.increaseMana(20);
+        assertEquals(120, DEFAULT_CHARACTER.getMana());
+    }
+
+    @Test
     @DisplayName("Test to increase XP")
     public void testToIncreaseXP() {
         DEFAULT_CHARACTER.setExperiencePoint(10);
@@ -109,6 +116,26 @@ public class CharacterTest {
         c.setMagicAbility(fireMagic);
         //assertEquals("Wizard", c.getName());
         assertEquals("Fireball", fireMagic.name);
+    }
+
+    @Test
+    @DisplayName("Test setting and getting Magic Ability")
+    public void testCharacterSetAndGetMagicAbility() {
+        MagicAbility fireMagic = new MagicAbility("Fireball", 20,1);
+        DEFAULT_CHARACTER.setMagicAbility(fireMagic);
+        assertEquals(fireMagic, DEFAULT_CHARACTER.getMagicAbility());
+    }
+
+    @Test
+    @DisplayName("Test adding and forgetting spells")
+    public void testCharacterSpellHandling() {
+        Spell fireSpell = new Spell("Fire");
+        Spell iceSpell = new Spell("Ice");
+        DEFAULT_CHARACTER.addSpell(fireSpell);
+        assertTrue(DEFAULT_CHARACTER.getKnownSpell().contains(fireSpell));
+        DEFAULT_CHARACTER.forgetSpell(fireSpell);
+        assertFalse(DEFAULT_CHARACTER.getKnownSpell().contains(fireSpell));
+        assertDoesNotThrow(() -> DEFAULT_CHARACTER.forgetSpell(iceSpell));
     }
 
     @Test

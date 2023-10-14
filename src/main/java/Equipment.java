@@ -9,6 +9,7 @@ public class Equipment extends NonLivingEntity{
     private Ability ability;
     private Position pos;
     private double damageBar;
+
     private static final Set<InteractableAction> STANDARD_INTERACTABLE_ACTIONS = new HashSet<>(Arrays.asList(
             InteractableAction.DROP,
             InteractableAction.LOOT,

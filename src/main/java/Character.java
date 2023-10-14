@@ -19,7 +19,7 @@ public class Character implements Interactable{
     private PhysicalAbility physicalAbility;
     private MagicAbility magicAbility;
     private boolean spell;
-    private ArrayList<Spell> knownSpells = new ArrayList<>();
+    private ArrayList<Spell> knownSpell = new ArrayList<>();
     private boolean canUseMagic = true;
 
     public Character(int health, int speed, int experiencePoint){
@@ -62,14 +62,17 @@ public class Character implements Interactable{
 
     /**Checks if Arraylist is not empty and if so removes the spell*/
     public void forgetSpell(Spell spell) {
-        if(!knownSpells.isEmpty()) {
-            knownSpells.remove(spell);
+        if(!knownSpell.isEmpty()) {
+            knownSpell.remove(spell);
         }
     }
 
     /**Adds a spell to the Arraylist*/
     public void addSpell(Spell spell) {
-        knownSpells.add(spell);
+        knownSpell.add(spell);
+    }
+    public ArrayList<Spell> getKnownSpell() {
+        return knownSpell;
     }
 
     public Set<Ability> getPossibleAbilities() {return possibleAbilities;}
