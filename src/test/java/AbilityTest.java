@@ -57,7 +57,7 @@ public class AbilityTest {
     @Test
     @DisplayName("Testing that magic ability is affected")
     public void testMagicAbilityAffected() {
-        Spell fireSpell = new Spell("Fire","Shoots fire");
+        Spell fireSpell = new Spell("Fire","Shoots fire",1,1);
         DEFAULT_CHARACTER.addSpell(fireSpell);
         DEFAULT_CHARACTER.setExperiencePoint(100);
         MagicAbility ability = new MagicAbility(fireSpell.getName(), 10,1);
@@ -70,7 +70,7 @@ public class AbilityTest {
     @Test
     @DisplayName("Testing that magic ability is not affected")
     public void testMagicAbilityNotAffected() {
-        Spell iceSpell = new Spell("Ice","Shoots ice");
+        Spell iceSpell = new Spell("Ice","Shoots ice",1,1);
         DEFAULT_CHARACTER.addSpell(iceSpell);
         MagicAbility ability = new MagicAbility(iceSpell.getName(), 10,1);
         ability.setCharacter(DEFAULT_CHARACTER);
