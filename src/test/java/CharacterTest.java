@@ -129,8 +129,8 @@ public class CharacterTest {
     @Test
     @DisplayName("Test adding and forgetting spells")
     public void testCharacterSpellHandling() {
-        Spell fireSpell = new Spell("Fire");
-        Spell iceSpell = new Spell("Ice");
+        Spell fireSpell = new Spell("Fire", "Shoots fire");
+        Spell iceSpell = new Spell("Ice", "Shoots ice");
         DEFAULT_CHARACTER.addSpell(fireSpell);
         assertTrue(DEFAULT_CHARACTER.getKnownSpell().contains(fireSpell));
         DEFAULT_CHARACTER.forgetSpell(fireSpell);
