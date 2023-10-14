@@ -28,7 +28,7 @@ public class Character implements Interactable{
         }
         this.health = health;
         this.speed = speed;
-        experiencePoint=0;
+        this.experiencePoint= experiencePoint;
         mana = 100;
         this.pos = new Position(0, 0);
         if(health > 0) {
@@ -43,7 +43,7 @@ public class Character implements Interactable{
         this.health = health;
         this.speed = speed;
         this.pos = pos;
-        experiencePoint=0;
+        this.experiencePoint=getExperiencePoint();
         if(health > 0) {
             isDead = false;
         }
@@ -75,15 +75,13 @@ public class Character implements Interactable{
         return knownSpell;
     }
 
-    public Set<Ability> getPossibleAbilities() {return possibleAbilities;}
-
     public MagicAbility getMagicAbility() {
         return magicAbility;
     }
     public void setMagicAbility(MagicAbility magicAbility) {
         this.magicAbility = magicAbility;
     }
-    public PhysicalAbility getPhysicalAbility() {return physicalAbility;}
+
     public void setHealth(int health) {
         if(health<0){
             throw new IllegalArgumentException("Health cannot be negative!");
@@ -92,6 +90,7 @@ public class Character implements Interactable{
             isDead = true;
         }
         this.health = health;}
+
     public void setPos(Position pos) {this.pos = pos;}
 
     public void setMana(int mana) {this.mana = mana;}
@@ -109,10 +108,9 @@ public class Character implements Interactable{
         setMana(result);
     }
 
-    public int increaseHealth(int add){
+    public void increaseHealth(int add){
         int result = health + add;
         setHealth(result);
-        return result;
     }
 
     public void decreaseHealth(int decrease) {
