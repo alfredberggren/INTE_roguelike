@@ -75,6 +75,7 @@ public class CharacterTest {
     @Test
     @DisplayName("Test to increase XP")
     public void testToIncreaseXP() {
+        DEFAULT_CHARACTER.setExperiencePoint(10);
         DEFAULT_CHARACTER.increaseXP(10);
         assertEquals(20, DEFAULT_CHARACTER.getExperiencePoint());
     }
