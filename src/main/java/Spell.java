@@ -1,4 +1,4 @@
-/**The Spell class represents a magical spell with name and description*/
+/**The Spell class represents a magical spell with name, description, casting time and cool-down*/
 public class Spell {
 
     private String name;
