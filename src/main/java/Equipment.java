@@ -1,3 +1,6 @@
+/**The Equipment class represents an item or piece of equipment,
+ * that can be used by characters. It extends the NonLivingEntity class*/
+
 import java.util.*;
 
 public class Equipment extends NonLivingEntity{
@@ -12,6 +15,7 @@ public class Equipment extends NonLivingEntity{
             InteractableAction.USE)
     );
 
+    /**Constructs Equipment with the specified characteristics*/
     public Equipment(String name, Set<InteractableAction> STANDARD_INTERACTABLE_ACTIONS, Effect effect, int damage, Ability ability) {
         super(name, STANDARD_INTERACTABLE_ACTIONS);
         this.effect = effect;
@@ -23,7 +27,7 @@ public class Equipment extends NonLivingEntity{
     public String getName(){
         return name;
     }
-
+    /**Retrieves the effect provided by the equipment*/
     public Effect getEffect() {
         return effect;
     }
@@ -38,18 +42,21 @@ public class Equipment extends NonLivingEntity{
         return possibleInteractableActions;
     }
 
+    /**Represents the possible effects of the equipment*/
     public enum Effect {
         SPEED, HEALTH, DAMAGE
     }
-
+    /**Represents different types of armor*/
     public enum Armor {
         HELMET, CHEST_ARMOR, LEGGING, BOOTS
     }
-
+    /**Retrieves the type of associated ability*/
     public Ability.AbilityType getAbility(){
          return ability.getTypeOfAbility();
     }
-
+    /**Modifies the damage to the equipment based on a damage bar value.
+     * If the damage bar falls to or below zero, the equipment is considered
+     * destroyed*/
     public void damageModifier(double damageBar) {
         double decreaseBy = 10;
         if(damageBar >= 10 && damageBar <= 100) {
@@ -63,11 +70,11 @@ public class Equipment extends NonLivingEntity{
             throw new RuntimeException("Equipment has been destroyed!");
         }
     }
-
+    /**Sets the damage bar value of the equipment*/
     public void setDamageOnEquipment(double damageBar){
         this.damageBar = damageBar;
     }
-
+    /**Retrieves the current damage bar value of the equipment*/
     public double getDamageOnEquipment(){
         return damageBar;
     }
@@ -85,6 +92,8 @@ public class Equipment extends NonLivingEntity{
         return Objects.hash(name, effect, damage, ability);
     }
 
+    /**Returns a string representation of the equipment,
+     *including its name, damage and effect*/
     @Override
     public String toString() {
         String s = name + " +" + damage + "% " + effect;
