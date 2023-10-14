@@ -16,21 +16,30 @@ public class EquipmentTest {
     );
 
     @Test
-    @DisplayName("Testar att en equipment har ett namn")
+    @DisplayName("Test that equipment has a name")
     public void testEquipmentName() {
         Equipment e = new Equipment("test", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 10, new MagicAbility("Arrow",4,1));
         assertEquals("test", e.getName());
     }
 
     @Test
-    @DisplayName("Testar att en equipment har effekt")
+    @DisplayName("Test setting position of equipment")
+    public void testSettingPosition() {
+        Position newPosition = new Position(1,1);
+        Equipment equipment = new Equipment("Test Equipment", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.HEALTH, 100, new MagicAbility("Test Magic Ability", 5, 1));
+        equipment.setPos(newPosition);
+        assertEquals(newPosition, equipment.getPos());
+    }
+
+    @Test
+    @DisplayName("Test that equipment has effect")
     public void testEquipmentEffect() {
         Equipment e = new Equipment("test", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 100, new MagicAbility("MiniSword",2,1));
         assertEquals(Equipment.Effect.DAMAGE, e.getEffect());
     }
 
     @Test
-    @DisplayName("Testar att possibleActions blir korrekt")
+    @DisplayName("Test that possibleActions is correct")
     public void testPossibleActions() {
         Equipment e = new Equipment("test", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.HEALTH, 100, new MagicAbility("MegaSword",40,1));
         assertEquals(DEFAULT_EQUIPMENT_ACTIONS, e.getPossibleActions());
