@@ -23,6 +23,13 @@ public class EquipmentTest {
     }
 
     @Test
+    @DisplayName("Test to create an equipment with valid parameters in constructor")
+    public void testConstructorWithValidParametersShouldSucceed() {
+        Equipment e = new Equipment("Sword", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 10, new MagicAbility("MegaSword",4,1));
+        assertEquals("Sword +10% DAMAGE", e.toString());
+    }
+
+    @Test
     @DisplayName("Test setting position of equipment")
     public void testSettingPosition() {
         Position newPosition = new Position(1,1);
@@ -73,16 +80,22 @@ public class EquipmentTest {
         Equipment e = new Equipment("Sword", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword",10,1));
         assertThrows(RuntimeException.class, () -> e.damageModifier(0));
     }
-   /* @Test
-    @DisplayName("Två olika utrustningar har olika hashcode")
+
+   @Test
+    @DisplayName("Two unequal equipments have unequal hashCode")
     public void testTwoUnequalEquipmentsHaveUnequalHashCode(){
-        assertNotEquals(new Equipment("test", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 100, new MagicAbility("Knife",5,"Physical", DEFAULT_CHARACTER, DEFAULT_PLAYER)).hashCode(), new Equipment("Knife", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.HEALTH, 50, new PhysicalAbility("Sword",10,"Physical")).hashCode());
+        assertNotEquals(new Equipment("Dagger", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 100, new MagicAbility("Dagger",5,1)).hashCode(), new Equipment("Sword", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.HEALTH, 50, new PhysicalAbility("FireBall",10,1)).hashCode());
     }
     @Test
-    @DisplayName("Två utrustningar som är olika")
+    @DisplayName("Two equipments which are unequal")
     public void testTwoUnequalEquipments() {
-        assertNotEquals(new Equipment("test", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 100, new MagicAbility("Knife",5,"Physical", DEFAULT_CHARACTER, DEFAULT_PLAYER)), new Equipment("test", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.HEALTH, 100, new MagicAbility("IceBall", 5,"Magic", DEFAULT_CHARACTER, DEFAULT_PLAYER)));
-    }*/
+        assertNotEquals(new Equipment("Dagger", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 100, new MagicAbility("Dagger",5,1)), new Equipment("Sword", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.HEALTH, 100, new MagicAbility("IceBall", 5,1)));
+    }
+    @Test
+    @DisplayName("Two equipments with same parameters have same hashCode")
+    public void testTwoEquipmentsWithSameParametersHaveSameHashCode(){
+        assertEquals(new Equipment("Dagger", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 100, new MagicAbility("Dagger",5,1)).hashCode(), new Equipment("Dagger", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 100, new MagicAbility("Dagger",5,1)).hashCode());
+    }
 
 
 }
