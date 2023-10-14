@@ -1,6 +1,6 @@
+/**The Character class represents a game character that can
+ * interact with the game world. It implements Interactable.*/
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 import java.util.Set;
 
 public class Character implements Interactable{
@@ -60,12 +60,14 @@ public class Character implements Interactable{
         return spell;
     }
 
+    /**Checks if Arraylist is not empty and if so removes the spell*/
     public void forgetSpell(Spell spell) {
         if(!knownSpells.isEmpty()) {
             knownSpells.remove(spell);
         }
     }
 
+    /**Adds a spell to the Arraylist*/
     public void addSpell(Spell spell) {
         knownSpells.add(spell);
     }
@@ -124,6 +126,11 @@ public class Character implements Interactable{
         return isDead;
     }
     public boolean canUseMagic(){return canUseMagic;}
+
+    /**Checks if the character has gained enough experience points to level up.
+     * If the character's experience points are greater than or equal to the experience
+     * required for the next level and the character's level is less than 10,
+     * the character levels up*/
     public void checkLevelUp() {
         int experiencePerLevelUp = 100;
         while(experiencePoint >= experiencePerLevelUp && level < 10) {
@@ -149,11 +156,13 @@ public class Character implements Interactable{
         this.experiencePoint = experiencePoint;
     }
 
+    /**Increases the character's experience points*/
     public void increaseXP(int add){
         int result = experiencePoint + add;
         setExperiencePoint(result);
     }
 
+    /**Decreases the character's experience points*/
     public void decreaseXP(int decrease){
         int result = experiencePoint - decrease;
         if(result<0){

@@ -1,3 +1,4 @@
+/**The Spell class represents a magical spell*/
 public class Spell {
 
     private String name;
