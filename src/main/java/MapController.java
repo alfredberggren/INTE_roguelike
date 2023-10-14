@@ -7,6 +7,7 @@ import java.util.Map;
  * TODO: Mindre hårdkodade grunkor
  * TODO: Items som genereras på mappen ska skickas in som en map med interactables som har en key för sannolikhetsvärdet.
  * TODO: De interactables som väljs ut ska baseras på gausskurvan.
+ * TODO: Skulle också kunna implementera en "Density" i MapBuilder, d.v.s. bestämma om kartan ska vara långa korridorer eller kompakta rum, svårt och kanske onödigt
  */
 
 public class MapController {
@@ -24,18 +25,18 @@ public class MapController {
         return gameMap.containsKey(position);
     }
 
-    public List<CardinalDirection> getAvailableDirections(Position p) {
+    public List<CardinalDirection> getAvailableDirections(Position position) {
         List<CardinalDirection> directions = new ArrayList<>();
-        if (roomExists(new Position(p.getX() + 1, p.getY()))) {
+        if (roomExists(new Position(position.getX() + 1, position.getY()))) {
             directions.add(CardinalDirection.EAST);
         }
-        if (roomExists(new Position(p.getX(), p.getY() + 1))) {
+        if (roomExists(new Position(position.getX(), position.getY() + 1))) {
             directions.add(CardinalDirection.NORTH);
         }
-        if (roomExists(new Position(p.getX() - 1, p.getY()))) {
+        if (roomExists(new Position(position.getX() - 1, position.getY()))) {
             directions.add(CardinalDirection.WEST);
         }
-        if (roomExists(new Position(p.getX(), p.getY() - 1))) {
+        if (roomExists(new Position(position.getX(), position.getY() - 1))) {
             directions.add(CardinalDirection.SOUTH);
         }
         return directions;
