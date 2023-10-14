@@ -134,4 +134,25 @@ public class AbilityTest {
         assertFalse(fireMagic.isLearnable(DEFAULT_CHARACTER));
     }
 
+    @Test
+    @DisplayName("Test equals method for Ability")
+    public void testAbilityEquals() {
+        Ability ability1 = new PhysicalAbility("Physical Attack",20,1);
+        Ability ability2 = new PhysicalAbility("Physical Attack", 20,1);
+        Ability ability3 = new MagicAbility("Magical Spell",30,2);
+        assertEquals(ability1, ability1);
+        assertEquals(ability1, ability2);
+        assertNotSame(ability1, ability3);
+    }
+
+    @Test
+    @DisplayName("Test hashCode method for Ability")
+    public void testAbilityHashCode() {
+        Ability ability1 = new PhysicalAbility("Physical Attack",20,1);
+        Ability ability2 = new PhysicalAbility("Physical Attack", 20,1);
+        Ability ability3 = new MagicAbility("Magical Spell",30,2);
+        assertEquals(ability1.hashCode(), ability2.hashCode());
+        assertNotSame(ability1.hashCode(), ability3.hashCode());
+    }
+
 }

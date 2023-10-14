@@ -2,6 +2,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 
 public class SpellTest {
 
@@ -67,6 +68,28 @@ public class SpellTest {
         assertEquals(10, spell.getCoolDown());
         spell.setCoolDown(5);
         assertEquals(5, spell.getCoolDown());
+    }
+
+    @Test
+    @DisplayName("Test equals method for Spell")
+    public void testSpellEquals() {
+       Spell spell1 = new Spell("Fireball", "A powerful fire spell",2,3);
+       Spell spell2 = new Spell("Fireball", "A powerful fire spell",2,3);
+       Spell spell3 = new Spell("Frostbolt", "A freezing spell",3,4);
+       assertEquals(spell1, spell1);
+       assertEquals(spell1, spell2);
+       assertNotSame(spell1, spell3);
+    }
+
+    @Test
+    @DisplayName("Test hashCode method for Spell")
+    public void testSpellHashCode() {
+        Spell spell1 = new Spell("Fireball", "A powerful fire spell",2,3);
+        Spell spell2 = new Spell("Fireball", "A powerful fire spell",2,3);
+        Spell spell3 = new Spell("Frostbolt", "A freezing spell",3,4);
+        assertEquals(spell1.hashCode(), spell1.hashCode());
+        assertEquals(spell1.hashCode(), spell2.hashCode());
+        assertNotSame(spell1, spell3);
     }
 
 }
