@@ -56,14 +56,14 @@ public class EquipmentTest {
     @DisplayName("Checking that Equipment have Magic Ability")
     public void testEquipmentHaveMagicAbility() {
         Equipment e = new Equipment("test", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.HEALTH, 100, new MagicAbility("IceBall", 5,1));
-        assertEquals("Magic", e.getAbility());
+        assertEquals("MAGICAL", e.getAbility());
     }
 
     @Test
     @DisplayName("Checking that Equipment have Physical Ability")
     public void testEquipmentHavePhysicalAbility() {
-        Equipment e = new Equipment("test", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 100, new MagicAbility("Knife",5,1));
-        assertEquals("Physical", e.getAbility());
+        Equipment e = new Equipment("test", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 100, new PhysicalAbility("Knife",5,1));
+        assertEquals("PHYSICAL", e.getAbility());
     }
 
     @Test

@@ -1,4 +1,3 @@
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,7 +25,11 @@ public class Player extends Character{
             throw new IllegalArgumentException("Experience points cannot be negative!");
         this.experiencePoint = experiencePoint;
     }
-
+    public void getRewardsAfterWinning(Quest quest){
+        if(quest.isCompleted()){
+            setExperiencePoint(experiencePoint += quest.getRewardXP());
+        }
+    }
     public void setName(String name) {
         // user input
         //the username consists of 2 to 10 characters. If less - invalid username

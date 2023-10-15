@@ -1,5 +1,4 @@
-/**The PhysicalAbility class extends the abstract Ability class
- * and represents a specific type of physical ability*/
+/**The PhysicalAbility class extends the abstract Ability class and represents a specific type of physical ability*/
 public class PhysicalAbility extends Ability{
 
     /**Constructs an Ability object with the specified characteristics*/
@@ -7,8 +6,7 @@ public class PhysicalAbility extends Ability{
         super(name, baseDamage, AbilityType.PHYSICAL, minimumLevel);
     }
 
-    /** {@inheritDoc}
-     * Calculates the damage inflicted by this specific physical ability*/
+    /** {@inheritDoc} Calculates the damage inflicted by this specific physical ability*/
     @Override
     public int calculateDamageOfAbility(Character character) {
         int baseDamage = 5;

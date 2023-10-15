@@ -4,7 +4,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -74,10 +73,10 @@ public class EquipmentOnBodyTest {
     }
 
     @Test
-    @DisplayName("Test to check where the equipment was placed but there is no such equipment in the map")
+    @DisplayName("Test to check where the non-existent equipment was placed in the map")
     public void testToCheckWhereNonExistentEquipmentWasPlaced() {
         EQUIPMENT_ON_BODY.putEquipment(DEFAULT_EQUIPMENT_SLOT, DEFAULT_EQUIPMENT);
-        assertEquals(null, EQUIPMENT_ON_BODY.checkWhereEquipmentWasPlaced(new Equipment("Dagger", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 60, new PhysicalAbility("Dagger", 20, 1))));
+        assertNull(EQUIPMENT_ON_BODY.checkWhereEquipmentWasPlaced(new Equipment("Dagger", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 60, new PhysicalAbility("Dagger", 20, 1))));
     }
 
 }

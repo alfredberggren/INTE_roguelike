@@ -1,7 +1,6 @@
 import java.util.Objects;
 
-/**The Ability class represents an abstract concept of character abilities
- * It provides a foundation for creating various types of abilities */
+/**The Ability class represents an abstract concept of character abilities. It provides a foundation for creating various types of abilities */
 public abstract class Ability {
 
     protected String name;
@@ -9,8 +8,7 @@ public abstract class Ability {
     protected AbilityType type;
     protected int minimumLevel;
 
-    /**Constructs an Ability object with the specified characteristics
-     * such as name, base damage, minimum level to retain and type of ability */
+    /**Constructs an Ability object with the specified characteristics, such as name, base damage, minimum level to retain and type of ability */
     public Ability(String name, int baseDamage, AbilityType type, int minimumLevel) {
         this.name = name;
         this.baseDamage = baseDamage;
@@ -18,8 +16,7 @@ public abstract class Ability {
         this.type = type;
     }
 
-    /**Calculates the damage inflicted by this ability
-     * when used by a character. */
+    /**Calculates the damage inflicted by this ability when used by a character. */
     abstract public int calculateDamageOfAbility(Character character);
 
     /**Representing the type of ability*/
@@ -30,12 +27,10 @@ public abstract class Ability {
     public AbilityType getTypeOfAbility(){
         return type;
     }
-    /**Checks whether the ability is learnable by a character
-     * based on their level*/
+    /**Checks whether the ability is learnable by a character based on their level*/
     public boolean isLearnable(Character character) {
         return character.getLevel() >= minimumLevel;
     }
-    /**Returns a string representation of the ability, its name*/
 
     @Override
     public boolean equals(Object o) {
@@ -54,6 +49,7 @@ public abstract class Ability {
         return Objects.hash(name, baseDamage, type, minimumLevel);
     }
 
+    /**Returns a string representation of the ability, its name*/
     abstract public String toString();
 
 }
