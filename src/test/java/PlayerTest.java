@@ -11,7 +11,7 @@ public class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        DEFAULT_PLAYER = new Player(80, 20, new Position(0,0));
+        DEFAULT_PLAYER = new Player(80, 20, new Position(0, 0));
     }
 
 
@@ -62,23 +62,31 @@ public class PlayerTest {
 
     @Test
     @DisplayName("Test that new player has XP=0")
-    public void testNewCharactersXP(){
+    public void testNewCharactersXP() {
         assertEquals(0, DEFAULT_PLAYER.getExperiencePoint());
     }
 
     @Test
     @DisplayName("Test to set correct experience points")
-    public void testSetCorrectXP(){
+    public void testSetCorrectXP() {
         DEFAULT_PLAYER.setExperiencePoint(100);
         assertEquals(100, DEFAULT_PLAYER.getExperiencePoint());
     }
+
     @Test
     @DisplayName("Test throws exception to set negative experience points")
-    public void testSetNegativeXP(){
+    public void testSetNegativeXP() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             DEFAULT_PLAYER.setExperiencePoint(-10);
         });
     }
 
-
+    @Test
+    @DisplayName("Test that player gets reward after winning")
+    public void testToGetRewardsAfterWinning() {
+        Quest DEFAULT_QUEST = new Quest("Kill Fido", QuestType.KILL, "Test description", 50);
+        DEFAULT_QUEST.completeQuest();
+        DEFAULT_PLAYER.getRewardsAfterWinning(DEFAULT_QUEST);
+        assertEquals(50, DEFAULT_PLAYER.getExperiencePoint());
+    }
 }
