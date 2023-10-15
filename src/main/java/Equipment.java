@@ -1,5 +1,4 @@
-/**The Equipment class represents an item or piece of equipment,
- * that can be used by characters. It extends the NonLivingEntity class*/
+/**The Equipment class represents an item or piece of equipment, that can be used by characters. It extends the NonLivingEntity class*/
 
 import java.util.*;
 
@@ -50,9 +49,7 @@ public class Equipment extends NonLivingEntity{
     public Ability.AbilityType getAbility(){
          return ability.getTypeOfAbility();
     }
-    /**Modifies the damage to the equipment based on a damage bar value.
-     * If the damage bar falls to or below zero, the equipment is considered
-     * destroyed*/
+    /**Modifies the damage to the equipment based on a damage bar value. If the damage bar falls to or below zero, the equipment is considered destroyed*/
     public void damageModifier(double damageBar) {
         double decreaseBy = 10;
         if(damageBar >= 10 && damageBar <= 100) {
@@ -88,8 +85,7 @@ public class Equipment extends NonLivingEntity{
         return Objects.hash(name, effect, damage, ability);
     }
 
-    /**Returns a string representation of the equipment,
-     *including its name, damage and effect*/
+    /**Returns a string representation of the equipment, including its name, damage and effect*/
     @Override
     public String toString() {
         String s = name + " +" + damage + "% " + effect;

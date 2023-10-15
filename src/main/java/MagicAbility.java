@@ -1,5 +1,4 @@
-/**The MagicAbility class extends the abstract Ability class
- * and represents a specific type of magical ability*/
+/**The MagicAbility class extends the abstract Ability class and represents a specific type of magical ability*/
 public class MagicAbility extends Ability{
     private Character character;
 
@@ -11,8 +10,7 @@ public class MagicAbility extends Ability{
     public void setCharacter(Character character) {
         this.character = character;
     }
-    /** {@inheritDoc}
-     * Calculates the damage inflicted by this specific magical ability*/
+    /** {@inheritDoc} Calculates the damage inflicted by this specific magical ability*/
     @Override
     public int calculateDamageOfAbility(Character character) {
         int baseDamage = 10;
@@ -21,9 +19,7 @@ public class MagicAbility extends Ability{
         return baseDamage + levelBonus + experienceBonus;
     }
 
-    /**Calculates the impact on the character's spellcasting ability,
-     * if the character does not meet the required conditions to
-     * retain the spell, the spell is forgotten*/
+    /**Calculates the impact on the character's spellcasting ability, if the character does not meet the required conditions to retain the spell, the spell is forgotten*/
     public boolean calculateImpactOnAbility() {
         int MINIMUM_XP_TO_RETAIN_SPELL = 100;
         if(!character.getSpell() && character.getExperiencePoint() < MINIMUM_XP_TO_RETAIN_SPELL) {

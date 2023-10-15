@@ -1,5 +1,4 @@
-/**The Character class represents a game character that can
- * interact with the game world. It implements Interactable.*/
+/**The Character class represents a game character that can interact with the game world. It implements Interactable.*/
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -128,10 +127,7 @@ public class Character implements Interactable{
     }
     public boolean canUseMagic(){return canUseMagic;}
 
-    /**Checks if the character has gained enough experience points to level up.
-     * If the character's experience points are greater than or equal to the experience
-     * required for the next level and the character's level is less than 10,
-     * the character levels up*/
+    /**Checks if the character has gained enough experience points to level up. If the character's experience points are greater than or equal to the experience required for the next level and the character's level is less than 10, the character levels up*/
     public void checkLevelUp() {
         int experiencePerLevelUp = 100;
         while(experiencePoint >= experiencePerLevelUp && level < 10) {
