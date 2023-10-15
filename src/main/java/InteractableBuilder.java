@@ -1,5 +1,6 @@
 import java.util.*;
 
+//TODO: kommentera skiten så man fattar vad detta är!
 public class InteractableBuilder {
     private static final String[] WEAPON_ARMOR_MATS = {
             "Steel",
