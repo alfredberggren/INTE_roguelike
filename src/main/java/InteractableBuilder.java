@@ -1,6 +1,38 @@
 import java.util.*;
 
-//TODO: kommentera skiten så man fattar vad detta är!
+//
+/* TODO:
+-   Alfred: kommentera skiten så man fattar vad detta är!
+
+Kristian:
+-   Bör egentligen inte själva skapandet av NPC/items eller vad som, hanteras av separata klasser? Som själva tar
+    hand om randomisering av stats osv, och således bör denna klass döpas om till typ "InteractableDecider" eller ngt?
+    På det sättet kan man i konstruktorn av denna klass skicka in objekt av sådana "interactablegeneratorer" som t.ex.
+    alla ska ärva från interface "InteractableGenerator" eller nåt. Finns säkert ett pattern för detta. Har kikat på
+    Decorator, som inte är direkt det, men skulle kunna vara ett alternativ. Factory? Nej, egentligen kanske mer Builder?!
+    Om man ska efterlikna det patternet, borde denna klass heta "Director".
+
+    Dessutom skulle detta eventuellt möjliggöra för "friare"/enklare implementation av klassbiblioteket. Det ger oss
+    också möjlighet till att "mocka" dessa generatorer for now, och skapar dessutom mycket mindre hårdkod.
+
+    Detta skulle så klart innebära en del omkodning, men...
+
+    Det jag menar att i konstruktorn till den här klassen skickar man in olika maps med "InteractableGenerator"-objekt
+    som nycklar, och Integers som probabilites. Parametrarna kan vara:
+    HashMap <InteractableGenerator, Integer> PositiveItemProbabilities,
+    PositiveNPCProbabilites
+    NegativeItemProbabilities
+    NegativeNPCProbabilites
+
+-   Sen får vi också tänka på hur vi kan få mindre "hårdkodning" gällande difficulty:n....
+
+-   Känner också att all randomisering borde, till så hög grad som möjligt (förutom gaussian madness kanske)
+    baseras på tydliga procent (skala 1-100). Detta för att hålla det så konsekvent, och således lättförståeligt,
+    som möjligt.
+
+-   Jag förstår inte heller determineProbabilites() fungerar. Eller, timmen är så sen så jag inte har modet till att
+    ta mig an det.
+ */
 public class InteractableBuilder {
     private static final String[] WEAPON_ARMOR_MATS = {
             "Steel",
@@ -17,6 +49,7 @@ public class InteractableBuilder {
     private HashMap<String, Integer> negativeNpcProbabilities;
     Random r = new Random();
     private int diffScale;
+
     public InteractableBuilder(int diffScale) {
         this.diffScale = diffScale;
         setBaseProbabilities();
@@ -69,6 +102,11 @@ public class InteractableBuilder {
         probabilityMaps.add(negativeNpcProbabilities);
     }
 
+    /**
+     * Decides which type of, and makes, a positive Interactable
+     * @return
+     * 90% chance of returning a positive consumable, 10% chance of returning a positive NPC.
+     */
     public Interactable getPositiveInteractable() {
         if (r.nextInt(10) == 0) {
             return getPositiveNPC();
@@ -78,6 +116,11 @@ public class InteractableBuilder {
     }
 
 
+    /**
+     *
+     * @return
+     * 50/50 chance to decide either positive food item, or positive potion item
+     */
     private Interactable getPositiveConsumable() {
         boolean food = r.nextBoolean();
         if (food) {
@@ -87,6 +130,12 @@ public class InteractableBuilder {
         }
     }
 
+    /**
+     * Randomizes a number between 1 - 100, to then check the posPotionProbabilities. If random number is lower than
+     * the probability, that Potion is created (with HARDCODED turnlimit).
+     * @return
+     * A "positive" PotionItem. Null if the number wasn't lower than any probability.
+     */
     private Interactable getPositivePotionItem() {
         int determinator = r.nextInt(100) + 1;
         for (Equipment.Effect e : posPotionProbabilities.keySet()) {
@@ -97,6 +146,12 @@ public class InteractableBuilder {
         return null;
     }
 
+    /**
+     * Randomizes a number between 1 - 100, to then check the Food Probabilities. If random number is lower than
+     * the probability, that food is created (with HARDCODED healvalue).
+     * @return
+     * A "positive" Food item. Null if the number wasn't lower than any probability.
+     */
     private Interactable getPositiveFoodItem() {
         int determinator = r.nextInt(100) + 1;
         for (String s : posFoodProbabilities.keySet()) {
@@ -107,6 +162,13 @@ public class InteractableBuilder {
         return null;
     }
 
+    /**
+     * Randomizes a number between 1 - 100, to then check the Positive NPC probabilites. If random number is lower than
+     * the probability, that npc is created (with HARDCODED health and speed values).
+     * @return
+     * A positive NPC.
+     * Null if the number wasn't lower than any probability.
+     */
     private Interactable getPositiveNPC() {
         int determinator = r.nextInt(100) + 1;
         for (String s : posNpcProbabilities.keySet()) {
@@ -117,6 +179,13 @@ public class InteractableBuilder {
         return null;
     }
 
+    /**
+     * Randomizes a number between 1 - 100, to then check the negative Interactable probabilites. If random number is lower than
+     * the probability, that interactable is created (ATM hardcoded to negative NPC's, with hardcoded health and speed).
+     * @return
+     * A negative Interactable (NPC).
+     * Null if the number wasn't lower than any probability.
+     */
     public Interactable getNegativeInteractable() {
         int determinator = r.nextInt(100) + 1;
         for (String s : negativeNpcProbabilities.keySet()) {
@@ -126,6 +195,7 @@ public class InteractableBuilder {
         }
         return null;
     }
+
 
     private void determineProbabilities() {
         for (HashMap<?, Integer> m : probabilityMaps) {
