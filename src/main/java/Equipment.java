@@ -46,8 +46,8 @@ public class Equipment extends NonLivingEntity{
         HELMET, CHEST_ARMOR, LEGGING, BOOTS
     }
     /**Retrieves the type of associated ability*/
-    public Ability.AbilityType getAbility(){
-         return ability.getTypeOfAbility();
+    public String getAbility(){
+         return ability.getTypeOfAbility().toString();
     }
     /**Modifies the damage to the equipment based on a damage bar value. If the damage bar falls to or below zero, the equipment is considered destroyed*/
     public void damageModifier(double damageBar) {
