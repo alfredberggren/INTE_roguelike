@@ -82,11 +82,21 @@ public class PlayerTest {
     }
 
     @Test
-    @DisplayName("Test that player gets reward after winning")
+    @DisplayName("Test that player gets a reward after winning")
     public void testToGetRewardsAfterWinning() {
-        Quest DEFAULT_QUEST = new Quest("Kill Fido", QuestType.KILL, "Test description", 50);
+        Quest DEFAULT_QUEST = new Quest("Kill Fido", QuestType.KILL, "Test description", 50, 5);
         DEFAULT_QUEST.completeQuest();
         DEFAULT_PLAYER.getRewardsAfterWinning(DEFAULT_QUEST);
         assertEquals(50, DEFAULT_PLAYER.getExperiencePoint());
     }
+
+    @Test
+    @DisplayName("Test that player does not get a reward if the quest is not completed")
+    public void testDoNotGetRewardsIfQuestNotCompleted() {
+        Quest DEFAULT_QUEST = new Quest("Kill Fido", QuestType.KILL, "Test description", 50, 5);
+        DEFAULT_PLAYER.getRewardsAfterWinning(DEFAULT_QUEST);
+        assertEquals(0, DEFAULT_PLAYER.getExperiencePoint());
+    }
+
+
 }

@@ -3,7 +3,6 @@ import java.util.regex.Pattern;
 
 public class Player extends Character{
 
-    private MagicAbility magicAbility;
     private String name;
     private int experiencePoint;
     private static final String NAME_PATTERN = "^[A-Za-z]\\w{1,11}$";
