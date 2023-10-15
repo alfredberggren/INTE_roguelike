@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -60,9 +61,24 @@ public class PlayerTest {
 //name tests
 
     @Test
-    @DisplayName("Test that new player has 0 XP")
-    public void testCharactersXP(){
+    @DisplayName("Test that new player has XP=0")
+    public void testNewCharactersXP(){
         assertEquals(0, DEFAULT_PLAYER.getExperiencePoint());
     }
+
+    @Test
+    @DisplayName("Test to set correct experience points")
+    public void testSetCorrectXP(){
+        DEFAULT_PLAYER.setExperiencePoint(100);
+        assertEquals(100, DEFAULT_PLAYER.getExperiencePoint());
+    }
+    @Test
+    @DisplayName("Test throws exception to set negative experience points")
+    public void testSetNegativeXP(){
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            DEFAULT_PLAYER.setExperiencePoint(-10);
+        });
+    }
+
 
 }

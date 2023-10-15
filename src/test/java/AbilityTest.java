@@ -57,7 +57,7 @@ public class AbilityTest {
     @Test
     @DisplayName("Testing that magic ability is affected")
     public void testMagicAbilityAffected() {
-        Spell fireSpell = new Spell("Fire");
+        Spell fireSpell = new Spell("Fire","Shoots fire",1,1);
         DEFAULT_CHARACTER.addSpell(fireSpell);
         DEFAULT_CHARACTER.setExperiencePoint(100);
         MagicAbility ability = new MagicAbility(fireSpell.getName(), 10,1);
@@ -70,7 +70,7 @@ public class AbilityTest {
     @Test
     @DisplayName("Testing that magic ability is not affected")
     public void testMagicAbilityNotAffected() {
-        Spell iceSpell = new Spell("Ice");
+        Spell iceSpell = new Spell("Ice","Shoots ice",1,1);
         DEFAULT_CHARACTER.addSpell(iceSpell);
         MagicAbility ability = new MagicAbility(iceSpell.getName(), 10,1);
         ability.setCharacter(DEFAULT_CHARACTER);
@@ -132,6 +132,27 @@ public class AbilityTest {
         DEFAULT_CHARACTER.setLevel(3);
         MagicAbility fireMagic = new MagicAbility("Fireball", 10, 5);
         assertFalse(fireMagic.isLearnable(DEFAULT_CHARACTER));
+    }
+
+    @Test
+    @DisplayName("Test equals method for Ability")
+    public void testAbilityEquals() {
+        Ability ability1 = new PhysicalAbility("Physical Attack",20,1);
+        Ability ability2 = new PhysicalAbility("Physical Attack", 20,1);
+        Ability ability3 = new MagicAbility("Magical Spell",30,2);
+        assertEquals(ability1, ability1);
+        assertEquals(ability1, ability2);
+        assertNotSame(ability1, ability3);
+    }
+
+    @Test
+    @DisplayName("Test hashCode method for Ability")
+    public void testAbilityHashCode() {
+        Ability ability1 = new PhysicalAbility("Physical Attack",20,1);
+        Ability ability2 = new PhysicalAbility("Physical Attack", 20,1);
+        Ability ability3 = new MagicAbility("Magical Spell",30,2);
+        assertEquals(ability1.hashCode(), ability2.hashCode());
+        assertNotSame(ability1.hashCode(), ability3.hashCode());
     }
 
 }

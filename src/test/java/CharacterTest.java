@@ -9,17 +9,17 @@ public class CharacterTest {
 
     @BeforeEach
     void setUp() {
-        DEFAULT_CHARACTER = new Character(80, 20, 10);
+        DEFAULT_CHARACTER = new Character(80, 20, 0);
     }
 
     @Test
-    @DisplayName("Testar att entitetens hälsa blir korrekt")
+    @DisplayName("Test character's health")
     public void testCharactersHealth() {
         assertEquals(80, DEFAULT_CHARACTER.getHealth());
     }
 
     @Test
-    @DisplayName("Testar att en entitets position blir korrekt")
+    @DisplayName("Test character's position")
     public void testCharactersPosition() {
         assertEquals(new Position(1, 2), DEFAULT_CHARACTER_WITH_POS.getPosition());
         assertEquals(1, DEFAULT_CHARACTER_WITH_POS.getPosition().getX());
@@ -27,10 +27,16 @@ public class CharacterTest {
     }
 
     @Test
-    @DisplayName("assert throws exception if health<0")
+    @DisplayName("Test to get character's speed")
+    public void testCharactersSpeed() {
+        assertEquals(20, DEFAULT_CHARACTER.getSpeed());
+    }
+
+    @Test
+    @DisplayName("Test throws exception if health<0")
     public void testCharacterWithNegativeHealth() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            new Character(-100, 10, 50);
+            new Character(-100, 10, 0);
         });
     }
 
@@ -38,14 +44,22 @@ public class CharacterTest {
     @DisplayName("Test throws exception if speed<0")
     public void testCharacterWithNegativeSpeed() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            new Character(100, -10, 50);
+            new Character(100, -10, 0);
         });
     }
 
     @Test
     @DisplayName("Test to decrease health to 0")
-    public void testToDecreaseHealth() {
+    public void testToDecreaseHealthToZero() {
         DEFAULT_CHARACTER.decreaseHealth(80);
+        assertEquals(0, DEFAULT_CHARACTER.getHealth());
+        assertTrue(DEFAULT_CHARACTER.isDead());
+    }
+
+    @Test
+    @DisplayName("Test to decrease health to negative value")
+    public void testToDecreaseHealthToNegativeValue() {
+        DEFAULT_CHARACTER.decreaseHealth(100);
         assertEquals(0, DEFAULT_CHARACTER.getHealth());
         assertTrue(DEFAULT_CHARACTER.isDead());
     }
@@ -58,14 +72,15 @@ public class CharacterTest {
     }
 
     @Test
-    @DisplayName("Test to increase mana")
+    @DisplayName("Test to increase mana and ability to use magic if mana>0")
     public void testToIncreaseMana() {
         DEFAULT_CHARACTER.increaseMana(20);
         assertEquals(120, DEFAULT_CHARACTER.getMana());
+        assertTrue(DEFAULT_CHARACTER.canUseMagic());
     }
 
     @Test
-    @DisplayName("Test to decrease mana and use magic if mana=0")
+    @DisplayName("Test to decrease mana and ability to use magic if mana=0")
     public void testToDecreaseMana() {
         DEFAULT_CHARACTER.decreaseMana(100);
         assertEquals(0, DEFAULT_CHARACTER.getMana());
@@ -104,11 +119,31 @@ public class CharacterTest {
     @Test
     @DisplayName("Test that character get Magic Ability")
     public void testCharacterMagicAbility() {
-        Character c = new Character(100, 10, 10);
+        Character c = new Character(100, 10, new Position(0, 0));
         MagicAbility fireMagic = new MagicAbility("Fireball", 20, 1);
         c.setMagicAbility(fireMagic);
         //assertEquals("Wizard", c.getName());
         assertEquals("Fireball", fireMagic.name);
+    }
+
+    @Test
+    @DisplayName("Test setting and getting Magic Ability")
+    public void testCharacterSetAndGetMagicAbility() {
+        MagicAbility fireMagic = new MagicAbility("Fireball", 20, 1);
+        DEFAULT_CHARACTER.setMagicAbility(fireMagic);
+        assertEquals(fireMagic, DEFAULT_CHARACTER.getMagicAbility());
+    }
+
+    @Test
+    @DisplayName("Test adding and forgetting spells")
+    public void testCharacterSpellHandling() {
+        Spell fireSpell = new Spell("Fire", "Shoots fire", 1, 1);
+        Spell iceSpell = new Spell("Ice", "Shoots ice", 1, 1);
+        DEFAULT_CHARACTER.addSpell(fireSpell);
+        assertTrue(DEFAULT_CHARACTER.getKnownSpell().contains(fireSpell));
+        DEFAULT_CHARACTER.forgetSpell(fireSpell);
+        assertFalse(DEFAULT_CHARACTER.getKnownSpell().contains(fireSpell));
+        assertDoesNotThrow(() -> DEFAULT_CHARACTER.forgetSpell(iceSpell));
     }
 
     @Test
@@ -119,7 +154,7 @@ public class CharacterTest {
     }
 
     @Test
-    @DisplayName("Test set-method at health<0")
+    @DisplayName("Test throws Exception at negative health")
     public void testThrowsExceptionWithNegativeHealth() {
         assertThrows(IllegalArgumentException.class, () -> {
             DEFAULT_CHARACTER.setHealth(-10);

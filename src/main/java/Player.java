@@ -6,7 +6,6 @@ public class Player extends Character{
 
     private MagicAbility magicAbility;
     private String name;
-    private Position pos;
     private int experiencePoint;
     private static final String NAME_PATTERN = "^[A-Za-z]\\w{1,11}$";
     public Player(int health, int speed, Position pos) {
@@ -15,7 +14,6 @@ public class Player extends Character{
     }
 
     public String getName(){return name;}
-    public Position getPos() {return pos;}
 
     @Override
     public int getExperiencePoint() {
@@ -24,6 +22,8 @@ public class Player extends Character{
 
     @Override
     public void setExperiencePoint(int experiencePoint) {
+        if(experiencePoint<0)
+            throw new IllegalArgumentException("Experience points cannot be negative!");
         this.experiencePoint = experiencePoint;
     }
 
