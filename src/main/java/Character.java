@@ -123,9 +123,11 @@ public class Character implements Interactable{
     }
 
     public boolean isDead() {
-        return isDead;
+        return health <= 0;
     }
-    public boolean canUseMagic(){return canUseMagic;}
+    public boolean canUseMagic(){
+        return mana == 0;
+    }
 
     /**Checks if the character has gained enough experience points to level up. If the character's experience points are greater than or equal to the experience required for the next level and the character's level is less than 10, the character levels up*/
     public void checkLevelUp() {
