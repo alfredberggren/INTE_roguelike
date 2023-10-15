@@ -14,11 +14,10 @@ public class Character implements Interactable{
     private int level;
     private Position pos;
     private boolean isDead = false;
-    protected Set<Ability> possibleAbilities;
-    private PhysicalAbility physicalAbility;
     private MagicAbility magicAbility;
     private boolean spell;
     private ArrayList<Spell> knownSpell = new ArrayList<>();
+    private InteractableInventory inventory = new InteractableInventory();
     private boolean canUseMagic = true;
 
     public Character(int health, int speed, int experiencePoint){
@@ -54,6 +53,10 @@ public class Character implements Interactable{
     public int getSpeed() {return speed;}
 
     public int getMana() {return mana;}
+
+    public InteractableInventory getInventory() {
+        return inventory;
+    }
 
     public boolean getSpell() {
         return spell;

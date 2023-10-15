@@ -1,6 +1,4 @@
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 public class EquipmentOnBody {
@@ -16,7 +14,6 @@ public class EquipmentOnBody {
             equipmentOnBody.put(slot, equipment);
         else
             System.out.println("This slot already contains an equipment!");
-
     }
 
     public boolean slotContainsEquipment(EquipmentSlot slot) {
@@ -24,20 +21,19 @@ public class EquipmentOnBody {
     }
 
     public void dropEquipment(EquipmentSlot slot) {
-        if(slotContainsEquipment(slot)) {
+        if (slotContainsEquipment(slot)) {
 //            Equipment e = equipmentOnBody.get(slot);
 //            e.setPos(player.getPos());
             equipmentOnBody.remove(slot);
-        }
-        else System.out.println("There is no equipment in this slot");
+        } else System.out.println("There is no equipment in this slot");
     }
 
-    public EquipmentSlot checkWhereEquipmentWasPlaced(Equipment e){
+    public EquipmentSlot checkWhereEquipmentWasPlaced(Equipment e) {
         Collection<EquipmentSlot> equipmentSlots = equipmentOnBody.keySet();
-        for(EquipmentSlot key: equipmentSlots){
+        for (EquipmentSlot key : equipmentSlots) {
             Equipment equipment = equipmentOnBody.get(key);
-            if(key != null){
-                if(e.equals(equipment)){
+            if (key != null) {
+                if (e.equals(equipment)) {
                     return key;
                 }
             }
