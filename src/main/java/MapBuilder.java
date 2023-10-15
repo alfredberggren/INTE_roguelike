@@ -1,17 +1,19 @@
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Random;
 
 public class MapBuilder {
-    private static final HashMap<Difficulty, Integer> DIFF_RATIO = new HashMap<>() {{
+    private static final EnumMap<Difficulty, Integer> DIFF_RATIO = new EnumMap<>(Difficulty.class) {{
         put(Difficulty.EASY, 3);
         put(Difficulty.MEDIUM, 5);
         put(Difficulty.HARD, 7);
     }};
+
     private static final int START_XY = 0;
 
     // Bestämmer sannolikheten i procent för att ett rum kommer att innehålla något.
-    private static final int INTERACTABLE_PERCENTAGE = 3;
+    private static final int INTERACTABLE_PERCENTAGE = 50;
+    private static final int TOTAL_PERCENT = 100;
     private int difficultyScale;
     private int amountOfRooms;
     private MapController mapController;
@@ -88,8 +90,8 @@ public class MapBuilder {
 
 
             //Check if interactables should generate in new room
-            randomInteractableDeterminator = r.nextInt(INTERACTABLE_PERCENTAGE) + 1;
-            if (randomInteractableDeterminator == 1) {
+            randomInteractableDeterminator = r.nextInt(TOTAL_PERCENT) + 1;
+            if (randomInteractableDeterminator <= INTERACTABLE_PERCENTAGE) {
                 dynInteractables = generateInteractables();
             }
 

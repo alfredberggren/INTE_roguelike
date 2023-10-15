@@ -23,6 +23,12 @@ public class InteractableBuilder {
         determineProbabilities();
     }
 
+
+    /**
+     * Sets hardcoded base probabilities (ATM). The probabilities work in such a way, that when a random number between
+     * 1-100 is generated, the number is compared to the key's value. If the number is less than than the value, that
+     * key is chosen. Therefore, the higher the number, the higher the chance of that "thing" generating.
+     */
     private void setBaseProbabilities() {
         probabilityMaps = new ArrayList<>();
         matProbabilities = new LinkedHashMap<>(){{
@@ -70,6 +76,7 @@ public class InteractableBuilder {
             return getPositiveConsumable();
         }
     }
+
 
     private Interactable getPositiveConsumable() {
         boolean food = r.nextBoolean();
