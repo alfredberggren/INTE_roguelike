@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class TextUI extends IO{
 
-    public TurnCommand requestTurnCommand(Room room, Character character){
+    public TurnCommand requestTurnCommand(Map map, Character character){
         String input = getUserInput();
         switch(input){
             case "action": return TurnCommand.ACTION;
@@ -12,13 +12,13 @@ public class TextUI extends IO{
         }
     }
 
-    public IO.TurnCommand requestAnotherTurnCommand(Room room, Character character){
+    public IO.TurnCommand requestAnotherTurnCommand(Map map, Character character){
         System.out.println("Command is not allowed");
-        return requestTurnCommand(room, character);
+        return requestTurnCommand(map, character);
     }
 
 
-    public CardinalDirection requestMove(Room room, Character character){
+    public CardinalDirection requestMove(Map map, Character character){
         String input = getUserInput();
         switch(input){
             case "north": return CardinalDirection.NORTH;
@@ -29,12 +29,12 @@ public class TextUI extends IO{
         }
     }
 
-    public CardinalDirection requestAnotherMove(Room room, Character character){
+    public CardinalDirection requestAnotherMove(Map map, Character character){
         System.out.println("Move is not allowed");
-        return requestMove(room, character);
+        return requestMove(map, character);
     }
 
-    public Interactable.InteractableAction requestAction(Room room, Character character){
+    public Interactable.InteractableAction requestAction(Map map, Character character){
         String input = getUserInput();
         switch(input){
             case "loot": return Interactable.InteractableAction.LOOT;
@@ -47,9 +47,9 @@ public class TextUI extends IO{
         }
     }
 
-    public Interactable.InteractableAction requestAnotherAction(Room room, Character character){
+    public Interactable.InteractableAction requestAnotherAction(Map map, Character character){
         System.out.println("Action is not allowed");
-        return requestAction(room, character);
+        return requestAction(map, character);
     }
 
     private String getUserInput(){
