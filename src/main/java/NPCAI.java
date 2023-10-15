@@ -2,13 +2,13 @@
 public class NPCAI extends IO{
 
     @Override
-    public IO.TurnCommand requestTurnCommand(Map map, Character character) {
+    public TurnSystem.TurnCommand requestTurnCommand(Map map, Character character) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'requestTurnCommand'");
     }
 
     @Override
-    public IO.TurnCommand requestAnotherTurnCommand(Map map, Character character) {
+    public TurnSystem.TurnCommand requestAnotherTurnCommand(Map map, Character character) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'requestAnotherTurnCommand'");
     }

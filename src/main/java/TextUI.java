@@ -2,17 +2,17 @@ import java.util.Scanner;
 
 public class TextUI extends IO{
 
-    public TurnCommand requestTurnCommand(Map map, Character character){
+    public TurnSystem.TurnCommand requestTurnCommand(Map map, Character character){
         String input = getUserInput();
         switch(input){
-            case "action": return TurnCommand.ACTION;
-            case "move": return TurnCommand.MOVE;
-            case "end turn": return TurnCommand.END;
+            case "action": return TurnSystem.TurnCommand.ACTION;
+            case "move": return TurnSystem.TurnCommand.MOVE;
+            case "end turn": return TurnSystem.TurnCommand.END;
             default: throw new IllegalArgumentException(input + " is not a valid command.");
         }
     }
 
-    public IO.TurnCommand requestAnotherTurnCommand(Map map, Character character){
+    public TurnSystem.TurnCommand requestAnotherTurnCommand(Map map, Character character){
         System.out.println("Command is not allowed");
         return requestTurnCommand(map, character);
     }

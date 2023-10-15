@@ -45,7 +45,7 @@ public class IOTest {
         // Needs updating when Character constructor is updated
         Character tempCharacter = new Character(0, 0, new Position(0, 0));
 
-        assertEquals(IO.TurnCommand.ACTION, tempTextUI.requestTurnCommand(tempMap, tempCharacter),
+        assertEquals(TurnSystem.TurnCommand.ACTION, tempTextUI.requestTurnCommand(tempMap, tempCharacter),
                "Could not request Turn Command");
     }
 
@@ -59,15 +59,15 @@ public class IOTest {
 
         String[] availableCommands = {"action", "move", "end turn"};
         int correctCommand = 0;
-        for (int i = 0; i < IO.TurnCommand.values().length; i++){
+        for (int i = 0; i < TurnSystem.TurnCommand.values().length; i++){
             InputStream tempInputStream = new ByteArrayInputStream(availableCommands[i].getBytes());
             System.setIn(tempInputStream);
 
-            if(IO.TurnCommand.values()[i].equals(tempTextUI.requestTurnCommand(tempMap, tempCharacter))){
+            if(TurnSystem.TurnCommand.values()[i].equals(tempTextUI.requestTurnCommand(tempMap, tempCharacter))){
                 correctCommand++;
             }
         }
-        assertEquals(IO.TurnCommand.values().length, correctCommand);
+        assertEquals(TurnSystem.TurnCommand.values().length, correctCommand);
     }
 
     @Test
@@ -102,7 +102,7 @@ public class IOTest {
         Map tempMap = new Map();
         // Needs updating when Character constructor is updated
         Character tempCharacter = new Character(0, 0, new Position(0, 0));
-        assertEquals(IO.TurnCommand.ACTION, tempTextUI.requestAnotherTurnCommand(tempMap, tempCharacter));
+        assertEquals(TurnSystem.TurnCommand.ACTION, tempTextUI.requestAnotherTurnCommand(tempMap, tempCharacter));
         InputStream outputStreamRead = new ByteArrayInputStream(outputStream.toByteArray());
 
         Scanner scanner = new Scanner(outputStreamRead);
