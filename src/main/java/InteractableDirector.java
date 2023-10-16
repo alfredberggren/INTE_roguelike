@@ -198,27 +198,27 @@ public class InteractableDirector {
 //        }
 //        return null;
 //    }
-
-    /**
-     * Randomizes a number between 1 - 100, to then check the negative Interactable probabilites. If random number is lower than
-     * the probability, that interactable is created (ATM hardcoded to negative NPC's, with hardcoded health and speed).
-     * @return
-     * A negative Interactable (NPC).
-     * Null if the number wasn't lower than any probability.
-     */
-    public Interactable getNegativeInteractable() {
-        int determinator = r.nextInt(100) + 1;
-        for (String s : negativeNpcProbabilities.keySet()) {
-            if (determinator < negativeNpcProbabilities.get(s)) {
-                return new NPC(s, 100, 10);
-            }
-        }
-        return null;
-    }
+//
+//    /**
+//     * Randomizes a number between 1 - 100, to then check the negative Interactable probabilites. If random number is lower than
+//     * the probability, that interactable is created (ATM hardcoded to negative NPC's, with hardcoded health and speed).
+//     * @return
+//     * A negative Interactable (NPC).
+//     * Null if the number wasn't lower than any probability.
+//     */
+//    public Interactable getNegativeInteractable() {
+//        int determinator = r.nextInt(100) + 1;
+//        for (String s : negativeNpcProbabilities.keySet()) {
+//            if (determinator < negativeNpcProbabilities.get(s)) {
+//                return new NPC(s, 100, 10);
+//            }
+//        }
+//        return null;
+//    }
 
 
     private void determineProbabilities() {
-        for (HashMap<?, Integer> m : probabilityMaps) {
+        for (HashMap<?, Integer> m : generatorProbabilityMaps.keySet()) {
             int tempDiffScale = diffScale;
             int changeFactor = tempDiffScale * 2 / m.keySet().size();
             putChangeFactor(m, changeFactor, tempDiffScale);
