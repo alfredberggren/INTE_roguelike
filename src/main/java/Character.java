@@ -32,6 +32,7 @@ public class Character implements Interactable{
         if (health < 0 || speed < 0) {
             throw new IllegalArgumentException("Speed and health needs to be 0 or more");
         }
+        this.name = name;
         this.health = health;
         this.speed = speed;
         mana = 100;
@@ -47,6 +48,7 @@ public class Character implements Interactable{
         if (health < 0 || speed < 0) {
             throw new IllegalArgumentException("Speed and health needs to be 0 or more");
         }
+        this.name = name;
         this.health = health;
         this.speed = speed;
         this.pos = pos;

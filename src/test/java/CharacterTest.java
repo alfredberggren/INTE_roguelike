@@ -183,4 +183,6 @@ public class CharacterTest {
             DEFAULT_CHARACTER.setHealth(-10);
         });
     }
+
+
 }
