@@ -15,7 +15,7 @@ public class Character implements Interactable{
     private int health;
     private int speed;
     private int mana; 
-    private int level;
+    protected int level;
     private Position pos;
     private boolean isDead = false;
     private MagicAbility magicAbility;
