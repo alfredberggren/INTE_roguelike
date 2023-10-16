@@ -11,8 +11,6 @@ public class Character implements Interactable{
     );
     private Set<InteractableAction> possibleInteractableActions;
 
-    //variabel för turnsystem
-
     //private String name;
     private int health;
     private int speed;
@@ -23,13 +21,13 @@ public class Character implements Interactable{
     private boolean isDead = false;
     private MagicAbility magicAbility;
     private boolean spell;
-    private ArrayList<MagicAbility> knownSpell = new ArrayList<>(); //lista av abilitys som checkar om de är spell eller physical
+    private Set<MagicAbility> knownSpell = new HashSet<>(); //lista av abilitys som checkar om de är spell eller physical
     private InteractableInventory inventory = new InteractableInventory();
     private boolean canUseMagic = true; // remove
     private EquipmentOnBody equipmentOnBody;
     private TurnSystem turnSystem;
 
-    public Character(int health, int speed, int experiencePoint, IO io){
+    public Character(int health, int speed, int experiencePoint,IO io){
         if (health < 0 || speed < 0) {
             throw new IllegalArgumentException("Speed and health needs to be 0 or more");
         }
@@ -89,7 +87,7 @@ public class Character implements Interactable{
     public void addSpell(MagicAbility spell) {
         knownSpell.add(spell);
     }
-    public ArrayList<MagicAbility> getKnownSpell() {
+    public Set<MagicAbility> getKnownSpell() {
         return knownSpell;
     }
 

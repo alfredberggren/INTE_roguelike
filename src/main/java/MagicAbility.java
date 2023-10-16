@@ -8,7 +8,6 @@ public class MagicAbility extends Ability{
     private String description;
     private int castingTime;
     private int coolDown;
-    private Set<MagicAbility> knownSpell = new HashSet<>();
 
     /**Constructs an Ability object with the specified characteristics*/
     MagicAbility(String name, int baseDamage, int minimumLevel, String description, int castingTime, int coolDown) {
@@ -54,8 +53,6 @@ public class MagicAbility extends Ability{
     public void setCoolDown(int coolDown) {
         this.coolDown = coolDown;
     }
-
-    /**Checks if Arraylist is not empty and if so removes the spell*/
 
 
     @Override
