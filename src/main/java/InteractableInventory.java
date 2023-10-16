@@ -20,7 +20,6 @@ public class InteractableInventory {
 
     }
 
-
     public void remove(Interactable... interactables){
         for (Interactable i: interactables){
             checkNull(i);

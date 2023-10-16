@@ -44,23 +44,38 @@ public class EquipmentOnBodyTest {
     @Test
     @DisplayName("Test to drop an equipment")
     public void testToDropAnEquipment() {
+        Character player = new Player(100, 10, new Position(0, 0));
         EQUIPMENT_ON_BODY.putEquipment(DEFAULT_EQUIPMENT_SLOT, DEFAULT_EQUIPMENT);
-        EQUIPMENT_ON_BODY.dropEquipment(DEFAULT_EQUIPMENT_SLOT);
+        player.dropEquipment(DEFAULT_EQUIPMENT_SLOT);
         assertEquals("", EQUIPMENT_ON_BODY.toString());
     }
+
+
+    //köra
+    @Test
+    @DisplayName("Test that equipment has correct position after it has been dropped")
+    public void testEquipmentsPosition() {
+        Character player = new Player(100, 10, new Position(0, 0));
+        EQUIPMENT_ON_BODY.putEquipment(DEFAULT_EQUIPMENT_SLOT, DEFAULT_EQUIPMENT);
+        player.dropEquipment(DEFAULT_EQUIPMENT_SLOT);
+        assertEquals(new Position(0,0), DEFAULT_EQUIPMENT.getPos());
+    }
+
 
     @Disabled
     @DisplayName("Test to drop non-existent equipment")
     public void testToDropNonExistentEquipment() {
-        EQUIPMENT_ON_BODY.dropEquipment(DEFAULT_EQUIPMENT_SLOT);
+        Character player = new Player(100, 10, new Position(0, 0));
+        player.dropEquipment(DEFAULT_EQUIPMENT_SLOT);
         assertEquals(null, EQUIPMENT_ON_BODY.toString());
     }
 
     @Test
     @DisplayName("Test to replace an equipment")
     public void testToReplaceEquipment() {
+        Player player = new Player(100, 10, new Position(0, 0));
         EQUIPMENT_ON_BODY.putEquipment(DEFAULT_EQUIPMENT_SLOT, DEFAULT_EQUIPMENT);
-        EQUIPMENT_ON_BODY.dropEquipment(DEFAULT_EQUIPMENT_SLOT);
+        player.dropEquipment(DEFAULT_EQUIPMENT_SLOT);
         EQUIPMENT_ON_BODY.putEquipment(DEFAULT_EQUIPMENT_SLOT, new Equipment("Dagger", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 60, new PhysicalAbility("Dagger", 20, 1)));
         assertEquals("LEFT_HAND: Dagger +60% DAMAGE", EQUIPMENT_ON_BODY.toString());
     }
