@@ -9,7 +9,7 @@ public class Character implements Interactable{
             InteractableAction.TALK,
             InteractableAction.FIGHT)
     );
-    protected Set<InteractableAction> possibleInteractableActions;
+    private Set<InteractableAction> possibleInteractableActions;
 
     //variabel för turnsystem
 
@@ -189,6 +189,6 @@ public class Character implements Interactable{
 
     @Override
     public Set<InteractableAction> getPossibleActions() {
-        return null;
+        return possibleInteractableActions;
     }
 }

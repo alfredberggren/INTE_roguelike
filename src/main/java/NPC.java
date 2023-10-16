@@ -1,6 +1,4 @@
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 public class NPC extends Character implements Interactable {
 
@@ -10,10 +8,6 @@ public class NPC extends Character implements Interactable {
         super(health, speed, experiencePoint);
 
         this.name = name;
-    }
-
-    public Set<InteractableAction> getPossibleActions() {
-        return possibleInteractableActions;
     }
 
     @Override
