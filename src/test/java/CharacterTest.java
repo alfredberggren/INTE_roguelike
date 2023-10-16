@@ -158,11 +158,11 @@ public class CharacterTest {
     public void testCharacterLevelUpWhenXPReaches100() {
         DEFAULT_CHARACTER.setLevel(0);
         DEFAULT_CHARACTER.setExperiencePoint(100);
-        DEFAULT_CHARACTER.checkLevelUp();
+        DEFAULT_CHARACTER.levelUp();
         assertEquals(1, DEFAULT_CHARACTER.getLevel());
         assertEquals(0, DEFAULT_CHARACTER.getExperiencePoint());
         DEFAULT_CHARACTER.setExperiencePoint(100);
-        DEFAULT_CHARACTER.checkLevelUp();
+        DEFAULT_CHARACTER.levelUp();
         assertEquals(2, DEFAULT_CHARACTER.getLevel());
         assertEquals(0, DEFAULT_CHARACTER.getExperiencePoint());
     }

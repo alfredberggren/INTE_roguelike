@@ -147,7 +147,7 @@ public class Character implements Interactable{
     }
 
     /**Checks if the character has gained enough experience points to level up. If the character's experience points are greater than or equal to the experience required for the next level and the character's level is less than 10, the character levels up*/
-    public void checkLevelUp() {
+    public void levelUp() {
         int experiencePerLevelUp = 100;
         while(experiencePoint >= experiencePerLevelUp && level < 10) {
             experiencePoint -= experiencePerLevelUp;
