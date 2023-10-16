@@ -12,6 +12,57 @@ public class CharacterTest {
         DEFAULT_CHARACTER = new Character(80, 20, 0);
     }
 
+    
+    //name tests
+    @Test
+    public void testCorrectName() {
+        DEFAULT_CHARCTER.setName("Rudolf");
+        assertEquals("Rudolf", DEFAULT_CHARCTER.getName());
+    }
+
+    @Test
+    public void testNameInputIsNull() {
+        assertThrows(NullPointerException.class, () -> {
+            DEFAULT_CHARCTER.setName(null);
+        });
+    }
+
+    @Test
+    public void testNameInputIsEmpty() {
+        assertThrows(IllegalArgumentException.class, () ->{
+            DEFAULT_CHARCTER.setName("");
+        });
+    }
+
+    @Test
+    public void testTooShortName() {
+        assertThrows(IllegalArgumentException.class, () ->{
+            DEFAULT_CHARCTER.setName("A");
+        });
+    }
+
+    @Test
+    public void testNameBeginsWithDigit() {
+        assertThrows(IllegalArgumentException.class, () ->{
+            DEFAULT_CHARCTER.setName("1Ab");
+        });
+    }
+
+    @Test
+    public void testTooLongName() {
+        assertThrows(IllegalArgumentException.class, () ->{
+            DEFAULT_CHARCTER.setName("tooLongNameToBeAccepted");
+        });
+    }
+
+    @Test
+    public void testNameContainsNotOnlyAlphanumericCharactersAndUnderscores() {
+        assertThrows(IllegalArgumentException.class, () ->{
+            DEFAULT_CHARCTER.setName("Aabba&&");
+        });
+    }
+//name tests
+
     @Test
     @DisplayName("Test character's health")
     public void testCharactersHealth() {
