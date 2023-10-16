@@ -64,6 +64,15 @@ public class MapController {
         return gameMap.get(pos);
     }
 
+    public boolean containsInteractable(Interactable interactable) {
+        for (Room r : gameMap.values()) {
+            if (r.getInteractables().contains(interactable)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

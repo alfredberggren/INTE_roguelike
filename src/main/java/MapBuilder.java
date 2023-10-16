@@ -1,6 +1,4 @@
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class MapBuilder {
     private static final EnumMap<Difficulty, Integer> DIFF_RATIO = new EnumMap<>(Difficulty.class) {{
@@ -21,15 +19,15 @@ public class MapBuilder {
     private Random r = new Random();
     private InteractableDirector interactableDirector;
 
-    public MapBuilder(Difficulty difficulty, int amountOfRooms, Player player, MapController mapController) {
+    public MapBuilder(Difficulty difficulty, int amountOfRooms, Player player, MapController mapController, InteractableDirector interactableDirector) {
         difficultyScale = DIFF_RATIO.get(difficulty);
         this.amountOfRooms = amountOfRooms;
         this.player = player;
         this.mapController = mapController;
-        interactableDirector = new InteractableDirector(difficultyScale);
+        this.interactableDirector = interactableDirector;
+        interactableDirector.setDifficultyScale(difficultyScale);
     }
 
-    //TODO: implementera något som gör att rummen inte går in i varandra! Eller vad som händer om det inte finns några directions att gå längre (direction = null)
     public void build() {
         //Set up first room
         Position currentPos = new Position(START_XY, START_XY);

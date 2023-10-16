@@ -19,6 +19,11 @@ public class NPC extends Character implements Interactable {
         return Objects.hash(name);
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
+
     public String getName(){
         return name;
     }

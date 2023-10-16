@@ -34,34 +34,28 @@ Kristian:
  */
 public class InteractableDirector {
     Random r = new Random();
-    private int diffScale;
+    private int difficultyScale;
 
     Map<HashMap<InteractableGenerator, Integer>, Integer> generatorProbabilityMaps;
 
-    public InteractableDirector(int diffScale, Map.Entry<HashMap<InteractableGenerator, Integer>, Integer>... generatorProbabilities) {
-        this.diffScale = diffScale;
-        this.generatorProbabilityMaps = new HashMap<>();
-        addProbabilityMaps(generatorProbabilities);
-        convertPercentages(generatorProbabilityMaps);
-        for (Map<InteractableGenerator, Integer> hm : generatorProbabilityMaps.keySet()) {
-            convertPercentages(hm);
+    public InteractableDirector(Map<HashMap<InteractableGenerator, Integer>, Integer> generatorProbabilities) {
+        generatorProbabilityMaps = convertPercentages(generatorProbabilities);
+        Map<HashMap<InteractableGenerator, Integer>, Integer> temp = new HashMap<>();
+        for (Map.Entry<HashMap<InteractableGenerator, Integer>, Integer> me : generatorProbabilityMaps.entrySet()) {
+            temp.put((HashMap<InteractableGenerator, Integer>) convertPercentages(me.getKey()), me.getValue());
         }
+        generatorProbabilityMaps = temp;
         determineProbabilities();
     }
 
-    private void addProbabilityMaps(Map.Entry<HashMap<InteractableGenerator, Integer>, Integer>[] generatorProbabilities) {
-        for (Map.Entry<HashMap<InteractableGenerator, Integer>, Integer> e : generatorProbabilities) {
-            generatorProbabilityMaps.put(e.getKey(), e.getValue());
-        }
-    }
-
     /**
-     * Decides which type of, and makes, a positive Interactable
+     * Decides which probability map to use based on the percentage values in generatorProbabilityMaps.
      * @return
-     * 90% chance of returning a positive consumable, 10% chance of returning a positive NPC.
+     * Returns an interactable from the randomly selected map.
      */
     public Interactable getInteractable() {
         int mapDeterminator = r.nextInt(100) + 1;
+        System.out.println(generatorProbabilityMaps);
         for (Map.Entry<HashMap<InteractableGenerator, Integer>, Integer> me : generatorProbabilityMaps.entrySet()) {
             if (mapDeterminator < me.getValue()) {
                 return getInteractableFromProbabilityMap(me.getKey());
@@ -70,6 +64,11 @@ public class InteractableDirector {
         return null;
     }
 
+    /**
+     * Makes an interactable from a probability map, based on percentages as values.
+     * @return
+     * Returns a generated interactable from a randomly selected InteractableGenerator.
+     */
     private Interactable getInteractableFromProbabilityMap(HashMap<InteractableGenerator, Integer> probMap) {
         int interactableGeneratorDeterminator = r.nextInt(100) + 1;
         for (Map.Entry<InteractableGenerator, Integer> e : probMap.entrySet()) {
@@ -80,90 +79,9 @@ public class InteractableDirector {
         return null;
     }
 
-//    /**
-//     *
-//     * @return
-//     * 50/50 chance to decide either positive food item, or positive potion item
-//     */
-//    private Interactable getPositiveConsumable() {
-//        boolean food = r.nextBoolean();
-//        if (food) {
-//            return getPositiveFoodItem();
-//        } else {
-//            return getPositivePotionItem();
-//        }
-//    }
-//
-//    /**
-//     * Randomizes a number between 1 - 100, to then check the posPotionProbabilities. If random number is lower than
-//     * the probability, that Potion is created (with HARDCODED turnlimit).
-//     * @return
-//     * A "positive" PotionItem. Null if the number wasn't lower than any probability.
-//     */
-//    private Interactable getPositivePotionItem() {
-//        int determinator = r.nextInt(100) + 1;
-//        for (Equipment.Effect e : posPotionProbabilities.keySet()) {
-//            if (determinator < posPotionProbabilities.get(e)) {
-//                return new PotionItem(e.name(), e, 5);
-//            }
-//        }
-//        return null;
-//    }
-//
-//    /**
-//     * Randomizes a number between 1 - 100, to then check the Food Probabilities. If random number is lower than
-//     * the probability, that food is created (with HARDCODED healvalue).
-//     * @return
-//     * A "positive" Food item. Null if the number wasn't lower than any probability.
-//     */
-//    private Interactable getPositiveFoodItem() {
-//        int determinator = r.nextInt(100) + 1;
-//        for (String s : posFoodProbabilities.keySet()) {
-//            if (determinator < posFoodProbabilities.get(s)) {
-//                return new FoodItem(s, 10);
-//            }
-//        }
-//        return null;
-//    }
-//
-//    /**
-//     * Randomizes a number between 1 - 100, to then check the Positive NPC probabilites. If random number is lower than
-//     * the probability, that npc is created (with HARDCODED health and speed values).
-//     * @return
-//     * A positive NPC.
-//     * Null if the number wasn't lower than any probability.
-//     */
-//    private Interactable getPositiveNPC() {
-//        int determinator = r.nextInt(100) + 1;
-//        for (String s : posNpcProbabilities.keySet()) {
-//            if (determinator < posNpcProbabilities.get(s)) {
-//                return new NPC(s, 100, 10);
-//            }
-//        }
-//        return null;
-//    }
-//
-//    /**
-//     * Randomizes a number between 1 - 100, to then check the negative Interactable probabilites. If random number is lower than
-//     * the probability, that interactable is created (ATM hardcoded to negative NPC's, with hardcoded health and speed).
-//     * @return
-//     * A negative Interactable (NPC).
-//     * Null if the number wasn't lower than any probability.
-//     */
-//    public Interactable getNegativeInteractable() {
-//        int determinator = r.nextInt(100) + 1;
-//        for (String s : negativeNpcProbabilities.keySet()) {
-//            if (determinator < negativeNpcProbabilities.get(s)) {
-//                return new NPC(s, 100, 10);
-//            }
-//        }
-//        return null;
-//    }
-
-
     private void determineProbabilities() {
         for (HashMap<?, Integer> m : generatorProbabilityMaps.keySet()) {
-            int tempDiffScale = diffScale;
+            int tempDiffScale = difficultyScale;
             int changeFactor = tempDiffScale * 2 / m.keySet().size();
             putChangeFactor(m, changeFactor, tempDiffScale);
         }
@@ -187,18 +105,27 @@ public class InteractableDirector {
      *
      */
     private static <T> Map<T, Integer> convertPercentages(Map<T, Integer> mapToGenerateFrom){
+
         int check = 0;
+        System.out.println(mapToGenerateFrom + " " + check);
+
         Map<T, Integer> newMap = new HashMap<>();
         
         for (Map.Entry<T, Integer> e : mapToGenerateFrom.entrySet()) {
             check = check + e.getValue();
-            if (check > 100) {
-                throw new IllegalStateException("Percentages must amount to exactly 100");
-            }
+            System.out.println(e.getValue() + " : " + check);
 
             newMap.put(e.getKey(), check);
+        }
+        System.out.println("Total check: " +check);
 
+        if (check != 100) {
+            throw new IllegalStateException("Percentages must amount to exactly 100!");
         }
         return newMap;
+    }
+
+    public void setDifficultyScale(int difficultyScale) {
+        this.difficultyScale = difficultyScale;
     }
 }
