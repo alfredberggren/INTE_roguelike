@@ -1,8 +1,9 @@
 import java.util.Scanner;
 
-public class TextUI extends IO{
+public class TextIO extends IO{
 
-    public TurnSystem.TurnCommand requestTurnCommand(Map map, Character character){
+    @Override
+    public TurnSystem.TurnCommand requestTurnCommand(MapController map, Character character){
         String input = getUserInput();
         switch(input){
             case "action": return TurnSystem.TurnCommand.ACTION;
@@ -12,13 +13,14 @@ public class TextUI extends IO{
         }
     }
 
-    public TurnSystem.TurnCommand requestAnotherTurnCommand(Map map, Character character){
+    @Override
+    public TurnSystem.TurnCommand requestAnotherTurnCommand(MapController map, Character character){
         System.out.println("Command is not allowed");
         return requestTurnCommand(map, character);
     }
 
-
-    public CardinalDirection requestMove(Map map, Character character){
+    @Override
+    public CardinalDirection requestMove(MapController map, Character character){
         String input = getUserInput();
         switch(input){
             case "north": return CardinalDirection.NORTH;
@@ -29,12 +31,14 @@ public class TextUI extends IO{
         }
     }
 
-    public CardinalDirection requestAnotherMove(Map map, Character character){
+    @Override
+    public CardinalDirection requestAnotherMove(MapController map, Character character){
         System.out.println("Move is not allowed");
         return requestMove(map, character);
     }
 
-    public Interactable.InteractableAction requestAction(Map map, Character character){
+    @Override
+    public Interactable.InteractableAction requestAction(MapController map, Character character, Interactable interactable){
         String input = getUserInput();
         switch(input){
             case "loot": return Interactable.InteractableAction.LOOT;
@@ -47,15 +51,29 @@ public class TextUI extends IO{
         }
     }
 
-    public Interactable.InteractableAction requestAnotherAction(Map map, Character character){
+    @Override
+    public Interactable.InteractableAction requestAnotherAction(MapController map, Character character, Interactable interactable){
         System.out.println("Action is not allowed");
-        return requestAction(map, character);
+        return requestAction(map, character, interactable);
     }
+
 
     private String getUserInput(){
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
         scanner.close();
         return input;
+    }
+
+    @Override
+    public Interactable requestInteractable(MapController map, Character character) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'requestInteractable'");
+    }
+
+    @Override
+    public Interactable requestAnotherInteractble(MapController map, Character character) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'requestAnotherInteractble'");
     }
 }

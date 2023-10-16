@@ -5,7 +5,7 @@ public class Player extends Character{
 
 
     public Player(String name, int health, int speed, Position pos, IO io) {
-        super(name, health, speed, pos, new TextUI());
+        super(name, health, speed, pos, io);
         experiencePoint=0;
     }
 

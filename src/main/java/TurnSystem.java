@@ -11,13 +11,13 @@ public class TurnSystem{
         this.io = io;
     }
 
-    public void move(Character player, Map worldMap) {
+    public void move(Character player, MapController worldMap) {
     }
 
-    public void action(Player player, Map worldMap) {
+    public void action(Player player, MapController worldMap) {
     }
 
-    public void startTurn(Map worldMap, Character character, int i) {
+    public void startTurn(MapController worldMap, Character character, int i) {
         while(true){
             if(io.requestTurnCommand(worldMap, character) == TurnCommand.END) return;
         }

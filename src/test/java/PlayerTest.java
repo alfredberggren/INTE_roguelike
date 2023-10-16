@@ -10,7 +10,7 @@ public class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        DEFAULT_PLAYER = new Player("Rudolf",80, 20, new Position(0, 0), new TextUI());
+        DEFAULT_PLAYER = new Player("Rudolf",80, 20, new Position(0, 0), new TextIO());
     }
 
     @Test

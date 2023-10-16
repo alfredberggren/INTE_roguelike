@@ -37,25 +37,23 @@ public class IOTest {
         InputStream tempInputStream = new ByteArrayInputStream(inputString.getBytes());
         System.setIn(tempInputStream);
 
-        IO tempTextUI = new TextUI();
+        IO tempTextIO = new TextIO();
 
-        // Needs updating when Room constructor is updated
         MapController tempMapController = new MapController();
+     
+        Character tempCharacter = new Character("name", 0, 0, new Position(0, 0), tempTextIO);
 
-        // Needs updating when Character constructor is updated
-        Character tempCharacter = new Character(0, 0, new Position(0, 0));
-
-        assertEquals(TurnSystem.TurnCommand.ACTION, tempTextUI.requestTurnCommand(tempMapController, tempCharacter),
+        assertEquals(TurnSystem.TurnCommand.ACTION, tempTextIO.requestTurnCommand(tempMapController, tempCharacter),
                "Could not request Turn Command");
     }
 
     @Test
     public void testRequestTurnCommandsAllTurnCommands() {
-        IO tempTextUI = new TextUI();
-        // Needs updating when Room constructor is updated
+        IO tempTextIO = new TextIO();
+
         MapController tempMapController = new MapController();
-        // Needs updating when Character constructor is updated
-        Character tempCharacter = new Character(0, 0, new Position(0, 0));
+        
+        Character tempCharacter = new Character("name", 0, 0, new Position(0, 0), tempTextIO);
 
         String[] availableCommands = {"action", "move", "end turn"};
         int correctCommand = 0;
@@ -63,7 +61,7 @@ public class IOTest {
             InputStream tempInputStream = new ByteArrayInputStream(availableCommands[i].getBytes());
             System.setIn(tempInputStream);
 
-            if(TurnSystem.TurnCommand.values()[i].equals(tempTextUI.requestTurnCommand(tempMapController, tempCharacter))){
+            if(TurnSystem.TurnCommand.values()[i].equals(tempTextIO.requestTurnCommand(tempMapController, tempCharacter))){
                 correctCommand++;
             }
         }
@@ -76,14 +74,13 @@ public class IOTest {
         InputStream tempInputStream = new ByteArrayInputStream(inputString.getBytes());
         System.setIn(tempInputStream);
 
-        IO tempTextUI = new TextUI();
-        // Needs updating when Room constructor is updated
-        MapController tempMapController = new MapController();
-        // Needs updating when Character constructor is updated
-        Character tempCharacter = new Character(0, 0, new Position(0, 0));
+        IO tempTextIO = new TextIO();
+
+        MapController tempMapController = new MapController();  
+        Character tempCharacter = new Character("name", 0, 0, new Position(0, 0), tempTextIO);
 
         assertThrows(IllegalArgumentException.class, () ->{
-            tempTextUI.requestTurnCommand(tempMapController, tempCharacter);
+            tempTextIO.requestTurnCommand(tempMapController, tempCharacter);
         });
     }
 
@@ -97,14 +94,14 @@ public class IOTest {
         System.setIn(tempInputStream);
         System.setOut(printStream);
 
-        TextUI tempTextUI = new TextUI();
-        // Needs updating when Room constructor is updated
-        MapController tempMapController = new MapController();
-        // Needs updating when Character constructor is updated
-        Character tempCharacter = new Character(0, 0, new Position(0, 0));
-        assertEquals(TurnSystem.TurnCommand.ACTION, tempTextUI.requestAnotherTurnCommand(tempMapController, tempCharacter));
-        InputStream outputStreamRead = new ByteArrayInputStream(outputStream.toByteArray());
+        TextIO tempTextIO = new TextIO();
 
+        MapController tempMapController = new MapController(); 
+        Character tempCharacter = new Character("name", 0, 0, new Position(0, 0), tempTextIO);
+        
+        //Checks the method outputs the correct string
+        assertEquals(TurnSystem.TurnCommand.ACTION, tempTextIO.requestAnotherTurnCommand(tempMapController, tempCharacter));
+        InputStream outputStreamRead = new ByteArrayInputStream(outputStream.toByteArray());
         Scanner scanner = new Scanner(outputStreamRead);
         String scannedLine = scanner.nextLine();
         scanner.close();
@@ -117,29 +114,22 @@ public class IOTest {
         InputStream tempInputStream = new ByteArrayInputStream(inputString.getBytes());
         System.setIn(tempInputStream);
 
-        IO tempTextUI = new TextUI();
+        IO tempTextIO = new TextIO();
 
-        // Needs updating when Room constructor is updated
         MapController tempMapController = new MapController();
+        Character tempCharacter = new Character("name", 0, 0, new Position(0, 0), tempTextIO);
 
-        // Needs updating when Character constructor is updated
-        Character tempCharacter = new Character(0, 0, new Position(0, 0));
-
-        // requestMove(Room room, Character character) has it parameters so it knows
-        // where from and who preforms the move.
-        assertEquals(CardinalDirection.NORTH, tempTextUI.requestMove(tempMapController, tempCharacter),
+        assertEquals(CardinalDirection.NORTH, tempTextIO.requestMove(tempMapController, tempCharacter),
                "Could not request move");
     }
 
     @Test
     public void testRequestMoveInAllDirections() {
-        TextUI tempTextUI = new TextUI();
+        TextIO tempTextIO = new TextIO();
 
-        // Needs updating when Room constructor is updated
+
         MapController tempMapController = new MapController();
-
-        // Needs updating when Character constructor is updated
-        Character tempCharacter = new Character(0, 0, new Position(0, 0));
+        Character tempCharacter = new Character("name", 0, 0, new Position(0, 0), tempTextIO);
 
         String[] movableDirections = {"north", "east", "south", "west"};
         int correctDirections = 0;
@@ -147,7 +137,7 @@ public class IOTest {
             InputStream tempInputStream = new ByteArrayInputStream(movableDirections[i].getBytes());
             System.setIn(tempInputStream);
 
-            if(CardinalDirection.values()[i].equals(tempTextUI.requestMove(tempMapController, tempCharacter))){
+            if(CardinalDirection.values()[i].equals(tempTextIO.requestMove(tempMapController, tempCharacter))){
                 correctDirections++;
             }
         }
@@ -160,14 +150,13 @@ public class IOTest {
         InputStream tempInputStream = new ByteArrayInputStream(inputString.getBytes());
         System.setIn(tempInputStream);
 
-        IO tempTextUI = new TextUI();
-        // Needs updating when Room constructor is updated
+        IO tempTextIO = new TextIO();
+
         MapController tempMapController = new MapController();
-        // Needs updating when Character constructor is updated
-        Character tempCharacter = new Character(0, 0, new Position(0, 0));
+        Character tempCharacter = new Character("name", 0, 0, new Position(0, 0), tempTextIO);
 
         assertThrows(IllegalArgumentException.class, () ->{
-            tempTextUI.requestMove(tempMapController, tempCharacter);
+            tempTextIO.requestMove(tempMapController, tempCharacter);
         });
     }
 
@@ -181,14 +170,14 @@ public class IOTest {
         System.setIn(tempInputStream);
         System.setOut(printStream);
 
-        IO tempTextUI = new TextUI();
-        // Needs updating when Room constructor is updated
-        MapController tempMapController = new MapController();
-        // Needs updating when Character constructor is updated
-        Character tempCharacter = new Character(0, 0, new Position(0, 0));
-        assertEquals(CardinalDirection.NORTH, tempTextUI.requestAnotherMove(tempMapController, tempCharacter));
-        InputStream outputStreamRead = new ByteArrayInputStream(outputStream.toByteArray());
+        IO tempTextIO = new TextIO();
 
+        MapController tempMapController = new MapController();
+        Character tempCharacter = new Character("name", 0, 0, new Position(0, 0), tempTextIO);
+        
+        //Checks the method outputs the correct string
+        assertEquals(CardinalDirection.NORTH, tempTextIO.requestAnotherMove(tempMapController, tempCharacter));
+        InputStream outputStreamRead = new ByteArrayInputStream(outputStream.toByteArray());
         Scanner scanner = new Scanner(outputStreamRead);
         String scannedLine = scanner.nextLine();
         scanner.close();
@@ -201,27 +190,23 @@ public class IOTest {
         InputStream tempInputStream = new ByteArrayInputStream(inputString.getBytes());
         System.setIn(tempInputStream);
 
-        IO tempTextUI = new TextUI();
+        IO tempTextIO = new TextIO();
 
-        // Needs updating when Room constructor is updated
         MapController tempMapController = new MapController();
+        Character tempCharacter = new Character("name", 0, 0, new Position(0, 0), tempTextIO);
+        FoodItem tempInteractableItem = new FoodItem("name", 0);
 
-        // Needs updating when Character constructor is updated
-        Character tempCharacter = new Character(0, 0, new Position(0, 0));
-
-        assertEquals(Interactable.InteractableAction.LOOT, tempTextUI.requestAction(tempMapController, tempCharacter),
+        assertEquals(Interactable.InteractableAction.LOOT, tempTextIO.requestAction(tempMapController, tempCharacter, tempInteractableItem),
                "Could not request move");
     }
 
     @Test
     public void testRequestActionAllActions() {
-        IO tempTextUI = new TextUI();
+        IO tempTextIO = new TextIO();
 
-        // Needs updating when Room constructor is updated
         MapController tempMapController = new MapController();
-
-        // Needs updating when Character constructor is updated
-        Character tempCharacter = new Character(0, 0, new Position(0, 0));
+        Character tempCharacter = new Character("name", 0, 0, new Position(0, 0), tempTextIO);
+        FoodItem tempInteractableItem = new FoodItem("name", 0);
 
         String[] movableDirections = {"loot", "drop", "fight", "wear", "talk", "use"};
         int correctDirections = 0;
@@ -229,7 +214,7 @@ public class IOTest {
             InputStream tempInputStream = new ByteArrayInputStream(movableDirections[i].getBytes());
             System.setIn(tempInputStream);
 
-            if(Interactable.InteractableAction.values()[i].equals(tempTextUI.requestAction(tempMapController, tempCharacter))){
+            if(Interactable.InteractableAction.values()[i].equals(tempTextIO.requestAction(tempMapController, tempCharacter, tempInteractableItem))){
                 correctDirections++;
             }
         }
@@ -242,14 +227,14 @@ public class IOTest {
         InputStream tempInputStream = new ByteArrayInputStream(inputString.getBytes());
         System.setIn(tempInputStream);
 
-        IO tempTextUI = new TextUI();
-        // Needs updating when Room constructor is updated
+        IO tempTextIO = new TextIO();
+
         MapController tempMapController = new MapController();
-        // Needs updating when Character constructor is updated
-        Character tempCharacter = new Character(0, 0, new Position(0, 0));
+        Character tempCharacter = new Character("name", 0, 0, new Position(0, 0), tempTextIO);
+        FoodItem tempInteractableItem = new FoodItem("name", 0);
 
         assertThrows(IllegalArgumentException.class, () ->{
-            tempTextUI.requestAction(tempMapController, tempCharacter);
+            tempTextIO.requestAction(tempMapController, tempCharacter, tempInteractableItem);
         });
     }
 
@@ -263,12 +248,12 @@ public class IOTest {
         System.setIn(tempInputStream);
         System.setOut(printStream);
 
-        IO tempTextUI = new TextUI();
-        // Needs updating when Room constructor is updated
+        IO tempTextIO = new TextIO();
         MapController tempMapController = new MapController();
-        // Needs updating when Character constructor is updated
-        Character tempCharacter = new Character(0, 0, new Position(0, 0));
-        assertEquals(Interactable.InteractableAction.LOOT, tempTextUI.requestAnotherAction(tempMapController, tempCharacter));
+        FoodItem tempInteractableItem = new FoodItem("name", 0);
+        
+        Character tempCharacter = new Character("name", 0, 0, new Position(0, 0), tempTextIO);
+        assertEquals(Interactable.InteractableAction.LOOT, tempTextIO.requestAnotherAction(tempMapController, tempCharacter, tempInteractableItem));
         
         //Checks the method outputs the correct string
         InputStream outputStreamRead = new ByteArrayInputStream(outputStream.toByteArray());

@@ -36,19 +36,17 @@ public class TurnSystemTest {
         Position playerPosition = new Position(0, 0);
         Room playerRoom = new Room(playerPosition);
         playerRoom.setPossibleRoutes(new ArrayList<CardinalDirection>());
-        worldMapController.addRoom(playerPosition, playerRoom);
+        worldMapController.add(playerPosition, playerRoom);
 
-        TurnSystem turnSystem = new TurnSystem(io);
-        Player player = new Player(1, 1, playerPosition);
+        Player player = new Player("name", 1, 1, playerPosition, io);
 
         assertThrows(IllegalStateException.class, () -> {
-            turnSystem.move(player, worldMapController);
+            player.getTurnSystem().move(player, worldMapController);
         }, "When there is no option for movement then There wasn't an exception Thrown");
     }
 
     @Test
     public void whenMove_thenCharacterHasMoved(){
-        TurnSystem turnSystem = new TurnSystem(io);
         MapController worldMapController = new MapController();
         Position originalPosition = new Position(0, 0);
         Room originalRoom = new Room(originalPosition);
@@ -59,8 +57,8 @@ public class TurnSystemTest {
         routes.add(CardinalDirection.NORTH);
         originalRoom.setPossibleRoutes(routes);
 
-        worldMapController.addRoom(originalPosition, originalRoom);
-        worldMapController.addRoom(otherPosition, otherRoom);
+        worldMapController.add(originalPosition, originalRoom);
+        worldMapController.add(otherPosition, otherRoom);
         Player player = new Player(1, 1, originalPosition);
                 
         Mockito.when(io.requestMove(worldMapController, player)).thenReturn(CardinalDirection.NORTH);
@@ -81,8 +79,8 @@ public class TurnSystemTest {
         routes.add(CardinalDirection.NORTH);
         originalRoom.setPossibleRoutes(routes);
 
-        worldMapController.addRoom(originalPosition, originalRoom);
-        worldMapController.addRoom(otherPosition, otherRoom);
+        worldMapController.add(originalPosition, originalRoom);
+        worldMapController.add(otherPosition, otherRoom);
         Player player = new Player(1, 1, originalPosition);
                 
         Mockito.when(io.requestMove(worldMapController, player)).thenReturn(CardinalDirection.SOUTH);
@@ -104,8 +102,8 @@ public class TurnSystemTest {
         routes.add(CardinalDirection.NORTH);
         originalRoom.setPossibleRoutes(routes);
 
-        worldMapController.addRoom(originalPosition, originalRoom);
-        worldMapController.addRoom(otherPosition, otherRoom);
+        worldMapController.add(originalPosition, originalRoom);
+        worldMapController.add(otherPosition, otherRoom);
         Player player = new Player(1, 1, originalPosition);
                 
         Mockito.when(io.requestMove(worldMapController, player)).thenReturn(CardinalDirection.SOUTH);
@@ -126,7 +124,7 @@ public class TurnSystemTest {
         MapController worldMapController = new MapController();
         Position playerPosition = new Position(0, 0);
         Room playerRoom = new Room(playerPosition, new InteractableInventory());
-        worldMapController.addRoom(playerPosition, playerRoom);
+        worldMapController.add(playerPosition, playerRoom);
 
         TurnSystem turnSystem = new TurnSystem(io);
         Player player = new Player(1, 1, playerPosition);
@@ -152,7 +150,7 @@ public class TurnSystemTest {
         MapController worldMapController = new MapController();
         Position playerPosition = new Position(0, 0);
         Room playerRoom = new Room(playerPosition, new InteractableInventory(testEquipment));
-        worldMapController.addRoom(playerPosition, playerRoom);
+        worldMapController.add(playerPosition, playerRoom);
 
         TurnSystem turnSystem = new TurnSystem(io);
         Player player = new Player(1, 1, playerPosition);
@@ -181,7 +179,7 @@ public class TurnSystemTest {
         MapController worldMapController = new MapController();
         Position playerPosition = new Position(0, 0);
         Room playerRoom = new Room(playerPosition, new InteractableInventory());
-        worldMapController.addRoom(playerPosition, playerRoom);
+        worldMapController.add(playerPosition, playerRoom);
 
         TurnSystem turnSystem = new TurnSystem(io);
         Player player = new Player(1, 1, playerPosition);
@@ -214,7 +212,7 @@ public class TurnSystemTest {
         MapController worldMapController = new MapController();
         Position playerPosition = new Position(0, 0);
         Room playerRoom = new Room(playerPosition, new InteractableInventory(testEquipment));
-        worldMapController.addRoom(playerPosition, playerRoom);
+        worldMapController.add(playerPosition, playerRoom);
 
         TurnSystem turnSystem = new TurnSystem(io);
         Player player = new Player(1, 1, playerPosition);
@@ -238,7 +236,7 @@ public class TurnSystemTest {
         MapController worldMapController = new MapController();
         Position playerPosition = new Position(0, 0);
         Room playerRoom = new Room(playerPosition, new InteractableInventory(testPotion));
-        worldMapController.addRoom(playerPosition, playerRoom);
+        worldMapController.add(playerPosition, playerRoom);
 
         TurnSystem turnSystem = new TurnSystem(io);
         Player player = new Player(1, 1, playerPosition);
@@ -264,7 +262,7 @@ public class TurnSystemTest {
         MapController worldMapController = new MapController();
         Position playerPosition = new Position(0, 0);
         Room playerRoom = new Room(playerPosition, new InteractableInventory(npc));
-        worldMapController.addRoom(playerPosition, playerRoom);
+        worldMapController.add(playerPosition, playerRoom);
 
         TurnSystem playerTurnSystem = new TurnSystem(io);
         Player player = new Player(100, 100, playerPosition);
@@ -294,7 +292,7 @@ public class TurnSystemTest {
         MapController worldMapController = new MapController();
         Position playerPosition = new Position(0, 0);
         Room playerRoom = new Room(playerPosition, new InteractableInventory(npc));
-        worldMapController.addRoom(playerPosition, playerRoom);
+        worldMapController.add(playerPosition, playerRoom);
 
         TurnSystem playerTurnSystem = new TurnSystem(io);
         Player player = new Player(100, 100, playerPosition);
@@ -326,7 +324,7 @@ public class TurnSystemTest {
         MapController worldMapController = new MapController();
         Position playerPosition = new Position(0, 0);
         Room playerRoom = new Room(playerPosition, new InteractableInventory(testEquipmentThree));
-        worldMapController.addRoom(playerPosition, playerRoom);
+        worldMapController.add(playerPosition, playerRoom);
 
         TurnSystem turnSystem = new TurnSystem(io);
         Player player = new Player(1, 1, playerPosition);
@@ -357,7 +355,7 @@ public class TurnSystemTest {
         MapController worldMapController = new MapController();
         Position playerPosition = new Position(0, 0);
         Room playerRoom = new Room(playerPosition, new InteractableInventory(testEquipmentOne));
-        worldMapController.addRoom(playerPosition, playerRoom);
+        worldMapController.add(playerPosition, playerRoom);
 
         TurnSystem turnSystem = new TurnSystem(io);
         Player player = new Player(1, 1, playerPosition);
@@ -385,7 +383,7 @@ public class TurnSystemTest {
         MapController worldMapController = new MapController();
         Position playerPosition = new Position(0, 0);
         Room playerRoom = new Room(playerPosition, new InteractableInventory(testEquipment));
-        worldMapController.addRoom(playerPosition, playerRoom);
+        worldMapController.add(playerPosition, playerRoom);
 
         TurnSystem turnSystem = new TurnSystem(io);
         Player player = new Player(1, 1, playerPosition);
@@ -416,7 +414,7 @@ public class TurnSystemTest {
         MapController worldMapController = new MapController();
         Position playerPosition = new Position(0, 0);
         Room playerRoom = new Room(playerPosition, new InteractableInventory(testEquipment));
-        worldMapController.addRoom(playerPosition, playerRoom);
+        worldMapController.add(playerPosition, playerRoom);
 
         TurnSystem turnSystem = new TurnSystem(io);
         Player player = new Player(1, 1, playerPosition);

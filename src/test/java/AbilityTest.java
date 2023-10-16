@@ -11,8 +11,8 @@ public class AbilityTest {
 
     @BeforeEach
     void setUp() {
-        character = new Character("Rudolf", 10, 100, new Position(1,1), new TextUI());
-        player = new Player("Rudolf",100,10, new Position(1,1), new TextUI());
+        character = new Character("Rudolf", 10, 100, new Position(1,1), new TextIO());
+        player = new Player("Rudolf",100,10, new Position(1,1), new TextIO());
     }
     @Test
     @DisplayName("Returns if a Magic Ability exist")
