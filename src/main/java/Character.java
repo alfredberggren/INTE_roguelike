@@ -16,7 +16,7 @@ public class Character implements Interactable{
     //private String name;
     private int health;
     private int speed;
-    private int mana;
+    private int mana; 
     private int experiencePoint;
     private int level;
     private Position pos;
@@ -25,10 +25,11 @@ public class Character implements Interactable{
     private boolean spell;
     private ArrayList<MagicAbility> knownSpell = new ArrayList<>(); //lista av abilitys som checkar om de är spell eller physical
     private InteractableInventory inventory = new InteractableInventory();
-    private boolean canUseMagic = true;
+    private boolean canUseMagic = true; // remove
     private EquipmentOnBody equipmentOnBody;
+    private TurnSystem turnSystem;
 
-    public Character(int health, int speed, int experiencePoint){
+    public Character(int health, int speed, int experiencePoint, IO io){
         if (health < 0 || speed < 0) {
             throw new IllegalArgumentException("Speed and health needs to be 0 or more");
         }
@@ -41,9 +42,10 @@ public class Character implements Interactable{
             isDead = false;
         }
         possibleInteractableActions = STANDARD_CHARACTER_INTERACTABLE_ACTIONS;
+        turnSystem = new TurnSystem(io);
     }
 
-    public Character(int health, int speed, Position pos){
+    public Character(int health, int speed, Position pos, IO io){
         if (health < 0 || speed < 0) {
             throw new IllegalArgumentException("Speed and health needs to be 0 or more");
         }
@@ -55,6 +57,7 @@ public class Character implements Interactable{
             isDead = false;
         }
         possibleInteractableActions = STANDARD_CHARACTER_INTERACTABLE_ACTIONS;
+        turnSystem = new TurnSystem(io);
     }
 
 
@@ -186,7 +189,6 @@ public class Character implements Interactable{
             setExperiencePoint(result);
         }
     }
-
 
     @Override
     public Set<InteractableAction> getPossibleActions() {
