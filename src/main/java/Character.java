@@ -19,6 +19,7 @@ public class Character implements Interactable{
     private ArrayList<Spell> knownSpell = new ArrayList<>();
     private InteractableInventory inventory = new InteractableInventory();
     private boolean canUseMagic = true;
+    private EquipmentOnBody equipmentOnBody;
 
     public Character(int health, int speed, int experiencePoint){
         if (health < 0 || speed < 0) {
@@ -56,6 +57,9 @@ public class Character implements Interactable{
 
     public InteractableInventory getInventory() {
         return inventory;
+    }
+    public EquipmentOnBody getEquipmentOnBody(){
+        return equipmentOnBody;
     }
 
     public boolean getSpell() {
