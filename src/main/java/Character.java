@@ -16,7 +16,7 @@ public class Character implements Interactable{
     private boolean isDead = false;
     private MagicAbility magicAbility;
     private boolean spell;
-    private ArrayList<Spell> knownSpell = new ArrayList<>();
+    private ArrayList<MagicAbility> knownSpell = new ArrayList<>(); //lista av abilitys som checkar om de är spell eller physical
     private InteractableInventory inventory = new InteractableInventory();
     private boolean canUseMagic = true;
 
@@ -63,17 +63,17 @@ public class Character implements Interactable{
     }
 
     /**Checks if Arraylist is not empty and if so removes the spell*/
-    public void forgetSpell(Spell spell) {
+    public void forgetSpell(MagicAbility spell) {
         if(!knownSpell.isEmpty()) {
             knownSpell.remove(spell);
         }
     }
 
     /**Adds a spell to the Arraylist*/
-    public void addSpell(Spell spell) {
+    public void addSpell(MagicAbility spell) {
         knownSpell.add(spell);
     }
-    public ArrayList<Spell> getKnownSpell() {
+    public ArrayList<MagicAbility> getKnownSpell() {
         return knownSpell;
     }
 

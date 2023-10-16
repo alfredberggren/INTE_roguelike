@@ -53,7 +53,7 @@ public class InteractableInventoryTest {
     public void testTransferMethodDoesNotTransferWhenInteractableNotInInventory(){
         setUpDefaultInventory();
         InteractableInventory inventory2 = new InteractableInventory();
-        Equipment e = new Equipment("Potion", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.HEALTH, 0, new MagicAbility("Heal",10,1));
+        Equipment e = new Equipment("Potion", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.HEALTH, 0, new MagicAbility("Heal",10,1,"Healing",1,1));
         inventory.transfer(e, inventory2);
         assertEquals(false, inventory2.contains(DEFAULT_EQUIPMENT));
     }
