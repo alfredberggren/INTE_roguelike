@@ -193,7 +193,8 @@ public class Character implements Interactable{
     }
 
     public void equip(EquipmentSlot slot, Equipment equipment) {
-        if (!equipmentOnBody.slotContainsEquipment(slot))
+        //testa!!
+        if (!equipmentOnBody.slotContainsEquipment(slot) && inventory.contains(equipment))
             equipmentOnBody.putEquipment(slot, equipment);
     }
 

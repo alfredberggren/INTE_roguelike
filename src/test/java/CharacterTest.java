@@ -1,6 +1,9 @@
 
 import org.junit.jupiter.api.*;
 
+import java.util.Arrays;
+import java.util.HashSet;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CharacterTest {
@@ -183,6 +186,23 @@ public class CharacterTest {
             DEFAULT_CHARACTER.setHealth(-10);
         });
     }
+
+    @Test
+    @DisplayName("Test to equip a character")
+    public void testToEquipCharacter(){
+        DEFAULT_CHARACTER.equip(EquipmentSlot.LEFT_HAND, new Equipment("Sword", new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP)), Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1)));
+        assertEquals("LEFT_HAND: Sword", DEFAULT_CHARACTER.getEquipmentOnBody());
+    }
+    @Test
+    @DisplayName("Test to unequip a character")
+    public void testToUnEquipCharacter(){
+        DEFAULT_CHARACTER.equip(EquipmentSlot.LEFT_HAND, new Equipment("Sword", new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP)), Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1)));
+        DEFAULT_CHARACTER.unEquip(EquipmentSlot.LEFT_HAND);
+        assertEquals("", DEFAULT_CHARACTER.getEquipmentOnBody());
+    }
+    //test equipment's position
+    //test inventory.remove
+    //test inventory.add
 
 
 }
