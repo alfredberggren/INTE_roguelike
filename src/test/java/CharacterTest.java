@@ -172,7 +172,7 @@ public class CharacterTest {
     public void testCharacterMagicAbility() {
         Character c = new Character(100, 10, new Position(0, 0));
         MagicAbility fireMagic = new MagicAbility("Fireball", 20, 1,"Shoots fire",2,1);
-        c.setMagicAbility(fireMagic);
+        c.addAbility(fireMagic);
         //assertEquals("Wizard", c.getName());
         assertEquals("Fireball", fireMagic.name);
     }
@@ -181,8 +181,8 @@ public class CharacterTest {
     @DisplayName("Test setting and getting Magic Ability")
     public void testCharacterSetAndGetMagicAbility() {
         MagicAbility fireMagic = new MagicAbility("Fireball", 20, 1,"Shoots fire",2,1);
-        DEFAULT_CHARACTER.setMagicAbility(fireMagic);
-        assertEquals(fireMagic, DEFAULT_CHARACTER.getMagicAbility());
+        DEFAULT_CHARACTER.addAbility(fireMagic);
+        assertEquals(fireMagic, DEFAULT_CHARACTER.getAbilities());
     }
 
     @Test
@@ -190,11 +190,11 @@ public class CharacterTest {
     public void testCharacterSpellHandling() {
         MagicAbility fireSpell = new MagicAbility("Fire", 10, 1,"Shoots fire", 1,2);
         MagicAbility iceSpell = new MagicAbility("Ice", 12, 1, "Shoots ice", 1,3);
-        DEFAULT_CHARACTER.addSpell(fireSpell);
-        assertTrue(DEFAULT_CHARACTER.getKnownSpell().contains(fireSpell));
-        DEFAULT_CHARACTER.forgetSpell(fireSpell);
-        assertFalse(DEFAULT_CHARACTER.getKnownSpell().contains(fireSpell));
-        assertDoesNotThrow(() -> DEFAULT_CHARACTER.forgetSpell(iceSpell));
+        DEFAULT_CHARACTER.addAbility(fireSpell);
+        assertTrue(DEFAULT_CHARACTER.getAbilities().contains(fireSpell));
+        DEFAULT_CHARACTER.forgetAbility(fireSpell);
+        assertFalse(DEFAULT_CHARACTER.getAbilities().contains(fireSpell));
+        assertDoesNotThrow(() -> DEFAULT_CHARACTER.forgetAbility(iceSpell));
     }
 
     @Test

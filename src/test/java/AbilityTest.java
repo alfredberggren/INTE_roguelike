@@ -58,12 +58,12 @@ public class AbilityTest {
     @DisplayName("Testing that magic ability is affected")
     public void testMagicAbilityAffected() {
         MagicAbility fireSpell = new MagicAbility("Fire",10,1,"Shoots fire",1,3);
-        DEFAULT_CHARACTER.addSpell(fireSpell);
+        DEFAULT_CHARACTER.addAbility(fireSpell);
         DEFAULT_CHARACTER.setExperiencePoint(100);
         MagicAbility ability = new MagicAbility(fireSpell.getName(), 10,1, "Fire",2,3);
         ability.setCharacter(DEFAULT_CHARACTER);
         DEFAULT_CHARACTER.decreaseXP(20);
-        DEFAULT_CHARACTER.forgetSpell(fireSpell);
+        DEFAULT_CHARACTER.forgetAbility(fireSpell);
         assertFalse(ability.calculateImpactOnAbility());
     }
 
@@ -71,7 +71,7 @@ public class AbilityTest {
     @DisplayName("Testing that magic ability is not affected")
     public void testMagicAbilityNotAffected() {
         MagicAbility iceSpell = new MagicAbility("Ice",5,1, "Shoots ice",1,2);
-        DEFAULT_CHARACTER.addSpell(iceSpell);
+        DEFAULT_CHARACTER.addAbility(iceSpell);
         MagicAbility ability = new MagicAbility(iceSpell.getName(), 10,1,"Ice",2,3);
         ability.setCharacter(DEFAULT_CHARACTER);
         DEFAULT_CHARACTER.setExperiencePoint(150);

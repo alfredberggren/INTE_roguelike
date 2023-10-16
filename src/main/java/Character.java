@@ -22,7 +22,7 @@ public class Character implements Interactable{
     private boolean isDead = false;
     private MagicAbility magicAbility;
     private boolean spell;
-    private Set<MagicAbility> knownSpell = new HashSet<>(); //lista av abilitys som checkar om de är spell eller physical
+    private Set<Ability> abilities = new HashSet<>();
     private InteractableInventory inventory = new InteractableInventory();
     private boolean canUseMagic = true; // remove
     private EquipmentOnBody equipmentOnBody;
@@ -78,26 +78,26 @@ public class Character implements Interactable{
     }
 
     /**Checks if Arraylist is not empty and if so removes the spell*/
-    public void forgetSpell(MagicAbility spell) {
-        if(!knownSpell.isEmpty()) {
-            knownSpell.remove(spell);
+    public void forgetAbility(MagicAbility spell) {
+        if(!abilities.isEmpty()) {
+            abilities.remove(spell);
         }
     }
 
     /**Adds a spell to the Arraylist*/
-    public void addSpell(MagicAbility spell) {
-        knownSpell.add(spell);
+    public void addAbility(Ability ability) {
+        abilities.add(ability);
     }
-    public Set<MagicAbility> getKnownSpell() {
-        return knownSpell;
+    public Set<Ability> getAbilities() {
+        return abilities;
     }
 
-    public MagicAbility getMagicAbility() {
+    /*public MagicAbility getMagicAbility() {
         return magicAbility;
-    }
-    public void setMagicAbility(MagicAbility magicAbility) {
+    }*/
+    /*public void setMagicAbility(MagicAbility magicAbility) {
         this.magicAbility = magicAbility;
-    }
+    }*/
 
     public void setHealth(int health) {
         if(health<0){
