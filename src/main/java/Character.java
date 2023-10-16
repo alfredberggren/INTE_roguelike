@@ -26,13 +26,12 @@ public class Character implements Interactable{
     private EquipmentOnBody equipmentOnBody;
     private TurnSystem turnSystem;
 
-    public Character(String name, int health, int speed, int experiencePoint, IO io){
+    public Character(String name, int health, int speed, IO io){
         if (health < 0 || speed < 0) {
             throw new IllegalArgumentException("Speed and health needs to be 0 or more");
         }
         this.health = health;
         this.speed = speed;
-        this.experiencePoint= experiencePoint;
         mana = 100;
         pos = new Position(0, 0);
         if(health > 0) {
@@ -49,7 +48,6 @@ public class Character implements Interactable{
         this.health = health;
         this.speed = speed;
         this.pos = pos;
-        experiencePoint=0;
         if(health > 0) {
             isDead = false;
         }
