@@ -194,6 +194,13 @@ public class CharacterTest {
         DEFAULT_CHARACTER.equip(EquipmentSlot.LEFT_HAND, equipment);
         assertEquals("LEFT_HAND: Sword", DEFAULT_CHARACTER.getEquipmentOnBody());
     }
+    @Test //testa!
+    @DisplayName("Test to equip a character when one of parameters is equal to null")
+    public void testToEquipCharacterWhenOneOfParametersZero() {
+        Equipment equipment = new Equipment("Sword", new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP)), Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1));
+        DEFAULT_CHARACTER.equip(EquipmentSlot.LEFT_HAND, null);
+        assertEquals("", DEFAULT_CHARACTER.getEquipmentOnBody());
+    }
 
     @Test
     @DisplayName("Test to unequip a character")
@@ -203,6 +210,16 @@ public class CharacterTest {
         DEFAULT_CHARACTER.unEquip(EquipmentSlot.LEFT_HAND);
         assertEquals("", DEFAULT_CHARACTER.getEquipmentOnBody());
     }
+
+    @Test //testa
+    @DisplayName("Test to unequip a character when one of parameters is equal to null")
+    public void testToUnEquipCharacterWhenOneOfParametersZero() {
+        Equipment equipment = new Equipment("Sword", new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP)), Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1));
+        DEFAULT_CHARACTER.equip(EquipmentSlot.LEFT_HAND, equipment);
+        DEFAULT_CHARACTER.unEquip(null);
+        assertEquals("LEFT_HAND: Sword", DEFAULT_CHARACTER.getEquipmentOnBody());
+    }
+
 
     @Test
     @DisplayName("Test that equipment which was dropped was added to Inventory")
@@ -220,7 +237,5 @@ public class CharacterTest {
         DEFAULT_CHARACTER.equip(EquipmentSlot.LEFT_HAND, equipment);
         assertFalse(DEFAULT_CHARACTER.getInventory().contains(equipment));
     }
-
-
 
 }

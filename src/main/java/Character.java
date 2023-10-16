@@ -190,17 +190,14 @@ public class Character implements Interactable{
             inventory.add(e);
         }
     }
-
     public void equip(EquipmentSlot slot, Equipment equipment) {
-        //testa!!
+
         if (!equipmentOnBody.slotContainsEquipment(slot) && inventory.contains(equipment)) {
             equipmentOnBody.putEquipment(slot, equipment);
             inventory.remove(equipment);
         }
 
     }
-
-
     @Override
     public Set<InteractableAction> getPossibleActions() {
         return possibleInteractableActions;
