@@ -50,44 +50,6 @@ public class MapBuilder {
             oldPos = currentPos;
             currentPos = decideNextPosition(currentPos);
 
-            //Kristian: Commented code below was my hard work, based on Alfred's. Came up with different solution, and implemented that instead. Pending Alfred´s approval, please remove.
-
-            //Check where rooms can be created from current room
-//            List<CardinalDirection> tempAvailableDirections = mapController.getUnavailableDirections(currentPos);
-
-            //If no directions, backtrack to room where directions can be taken
-//            while (tempAvailableDirections.isEmpty()){
-//                //Set pos from another random direction in currentRoom
-//                currentPos = getNextPosition(currentRoom.getPossibleRoutes().get(r.nextInt(currentRoom.getPossibleRoutes().size())), currentRoom.getPosition());
-//                //Set availableDirections from the new pos
-//                tempAvailableDirections = mapController.getUnavailableDirections(currentPos);
-//                //Set current room as the room at currentPos
-//                currentRoom = mapController.getRoom(currentPos);
-//            }
-
-            //choose random direction
-//            int nextDir = r.nextInt(tempAvailableDirections.size());
-//            CardinalDirection direction = tempAvailableDirections.get(nextDir);
-//            oldPos = currentPos;
-//
-//            //Generate new XY-position from direction and current position
-//            currentPos = getNextPosition(direction, currentPos);
-
-            //Check if room exists at new pos
-//            while (mapController.roomExists(currentPos)){
-//                //Add possible route to current room
-//                currentRoom.addPossibleRoute(direction);
-//
-//                //get new direction from oldPos
-//                tempAvailableDirections = mapController.getUnavailableDirections(oldPos);
-//                nextDir = r.nextInt(tempAvailableDirections.size());
-//                direction = tempAvailableDirections.get(nextDir);
-//
-//                //Set new pos
-//                currentPos = getNextPosition(direction, oldPos);
-//            }
-
-
             //Check if interactables should generate in new room
             randomInteractableDeterminator = r.nextInt(TOTAL_PERCENT) + 1;
             if (randomInteractableDeterminator <= INTERACTABLE_PERCENTAGE) {
