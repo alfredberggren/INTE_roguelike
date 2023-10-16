@@ -1,12 +1,14 @@
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**The MagicAbility class extends the abstract Ability class and represents a specific type of magical ability*/
 public class MagicAbility extends Ability{
     private Character character;
     private String description;
-    private String spellName;
     private int castingTime;
     private int coolDown;
+    private Set<MagicAbility> knownSpell = new HashSet<>();
 
     /**Constructs an Ability object with the specified characteristics*/
     MagicAbility(String name, int baseDamage, int minimumLevel, String description, int castingTime, int coolDown) {
@@ -22,7 +24,7 @@ public class MagicAbility extends Ability{
     }
 
     public String getName() {
-        return spellName;
+        return name;
     }
 
     public void setName(String name){
@@ -52,6 +54,9 @@ public class MagicAbility extends Ability{
     public void setCoolDown(int coolDown) {
         this.coolDown = coolDown;
     }
+
+    /**Checks if Arraylist is not empty and if so removes the spell*/
+
 
     @Override
     public boolean equals(Object o) {

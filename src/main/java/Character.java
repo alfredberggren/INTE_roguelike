@@ -1,5 +1,4 @@
 /**The Character class represents a game character that can interact with the game world. It implements Interactable.*/
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -23,7 +22,7 @@ public class Character implements Interactable{
     private boolean isDead = false;
     private MagicAbility magicAbility;
     private boolean spell;
-    private ArrayList<MagicAbility> knownSpell = new ArrayList<>(); //lista av abilitys som checkar om de är spell eller physical
+    private Set<MagicAbility> knownSpell; //lista av abilitys som checkar om de är spell eller physical
     private InteractableInventory inventory = new InteractableInventory();
     private boolean canUseMagic = true;
     private EquipmentOnBody equipmentOnBody;
@@ -41,6 +40,7 @@ public class Character implements Interactable{
             isDead = false;
         }
         possibleInteractableActions = STANDARD_CHARACTER_INTERACTABLE_ACTIONS;
+        this.knownSpell = getKnownSpell();
     }
 
     public Character(int health, int speed, Position pos){
@@ -75,7 +75,6 @@ public class Character implements Interactable{
         return spell;
     }
 
-    /**Checks if Arraylist is not empty and if so removes the spell*/
     public void forgetSpell(MagicAbility spell) {
         if(!knownSpell.isEmpty()) {
             knownSpell.remove(spell);
@@ -86,7 +85,7 @@ public class Character implements Interactable{
     public void addSpell(MagicAbility spell) {
         knownSpell.add(spell);
     }
-    public ArrayList<MagicAbility> getKnownSpell() {
+    public Set<MagicAbility> getKnownSpell() {
         return knownSpell;
     }
 
