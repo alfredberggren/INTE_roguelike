@@ -4,7 +4,6 @@ import java.util.regex.Pattern;
 public class Player extends Character{
     private static final STANDARD_PLAYER_NAME = "Player";
 
-    private int experiencePoint;
     private static final String NAME_PATTERN = "^[A-Za-z]\\w{1,11}$";
     public Player(int health, int speed, Position pos) {
         super(STANDARD_PLAYER_NAME,health, speed, pos);
@@ -15,8 +14,6 @@ public class Player extends Character{
     public int getExperiencePoint() {
         return experiencePoint;
     }
-
-
 
     @Override
     public void setExperiencePoint(int experiencePoint) {
