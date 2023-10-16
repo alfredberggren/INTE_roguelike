@@ -12,10 +12,11 @@ public class MagicAbility extends Ability{
 
     /**Constructs an Ability object with the specified characteristics*/
     MagicAbility(String name, int baseDamage, int minimumLevel, String description, int castingTime, int coolDown) {
-        super(name, baseDamage, AbilityType.MAGICAL, minimumLevel);
+        super(name, baseDamage, AbilityType.MAGICAL, minimumLevel >= 1 ? minimumLevel:1);
         this.description = description;
         this.castingTime = castingTime;
         this.coolDown = coolDown;
+
     }
 
     /**Sets the character associated with this magical ability*/
@@ -86,7 +87,7 @@ public class MagicAbility extends Ability{
     public boolean calculateImpactOnAbility() {
         //int minimumLevelRetain = 10; //om man dör så förlorar man spells
         int characterLevel = character.getLevel();
-        if(!character.getSpell() && characterLevel < 1) {
+        if(!character.getSpell() && characterLevel < minimumLevel) {
             character.forgetAbility(new MagicAbility("Fire", 10,1, "Shoots fire",1,2));
             return false;
         } else {
