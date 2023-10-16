@@ -11,7 +11,7 @@ public class Character implements Interactable{
     private Set<InteractableAction> possibleInteractableActions;
 
 
-    private String name;
+    protected String name;
     private static final String NAME_PATTERN = "^[A-Za-z]\\w{1,11}$";
 
     private int health;
@@ -56,7 +56,7 @@ public class Character implements Interactable{
             isDead = false;
         }
         possibleInteractableActions = STANDARD_CHARACTER_INTERACTABLE_ACTIONS;
-        turnSystem = new TurnSystem(io);
+        //turnSystem = new TurnSystem(io);
     }
 
     public void setName(String name) {
@@ -99,7 +99,7 @@ public class Character implements Interactable{
         return equipmentOnBody;
     }
 
-    public TurnSystem getTurnSystem(){return turnSystem}
+    public TurnSystem getTurnSystem(){return turnSystem;}
 
     public boolean getSpell() {
         return spell;

@@ -5,6 +5,7 @@ import java.util.Set;
 /**The MagicAbility class extends the abstract Ability class and represents a specific type of magical ability*/
 public class MagicAbility extends Ability{
     private Character character;
+    private Player player;
     private String description;
     private int castingTime;
     private int coolDown;
@@ -77,15 +78,15 @@ public class MagicAbility extends Ability{
     public int calculateDamageOfAbility(Character character) {
         int baseDamage = 10;
         int levelBonus = character.getLevel() * 5;
-        int experienceBonus = character.getExperiencePoint() / 10;
+        int experienceBonus = player.getExperiencePoint() / 10;
         return baseDamage + levelBonus + experienceBonus;
     }
 
     /**Calculates the impact on the character's spellcasting ability, if the character does not meet the required conditions to retain the spell, the spell is forgotten*/
     public boolean calculateImpactOnAbility() {
         int minimumLevelRetain = 10; //om man dör så förlorar man spells
-        if(!character.getSpell() && character.getExperiencePoint() < minimumLevelRetain) {
-            character.forgetSpell(new MagicAbility("Fire", 10,1, "Shoots fire",1,2));
+        if(!character.getSpell() && player.getExperiencePoint() < minimumLevelRetain) {
+            character.forgetAbility(new MagicAbility("Fire", 10,1, "Shoots fire",1,2));
             return false;
         } else {
             return true;
