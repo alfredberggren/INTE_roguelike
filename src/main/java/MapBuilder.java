@@ -21,12 +21,12 @@ public class MapBuilder {
     private Random r = new Random();
     private InteractableDirector interactableDirector;
 
-    public MapBuilder(Difficulty difficulty, int amountOfRooms, Player player, MapController mapController) {
+    public MapBuilder(Difficulty difficulty, int amountOfRooms, Player player, MapController mapController, InteractableDirector intDirector) {
         difficultyScale = DIFF_RATIO.get(difficulty);
         this.amountOfRooms = amountOfRooms;
         this.player = player;
         this.mapController = mapController;
-        interactableDirector = new InteractableDirector(difficultyScale);
+        interactableDirector = intDirector;
     }
 
     //TODO: implementera något som gör att rummen inte går in i varandra! Eller vad som händer om det inte finns några directions att gå längre (direction = null)
