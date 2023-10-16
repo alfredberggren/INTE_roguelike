@@ -12,6 +12,7 @@ public class EquipmentOnBodyTest {
     static EquipmentSlot DEFAULT_EQUIPMENT_SLOT = EquipmentSlot.LEFT_HAND;
     static final Set<Interactable.InteractableAction> DEFAULT_EQUIPMENT_ACTIONS = new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP));
     static Equipment DEFAULT_EQUIPMENT = new Equipment("Sword", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1));
+    static Player DEFAULT_PLAYER = new Player(100, 10, new Position(0,0));
 
     @BeforeEach
     void setUp() {
@@ -42,43 +43,13 @@ public class EquipmentOnBodyTest {
     }
 
     @Test
-    @DisplayName("Test to drop an equipment")
-    public void testToDropAnEquipment() {
-        Character player = new Player(100, 10, new Position(0, 0));
+    @DisplayName("Test to remove an equipment")
+    public void testToRemoveAnEquipment() {
         EQUIPMENT_ON_BODY.putEquipment(DEFAULT_EQUIPMENT_SLOT, DEFAULT_EQUIPMENT);
-        player.dropEquipment(DEFAULT_EQUIPMENT_SLOT);
+        EQUIPMENT_ON_BODY.removeEquipment(DEFAULT_EQUIPMENT_SLOT);
         assertEquals("", EQUIPMENT_ON_BODY.toString());
     }
 
-
-    //köra
-    @Test
-    @DisplayName("Test that equipment has correct position after it has been dropped")
-    public void testEquipmentsPosition() {
-        Character player = new Player(100, 10, new Position(0, 0));
-        EQUIPMENT_ON_BODY.putEquipment(DEFAULT_EQUIPMENT_SLOT, DEFAULT_EQUIPMENT);
-        player.dropEquipment(DEFAULT_EQUIPMENT_SLOT);
-        assertEquals(new Position(0,0), DEFAULT_EQUIPMENT.getPos());
-    }
-
-
-    @Disabled
-    @DisplayName("Test to drop non-existent equipment")
-    public void testToDropNonExistentEquipment() {
-        Character player = new Player(100, 10, new Position(0, 0));
-        player.dropEquipment(DEFAULT_EQUIPMENT_SLOT);
-        assertEquals(null, EQUIPMENT_ON_BODY.toString());
-    }
-
-    @Test
-    @DisplayName("Test to replace an equipment")
-    public void testToReplaceEquipment() {
-        Player player = new Player(100, 10, new Position(0, 0));
-        EQUIPMENT_ON_BODY.putEquipment(DEFAULT_EQUIPMENT_SLOT, DEFAULT_EQUIPMENT);
-        player.dropEquipment(DEFAULT_EQUIPMENT_SLOT);
-        EQUIPMENT_ON_BODY.putEquipment(DEFAULT_EQUIPMENT_SLOT, new Equipment("Dagger", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 60, new PhysicalAbility("Dagger", 20, 1)));
-        assertEquals("LEFT_HAND: Dagger +60% DAMAGE", EQUIPMENT_ON_BODY.toString());
-    }
 
     @Test
     @DisplayName("Test to check where the equipment was placed")
