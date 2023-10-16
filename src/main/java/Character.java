@@ -187,6 +187,7 @@ public class Character implements Interactable{
         }
     }
 
+
     @Override
     public Set<InteractableAction> getPossibleActions() {
         return possibleInteractableActions;

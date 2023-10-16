@@ -41,10 +41,10 @@ public class Player extends Character{
             throw new NullPointerException("Error: name can't be null");
         }
         if (name.isEmpty()){
-            System.out.println("Error: please, choose a name");
+            throw new IllegalArgumentException("Error: name can't be empty");
         }
         if(!matchesPattern(NAME_PATTERN, name)){
-            System.out.println("Error: this name is not correct");
+            throw new IllegalArgumentException("Name doesn't match the pattern");
         }
         else
             this.name = name;
