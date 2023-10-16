@@ -1,4 +1,5 @@
 /**The Character class represents a game character that can interact with the game world. It implements Interactable.*/
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -15,19 +16,20 @@ public class Character implements Interactable{
     //private String name;
     private int health;
     private int speed;
-    private int mana;
+    private int mana; 
     private int experiencePoint;
     private int level;
     private Position pos;
     private boolean isDead = false;
     private MagicAbility magicAbility;
     private boolean spell;
-    private Set<MagicAbility> knownSpell; //lista av abilitys som checkar om de är spell eller physical
+    private ArrayList<MagicAbility> knownSpell = new ArrayList<>(); //lista av abilitys som checkar om de är spell eller physical
     private InteractableInventory inventory = new InteractableInventory();
-    private boolean canUseMagic = true;
+    private boolean canUseMagic = true; // remove
     private EquipmentOnBody equipmentOnBody;
+    private TurnSystem turnSystem;
 
-    public Character(int health, int speed, int experiencePoint){
+    public Character(int health, int speed, int experiencePoint, IO io){
         if (health < 0 || speed < 0) {
             throw new IllegalArgumentException("Speed and health needs to be 0 or more");
         }
@@ -40,10 +42,10 @@ public class Character implements Interactable{
             isDead = false;
         }
         possibleInteractableActions = STANDARD_CHARACTER_INTERACTABLE_ACTIONS;
-        this.knownSpell = getKnownSpell();
+        turnSystem = new TurnSystem(io);
     }
 
-    public Character(int health, int speed, Position pos){
+    public Character(int health, int speed, Position pos, IO io){
         if (health < 0 || speed < 0) {
             throw new IllegalArgumentException("Speed and health needs to be 0 or more");
         }
@@ -55,6 +57,7 @@ public class Character implements Interactable{
             isDead = false;
         }
         possibleInteractableActions = STANDARD_CHARACTER_INTERACTABLE_ACTIONS;
+        turnSystem = new TurnSystem(io);
     }
 
 
@@ -75,6 +78,7 @@ public class Character implements Interactable{
         return spell;
     }
 
+    /**Checks if Arraylist is not empty and if so removes the spell*/
     public void forgetSpell(MagicAbility spell) {
         if(!knownSpell.isEmpty()) {
             knownSpell.remove(spell);
@@ -85,7 +89,7 @@ public class Character implements Interactable{
     public void addSpell(MagicAbility spell) {
         knownSpell.add(spell);
     }
-    public Set<MagicAbility> getKnownSpell() {
+    public ArrayList<MagicAbility> getKnownSpell() {
         return knownSpell;
     }
 
@@ -185,7 +189,6 @@ public class Character implements Interactable{
             setExperiencePoint(result);
         }
     }
-
 
     @Override
     public Set<InteractableAction> getPossibleActions() {
