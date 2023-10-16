@@ -1,6 +1,9 @@
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.HashSet;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class QuestTest {
@@ -93,6 +96,17 @@ public class QuestTest {
     public void testTwoUnequalQuests() {
         Quest test_quest = new Quest("Explore the Magic Wood", QuestType.EXPLORE, "Test description", 100, 7);
         assertFalse(DEFAULT_QUEST.equals(test_quest));
+    }
+    @Test
+    @DisplayName("Test two equal quests")
+    public void testTwoEqualTests(){
+        assertTrue(DEFAULT_QUEST.equals(DEFAULT_QUEST));
+    }
+
+    @Test //testa!!
+    @DisplayName("Test equals() when parameter i not insttance of Quest class")
+    public void testEqualityQuestWithNotQuest(){
+        assertFalse(DEFAULT_QUEST.equals(new Equipment("Sword", new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP)), Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1))));
     }
 
     @Test
