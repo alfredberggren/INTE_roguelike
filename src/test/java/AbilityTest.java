@@ -238,6 +238,27 @@ public class AbilityTest {
     }
 
     @Test
+    @DisplayName("Test minimum level cannot be negative")
+    public void testMinimumLevelCannotBeNegative() {
+        MagicAbility ability = new MagicAbility("Fire",10,-2,"Shoots fire",1,1);
+        assertEquals(1, ability.minimumLevel);
+    }
+
+    @Test
+    @DisplayName("Test casting time cannot be negative")
+    public void testCastingTimeCannotBeNegative() {
+        MagicAbility ability = new MagicAbility("Fireball", 10,3,"A fiery ball",-1,3);
+        assertEquals(0, ability.getCastingTime());
+    }
+
+    @Test
+    @DisplayName("Test cool-down time cannot be negative")
+    public void testCoolDownTimeCannotBeNegative() {
+        MagicAbility ability = new MagicAbility("Fireball", 10,3,"A fiery ball",2,-1);
+        assertEquals(0, ability.getCoolDown());
+    }
+
+    @Test
     @DisplayName("Test equals method for Spell")
     public void testSpellEquals() {
         MagicAbility spell1 = new MagicAbility("Fireball", 10,2, "A powerful fire spell",2,3);
