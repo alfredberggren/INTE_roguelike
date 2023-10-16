@@ -7,10 +7,12 @@ import static org.junit.jupiter.api.Assertions.*;
 public class AbilityTest {
 
     static Character DEFAULT_CHARACTER;
+    static Player DEFAULT_PLAYER;
 
     @BeforeEach
     void setUp() {
-        DEFAULT_CHARACTER = new Character(100, 10, 100);
+        DEFAULT_CHARACTER = new Character("Rudolf", 10, 100, new Position(1,1), new TextUI());
+        DEFAULT_PLAYER = new Player("Rudolf",100,10, new Position(1,1), new TextUI());
     }
     @Test
     @DisplayName("Returns if a Magic Ability exist")
@@ -39,7 +41,7 @@ public class AbilityTest {
     public void testCalculateDamageForFireball() {
         MagicAbility fireBall = new MagicAbility("Fireball",10,1,"A fiery ball",2,3);
         DEFAULT_CHARACTER.setLevel(2);
-        DEFAULT_CHARACTER.setExperiencePoint(50);
+        DEFAULT_PLAYER.increaseXP(50);
         int damage = fireBall.calculateDamageOfAbility(DEFAULT_CHARACTER);
         assertEquals(25, damage);
     }
@@ -49,7 +51,7 @@ public class AbilityTest {
     public void testCalculateDamageForSword() {
         PhysicalAbility sword = new PhysicalAbility("Sword",5,1);
         DEFAULT_CHARACTER.setLevel(2);
-        DEFAULT_CHARACTER.setExperiencePoint(50);
+        DEFAULT_PLAYER.increaseXP(50);
         int damage = sword.calculateDamageOfAbility(DEFAULT_CHARACTER);
         assertEquals(14, damage);
     }
@@ -59,10 +61,10 @@ public class AbilityTest {
     public void testMagicAbilityAffected() {
         MagicAbility fireSpell = new MagicAbility("Fire",10,1,"Shoots fire",1,3);
         DEFAULT_CHARACTER.addAbility(fireSpell);
-        DEFAULT_CHARACTER.setExperiencePoint(100);
+        DEFAULT_PLAYER.increaseXP(100);
         MagicAbility ability = new MagicAbility(fireSpell.getName(), 10,1, "Fire",2,3);
         ability.setCharacter(DEFAULT_CHARACTER);
-        DEFAULT_CHARACTER.decreaseXP(20);
+        DEFAULT_PLAYER.decreaseXP(20);
         DEFAULT_CHARACTER.forgetAbility(fireSpell);
         assertFalse(ability.calculateImpactOnAbility());
     }
@@ -74,7 +76,7 @@ public class AbilityTest {
         DEFAULT_CHARACTER.addAbility(iceSpell);
         MagicAbility ability = new MagicAbility(iceSpell.getName(), 10,1,"Ice",2,3);
         ability.setCharacter(DEFAULT_CHARACTER);
-        DEFAULT_CHARACTER.setExperiencePoint(150);
+        DEFAULT_PLAYER.increaseXP(150);
         assertTrue(ability.calculateImpactOnAbility());
     }
 
@@ -83,7 +85,7 @@ public class AbilityTest {
     public void testMagicCalculateDamageForLowLevelPlayer() {
         MagicAbility fireBall = new MagicAbility("Fireball",10,1,"A fiery ball",2,3);
         DEFAULT_CHARACTER.setLevel(1);
-        DEFAULT_CHARACTER.setExperiencePoint(0);
+        DEFAULT_PLAYER.increaseXP(0);
         int damage = fireBall.calculateDamageOfAbility(DEFAULT_CHARACTER);
         assertEquals(15, damage);
     }
@@ -93,7 +95,7 @@ public class AbilityTest {
     public void testMagicCalculateDamageForHighLevelPlayer() {
         MagicAbility fireBall = new MagicAbility("Fireball",10,1,"A fiery ball",2,3);
         DEFAULT_CHARACTER.setLevel(10);
-        DEFAULT_CHARACTER.setExperiencePoint(100);
+        DEFAULT_PLAYER.increaseXP(100);
         int damage = fireBall.calculateDamageOfAbility(DEFAULT_CHARACTER);
         assertEquals(70, damage);
     }
@@ -103,7 +105,7 @@ public class AbilityTest {
     public void testPhysicalCalculateDamageForLowLevelPlayer() {
         PhysicalAbility sword = new PhysicalAbility("Sword", 5,1);
         DEFAULT_CHARACTER.setLevel(1);
-        DEFAULT_CHARACTER.setExperiencePoint(0);
+        DEFAULT_PLAYER.increaseXP(0);
         int damage = sword.calculateDamageOfAbility(DEFAULT_CHARACTER);
         assertEquals(7, damage);
     }
@@ -113,7 +115,7 @@ public class AbilityTest {
     public void testPhysicalCalculateDamageForHighLevelPlayer() {
         PhysicalAbility sword = new PhysicalAbility("Sword", 5,1);
         DEFAULT_CHARACTER.setLevel(10);
-        DEFAULT_CHARACTER.setExperiencePoint(100);
+        DEFAULT_PLAYER.increaseXP(100);
         int damage = sword.calculateDamageOfAbility(DEFAULT_CHARACTER);
         assertEquals(35, damage);
     }
