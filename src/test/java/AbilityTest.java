@@ -6,13 +6,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class AbilityTest {
 
-    static Character DEFAULT_CHARACTER;
-    static Player DEFAULT_PLAYER;
+    private static Character defaultCharacter;
+    private static Player defaultPlayer;
 
     @BeforeEach
     void setUp() {
-        DEFAULT_CHARACTER = new Character("Rudolf", 10, 100, new Position(1,1), new TextUI());
-        DEFAULT_PLAYER = new Player("Rudolf",100,10, new Position(1,1), new TextUI());
+        defaultCharacter = new Character("Rudolf", 10, 100, new Position(1,1), new TextUI());
+        defaultPlayer = new Player("Rudolf",100,10, new Position(1,1), new TextUI());
     }
     @Test
     @DisplayName("Returns if a Magic Ability exist")
@@ -40,9 +40,9 @@ public class AbilityTest {
     @DisplayName("Test calculating damage for Fireball")
     public void testCalculateDamageForFireball() {
         MagicAbility fireBall = new MagicAbility("Fireball",10,1,"A fiery ball",2,3);
-        DEFAULT_CHARACTER.setLevel(2);
-        DEFAULT_PLAYER.increaseXP(50);
-        int damage = fireBall.calculateDamageOfAbility(DEFAULT_CHARACTER);
+        defaultCharacter.setLevel(2);
+        defaultPlayer.increaseXP(50);
+        int damage = fireBall.calculateDamageOfAbility(defaultCharacter);
         assertEquals(25, damage);
     }
 
@@ -50,9 +50,9 @@ public class AbilityTest {
     @DisplayName("Test calculating damage for Sword")
     public void testCalculateDamageForSword() {
         PhysicalAbility sword = new PhysicalAbility("Sword",5,1);
-        DEFAULT_CHARACTER.setLevel(2);
-        DEFAULT_PLAYER.increaseXP(50);
-        int damage = sword.calculateDamageOfAbility(DEFAULT_CHARACTER);
+        defaultCharacter.setLevel(2);
+        defaultPlayer.increaseXP(50);
+        int damage = sword.calculateDamageOfAbility(defaultCharacter);
         assertEquals(14, damage);
     }
 
@@ -60,12 +60,12 @@ public class AbilityTest {
     @DisplayName("Testing that magic ability is affected")
     public void testMagicAbilityAffected() {
         MagicAbility fireSpell = new MagicAbility("Fire",10,1,"Shoots fire",1,3);
-        DEFAULT_CHARACTER.addAbility(fireSpell);
-        DEFAULT_PLAYER.increaseXP(100);
+        defaultCharacter.addAbility(fireSpell);
+        defaultPlayer.increaseXP(100);
         MagicAbility ability = new MagicAbility(fireSpell.getName(), 10,1, "Fire",2,3);
-        ability.setCharacter(DEFAULT_CHARACTER);
-        DEFAULT_PLAYER.decreaseXP(20);
-        DEFAULT_CHARACTER.forgetAbility(fireSpell);
+        ability.setCharacter(defaultCharacter);
+        defaultPlayer.decreaseXP(20);
+        defaultCharacter.forgetAbility(fireSpell);
         assertFalse(ability.calculateImpactOnAbility());
     }
 
@@ -73,10 +73,10 @@ public class AbilityTest {
     @DisplayName("Testing that magic ability is not affected")
     public void testMagicAbilityNotAffected() {
         MagicAbility iceSpell = new MagicAbility("Ice",5,1, "Shoots ice",1,2);
-        DEFAULT_CHARACTER.addAbility(iceSpell);
+        defaultCharacter.addAbility(iceSpell);
         MagicAbility ability = new MagicAbility(iceSpell.getName(), 10,1,"Ice",2,3);
-        ability.setCharacter(DEFAULT_CHARACTER);
-        DEFAULT_PLAYER.increaseXP(150);
+        ability.setCharacter(defaultCharacter);
+        defaultPlayer.increaseXP(150);
         assertTrue(ability.calculateImpactOnAbility());
     }
 
@@ -84,9 +84,9 @@ public class AbilityTest {
     @DisplayName("Test for calculating damage for Magic Ability when character has low level")
     public void testMagicCalculateDamageForLowLevelPlayer() {
         MagicAbility fireBall = new MagicAbility("Fireball",10,1,"A fiery ball",2,3);
-        DEFAULT_CHARACTER.setLevel(1);
-        DEFAULT_PLAYER.increaseXP(0);
-        int damage = fireBall.calculateDamageOfAbility(DEFAULT_CHARACTER);
+        defaultCharacter.setLevel(1);
+        defaultPlayer.increaseXP(0);
+        int damage = fireBall.calculateDamageOfAbility(defaultCharacter);
         assertEquals(15, damage);
     }
 
@@ -94,9 +94,9 @@ public class AbilityTest {
     @DisplayName("Test for calculating damage for Magic Ability when character has high level")
     public void testMagicCalculateDamageForHighLevelPlayer() {
         MagicAbility fireBall = new MagicAbility("Fireball",10,1,"A fiery ball",2,3);
-        DEFAULT_CHARACTER.setLevel(10);
-        DEFAULT_PLAYER.increaseXP(100);
-        int damage = fireBall.calculateDamageOfAbility(DEFAULT_CHARACTER);
+        defaultCharacter.setLevel(10);
+        defaultPlayer.increaseXP(100);
+        int damage = fireBall.calculateDamageOfAbility(defaultCharacter);
         assertEquals(70, damage);
     }
 
@@ -104,9 +104,9 @@ public class AbilityTest {
     @DisplayName("Test for calculating damage for Physical Ability when character has low level")
     public void testPhysicalCalculateDamageForLowLevelPlayer() {
         PhysicalAbility sword = new PhysicalAbility("Sword", 5,1);
-        DEFAULT_CHARACTER.setLevel(1);
-        DEFAULT_PLAYER.increaseXP(0);
-        int damage = sword.calculateDamageOfAbility(DEFAULT_CHARACTER);
+        defaultCharacter.setLevel(1);
+        defaultPlayer.increaseXP(0);
+        int damage = sword.calculateDamageOfAbility(defaultCharacter);
         assertEquals(7, damage);
     }
 
@@ -114,26 +114,26 @@ public class AbilityTest {
     @DisplayName("Test for calculating damage for Physical Ability when character has high level")
     public void testPhysicalCalculateDamageForHighLevelPlayer() {
         PhysicalAbility sword = new PhysicalAbility("Sword", 5,1);
-        DEFAULT_CHARACTER.setLevel(10);
-        DEFAULT_PLAYER.increaseXP(100);
-        int damage = sword.calculateDamageOfAbility(DEFAULT_CHARACTER);
+        defaultCharacter.setLevel(10);
+        defaultPlayer.increaseXP(100);
+        int damage = sword.calculateDamageOfAbility(defaultCharacter);
         assertEquals(35, damage);
     }
 
     @Test
     @DisplayName("Test that a character is able to learn Magic")
     public void testCharacterCanLearnMagicAbility() {
-        DEFAULT_CHARACTER.setLevel(10);
+        defaultCharacter.setLevel(10);
         MagicAbility fireMagic = new MagicAbility("Fireball", 10, 5, "A fiery ball",2,3);
-        assertTrue(fireMagic.isLearnable(DEFAULT_CHARACTER));
+        assertTrue(fireMagic.isLearnable(defaultCharacter));
     }
 
     @Test
     @DisplayName("Test that a character is not able to learn Magic")
     public void testCharacterCannotLearnMagicAbility() {
-        DEFAULT_CHARACTER.setLevel(3);
+        defaultCharacter.setLevel(3);
         MagicAbility fireMagic = new MagicAbility("Fireball", 10, 5,"A fiery ball",2,3);
-        assertFalse(fireMagic.isLearnable(DEFAULT_CHARACTER));
+        assertFalse(fireMagic.isLearnable(defaultCharacter));
     }
 
     @Test

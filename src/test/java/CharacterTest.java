@@ -8,11 +8,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class CharacterTest {
     static Character DEFAULT_CHARACTER;
-    static Character DEFAULT_CHARACTER_WITH_POS = new Character(0, 9, new Position(1, 2));
+    static Character DEFAULT_CHARACTER_WITH_POS = new Character("Rudolf", 100,1, new Position(1, 2), new TextUI());
 
     @BeforeEach
     void setUp() {
-        DEFAULT_CHARACTER = new Character(80, 20, 0);
+        DEFAULT_CHARACTER = new Character("Ragnar", 80, 20, new TextUI());
     }
 
     //name tests
@@ -90,7 +90,7 @@ public class CharacterTest {
     @DisplayName("Test throws exception if health<0")
     public void testCharacterWithNegativeHealth() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            new Character(-100, 10, 0);
+            new Character("Ragnar", -100, 0, new TextUI());
         });
     }
 
@@ -98,7 +98,7 @@ public class CharacterTest {
     @DisplayName("Test throws exception if speed<0")
     public void testCharacterWithNegativeSpeed() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            new Character(100, -10, 0);
+            new Character("Ragnar", 100, 0, new TextUI());
         });
     }
 
@@ -145,7 +145,7 @@ public class CharacterTest {
     @Test
     @DisplayName("Test that character get Magic Ability")
     public void testCharacterMagicAbility() {
-        Character c = new Character(100, 10, new Position(0, 0));
+        Character c = new Character("Rudolf", 10, 10, new Position(0, 0), new TextUI());
         MagicAbility fireMagic = new MagicAbility("Fireball", 20, 1,"Shoots fire",2,1);
         c.addAbility(fireMagic);
         //assertEquals("Wizard", c.getName());
