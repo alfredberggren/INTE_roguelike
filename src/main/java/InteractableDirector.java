@@ -215,4 +215,32 @@ public class InteractableDirector {
         }
     }
 
+    /**
+     * Updates percentages to adhere to how our implementation of random works.
+     * @param mapToGenerateFrom
+     * @return
+     * New map with updated Integer-values
+     * @param <T>
+     * @throws IllegalStateException
+     * If values amount to more than 100%
+     *
+     */
+    private static <T> Map<T, Integer> convertPercentages(Map<T, Integer> mapToGenerateFrom){
+        int check = 0;
+        Map<T, Integer> newMap = new HashMap<>();
+        
+        for (Map.Entry<T, Integer> e : mapToGenerateFrom.entrySet()) {
+            check = check + e.getValue();
+            if (check > 100) {
+                throw new IllegalStateException("Percentages must amount to exactly 100");
+            }
+
+            newMap.put(e.getKey(), check);
+
+        }
+        return newMap;
+    }
+
+
+
 }
