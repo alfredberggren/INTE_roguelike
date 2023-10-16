@@ -1,8 +1,15 @@
 /**The Character class represents a game character that can interact with the game world. It implements Interactable.*/
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 public class Character implements Interactable{
+    private static final Set<InteractableAction> STANDARD_CHARACTER_INTERACTABLE_ACTIONS = new HashSet<>(Arrays.asList(
+            InteractableAction.TALK,
+            InteractableAction.FIGHT)
+    );
+    private Set<InteractableAction> possibleInteractableActions;
 
     //variabel för turnsystem
 
@@ -19,6 +26,7 @@ public class Character implements Interactable{
     private ArrayList<MagicAbility> knownSpell = new ArrayList<>(); //lista av abilitys som checkar om de är spell eller physical
     private InteractableInventory inventory = new InteractableInventory();
     private boolean canUseMagic = true;
+    private EquipmentOnBody equipmentOnBody;
 
     public Character(int health, int speed, int experiencePoint){
         if (health < 0 || speed < 0) {
@@ -32,6 +40,7 @@ public class Character implements Interactable{
         if(health > 0) {
             isDead = false;
         }
+        possibleInteractableActions = STANDARD_CHARACTER_INTERACTABLE_ACTIONS;
     }
 
     public Character(int health, int speed, Position pos){
@@ -45,6 +54,7 @@ public class Character implements Interactable{
         if(health > 0) {
             isDead = false;
         }
+        possibleInteractableActions = STANDARD_CHARACTER_INTERACTABLE_ACTIONS;
     }
 
 
@@ -56,6 +66,9 @@ public class Character implements Interactable{
 
     public InteractableInventory getInventory() {
         return inventory;
+    }
+    public EquipmentOnBody getEquipmentOnBody(){
+        return equipmentOnBody;
     }
 
     public boolean getSpell() {
@@ -174,8 +187,9 @@ public class Character implements Interactable{
         }
     }
 
+
     @Override
     public Set<InteractableAction> getPossibleActions() {
-        return null;
+        return possibleInteractableActions;
     }
 }

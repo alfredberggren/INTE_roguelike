@@ -1,25 +1,13 @@
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 public class NPC extends Character implements Interactable {
-    private Set<InteractableAction> possibleInteractableActions;
 
     private String name;
 
-    public NPC(String name, int health, int speed, int experiencePoint, Set<InteractableAction> possibleInteractableActions) {
+    public NPC(String name, int health, int speed, int experiencePoint) {
         super(health, speed, experiencePoint);
-        possibleInteractableActions = new HashSet<>(){{
-            add(InteractableAction.TALK);
-            add(InteractableAction.FIGHT);
-            add(InteractableAction.LOOT);
-        }};
 
         this.name = name;
-    }
-
-    public Set<InteractableAction> getPossibleActions() {
-        return possibleInteractableActions;
     }
 
     @Override
