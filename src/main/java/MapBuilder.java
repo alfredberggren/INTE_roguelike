@@ -88,7 +88,6 @@ public class MapBuilder {
 //            }
 
 
-
             //Check if interactables should generate in new room
             randomInteractableDeterminator = r.nextInt(TOTAL_PERCENT) + 1;
             if (randomInteractableDeterminator <= INTERACTABLE_PERCENTAGE) {
@@ -111,13 +110,13 @@ public class MapBuilder {
     }
 
 
-    private Position decideNextPosition(Position pos){
+    private Position decideNextPosition(Position pos) {
         int rndDirectionIndex;
         //Get dirs where route can be created
         List<CardinalDirection> possibleNewDirs = mapController.getUnavailableDirections(pos);
 
         //If pos's directions are already filled
-        while (possibleNewDirs.isEmpty()){
+        while (possibleNewDirs.isEmpty()) {
             //choose a random existing direction from pos
             List<CardinalDirection> existingDirs = mapController.getAvailableDirections(pos);
             rndDirectionIndex = r.nextInt(existingDirs.size());
@@ -155,25 +154,16 @@ public class MapBuilder {
 
     private InteractableInventory generateInteractables() {
         InteractableInventory interactables = new InteractableInventory();
-        int interactableDeterminator;
-        boolean positiveInteractable;
         int amountOfInteractables = generateAmountOfInteractables();
 
-        for (int i = 0; i < amountOfInteractables; i++){
-            interactableDeterminator = r.nextInt(10) + 1;
-            positiveInteractable= interactableDeterminator > difficultyScale;
-
-            if (positiveInteractable) {
-                interactables.add(interactableDirector.getInteractable());
-            } else {
-                interactables.add(interactableDirector.getNegativeInteractable());
-            }
+        for (int i = 0; i < amountOfInteractables; i++) {
+            interactables.add(interactableDirector.getInteractable());
         }
         return interactables;
     }
 
     //Gaussian madness 9000
-    private int generateAmountOfInteractables(){
-        return Math.abs((int)r.nextGaussian(0.0, 1.2)) + 1;
+    private int generateAmountOfInteractables() {
+        return Math.abs((int) r.nextGaussian(0.0, 1.2)) + 1;
     }
 }
