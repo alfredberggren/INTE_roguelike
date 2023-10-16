@@ -84,8 +84,9 @@ public class MagicAbility extends Ability{
 
     /**Calculates the impact on the character's spellcasting ability, if the character does not meet the required conditions to retain the spell, the spell is forgotten*/
     public boolean calculateImpactOnAbility() {
-        int minimumLevelRetain = 10; //om man dör så förlorar man spells
-        if(!character.getSpell() && player.getExperiencePoint() < minimumLevelRetain) {
+        //int minimumLevelRetain = 10; //om man dör så förlorar man spells
+        int characterLevel = character.getLevel();
+        if(!character.getSpell() && characterLevel < 1) {
             character.forgetAbility(new MagicAbility("Fire", 10,1, "Shoots fire",1,2));
             return false;
         } else {
