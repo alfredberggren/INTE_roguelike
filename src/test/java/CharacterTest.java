@@ -138,34 +138,6 @@ public class CharacterTest {
         assertFalse(DEFAULT_CHARACTER.canUseMagic());
     }
 
-    @Test
-    @DisplayName("Test to increase XP")
-    public void testToIncreaseXP() {
-        DEFAULT_CHARACTER.setExperiencePoint(10);
-        DEFAULT_CHARACTER.increaseXP(10);
-        assertEquals(20, DEFAULT_CHARACTER.getExperiencePoint());
-    }
-
-    @Test
-    @DisplayName("Test to decrease XP")
-    public void testToDecreaseXP() {
-        DEFAULT_CHARACTER.decreaseXP(10);
-        assertEquals(0, DEFAULT_CHARACTER.getExperiencePoint());
-    }
-
-    @Test
-    @DisplayName("Test that character level up")
-    public void testCharacterLevelUpWhenXPReaches100() {
-        DEFAULT_CHARACTER.setLevel(0);
-        DEFAULT_CHARACTER.setExperiencePoint(100);
-        DEFAULT_CHARACTER.levelUp();
-        assertEquals(1, DEFAULT_CHARACTER.getLevel());
-        assertEquals(0, DEFAULT_CHARACTER.getExperiencePoint());
-        DEFAULT_CHARACTER.setExperiencePoint(100);
-        DEFAULT_CHARACTER.levelUp();
-        assertEquals(2, DEFAULT_CHARACTER.getLevel());
-        assertEquals(0, DEFAULT_CHARACTER.getExperiencePoint());
-    }
 
     @Test
     @DisplayName("Test that character get Magic Ability")

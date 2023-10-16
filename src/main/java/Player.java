@@ -4,7 +4,8 @@ import java.util.regex.Pattern;
 public class Player extends Character{
 
     
-    privaet int experiencePoint;
+    private int experiencePoint;
+
 
     public Player(String name, int health, int speed, Position pos) {
         super(name, health, speed, pos);
