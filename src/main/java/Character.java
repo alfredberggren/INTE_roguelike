@@ -1,8 +1,15 @@
 /**The Character class represents a game character that can interact with the game world. It implements Interactable.*/
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 public class Character implements Interactable{
+    private static final Set<InteractableAction> STANDARD_CHARACTER_INTERACTABLE_ACTIONS = new HashSet<>(Arrays.asList(
+            InteractableAction.TALK,
+            InteractableAction.FIGHT)
+    );
+    protected Set<InteractableAction> possibleInteractableActions;
 
     //variabel för turnsystem
 
@@ -33,6 +40,7 @@ public class Character implements Interactable{
         if(health > 0) {
             isDead = false;
         }
+        possibleInteractableActions = STANDARD_CHARACTER_INTERACTABLE_ACTIONS;
     }
 
     public Character(int health, int speed, Position pos){
@@ -46,6 +54,7 @@ public class Character implements Interactable{
         if(health > 0) {
             isDead = false;
         }
+        possibleInteractableActions = STANDARD_CHARACTER_INTERACTABLE_ACTIONS;
     }
 
 
