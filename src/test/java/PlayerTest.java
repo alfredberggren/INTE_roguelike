@@ -4,66 +4,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class PlayerTest {
     static Player DEFAULT_PLAYER;
 
     @BeforeEach
     void setUp() {
-        DEFAULT_PLAYER = new Player(80, 20, new Position(0, 0));
+        DEFAULT_PLAYER = new Player("Rudolf",80, 20, new Position(0, 0), new TextUI());
     }
-
-
-    //name tests
-    @Test
-    public void testCorrectName() {
-        DEFAULT_PLAYER.setName("Rudolf");
-        assertEquals("Rudolf", DEFAULT_PLAYER.getName());
-    }
-
-    @Test
-    public void testNameInputIsNull() {
-        assertThrows(NullPointerException.class, () -> {
-            DEFAULT_PLAYER.setName(null);
-        });
-    }
-
-    @Test
-    public void testNameInputIsEmpty() {
-        assertThrows(IllegalArgumentException.class, () ->{
-            DEFAULT_PLAYER.setName("");
-        });
-    }
-
-    @Test
-    public void testTooShortName() {
-        assertThrows(IllegalArgumentException.class, () ->{
-            DEFAULT_PLAYER.setName("A");
-        });
-    }
-
-    @Test
-    public void testNameBeginsWithDigit() {
-        assertThrows(IllegalArgumentException.class, () ->{
-            DEFAULT_PLAYER.setName("1Ab");
-        });
-    }
-
-    @Test
-    public void testTooLongName() {
-        assertThrows(IllegalArgumentException.class, () ->{
-            DEFAULT_PLAYER.setName("tooLongNameToBeAccepted");
-        });
-    }
-
-    @Test
-    public void testNameContainsNotOnlyAlphanumericCharactersAndUnderscores() {
-        assertThrows(IllegalArgumentException.class, () ->{
-            DEFAULT_PLAYER.setName("Aabba&&");
-        });
-    }
-//name tests
 
     @Test
     @DisplayName("Test that new player has XP=0")
@@ -74,7 +22,7 @@ public class PlayerTest {
     @Test
     @DisplayName("Test to set correct experience points")
     public void testSetCorrectXP() {
-        DEFAULT_PLAYER.setExperiencePoint(100);
+        DEFAULT_PLAYER.increaseXP(100);
         assertEquals(100, DEFAULT_PLAYER.getExperiencePoint());
     }
 
@@ -82,7 +30,7 @@ public class PlayerTest {
     @DisplayName("Test throws exception to set negative experience points")
     public void testSetNegativeXP() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            DEFAULT_PLAYER.setExperiencePoint(-10);
+            DEFAULT_PLAYER.decreaseXP(-10);
         });
     }
 
@@ -103,5 +51,33 @@ public class PlayerTest {
         assertEquals(0, DEFAULT_PLAYER.getExperiencePoint());
     }
 
+    @Test
+    @DisplayName("Test to increase XP")
+    public void testToIncreaseXP() {
+        DEFAULT_PLAYER.increaseXP(10);
+        DEFAULT_PLAYER.increaseXP(10);
+        assertEquals(20, DEFAULT_PLAYER.getExperiencePoint());
+    }
+
+    @Test
+    @DisplayName("Test to decrease XP")
+    public void testToDecreaseXP() {
+        DEFAULT_PLAYER.decreaseXP(10);
+        assertEquals(0, DEFAULT_PLAYER.getExperiencePoint());
+    }
+
+    @Test
+    @DisplayName("Test that character level up")
+    public void testCharacterLevelUpWhenXPReaches100() {
+        DEFAULT_PLAYER.setLevel(0);
+        DEFAULT_PLAYER.increaseXP(100);
+        DEFAULT_PLAYER.levelUp();
+        assertEquals(1, DEFAULT_PLAYER.getLevel());
+        assertEquals(0, DEFAULT_PLAYER.getExperiencePoint());
+        DEFAULT_PLAYER.increaseXP(100);
+        DEFAULT_PLAYER.levelUp();
+        assertEquals(2, DEFAULT_PLAYER.getLevel());
+        assertEquals(0, DEFAULT_PLAYER.getExperiencePoint());
+    }
 
 }

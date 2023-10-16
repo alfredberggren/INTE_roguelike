@@ -3,7 +3,7 @@
 import java.util.*;
 
 public class Equipment extends NonLivingEntity{
-    private Effect effect;
+    private Effect effect; //gör till egen klass?
     private int damage;
     private Ability ability;
     private Position pos;

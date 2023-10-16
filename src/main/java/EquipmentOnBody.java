@@ -8,24 +8,19 @@ public class EquipmentOnBody {
         this.equipmentOnBody = equipmentOnBody;
     }
 
+    public Equipment getEquipment(EquipmentSlot slot) {
+        return equipmentOnBody.get(slot);
+    }
 
-    public void putEquipment(EquipmentSlot slot, Equipment equipment) {
-        if (!slotContainsEquipment(slot))
-            equipmentOnBody.put(slot, equipment);
-        else
-            System.out.println("This slot already contains an equipment!");
+    public void removeEquipment(EquipmentSlot slot){
+        equipmentOnBody.remove(slot);
+    }
+    public void putEquipment(EquipmentSlot slot, Equipment equipment){
+        equipmentOnBody.put(slot, equipment);
     }
 
     public boolean slotContainsEquipment(EquipmentSlot slot) {
         return equipmentOnBody.containsKey(slot);
-    }
-
-    public void dropEquipment(EquipmentSlot slot) {
-        if (slotContainsEquipment(slot)) {
-//            Equipment e = equipmentOnBody.get(slot);
-//            e.setPos(player.getPos());
-            equipmentOnBody.remove(slot);
-        } else System.out.println("There is no equipment in this slot");
     }
 
     public EquipmentSlot checkWhereEquipmentWasPlaced(Equipment e) {

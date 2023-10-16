@@ -1,16 +1,70 @@
 
 import org.junit.jupiter.api.*;
 
+import java.util.Arrays;
+import java.util.HashSet;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CharacterTest {
     static Character DEFAULT_CHARACTER;
-    static Character DEFAULT_CHARACTER_WITH_POS = new Character(0, 9, new Position(1, 2));
+    static Character DEFAULT_CHARACTER_WITH_POS = new Character("Rudolf", 100,1, new Position(1, 2), new TextUI());
 
     @BeforeEach
     void setUp() {
-        DEFAULT_CHARACTER = new Character(80, 20, 0);
+        DEFAULT_CHARACTER = new Character("Ragnar", 80, 20, new TextUI());
     }
+
+    //name tests
+    @Test
+    public void testCorrectName() {
+        DEFAULT_CHARACTER.setName("Rudolf");
+        assertEquals("Rudolf", DEFAULT_CHARACTER.getName());
+    }
+
+    @Test
+    public void testNameInputIsNull() {
+        assertThrows(NullPointerException.class, () -> {
+            DEFAULT_CHARACTER.setName(null);
+        });
+    }
+
+    @Test
+    public void testNameInputIsEmpty() {
+        assertThrows(IllegalArgumentException.class, () ->{
+            DEFAULT_CHARACTER.setName("");
+        });
+    }
+
+    @Test
+    public void testTooShortName() {
+        assertThrows(IllegalArgumentException.class, () ->{
+            DEFAULT_CHARACTER.setName("A");
+        });
+    }
+
+    @Test
+    public void testNameBeginsWithDigit() {
+        assertThrows(IllegalArgumentException.class, () ->{
+            DEFAULT_CHARACTER.setName("1Ab");
+        });
+    }
+
+    @Test
+    public void testTooLongName() {
+        assertThrows(IllegalArgumentException.class, () ->{
+            DEFAULT_CHARACTER.setName("tooLongNameToBeAccepted");
+        });
+    }
+
+    @Test
+    public void testNameContainsNotOnlyAlphanumericCharactersAndUnderscores() {
+        assertThrows(IllegalArgumentException.class, () ->{
+            DEFAULT_CHARACTER.setName("Aabba&&");
+        });
+    }
+//name tests
+
 
     @Test
     @DisplayName("Test character's health")
@@ -36,7 +90,7 @@ public class CharacterTest {
     @DisplayName("Test throws exception if health<0")
     public void testCharacterWithNegativeHealth() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            new Character(-100, 10, 0);
+            new Character("Ragnar", -100, 0, new TextUI());
         });
     }
 
@@ -44,7 +98,7 @@ public class CharacterTest {
     @DisplayName("Test throws exception if speed<0")
     public void testCharacterWithNegativeSpeed() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            new Character(100, -10, 0);
+            new Character("Ragnar", 100, 0, new TextUI());
         });
     }
 
@@ -87,41 +141,13 @@ public class CharacterTest {
         assertFalse(DEFAULT_CHARACTER.canUseMagic());
     }
 
-    @Test
-    @DisplayName("Test to increase XP")
-    public void testToIncreaseXP() {
-        DEFAULT_CHARACTER.setExperiencePoint(10);
-        DEFAULT_CHARACTER.increaseXP(10);
-        assertEquals(20, DEFAULT_CHARACTER.getExperiencePoint());
-    }
-
-    @Test
-    @DisplayName("Test to decrease XP")
-    public void testToDecreaseXP() {
-        DEFAULT_CHARACTER.decreaseXP(10);
-        assertEquals(0, DEFAULT_CHARACTER.getExperiencePoint());
-    }
-
-    @Test
-    @DisplayName("Test that character level up")
-    public void testCharacterLevelUpWhenXPReaches100() {
-        DEFAULT_CHARACTER.setLevel(0);
-        DEFAULT_CHARACTER.setExperiencePoint(100);
-        DEFAULT_CHARACTER.checkLevelUp();
-        assertEquals(1, DEFAULT_CHARACTER.getLevel());
-        assertEquals(0, DEFAULT_CHARACTER.getExperiencePoint());
-        DEFAULT_CHARACTER.setExperiencePoint(100);
-        DEFAULT_CHARACTER.checkLevelUp();
-        assertEquals(2, DEFAULT_CHARACTER.getLevel());
-        assertEquals(0, DEFAULT_CHARACTER.getExperiencePoint());
-    }
 
     @Test
     @DisplayName("Test that character get Magic Ability")
     public void testCharacterMagicAbility() {
-        Character c = new Character(100, 10, new Position(0, 0));
-        MagicAbility fireMagic = new MagicAbility("Fireball", 20, 1);
-        c.setMagicAbility(fireMagic);
+        Character c = new Character("Rudolf", 10, 10, new Position(0, 0), new TextUI());
+        MagicAbility fireMagic = new MagicAbility("Fireball", 20, 1,"Shoots fire",2,1);
+        c.addAbility(fireMagic);
         //assertEquals("Wizard", c.getName());
         assertEquals("Fireball", fireMagic.name);
     }
@@ -129,21 +155,21 @@ public class CharacterTest {
     @Test
     @DisplayName("Test setting and getting Magic Ability")
     public void testCharacterSetAndGetMagicAbility() {
-        MagicAbility fireMagic = new MagicAbility("Fireball", 20, 1);
-        DEFAULT_CHARACTER.setMagicAbility(fireMagic);
-        assertEquals(fireMagic, DEFAULT_CHARACTER.getMagicAbility());
+        MagicAbility fireMagic = new MagicAbility("Fireball", 20, 1,"Shoots fire",2,1);
+        DEFAULT_CHARACTER.addAbility(fireMagic);
+        assertEquals(fireMagic, DEFAULT_CHARACTER.getAbilities());
     }
 
     @Test
     @DisplayName("Test adding and forgetting spells")
     public void testCharacterSpellHandling() {
-        Spell fireSpell = new Spell("Fire", "Shoots fire", 1, 1);
-        Spell iceSpell = new Spell("Ice", "Shoots ice", 1, 1);
-        DEFAULT_CHARACTER.addSpell(fireSpell);
-        assertTrue(DEFAULT_CHARACTER.getKnownSpell().contains(fireSpell));
-        DEFAULT_CHARACTER.forgetSpell(fireSpell);
-        assertFalse(DEFAULT_CHARACTER.getKnownSpell().contains(fireSpell));
-        assertDoesNotThrow(() -> DEFAULT_CHARACTER.forgetSpell(iceSpell));
+        MagicAbility fireSpell = new MagicAbility("Fire", 10, 1,"Shoots fire", 1,2);
+        MagicAbility iceSpell = new MagicAbility("Ice", 12, 1, "Shoots ice", 1,3);
+        DEFAULT_CHARACTER.addAbility(fireSpell);
+        assertTrue(DEFAULT_CHARACTER.getAbilities().contains(fireSpell));
+        DEFAULT_CHARACTER.forgetAbility(fireSpell);
+        assertFalse(DEFAULT_CHARACTER.getAbilities().contains(fireSpell));
+        assertDoesNotThrow(() -> DEFAULT_CHARACTER.forgetAbility(iceSpell));
     }
 
     @Test
@@ -160,4 +186,23 @@ public class CharacterTest {
             DEFAULT_CHARACTER.setHealth(-10);
         });
     }
+
+    @Test
+    @DisplayName("Test to equip a character")
+    public void testToEquipCharacter(){
+        DEFAULT_CHARACTER.equip(EquipmentSlot.LEFT_HAND, new Equipment("Sword", new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP)), Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1)));
+        assertEquals("LEFT_HAND: Sword", DEFAULT_CHARACTER.getEquipmentOnBody());
+    }
+    @Test
+    @DisplayName("Test to unequip a character")
+    public void testToUnEquipCharacter(){
+        DEFAULT_CHARACTER.equip(EquipmentSlot.LEFT_HAND, new Equipment("Sword", new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP)), Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1)));
+        DEFAULT_CHARACTER.unEquip(EquipmentSlot.LEFT_HAND);
+        assertEquals("", DEFAULT_CHARACTER.getEquipmentOnBody());
+    }
+    //test equipment's position
+    //test inventory.remove
+    //test inventory.add
+
+
 }

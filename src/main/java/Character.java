@@ -1,8 +1,7 @@
 /**The Character class represents a game character that can interact with the game world. It implements Interactable.*/
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Character implements Interactable{
     private static final Set<InteractableAction> STANDARD_CHARACTER_INTERACTABLE_ACTIONS = new HashSet<>(Arrays.asList(
@@ -11,52 +10,81 @@ public class Character implements Interactable{
     );
     private Set<InteractableAction> possibleInteractableActions;
 
-    //variabel för turnsystem
 
-    //private String name;
+    protected String name;
+    private static final String NAME_PATTERN = "^[A-Za-z]\\w{1,11}$";
+
     private int health;
     private int speed;
-    private int mana;
-    private int experiencePoint;
-    private int level;
+    private int mana; 
+    protected int level;
     private Position pos;
     private boolean isDead = false;
     private MagicAbility magicAbility;
     private boolean spell;
-    private ArrayList<Spell> knownSpell = new ArrayList<>();
+    private Set<Ability> abilities = new HashSet<>();
     private InteractableInventory inventory = new InteractableInventory();
-    private boolean canUseMagic = true;
+    private boolean canUseMagic = true; // remove
     private EquipmentOnBody equipmentOnBody;
+    private TurnSystem turnSystem;
 
-    public Character(int health, int speed, int experiencePoint){
+    public Character(String name, int health, int speed, IO io){
         if (health < 0 || speed < 0) {
             throw new IllegalArgumentException("Speed and health needs to be 0 or more");
         }
+        this.name = name;
         this.health = health;
         this.speed = speed;
-        this.experiencePoint= experiencePoint;
         mana = 100;
         pos = new Position(0, 0);
         if(health > 0) {
             isDead = false;
         }
         possibleInteractableActions = STANDARD_CHARACTER_INTERACTABLE_ACTIONS;
+        turnSystem = new TurnSystem(io);
     }
 
-    public Character(int health, int speed, Position pos){
+    public Character(String name, int health, int speed, Position pos, IO io){
         if (health < 0 || speed < 0) {
             throw new IllegalArgumentException("Speed and health needs to be 0 or more");
         }
+        this.name = name;
         this.health = health;
         this.speed = speed;
         this.pos = pos;
-        experiencePoint=0;
         if(health > 0) {
             isDead = false;
         }
         possibleInteractableActions = STANDARD_CHARACTER_INTERACTABLE_ACTIONS;
+        //turnSystem = new TurnSystem(io);
     }
 
+    public void setName(String name) {
+        // user input
+        //the username consists of 2 to 10 characters. If less - invalid username
+        //the username can only contain alphanumeric characters and underscores(_)
+        //uppercase, lowercase and digits (0-9)
+        //the first character must be an alphabetic character
+        if (name == null){
+            throw new NullPointerException("Error: name can't be null");
+        }
+        if (name.isEmpty()){
+            throw new IllegalArgumentException("Error: name can't be empty");
+        }
+        if(!matchesPattern(NAME_PATTERN, name)){
+            throw new IllegalArgumentException("Name doesn't match the pattern");
+        }
+        else
+            this.name = name;
+    }
+
+    boolean matchesPattern(String pattern, String name){
+        Pattern p = Pattern.compile(pattern);
+        Matcher m = p.matcher(name);
+        return m.find();
+    }
+
+    public String getName(){return name;}
 
     public Position getPosition() {return pos;}
     public int getHealth() {return health;}
@@ -71,31 +99,33 @@ public class Character implements Interactable{
         return equipmentOnBody;
     }
 
+    public TurnSystem getTurnSystem(){return turnSystem;}
+
     public boolean getSpell() {
         return spell;
     }
 
     /**Checks if Arraylist is not empty and if so removes the spell*/
-    public void forgetSpell(Spell spell) {
-        if(!knownSpell.isEmpty()) {
-            knownSpell.remove(spell);
+    public void forgetAbility(MagicAbility spell) {
+        if(!abilities.isEmpty()) {
+            abilities.remove(spell);
         }
     }
 
     /**Adds a spell to the Arraylist*/
-    public void addSpell(Spell spell) {
-        knownSpell.add(spell);
+    public void addAbility(Ability ability) {
+        abilities.add(ability);
     }
-    public ArrayList<Spell> getKnownSpell() {
-        return knownSpell;
+    public Set<Ability> getAbilities() {
+        return abilities;
     }
 
-    public MagicAbility getMagicAbility() {
+    /*public MagicAbility getMagicAbility() {
         return magicAbility;
-    }
-    public void setMagicAbility(MagicAbility magicAbility) {
+    }*/
+    /*public void setMagicAbility(MagicAbility magicAbility) {
         this.magicAbility = magicAbility;
-    }
+    }*/
 
     public void setHealth(int health) {
         if(health<0){
@@ -145,17 +175,6 @@ public class Character implements Interactable{
         return mana == 0;
     }
 
-    /**Checks if the character has gained enough experience points to level up. If the character's experience points are greater than or equal to the experience required for the next level and the character's level is less than 10, the character levels up*/
-    public void checkLevelUp() {
-        int experiencePerLevelUp = 100;
-        while(experiencePoint >= experiencePerLevelUp && level < 10) {
-            experiencePoint -= experiencePerLevelUp;
-            level++;
-            //this.magicAbility = new MagicAbility("New magic ability", 10, "magic ability");
-            System.out.println("Congratulations! You've reached level " + level + "!");
-        }
-    }
-
     public void setLevel(int level) {
         this.level = level;
     }
@@ -163,28 +182,20 @@ public class Character implements Interactable{
     public int getLevel() {
         return level;
     }
-    public int getExperiencePoint() {
-        return experiencePoint;
-    }
 
-    public void setExperiencePoint(int experiencePoint) {
-        this.experiencePoint = experiencePoint;
-    }
-
-    /**Increases the character's experience points*/
-    public void increaseXP(int add){
-        int result = experiencePoint + add;
-        setExperiencePoint(result);
-    }
-
-    /**Decreases the character's experience points*/
-    public void decreaseXP(int decrease){
-        int result = experiencePoint - decrease;
-        if(result<0){
-            setExperiencePoint(0);
-        }else {
-            setExperiencePoint(result);
+    public void unEquip(EquipmentSlot slot){
+        if(equipmentOnBody.slotContainsEquipment(slot)){
+            Equipment e = equipmentOnBody.getEquipment(slot);
+            e.setPos(getPosition());
+            equipmentOnBody.removeEquipment(slot);
+            inventory.remove(e);
         }
+    }
+
+    public void equip(EquipmentSlot slot, Equipment equipment) {
+        //testa!!
+        if (!equipmentOnBody.slotContainsEquipment(slot) && inventory.contains(equipment))
+            equipmentOnBody.putEquipment(slot, equipment);
     }
 
 

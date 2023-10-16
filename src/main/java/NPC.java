@@ -2,12 +2,8 @@ import java.util.Objects;
 
 public class NPC extends Character implements Interactable {
 
-    private String name;
-
-    public NPC(String name, int health, int speed, int experiencePoint) {
-        super(health, speed, experiencePoint);
-
-        this.name = name;
+    public NPC(String name, int health, int speed, IO io) {
+        super(name, health, speed, io);
     }
 
     @Override

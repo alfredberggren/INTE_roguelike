@@ -6,16 +6,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class AbilityTest {
 
-    static Character DEFAULT_CHARACTER;
+    private static Character defaultCharacter;
+    private static Player defaultPlayer;
 
     @BeforeEach
     void setUp() {
-        DEFAULT_CHARACTER = new Character(100,10, 100);
+        defaultCharacter = new Character("Rudolf", 10, 100, new Position(1,1), new TextUI());
+        defaultPlayer = new Player("Rudolf",100,10, new Position(1,1), new TextUI());
     }
     @Test
     @DisplayName("Returns if a Magic Ability exist")
     public void testOnlyMagicAbility() {
-        MagicAbility magicAbility = new MagicAbility("Fireball",25,1);
+        MagicAbility magicAbility = new MagicAbility("Fireball",25,1,"A fiery ball",2,3);
         assertEquals("MAGICAL", magicAbility.toString());
     }
 
@@ -29,7 +31,7 @@ public class AbilityTest {
     @Test
     @DisplayName("Returns if both Magic Ability and Physical Ability exist")
     public void testBothMagicAndPhysicalAbility() {
-        MagicAbility magicAbility = new MagicAbility("Fireball", 20,1);
+        MagicAbility magicAbility = new MagicAbility("Fireball", 20,1,"A fiery ball",2,3);
         PhysicalAbility physicalAbility = new PhysicalAbility("Sword", 10,1);
         assertEquals("MAGICAL" + "PHYSICAL", magicAbility.toString() + physicalAbility);
     }
@@ -37,10 +39,10 @@ public class AbilityTest {
     @Test
     @DisplayName("Test calculating damage for Fireball")
     public void testCalculateDamageForFireball() {
-        MagicAbility fireBall = new MagicAbility("Fireball",10,1);
-        DEFAULT_CHARACTER.setLevel(2);
-        DEFAULT_CHARACTER.setExperiencePoint(50);
-        int damage = fireBall.calculateDamageOfAbility(DEFAULT_CHARACTER);
+        MagicAbility fireBall = new MagicAbility("Fireball",10,1,"A fiery ball",2,3);
+        defaultCharacter.setLevel(2);
+        defaultPlayer.increaseXP(50);
+        int damage = fireBall.calculateDamageOfAbility(defaultCharacter);
         assertEquals(25, damage);
     }
 
@@ -48,53 +50,53 @@ public class AbilityTest {
     @DisplayName("Test calculating damage for Sword")
     public void testCalculateDamageForSword() {
         PhysicalAbility sword = new PhysicalAbility("Sword",5,1);
-        DEFAULT_CHARACTER.setLevel(2);
-        DEFAULT_CHARACTER.setExperiencePoint(50);
-        int damage = sword.calculateDamageOfAbility(DEFAULT_CHARACTER);
+        defaultCharacter.setLevel(2);
+        defaultPlayer.increaseXP(50);
+        int damage = sword.calculateDamageOfAbility(defaultCharacter);
         assertEquals(14, damage);
     }
 
     @Test
     @DisplayName("Testing that magic ability is affected")
     public void testMagicAbilityAffected() {
-        Spell fireSpell = new Spell("Fire","Shoots fire",1,1);
-        DEFAULT_CHARACTER.addSpell(fireSpell);
-        DEFAULT_CHARACTER.setExperiencePoint(100);
-        MagicAbility ability = new MagicAbility(fireSpell.getName(), 10,1);
-        ability.setCharacter(DEFAULT_CHARACTER);
-        DEFAULT_CHARACTER.decreaseXP(20);
-        DEFAULT_CHARACTER.forgetSpell(fireSpell);
+        MagicAbility fireSpell = new MagicAbility("Fire",10,1,"Shoots fire",1,3);
+        defaultCharacter.addAbility(fireSpell);
+        defaultPlayer.increaseXP(100);
+        MagicAbility ability = new MagicAbility(fireSpell.getName(), 10,1, "Fire",2,3);
+        ability.setCharacter(defaultCharacter);
+        defaultPlayer.decreaseXP(20);
+        defaultCharacter.forgetAbility(fireSpell);
         assertFalse(ability.calculateImpactOnAbility());
     }
 
     @Test
     @DisplayName("Testing that magic ability is not affected")
     public void testMagicAbilityNotAffected() {
-        Spell iceSpell = new Spell("Ice","Shoots ice",1,1);
-        DEFAULT_CHARACTER.addSpell(iceSpell);
-        MagicAbility ability = new MagicAbility(iceSpell.getName(), 10,1);
-        ability.setCharacter(DEFAULT_CHARACTER);
-        DEFAULT_CHARACTER.setExperiencePoint(150);
+        MagicAbility iceSpell = new MagicAbility("Ice",5,1, "Shoots ice",1,2);
+        defaultCharacter.addAbility(iceSpell);
+        MagicAbility ability = new MagicAbility(iceSpell.getName(), 10,1,"Ice",2,3);
+        ability.setCharacter(defaultCharacter);
+        defaultPlayer.increaseXP(150);
         assertTrue(ability.calculateImpactOnAbility());
     }
 
     @Test
     @DisplayName("Test for calculating damage for Magic Ability when character has low level")
     public void testMagicCalculateDamageForLowLevelPlayer() {
-        MagicAbility fireBall = new MagicAbility("Fireball",10,1);
-        DEFAULT_CHARACTER.setLevel(1);
-        DEFAULT_CHARACTER.setExperiencePoint(0);
-        int damage = fireBall.calculateDamageOfAbility(DEFAULT_CHARACTER);
+        MagicAbility fireBall = new MagicAbility("Fireball",10,1,"A fiery ball",2,3);
+        defaultCharacter.setLevel(1);
+        defaultPlayer.increaseXP(0);
+        int damage = fireBall.calculateDamageOfAbility(defaultCharacter);
         assertEquals(15, damage);
     }
 
     @Test
     @DisplayName("Test for calculating damage for Magic Ability when character has high level")
     public void testMagicCalculateDamageForHighLevelPlayer() {
-        MagicAbility fireBall = new MagicAbility("Fireball",10,1);
-        DEFAULT_CHARACTER.setLevel(10);
-        DEFAULT_CHARACTER.setExperiencePoint(100);
-        int damage = fireBall.calculateDamageOfAbility(DEFAULT_CHARACTER);
+        MagicAbility fireBall = new MagicAbility("Fireball",10,1,"A fiery ball",2,3);
+        defaultCharacter.setLevel(10);
+        defaultPlayer.increaseXP(100);
+        int damage = fireBall.calculateDamageOfAbility(defaultCharacter);
         assertEquals(70, damage);
     }
 
@@ -102,9 +104,9 @@ public class AbilityTest {
     @DisplayName("Test for calculating damage for Physical Ability when character has low level")
     public void testPhysicalCalculateDamageForLowLevelPlayer() {
         PhysicalAbility sword = new PhysicalAbility("Sword", 5,1);
-        DEFAULT_CHARACTER.setLevel(1);
-        DEFAULT_CHARACTER.setExperiencePoint(0);
-        int damage = sword.calculateDamageOfAbility(DEFAULT_CHARACTER);
+        defaultCharacter.setLevel(1);
+        defaultPlayer.increaseXP(0);
+        int damage = sword.calculateDamageOfAbility(defaultCharacter);
         assertEquals(7, damage);
     }
 
@@ -112,26 +114,26 @@ public class AbilityTest {
     @DisplayName("Test for calculating damage for Physical Ability when character has high level")
     public void testPhysicalCalculateDamageForHighLevelPlayer() {
         PhysicalAbility sword = new PhysicalAbility("Sword", 5,1);
-        DEFAULT_CHARACTER.setLevel(10);
-        DEFAULT_CHARACTER.setExperiencePoint(100);
-        int damage = sword.calculateDamageOfAbility(DEFAULT_CHARACTER);
+        defaultCharacter.setLevel(10);
+        defaultPlayer.increaseXP(100);
+        int damage = sword.calculateDamageOfAbility(defaultCharacter);
         assertEquals(35, damage);
     }
 
     @Test
     @DisplayName("Test that a character is able to learn Magic")
     public void testCharacterCanLearnMagicAbility() {
-        DEFAULT_CHARACTER.setLevel(10);
-        MagicAbility fireMagic = new MagicAbility("Fireball", 10, 5);
-        assertTrue(fireMagic.isLearnable(DEFAULT_CHARACTER));
+        defaultCharacter.setLevel(10);
+        MagicAbility fireMagic = new MagicAbility("Fireball", 10, 5, "A fiery ball",2,3);
+        assertTrue(fireMagic.isLearnable(defaultCharacter));
     }
 
     @Test
     @DisplayName("Test that a character is not able to learn Magic")
     public void testCharacterCannotLearnMagicAbility() {
-        DEFAULT_CHARACTER.setLevel(3);
-        MagicAbility fireMagic = new MagicAbility("Fireball", 10, 5);
-        assertFalse(fireMagic.isLearnable(DEFAULT_CHARACTER));
+        defaultCharacter.setLevel(3);
+        MagicAbility fireMagic = new MagicAbility("Fireball", 10, 5,"A fiery ball",2,3);
+        assertFalse(fireMagic.isLearnable(defaultCharacter));
     }
 
     @Test
@@ -139,7 +141,7 @@ public class AbilityTest {
     public void testAbilityEquals() {
         Ability ability1 = new PhysicalAbility("Physical Attack",20,1);
         Ability ability2 = new PhysicalAbility("Physical Attack", 20,1);
-        Ability ability3 = new MagicAbility("Magical Spell",30,2);
+        Ability ability3 = new MagicAbility("Magical Spell",30,2, "Magic",1,1);
         assertEquals(ability1, ability1);
         assertEquals(ability1, ability2);
         assertNotSame(ability1, ability3);
@@ -150,9 +152,94 @@ public class AbilityTest {
     public void testAbilityHashCode() {
         Ability ability1 = new PhysicalAbility("Physical Attack",20,1);
         Ability ability2 = new PhysicalAbility("Physical Attack", 20,1);
-        Ability ability3 = new MagicAbility("Magical Spell",30,2);
+        Ability ability3 = new MagicAbility("Magical Spell",30,2, "Magic",2,3);
         assertEquals(ability1.hashCode(), ability2.hashCode());
         assertNotSame(ability1.hashCode(), ability3.hashCode());
     }
 
+    @Test
+    @DisplayName("Test getting the name of a spell")
+    public void testSpellName() {
+        MagicAbility spell = new MagicAbility("Fireball", 10, 2, "A fiery projectile",2,10);
+        assertEquals("Fireball", spell.getName());
+    }
+
+    @Test
+    @DisplayName("Test getting the description of a spell")
+    public void testSpellDescription() {
+        MagicAbility spell = new MagicAbility("Ice Shard", 10,2, "A shard of ice",1,5);
+        assertEquals("A shard of ice", spell.getDescription());
+    }
+
+    @Test
+    @DisplayName("Test getting the casting time of a spell")
+    public void testSpellCastingTime() {
+        MagicAbility spell = new MagicAbility("Thunderbolt", 10, 3, "A powerful lightning spell",3,15);
+        assertEquals(3, spell.getCastingTime());
+    }
+
+    @Test
+    @DisplayName("Test getting the cool-down time of a spell")
+    public void testSpellCoolDown() {
+        MagicAbility spell = new MagicAbility("Lightning Strike", 10,2, "A fast lightning attack",2,8);
+        assertEquals(8, spell.getCoolDown());
+    }
+
+    @Test
+    @DisplayName("Test setting and getting the name of a spell")
+    public void testSetAndGetSpellName() {
+        MagicAbility spell = new MagicAbility("Earthquake", 10,5, "Shake the ground",5,20);
+        assertEquals("Earthquake", spell.getName());
+        spell.setName("Tornado");
+        assertEquals("Tornado", spell.getName());
+    }
+
+    @Test
+    @DisplayName("Test setting and getting the description of a spell")
+    public void testSetAndGetSpellDescription() {
+        MagicAbility spell = new MagicAbility("Healing Touch", 0,2, "Heal allies",2,10);
+        assertEquals("Heal allies", spell.getDescription());
+        spell.setDescription("Revive the fallen");
+        assertEquals("Revive the fallen", spell.getDescription());
+    }
+
+    @Test
+    @DisplayName("Test setting and getting the casting time of a spell")
+    public void testSetAndGetSpellCastingTime() {
+        MagicAbility spell = new MagicAbility("Firestorm", 10,4, "A blaze of fire",4,15);
+        assertEquals(4, spell.getCastingTime());
+        spell.setCastingTime(3);
+        assertEquals(3, spell.getCastingTime());
+    }
+
+    @Test
+    @DisplayName("Test setting and getting the cool-down time of a spell")
+    public void testSetAndGetSpellCoolDown() {
+        MagicAbility spell = new MagicAbility("Blizzard", 10,2, "Summon icy winds",2,10);
+        assertEquals(10, spell.getCoolDown());
+        spell.setCoolDown(5);
+        assertEquals(5, spell.getCoolDown());
+    }
+
+    @Test
+    @DisplayName("Test equals method for Spell")
+    public void testSpellEquals() {
+        MagicAbility spell1 = new MagicAbility("Fireball", 10,2, "A powerful fire spell",2,3);
+        MagicAbility spell2 = new MagicAbility("Fireball", 10,2, "A powerful fire spell",2,3);
+        MagicAbility spell3 = new MagicAbility("Frostbolt", 7,3,"A freezing spell",3,4);
+        assertEquals(spell1, spell1);
+        assertEquals(spell1, spell2);
+        assertNotSame(spell1, spell3);
+    }
+
+    @Test
+    @DisplayName("Test hashCode method for Spell")
+    public void testSpellHashCode() {
+        MagicAbility spell1 = new MagicAbility("Fireball", 10,2, "A powerful fire spell",2,3);
+        MagicAbility spell2 = new MagicAbility("Fireball", 10,2, "A powerful fire spell",2,3);
+        MagicAbility spell3 = new MagicAbility("Frostbolt", 7,3,"A freezing spell", 3,4);
+        assertEquals(spell1.hashCode(), spell1.hashCode());
+        assertEquals(spell1.hashCode(), spell2.hashCode());
+        assertNotSame(spell1, spell3);
+    }
 }
