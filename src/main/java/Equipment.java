@@ -39,7 +39,7 @@ public class Equipment extends NonLivingEntity{
 
     /**Represents the possible effects of the equipment*/
     public enum Effect {
-        SPEED, HEALTH, DAMAGE
+        SPEED, HEALTH, DAMAGE, ARMOR
     }
     /**Represents different types of armor*/
     public enum Armor {

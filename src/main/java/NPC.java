@@ -1,22 +1,25 @@
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-public class NPC extends Character {
+public class NPC extends Character implements Interactable {
     private Set<InteractableAction> possibleInteractableActions;
+
     private String name;
 
     public NPC(String name, int health, int speed, int experiencePoint, Set<InteractableAction> possibleInteractableActions) {
         super(health, speed, experiencePoint);
+        possibleInteractableActions = new HashSet<>(){{
+            add(InteractableAction.TALK);
+            add(InteractableAction.FIGHT);
+            add(InteractableAction.LOOT);
+        }};
+
         this.name = name;
-        this.possibleInteractableActions = possibleInteractableActions;
     }
 
     public Set<InteractableAction> getPossibleActions() {
         return possibleInteractableActions;
-    }
-
-    public String getName() {
-        return name;
     }
 
     @Override
@@ -30,5 +33,9 @@ public class NPC extends Character {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    public String getName(){
+        return name;
     }
 }

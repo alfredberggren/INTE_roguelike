@@ -57,5 +57,10 @@ public class Room {
         }
     }
 
+    @Override
+    public String toString(){
+        return "Room at pos " + position + " with interactables: " + interactables.toString() + " and directions: " + possibleRoutes;
+    }
+
 
 }
