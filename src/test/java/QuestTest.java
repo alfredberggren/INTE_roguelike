@@ -37,6 +37,12 @@ public class QuestTest {
     }
 
     @Test
+    @DisplayName("Test that quest is nor completed in constructor")
+    public void testThatQuestIsNotCompletedInConstructor(){
+        assertFalse(DEFAULT_QUEST.isCompleted());
+    }
+
+    @Test
     @DisplayName("Test to create a quest with negative rewardXP")
     public void testConstructorWithNegativeRewardXP() {
         assertThrows(IllegalArgumentException.class, () -> {
@@ -75,6 +81,11 @@ public class QuestTest {
         Character character = new Character(100, 10, 100);
         character.setLevel(5);
         assertTrue(DEFAULT_QUEST.correspondToLevel(character));
+    }
+    @Test
+    @DisplayName("Test to check if difficulty correspond character's level when Character is null")
+    public void testThatDifficultyCorrespondToLevelWhenCharacterIsNull(){
+        assertFalse(DEFAULT_QUEST.correspondToLevel(null));
     }
 
     @Test

@@ -53,7 +53,10 @@ public class Quest {
      * difficulty should be equal character's level
      */
     public boolean correspondToLevel(Character c) {
-        return difficulty == c.getLevel();
+        if(!(c==null)) {
+            return difficulty == c.getLevel();
+        }
+            return false;
     }
 
     @Override
