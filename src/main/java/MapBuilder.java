@@ -164,7 +164,7 @@ public class MapBuilder {
             positiveInteractable= interactableDeterminator > difficultyScale;
 
             if (positiveInteractable) {
-                interactables.add(interactableDirector.getPositiveInteractable());
+                interactables.add(interactableDirector.getInteractable());
             } else {
                 interactables.add(interactableDirector.getNegativeInteractable());
             }

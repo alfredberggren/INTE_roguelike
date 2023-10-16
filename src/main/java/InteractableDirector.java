@@ -52,11 +52,17 @@ public class InteractableDirector {
         this.generatorProbabilityMaps = new HashMap<>();
         addProbabilityMaps(generatorProbabilities);
         //setBaseProbabilities();
+        convertPercentages(generatorProbabilityMaps);
+        for (Map<InteractableGenerator, Integer> hm : generatorProbabilityMaps.keySet()) {
+            convertPercentages(hm);
+        }
         determineProbabilities();
     }
 
     private void addProbabilityMaps(Map.Entry<HashMap<InteractableGenerator, Integer>, Integer>[] generatorProbabilities) {
-        generatorProbabilityMaps.putAll(generatorProbabilities);
+        for (Map.Entry<HashMap<InteractableGenerator, Integer>, Integer> e : generatorProbabilities) {
+            generatorProbabilityMaps.put(e.getKey(), e.getValue());
+        }
     }
 
 
@@ -110,77 +116,88 @@ public class InteractableDirector {
      * @return
      * 90% chance of returning a positive consumable, 10% chance of returning a positive NPC.
      */
-    public Interactable getPositiveInteractable() {
-        if (r.nextInt(10) == 0) {
-            return getPositiveNPC();
-        } else {
-            return getPositiveConsumable();
-        }
-    }
-
-
-    /**
-     *
-     * @return
-     * 50/50 chance to decide either positive food item, or positive potion item
-     */
-    private Interactable getPositiveConsumable() {
-        boolean food = r.nextBoolean();
-        if (food) {
-            return getPositiveFoodItem();
-        } else {
-            return getPositivePotionItem();
-        }
-    }
-
-    /**
-     * Randomizes a number between 1 - 100, to then check the posPotionProbabilities. If random number is lower than
-     * the probability, that Potion is created (with HARDCODED turnlimit).
-     * @return
-     * A "positive" PotionItem. Null if the number wasn't lower than any probability.
-     */
-    private Interactable getPositivePotionItem() {
-        int determinator = r.nextInt(100) + 1;
-        for (Equipment.Effect e : posPotionProbabilities.keySet()) {
-            if (determinator < posPotionProbabilities.get(e)) {
-                return new PotionItem(e.name(), e, 5);
+    public Interactable getInteractable() {
+        int mapDeterminator = r.nextInt(100) + 1;
+        for (Map.Entry<HashMap<InteractableGenerator, Integer>, Integer> me : generatorProbabilityMaps.entrySet()) {
+            if (mapDeterminator < me.getValue()) {
+                return getInteractableFromProbabilityMap(me.getKey());
             }
         }
         return null;
     }
 
-    /**
-     * Randomizes a number between 1 - 100, to then check the Food Probabilities. If random number is lower than
-     * the probability, that food is created (with HARDCODED healvalue).
-     * @return
-     * A "positive" Food item. Null if the number wasn't lower than any probability.
-     */
-    private Interactable getPositiveFoodItem() {
-        int determinator = r.nextInt(100) + 1;
-        for (String s : posFoodProbabilities.keySet()) {
-            if (determinator < posFoodProbabilities.get(s)) {
-                return new FoodItem(s, 10);
+    private Interactable getInteractableFromProbabilityMap(HashMap<InteractableGenerator, Integer> probMap) {
+        int interactableGeneratorDeterminator = r.nextInt(100) + 1;
+        for (Map.Entry<InteractableGenerator, Integer> e : probMap.entrySet()) {
+            if (interactableGeneratorDeterminator < e.getValue()) {
+                return e.getKey().generateInteractable();
             }
         }
         return null;
     }
 
-    /**
-     * Randomizes a number between 1 - 100, to then check the Positive NPC probabilites. If random number is lower than
-     * the probability, that npc is created (with HARDCODED health and speed values).
-     * @return
-     * A positive NPC.
-     * Null if the number wasn't lower than any probability.
-     */
-    private Interactable getPositiveNPC() {
-        int determinator = r.nextInt(100) + 1;
-        for (String s : posNpcProbabilities.keySet()) {
-            if (determinator < posNpcProbabilities.get(s)) {
-                return new NPC(s, 100, 10);
-            }
-        }
-        return null;
-    }
+//    /**
+//     *
+//     * @return
+//     * 50/50 chance to decide either positive food item, or positive potion item
+//     */
+//    private Interactable getPositiveConsumable() {
+//        boolean food = r.nextBoolean();
+//        if (food) {
+//            return getPositiveFoodItem();
+//        } else {
+//            return getPositivePotionItem();
+//        }
+//    }
+//
+//    /**
+//     * Randomizes a number between 1 - 100, to then check the posPotionProbabilities. If random number is lower than
+//     * the probability, that Potion is created (with HARDCODED turnlimit).
+//     * @return
+//     * A "positive" PotionItem. Null if the number wasn't lower than any probability.
+//     */
+//    private Interactable getPositivePotionItem() {
+//        int determinator = r.nextInt(100) + 1;
+//        for (Equipment.Effect e : posPotionProbabilities.keySet()) {
+//            if (determinator < posPotionProbabilities.get(e)) {
+//                return new PotionItem(e.name(), e, 5);
+//            }
+//        }
+//        return null;
+//    }
+//
+//    /**
+//     * Randomizes a number between 1 - 100, to then check the Food Probabilities. If random number is lower than
+//     * the probability, that food is created (with HARDCODED healvalue).
+//     * @return
+//     * A "positive" Food item. Null if the number wasn't lower than any probability.
+//     */
+//    private Interactable getPositiveFoodItem() {
+//        int determinator = r.nextInt(100) + 1;
+//        for (String s : posFoodProbabilities.keySet()) {
+//            if (determinator < posFoodProbabilities.get(s)) {
+//                return new FoodItem(s, 10);
+//            }
+//        }
+//        return null;
+//    }
+//
+//    /**
+//     * Randomizes a number between 1 - 100, to then check the Positive NPC probabilites. If random number is lower than
+//     * the probability, that npc is created (with HARDCODED health and speed values).
+//     * @return
+//     * A positive NPC.
+//     * Null if the number wasn't lower than any probability.
+//     */
+//    private Interactable getPositiveNPC() {
+//        int determinator = r.nextInt(100) + 1;
+//        for (String s : posNpcProbabilities.keySet()) {
+//            if (determinator < posNpcProbabilities.get(s)) {
+//                return new NPC(s, 100, 10);
+//            }
+//        }
+//        return null;
+//    }
 
     /**
      * Randomizes a number between 1 - 100, to then check the negative Interactable probabilites. If random number is lower than
