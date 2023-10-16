@@ -56,15 +56,15 @@ public class Character implements Interactable{
             isDead = false;
         }
         possibleInteractableActions = STANDARD_CHARACTER_INTERACTABLE_ACTIONS;
-        //turnSystem = new TurnSystem(io);
+        turnSystem = new TurnSystem(io);
     }
 
     public void setName(String name) {
-        // user input
-        //the username consists of 2 to 10 characters. If less - invalid username
-        //the username can only contain alphanumeric characters and underscores(_)
-        //uppercase, lowercase and digits (0-9)
-        //the first character must be an alphabetic character
+        /** user input
+        the username consists of 2 to 10 characters. If less - invalid username
+        the username can only contain alphanumeric characters and underscores(_)
+        uppercase, lowercase and digits (0-9)
+        the first character must be an alphabetic character*/
         if (name == null){
             throw new NullPointerException("Error: name can't be null");
         }
