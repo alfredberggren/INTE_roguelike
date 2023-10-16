@@ -18,6 +18,8 @@ public class Player extends Character{
         return experiencePoint;
     }
 
+
+
     @Override
     public void setExperiencePoint(int experiencePoint) {
         if(experiencePoint<0)
