@@ -1,5 +1,7 @@
 /**The Character class represents a game character that can interact with the game world. It implements Interactable.*/
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Character implements Interactable{
     private static final Set<InteractableAction> STANDARD_CHARACTER_INTERACTABLE_ACTIONS = new HashSet<>(Arrays.asList(
