@@ -2,25 +2,50 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Player extends Character{
-    private static final STANDARD_PLAYER_NAME = "Player";
 
-    private static final String NAME_PATTERN = "^[A-Za-z]\\w{1,11}$";
-    public Player(int health, int speed, Position pos) {
-        super(STANDARD_PLAYER_NAME,health, speed, pos);
+    
+    privaet int experiencePoint;
+
+    public Player(String name, int health, int speed, Position pos) {
+        super(name, health, speed, pos);
         experiencePoint=0;
     }
 
-    @Override
     public int getExperiencePoint() {
         return experiencePoint;
     }
 
-    @Override
-    public void setExperiencePoint(int experiencePoint) {
+    private void setExperiencePoint(int experiencePoint) {
         if(experiencePoint<0)
             throw new IllegalArgumentException("Experience points cannot be negative!");
         this.experiencePoint = experiencePoint;
     }
+
+    /**Increases the character's experience points*/
+    public void increaseXP(int add){
+        int result = experiencePoint + add;
+        setExperiencePoint(result);
+    }
+
+    /**Decreases the character's experience points*/
+    public void decreaseXP(int decrease){
+        int result = experiencePoint - decrease;
+        if(result<0){
+            setExperiencePoint(0);
+        }else {
+            setExperiencePoint(result);
+        }
+    }
+
+    /**Checks if the character has gained enough experience points to level up. If the character's experience points are greater than or equal to the experience required for the next level and the character's level is less than 10, the character levels up*/
+    public void levelUp() {
+        int experiencePerLevelUp = 100;
+        while(experiencePoint >= experiencePerLevelUp && level < 10) {
+            experiencePoint -= experiencePerLevelUp;
+            level++;
+        }
+    }
+
     public void getRewardsAfterWinning(Quest quest){
         if(quest.isCompleted()){
             setExperiencePoint(experiencePoint += quest.getRewardXP());
