@@ -181,6 +181,21 @@ public class Character implements Interactable{
         return level;
     }
 
+    public void unEquip(EquipmentSlot slot){
+        if(equipmentOnBody.slotContainsEquipment(slot)){
+            Equipment e = equipmentOnBody.getEquipment(slot);
+            e.setPos(getPosition());
+            equipmentOnBody.removeEquipment(slot);
+            inventory.remove(e);
+        }
+    }
+
+    public void equip(EquipmentSlot slot, Equipment equipment) {
+        if (!equipmentOnBody.slotContainsEquipment(slot))
+            equipmentOnBody.putEquipment(slot, equipment);
+    }
+
+
     @Override
     public Set<InteractableAction> getPossibleActions() {
         return possibleInteractableActions;
