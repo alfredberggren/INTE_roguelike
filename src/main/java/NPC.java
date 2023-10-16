@@ -2,8 +2,8 @@ import java.util.Objects;
 
 public class NPC extends Character implements Interactable {
 
-    public NPC(String name, int health, int speed, IO io) {
-        super(name, health, speed, io);
+    public NPC(String name, int health, int speed, int experiencePoint) {
+        super(String name, health, speed, experiencePoint);
     }
 
     @Override
@@ -17,11 +17,6 @@ public class NPC extends Character implements Interactable {
     @Override
     public int hashCode() {
         return Objects.hash(name);
-    }
-
-    @Override
-    public String toString() {
-        return name;
     }
 
     public String getName(){

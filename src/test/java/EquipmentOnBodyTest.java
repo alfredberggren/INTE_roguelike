@@ -12,7 +12,7 @@ public class EquipmentOnBodyTest {
     static EquipmentSlot DEFAULT_EQUIPMENT_SLOT = EquipmentSlot.LEFT_HAND;
     static final Set<Interactable.InteractableAction> DEFAULT_EQUIPMENT_ACTIONS = new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP));
     static Equipment DEFAULT_EQUIPMENT = new Equipment("Sword", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1));
-    static Player DEFAULT_PLAYER = new Player(100, 10, new Position(0,0));
+    static Player DEFAULT_PLAYER = new Player("Rudolf", 100, 10, new Position(0,0), new TextIO());
 
     @BeforeEach
     void setUp() {
