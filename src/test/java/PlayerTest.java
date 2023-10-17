@@ -41,8 +41,6 @@ public class PlayerTest {
         });
     }
 
-
-
     @Test
     @DisplayName("Test that player gets a reward after winning")
     public void testToGetRewardsAfterWinning() {
