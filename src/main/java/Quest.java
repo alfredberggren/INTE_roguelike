@@ -17,7 +17,7 @@ public class Quest {
         this.rewardXP = rewardXP;
         this.questType = questType;
         if (difficulty <= 0)
-            throw new IllegalArgumentException("Difficulty cannot be zero or negative!");
+            throw new IllegalArgumentException("Difficulty cannot be zero or be negative!");
         this.difficulty = difficulty;
         this.isCompleted = false;
     }
@@ -54,10 +54,10 @@ public class Quest {
      * difficulty should be equal character's level
      */
     public boolean correspondToLevel(Character c) {
-        if(c != null) {
+        if (c != null) {
             return this.difficulty == c.getLevel();
         }
-            return false;
+        return false;
     }
 
     @Override

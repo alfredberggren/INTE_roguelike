@@ -10,7 +10,7 @@ public class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        player = new Player("Rudolf",80, 20, new Position(0, 0), new TextIO());
+        player = new Player("Rudolf", 80, 20, new Position(0, 0), new TextIO());
     }
 
     @Test
@@ -29,8 +29,8 @@ public class PlayerTest {
     @Test
     @DisplayName("Test to decrease XP to negative value")
     public void testDecreaseXPToNegativeValue() {
-       player.decreaseXP(10);
-       assertEquals(0, player.getExperiencePoint());
+        player.decreaseXP(10);
+        assertEquals(0, player.getExperiencePoint());
     }
 
     @Test
