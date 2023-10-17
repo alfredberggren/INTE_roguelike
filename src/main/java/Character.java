@@ -192,7 +192,9 @@ public class Character implements Interactable {
         return level;
     }
 
-    // For equip we might also want them to add/remove the ability they have form the ability set/list? -simon
+    /** For unequip we check if this equipment is "on body".
+     * Then remove that ability which equipment had from list with abilities wich character has.
+     * And add the equipment to the inventory*/
     public void unEquip(Equipment equipment) {
         if(equipment!=null) {
             if (equipmentOnBody.slotContainsEquipment(equipment.getEquipmentSlot()) && equipment.equals(equipmentOnBody.getEquipment(equipment.getEquipmentSlot()))) {
@@ -203,6 +205,9 @@ public class Character implements Interactable {
         }
     }
 
+    /** For equip we check if this equipment is not already "on body"
+     * and that it is there in inventory. Then add that ability which equipment has to list with abilities wich character has.
+     * And remove the equipment from the inventory*/
     public void equip(Equipment equipment) {
         if (equipment != null) {
             if (!equipmentOnBody.slotContainsEquipment(equipment.getEquipmentSlot()) && inventory.contains(equipment))
