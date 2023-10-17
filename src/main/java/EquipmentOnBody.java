@@ -5,24 +5,24 @@ import java.util.Map;
 public class EquipmentOnBody {
     private Map<EquipmentSlot, Equipment> equipmentOnBody = new HashMap<>();
 
-    public EquipmentOnBody(){}
-    public EquipmentOnBody(Map<EquipmentSlot, Equipment> equipmentOnBody) {
-        this.equipmentOnBody = equipmentOnBody;
+    public EquipmentOnBody() {
     }
 
-    public Map<EquipmentSlot, Equipment> getEquipmentOnBody() {
-        return this.equipmentOnBody;
+    public EquipmentOnBody(Map<EquipmentSlot, Equipment> equipmentOnBody) {
+        this.equipmentOnBody = equipmentOnBody;
     }
 
     public Equipment getEquipment(EquipmentSlot slot) {
         return equipmentOnBody.get(slot);
     }
 
-    public void removeEquipment(EquipmentSlot slot){
+    public void removeEquipment(EquipmentSlot slot) {
         equipmentOnBody.remove(slot);
     }
-    public void putEquipment(EquipmentSlot slot, Equipment equipment){
-        equipmentOnBody.put(slot, equipment);
+
+    public void putEquipment(EquipmentSlot slot, Equipment equipment) {
+        if (!slotContainsEquipment(slot))
+            equipmentOnBody.put(slot, equipment);
     }
 
     public boolean slotContainsEquipment(EquipmentSlot slot) {

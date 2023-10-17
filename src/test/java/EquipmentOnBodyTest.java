@@ -16,6 +16,12 @@ public class EquipmentOnBodyTest {
     }
 
     @Test
+    @DisplayName("Test to get an equipment")
+        public void testToGetEquipment(){
+            assertEquals("LEFT_HAND: Sword +50% DAMAGE", equipmentOnBody.getEquipment(equipmentSlot).toString());
+        }
+
+    @Test
     @DisplayName("Test to put an equipment in a slot")
     public void testToPutEquipmentInSlot() {
         equipmentOnBody.putEquipment(equipmentSlot, equipment);
@@ -45,7 +51,6 @@ public class EquipmentOnBodyTest {
         equipmentOnBody.removeEquipment(equipmentSlot);
         assertEquals("", equipmentOnBody.toString());
     }
-
 
     @Test
     @DisplayName("Test to check where the equipment was placed")
