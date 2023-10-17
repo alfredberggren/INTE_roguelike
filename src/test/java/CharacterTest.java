@@ -149,7 +149,6 @@ public class CharacterTest {
         Character c = new Character("Rudolf", 10, 10, new Position(0, 0), new TextIO());
         MagicAbility fireMagic = new MagicAbility("Fireball", 20, 1, "Shoots fire", 2, 1);
         c.addAbility(fireMagic);
-        //assertEquals("Wizard", c.getName());
         assertEquals("Fireball", fireMagic.name);
     }
 
@@ -158,7 +157,15 @@ public class CharacterTest {
     public void testCharacterSetAndGetMagicAbility() {
         MagicAbility fireMagic = new MagicAbility("Fireball", 20, 1, "Shoots fire", 2, 1);
         DEFAULT_CHARACTER.addAbility(fireMagic);
-        assertEquals(fireMagic, DEFAULT_CHARACTER.getAbilities());
+        assertTrue(DEFAULT_CHARACTER.getAbilities().contains(fireMagic));
+    }
+
+    @Test
+    @DisplayName("Test setting and getting Physical Ability")
+    public void testCharacterSetAndGetPhysicalAbility() {
+        PhysicalAbility sword = new PhysicalAbility("Sword", 10, 1);
+        DEFAULT_CHARACTER.addAbility(sword);
+        assertTrue(DEFAULT_CHARACTER.getAbilities().contains(sword));
     }
 
     @Test
