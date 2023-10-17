@@ -38,7 +38,7 @@ public class QuestTest {
 
     @Test
     @DisplayName("Test that quest is nor completed in constructor")
-    public void testThatQuestIsNotCompletedInConstructor(){
+    public void testThatQuestIsNotCompletedInConstructor() {
         assertFalse(quest.isCompleted());
     }
 
@@ -86,7 +86,7 @@ public class QuestTest {
 
     @Test
     @DisplayName("Test to check if difficulty correspond character's level when Character is null")
-    public void testThatDifficultyCorrespondToLevelWhenCharacterIsNull(){
+    public void testThatDifficultyCorrespondToLevelWhenCharacterIsNull() {
         assertFalse(quest.correspondToLevel(null));
     }
 
@@ -99,13 +99,13 @@ public class QuestTest {
 
     @Test
     @DisplayName("Test two equal quests")
-    public void testTwoEqualTests(){
+    public void testTwoEqualTests() {
         assertTrue(quest.equals(quest));
     }
 
     @Test
     @DisplayName("Test equals() when parameter i not instance of Quest class")
-    public void testEqualityQuestWithNotQuest(){
+    public void testEqualityQuestWithNotQuest() {
         assertFalse(quest.equals(new Equipment("Sword", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1))));
     }
 

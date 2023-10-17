@@ -215,7 +215,7 @@ public class CharacterTest {
     @DisplayName("Test to unequip a character")
     public void testToUnEquipCharacter() {
         Equipment testEquipment = new Equipment("Sword", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1));
-        character.getInventory().add( new Equipment("Sword", EquipmentSlot.LEFT_HAND, new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.UNEQUIP)), Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1)));
+        character.getInventory().add(new Equipment("Sword", EquipmentSlot.LEFT_HAND, new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.UNEQUIP)), Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1)));
         character.equip(testEquipment);
         character.unEquip(testEquipment);
         assertEquals("", character.getEquipmentOnBody().toString());
