@@ -200,10 +200,9 @@ public class CharacterTest {
     // }
 
     @Test //testa!
-    @DisplayName("Test to equip a character when one of parameters is equal to null")
-    public void testToEquipCharacterWhenOneOfParametersZero() {
-        Equipment equipment = new Equipment("Sword", new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP)), Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1));
-        DEFAULT_CHARACTER.equip(EquipmentSlot.LEFT_HAND, null);
+    @DisplayName("Test to equip a character when Equipment is null")
+    public void testToEquipCharacterWhenEquipmentIsNull() {
+        DEFAULT_CHARACTER.equip(null);
         assertEquals("", DEFAULT_CHARACTER.getEquipmentOnBody());
     }
 
@@ -224,29 +223,29 @@ public class CharacterTest {
     // }
 
     @Test //testa
-    @DisplayName("Test to unequip a character when one of parameters is equal to null")
-    public void testToUnEquipCharacterWhenOneOfParametersZero() {
-        Equipment equipment = new Equipment("Sword", new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP)), Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1));
-        DEFAULT_CHARACTER.equip(EquipmentSlot.LEFT_HAND, equipment);
+    @DisplayName("Test to unequip a character when Equipment is null")
+    public void testToUnEquipCharacterWhenEquipmentIsNull() {
+        Equipment equipment = new Equipment("Sword", EquipmentSlot.LEFT_HAND, new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP)), Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1));
+        DEFAULT_CHARACTER.equip(equipment);
         DEFAULT_CHARACTER.unEquip(null);
         assertEquals("LEFT_HAND: Sword", DEFAULT_CHARACTER.getEquipmentOnBody());
     }
 
 
     @Test
-    @DisplayName("Test that equipment which was dropped was added to Inventory")
+    @DisplayName("Test that equipment which was Uneqiped was added to Inventory")
     public void testThatDiscardedEquipmentWasAddedToInventory() {
-        Equipment equipment = new Equipment("Sword", new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP)), Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1));
-        DEFAULT_CHARACTER.equip(EquipmentSlot.LEFT_HAND, equipment);
-        DEFAULT_CHARACTER.unEquip(EquipmentSlot.LEFT_HAND);
+        Equipment equipment = new Equipment("Sword", EquipmentSlot.LEFT_HAND, new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.UNEQUIP)), Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1));
+        DEFAULT_CHARACTER.equip(equipment);
+        DEFAULT_CHARACTER.unEquip(equipment);
         assertTrue(DEFAULT_CHARACTER.getInventory().contains(equipment));
     }
 
     @Test
     @DisplayName("Test that equipment which was selected to equip was removed from Inventory")
     public void testThatChosenEquipmentWasRemovedFromInventory() {
-        Equipment equipment = new Equipment("Sword", new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP)), Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1));
-        DEFAULT_CHARACTER.equip(EquipmentSlot.LEFT_HAND, equipment);
+        Equipment equipment = new Equipment("Sword", EquipmentSlot.LEFT_HAND, new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP)), Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1));
+        DEFAULT_CHARACTER.equip(equipment);
         assertFalse(DEFAULT_CHARACTER.getInventory().contains(equipment));
     }
 
