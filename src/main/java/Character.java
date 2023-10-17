@@ -9,7 +9,9 @@ import java.util.regex.Pattern;
 public class Character implements Interactable {
     private static final Set<InteractableAction> STANDARD_CHARACTER_INTERACTABLE_ACTIONS = new HashSet<>(Arrays.asList(
             InteractableAction.TALK,
-            InteractableAction.FIGHT)
+            InteractableAction.FIGHT,
+            InteractableAction.LOOT,
+            InteractableAction.DROP)
     );
     private static final String NAME_PATTERN = "^[A-Za-z]\\w{1,11}$";
     private Set<InteractableAction> possibleInteractableActions;
@@ -223,5 +225,9 @@ public class Character implements Interactable {
     @Override
     public Set<InteractableAction> getPossibleActions() {
         return possibleInteractableActions;
+    }
+
+    public Object getEffect() {
+        return null;
     }
 }

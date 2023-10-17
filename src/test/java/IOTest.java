@@ -196,7 +196,7 @@ public class IOTest {
         Character tempCharacter = new Character("name", 0, 0, new Position(0, 0), tempTextIO);
         FoodItem tempInteractableItem = new FoodItem("name", 1);
 
-        assertEquals(Interactable.InteractableAction.LOOT, tempTextIO.requestAction(tempMapController, tempCharacter, tempInteractableItem),
+        assertEquals(Interactable.InteractableAction.LOOT, tempTextIO.requestAction(tempInteractableItem, tempCharacter),
                "Could not request move");
     }
 
@@ -214,7 +214,7 @@ public class IOTest {
             InputStream tempInputStream = new ByteArrayInputStream(movableDirections[i].getBytes());
             System.setIn(tempInputStream);
 
-            if(Interactable.InteractableAction.values()[i].equals(tempTextIO.requestAction(tempMapController, tempCharacter, tempInteractableItem))){
+            if(Interactable.InteractableAction.values()[i].equals(tempTextIO.requestAction(tempInteractableItem, tempCharacter))){
                 correctDirections++;
             }
         }
@@ -234,7 +234,7 @@ public class IOTest {
         FoodItem tempInteractableItem = new FoodItem("name", 1);
 
         assertThrows(IllegalArgumentException.class, () ->{
-            tempTextIO.requestAction(tempMapController, tempCharacter, tempInteractableItem);
+            tempTextIO.requestAction(tempInteractableItem, tempCharacter);
         });
     }
 
@@ -253,7 +253,7 @@ public class IOTest {
         FoodItem tempInteractableItem = new FoodItem("name", 1);
         
         Character tempCharacter = new Character("name", 0, 0, new Position(0, 0), tempTextIO);
-        assertEquals(Interactable.InteractableAction.LOOT, tempTextIO.requestAnotherAction(tempMapController, tempCharacter, tempInteractableItem));
+        assertEquals(Interactable.InteractableAction.LOOT, tempTextIO.requestAnotherAction(tempInteractableItem, tempCharacter));
         
         //Checks the method outputs the correct string
         InputStream outputStreamRead = new ByteArrayInputStream(outputStream.toByteArray());

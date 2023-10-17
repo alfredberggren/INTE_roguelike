@@ -26,25 +26,37 @@ public class NPCAI extends IO{
     }
 
     @Override
-    public Interactable.InteractableAction requestAction(MapController map, Character character, Interactable interactable) {
+    public Interactable.InteractableAction requestAction(Interactable interactable, Character character) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'requestAction'");
     }
 
     @Override
-    public Interactable.InteractableAction requestAnotherAction(MapController map, Character character, Interactable interactable) {
+    public Interactable.InteractableAction requestAnotherAction(Interactable interactable, Character character) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'requestAnotherAction'");
     }
 
     @Override
-    public Interactable requestInteractable(MapController map, Character character) {
+    public Interactable requestInteractable(Room room, Character character) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'requestInteractable'");
     }
 
     @Override
-    public Interactable requestAnotherInteractble(MapController map, Character character) {
+    public Interactable requestAnotherInteractble(Room room, Character character) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'requestAnotherInteractble'");
+    }
+
+    @Override
+    public Interactable requestInteractable(Character from, Character to) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'requestInteractable'");
+    }
+
+    @Override
+    public Interactable requestAnotherInteractble(Character from, Character to) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'requestAnotherInteractble'");
     }

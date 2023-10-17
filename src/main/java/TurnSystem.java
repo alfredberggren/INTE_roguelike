@@ -11,10 +11,12 @@ public class TurnSystem{
         this.io = io;
     }
 
-    public void move(Character player, MapController worldMap) {
+    public boolean move(Character player, MapController worldMap) {
+        return false;
     }
 
-    public void action(Player player, MapController worldMap) {
+    public boolean action(Player player, MapController worldMap) {
+        return false;
     }
 
     public void startTurn(MapController worldMap, Character character, int speed) {

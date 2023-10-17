@@ -17,12 +17,16 @@ public abstract class IO {
 
     public abstract CardinalDirection requestAnotherMove(MapController map, Character character);
 
-    public abstract Interactable.InteractableAction requestAction(MapController map, Character character, Interactable interactable);
+    public abstract Interactable.InteractableAction requestAction(Interactable interactable, Character character);
 
-    public abstract Interactable.InteractableAction requestAnotherAction(MapController map, Character character, Interactable interactable);
+    public abstract Interactable.InteractableAction requestAnotherAction(Interactable interactable, Character character);
 
     //TODO: tests
-    public abstract Interactable requestInteractable(MapController map, Character character);
+    public abstract Interactable requestInteractable(Room room, Character character);
 
-    public abstract Interactable requestAnotherInteractble(MapController map, Character character);
+    public abstract Interactable requestAnotherInteractble(Room room, Character character);
+
+    public abstract Interactable requestInteractable(Character from, Character to);
+
+    public abstract Interactable requestAnotherInteractble(Character from, Character to);
 }
