@@ -3,9 +3,9 @@ public class GameController {
     }
 
     public static void main(String[] args) {
-        MapController mapController = new MapController();
-        Position p = new Position(0,0);
-        Room r = new Room(p, new InteractableInventory(new NPC("Ragnar", 10, 100, new TextIO())));
+        //MapController mapController = new MapController();
+        //Position p = new Position(0,0);
+        //Room r = new Room(p, new InteractableInventory(new NPC("Ragnar", 10, 100, new TextIO())));
 
         //Problem when adding room before map built, building overwrites manually inserted rooms. Gives idea to implement "Set up first room".
         //mapController.add(p, r);

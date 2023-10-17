@@ -13,6 +13,8 @@ public class Equipment extends NonLivingEntity{
     private Effect effect; //gör till egen klass?
     private int damage;
     private Ability ability;
+
+    //Why would equipment need this?
     private EquipmentSlot equipmentSlot;
     private double damageBar;
 
@@ -43,7 +45,7 @@ public class Equipment extends NonLivingEntity{
      * The actions that can be done with Equipment
      */
     public Equipment(String name, Set<InteractableAction> possibleActions) {
-        this(name, possibleActions, Effect.NONE, 0, null);
+        this(name, null, Effect.NONE, 0, null);
     }
 
     public String getName(){
@@ -75,7 +77,7 @@ public class Equipment extends NonLivingEntity{
         if (ability == null) {
             return "Equipment has no ability";
         }
-        return ability.getTypeOfAbility();
+        return ability.getTypeOfAbility().toString();
     }
     /**Modifies the damage to the equipment based on a damage bar value. If the damage bar falls to or below zero, the equipment is considered destroyed*/
     public void damageModifier(double damageBar) {
