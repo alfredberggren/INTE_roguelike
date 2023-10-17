@@ -7,6 +7,7 @@ public class Quest {
     private int rewardXP;
     private int difficulty;
     private boolean isCompleted;
+    //private Character character;
 
     public Quest(String name, QuestType questType, String questDescription, int rewardXP, int difficulty) {
         this.name = name;

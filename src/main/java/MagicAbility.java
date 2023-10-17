@@ -4,8 +4,9 @@ import java.util.Set;
 
 /**The MagicAbility class extends the abstract Ability class and represents a specific type of magical ability*/
 public class MagicAbility extends Ability{
-    private Character character;
-    private Player player;
+
+    private Set<Ability> abilities = new HashSet<>();
+
     private String description;
     private int castingTime;
     private int coolDown;
@@ -14,14 +15,9 @@ public class MagicAbility extends Ability{
     MagicAbility(String name, int baseDamage, int minimumLevel, String description, int castingTime, int coolDown) {
         super(name, baseDamage, AbilityType.MAGICAL, minimumLevel >= 1 ? minimumLevel:1);
         this.description = description;
-        this.castingTime = castingTime;
-        this.coolDown = coolDown;
+        this.castingTime = castingTime >= 1 ? castingTime:1;
+        this.coolDown = coolDown >= 1 ? coolDown:1;
 
-    }
-
-    /**Sets the character associated with this magical ability*/
-    public void setCharacter(Character character) {
-        this.character = character;
     }
 
     public String getName() {
@@ -56,7 +52,6 @@ public class MagicAbility extends Ability{
         this.coolDown = coolDown;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if(this == o) {
@@ -76,22 +71,30 @@ public class MagicAbility extends Ability{
 
     /** {@inheritDoc} Calculates the damage inflicted by this specific magical ability*/
     @Override
-    public int calculateDamageOfAbility(Character character) {
+    public int calculateDamageOfAbility(Character character, Player player) {
         int baseDamage = 10;
         int levelBonus = character.getLevel() * 5;
         int experienceBonus = player.getExperiencePoint() / 10;
         return baseDamage + levelBonus + experienceBonus;
     }
 
-    /**Calculates the impact on the character's spellcasting ability, if the character does not meet the required conditions to retain the spell, the spell is forgotten*/
-    public boolean calculateImpactOnAbility() {
-        //int minimumLevelRetain = 10; //om man dör så förlorar man spells
+    /**Calculates the impact on the character's spell casting ability, if the character does not meet the required conditions to retain the spell, the spell is forgotten*/
+    public boolean calculateImpactOnAbility(Character character) {
         int characterLevel = character.getLevel();
-        if(!character.getSpell() && characterLevel < minimumLevel) {
-            character.forgetAbility(new MagicAbility("Fire", 10,1, "Shoots fire",1,2));
-            return false;
-        } else {
+        if(!containMagic() && characterLevel < minimumLevel) {
+            character.removeAbility(new MagicAbility("Fire", 10,1, "Shoots fire",1,2));
             return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**Checks if magical ability is in the Set*/
+    private boolean containMagic() {
+        if(abilities.contains(name)) {
+            return true;
+        } else {
+            return false;
         }
     }
 

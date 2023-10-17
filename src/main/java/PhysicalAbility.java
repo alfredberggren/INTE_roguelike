@@ -10,7 +10,7 @@ public class PhysicalAbility extends Ability{
 
     /** {@inheritDoc} Calculates the damage inflicted by this specific physical ability*/
     @Override
-    public int calculateDamageOfAbility(Character character) {
+    public int calculateDamageOfAbility(Character character, Player player) {
         int baseDamage = 5;
         int levelBonus = character.getLevel() * 2;
         int experienceBonus = player.getExperiencePoint() / 10;

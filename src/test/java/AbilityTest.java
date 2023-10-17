@@ -42,7 +42,7 @@ public class AbilityTest {
         MagicAbility fireBall = new MagicAbility("Fireball",10,1,"A fiery ball",2,3);
         character.setLevel(2);
         player.increaseXP(50);
-        int damage = fireBall.calculateDamageOfAbility(character);
+        int damage = fireBall.calculateDamageOfAbility(character, player);
         assertEquals(25, damage);
     }
 
@@ -52,7 +52,7 @@ public class AbilityTest {
         PhysicalAbility sword = new PhysicalAbility("Sword",5,1);
         character.setLevel(2);
         player.increaseXP(50);
-        int damage = sword.calculateDamageOfAbility(character);
+        int damage = sword.calculateDamageOfAbility(character, player);
         assertEquals(14, damage);
     }
 
@@ -61,12 +61,10 @@ public class AbilityTest {
     public void testMagicAbilityAffected() {
         MagicAbility fireSpell = new MagicAbility("Fire",10,1,"Shoots fire",1,3);
         character.addAbility(fireSpell);
-        player.increaseXP(100);
         MagicAbility ability = new MagicAbility(fireSpell.getName(), 10,1, "Fire",2,3);
-        ability.setCharacter(character);
-        player.decreaseXP(20);
-        character.forgetAbility(fireSpell);
-        assertFalse(ability.calculateImpactOnAbility());
+        character.setLevel(0);
+        character.removeAbility(fireSpell);
+        assertTrue(ability.calculateImpactOnAbility(character));
     }
 
     @Test
@@ -75,9 +73,8 @@ public class AbilityTest {
         MagicAbility iceSpell = new MagicAbility("Ice",5,1, "Shoots ice",1,2);
         character.addAbility(iceSpell);
         MagicAbility ability = new MagicAbility(iceSpell.getName(), 10,1,"Ice",2,3);
-        ability.setCharacter(character);
-        player.increaseXP(150);
-        assertTrue(ability.calculateImpactOnAbility());
+        character.setLevel(1);
+        assertFalse(ability.calculateImpactOnAbility(character));
     }
 
     @Test
@@ -86,7 +83,7 @@ public class AbilityTest {
         MagicAbility fireBall = new MagicAbility("Fireball",10,1,"A fiery ball",2,3);
         character.setLevel(1);
         player.increaseXP(0);
-        int damage = fireBall.calculateDamageOfAbility(character);
+        int damage = fireBall.calculateDamageOfAbility(character, player);
         assertEquals(15, damage);
     }
 
@@ -96,7 +93,7 @@ public class AbilityTest {
         MagicAbility fireBall = new MagicAbility("Fireball",10,1,"A fiery ball",2,3);
         character.setLevel(10);
         player.increaseXP(100);
-        int damage = fireBall.calculateDamageOfAbility(character);
+        int damage = fireBall.calculateDamageOfAbility(character, player);
         assertEquals(70, damage);
     }
 
@@ -106,7 +103,7 @@ public class AbilityTest {
         PhysicalAbility sword = new PhysicalAbility("Sword", 5,1);
         character.setLevel(1);
         player.increaseXP(0);
-        int damage = sword.calculateDamageOfAbility(character);
+        int damage = sword.calculateDamageOfAbility(character, player);
         assertEquals(7, damage);
     }
 
@@ -116,7 +113,7 @@ public class AbilityTest {
         PhysicalAbility sword = new PhysicalAbility("Sword", 5,1);
         character.setLevel(10);
         player.increaseXP(100);
-        int damage = sword.calculateDamageOfAbility(character);
+        int damage = sword.calculateDamageOfAbility(character, player);
         assertEquals(35, damage);
     }
 
@@ -248,14 +245,14 @@ public class AbilityTest {
     @DisplayName("Test casting time cannot be negative")
     public void testCastingTimeCannotBeNegative() {
         MagicAbility ability = new MagicAbility("Fireball", 10,3,"A fiery ball",-1,3);
-        assertEquals(0, ability.getCastingTime());
+        assertEquals(1, ability.getCastingTime());
     }
 
     @Test
     @DisplayName("Test cool-down time cannot be negative")
     public void testCoolDownTimeCannotBeNegative() {
         MagicAbility ability = new MagicAbility("Fireball", 10,3,"A fiery ball",2,-1);
-        assertEquals(0, ability.getCoolDown());
+        assertEquals(1, ability.getCoolDown());
     }
 
     @Test
