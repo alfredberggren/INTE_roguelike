@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.junit.runner.RunWith;
@@ -88,8 +89,8 @@ public class MapBuilderTest {
 
     @Test
     @DisplayName("Testar att om kartan har olika interactables")
-    public void test_buildingMap_generatesDifferentInteractables(Interactable input, boolean expected) {
+    public void test_buildingMap_generatesDifferentInteractables() {
         mapBuilder.build();
-
+        assertEquals(true, input);
     }
 }
