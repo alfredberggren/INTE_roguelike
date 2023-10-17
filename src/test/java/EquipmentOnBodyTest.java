@@ -8,7 +8,7 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class EquipmentOnBodyTest {
-    static EquipmentOnBody EQUIPMENT_ON_BODY; //is this suppose to be a constant or a variable?
+    static EquipmentOnBody EQUIPMENT_ON_BODY;
     static final EquipmentSlot DEFAULT_EQUIPMENT_SLOT = EquipmentSlot.LEFT_HAND;
     static final Equipment DEFAULT_EQUIPMENT = new Equipment("Sword", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1));
     static final Player DEFAULT_PLAYER = new Player("Name", 100, 10, new Position(0,0), new TextIO());

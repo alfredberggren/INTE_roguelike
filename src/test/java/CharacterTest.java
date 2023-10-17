@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class CharacterTest {
     static Character DEFAULT_CHARACTER;
-    static Character DEFAULT_CHARACTER_WITH_POS = new Character("Rudolf", 100,1, new Position(1, 2), new TextIO());
+    static Character DEFAULT_CHARACTER_WITH_POS = new Character("Rudolf", 100, 1, new Position(1, 2), new TextIO());
 
     @BeforeEach
     void setUp() {
@@ -31,35 +31,35 @@ public class CharacterTest {
 
     @Test
     public void testNameInputIsEmpty() {
-        assertThrows(IllegalArgumentException.class, () ->{
+        assertThrows(IllegalArgumentException.class, () -> {
             DEFAULT_CHARACTER.setName("");
         });
     }
 
     @Test
     public void testTooShortName() {
-        assertThrows(IllegalArgumentException.class, () ->{
+        assertThrows(IllegalArgumentException.class, () -> {
             DEFAULT_CHARACTER.setName("A");
         });
     }
 
     @Test
     public void testNameBeginsWithDigit() {
-        assertThrows(IllegalArgumentException.class, () ->{
+        assertThrows(IllegalArgumentException.class, () -> {
             DEFAULT_CHARACTER.setName("1Ab");
         });
     }
 
     @Test
     public void testTooLongName() {
-        assertThrows(IllegalArgumentException.class, () ->{
+        assertThrows(IllegalArgumentException.class, () -> {
             DEFAULT_CHARACTER.setName("tooLongNameToBeAccepted");
         });
     }
 
     @Test
     public void testNameContainsNotOnlyAlphanumericCharactersAndUnderscores() {
-        assertThrows(IllegalArgumentException.class, () ->{
+        assertThrows(IllegalArgumentException.class, () -> {
             DEFAULT_CHARACTER.setName("Aabba&&");
         });
     }
@@ -146,7 +146,7 @@ public class CharacterTest {
     @DisplayName("Test that character get Magic Ability")
     public void testCharacterMagicAbility() {
         Character c = new Character("Rudolf", 10, 10, new Position(0, 0), new TextIO());
-        MagicAbility fireMagic = new MagicAbility("Fireball", 20, 1,"Shoots fire",2,1);
+        MagicAbility fireMagic = new MagicAbility("Fireball", 20, 1, "Shoots fire", 2, 1);
         c.addAbility(fireMagic);
         //assertEquals("Wizard", c.getName());
         assertEquals("Fireball", fireMagic.name);
@@ -155,7 +155,7 @@ public class CharacterTest {
     @Test
     @DisplayName("Test setting and getting Magic Ability")
     public void testCharacterSetAndGetMagicAbility() {
-        MagicAbility fireMagic = new MagicAbility("Fireball", 20, 1,"Shoots fire",2,1);
+        MagicAbility fireMagic = new MagicAbility("Fireball", 20, 1, "Shoots fire", 2, 1);
         DEFAULT_CHARACTER.addAbility(fireMagic);
         assertEquals(fireMagic, DEFAULT_CHARACTER.getAbilities());
     }
@@ -163,8 +163,8 @@ public class CharacterTest {
     @Test
     @DisplayName("Test adding and forgetting spells")
     public void testCharacterSpellHandling() {
-        MagicAbility fireSpell = new MagicAbility("Fire", 10, 1,"Shoots fire", 1,2);
-        MagicAbility iceSpell = new MagicAbility("Ice", 12, 1, "Shoots ice", 1,3);
+        MagicAbility fireSpell = new MagicAbility("Fire", 10, 1, "Shoots fire", 1, 2);
+        MagicAbility iceSpell = new MagicAbility("Ice", 12, 1, "Shoots ice", 1, 3);
         DEFAULT_CHARACTER.addAbility(fireSpell);
         assertTrue(DEFAULT_CHARACTER.getAbilities().contains(fireSpell));
         DEFAULT_CHARACTER.forgetAbility(fireSpell);
@@ -193,6 +193,20 @@ public class CharacterTest {
         DEFAULT_CHARACTER.equip(new Equipment("Sword", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1)));
         assertEquals("LEFT_HAND: Sword", DEFAULT_CHARACTER.getEquipmentOnBody());
     }
+    // public void testToEquipCharacter() {
+    //     Equipment equipment = new Equipment("Sword", new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP)), Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1));
+    //     DEFAULT_CHARACTER.equip(EquipmentSlot.LEFT_HAND, equipment);
+    //     assertEquals("LEFT_HAND: Sword", DEFAULT_CHARACTER.getEquipmentOnBody());
+    // }
+
+    @Test //testa!
+    @DisplayName("Test to equip a character when one of parameters is equal to null")
+    public void testToEquipCharacterWhenOneOfParametersZero() {
+        Equipment equipment = new Equipment("Sword", new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP)), Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1));
+        DEFAULT_CHARACTER.equip(EquipmentSlot.LEFT_HAND, null);
+        assertEquals("", DEFAULT_CHARACTER.getEquipmentOnBody());
+    }
+
     @Test
     @DisplayName("Test to unequip a character")
     public void testToUnEquipCharacter(){
@@ -201,9 +215,39 @@ public class CharacterTest {
         DEFAULT_CHARACTER.unEquip(testEquipment);
         assertEquals("", DEFAULT_CHARACTER.getEquipmentOnBody());
     }
-    //test equipment's position
-    //test inventory.remove
-    //test inventory.add
 
+    // public void testToUnEquipCharacter() {
+    //     Equipment equipment = new Equipment("Sword", new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP)), Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1));
+    //     DEFAULT_CHARACTER.equip(EquipmentSlot.LEFT_HAND, equipment);
+    //     DEFAULT_CHARACTER.unEquip(EquipmentSlot.LEFT_HAND);
+    //     assertEquals("", DEFAULT_CHARACTER.getEquipmentOnBody());
+    // }
+
+    @Test //testa
+    @DisplayName("Test to unequip a character when one of parameters is equal to null")
+    public void testToUnEquipCharacterWhenOneOfParametersZero() {
+        Equipment equipment = new Equipment("Sword", new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP)), Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1));
+        DEFAULT_CHARACTER.equip(EquipmentSlot.LEFT_HAND, equipment);
+        DEFAULT_CHARACTER.unEquip(null);
+        assertEquals("LEFT_HAND: Sword", DEFAULT_CHARACTER.getEquipmentOnBody());
+    }
+
+
+    @Test
+    @DisplayName("Test that equipment which was dropped was added to Inventory")
+    public void testThatDiscardedEquipmentWasAddedToInventory() {
+        Equipment equipment = new Equipment("Sword", new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP)), Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1));
+        DEFAULT_CHARACTER.equip(EquipmentSlot.LEFT_HAND, equipment);
+        DEFAULT_CHARACTER.unEquip(EquipmentSlot.LEFT_HAND);
+        assertTrue(DEFAULT_CHARACTER.getInventory().contains(equipment));
+    }
+
+    @Test
+    @DisplayName("Test that equipment which was selected to equip was removed from Inventory")
+    public void testThatChosenEquipmentWasRemovedFromInventory() {
+        Equipment equipment = new Equipment("Sword", new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP)), Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1));
+        DEFAULT_CHARACTER.equip(EquipmentSlot.LEFT_HAND, equipment);
+        assertFalse(DEFAULT_CHARACTER.getInventory().contains(equipment));
+    }
 
 }

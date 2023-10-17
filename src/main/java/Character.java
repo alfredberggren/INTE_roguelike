@@ -59,11 +59,11 @@ public class Character implements Interactable{
     }
 
     public void setName(String name) {
-        // user input
-        //the username consists of 2 to 10 characters. If less - invalid username
-        //the username can only contain alphanumeric characters and underscores(_)
-        //uppercase, lowercase and digits (0-9)
-        //the first character must be an alphabetic character
+        /** user input
+        the username consists of 2 to 10 characters. If less - invalid username
+        the username can only contain alphanumeric characters and underscores(_)
+        uppercase, lowercase and digits (0-9)
+        the first character must be an alphabetic character*/
         if (name == null){
             throw new NullPointerException("Error: name can't be null");
         }
@@ -185,7 +185,7 @@ public class Character implements Interactable{
     }
 
 
-    // For equip we might also want them to add/remove the ability they have form the ability set/list?
+    // For equip we might also want them to add/remove the ability they have form the ability set/list? -simon
     public void unEquip(Equipment equipment){
         if(equipmentOnBody.slotContainsEquipment(equipment.getEquipmentSlot()) && equipment.equals(equipmentOnBody.getEquipment(equipment.getEquipmentSlot()))){
             equipmentOnBody.removeEquipment(equipment.getEquipmentSlot());
@@ -199,19 +199,20 @@ public class Character implements Interactable{
             equipmentOnBody.putEquipment(equipment.getEquipmentSlot(), equipment);
     }
 
-    // public void unEquip(EquipmentSlot slot){
+    //public void unEquip(EquipmentSlot slot){
     //     if(equipmentOnBody.slotContainsEquipment(slot)){
     //         Equipment e = equipmentOnBody.getEquipment(slot);
-    //         e.setPos(getPosition());
     //         equipmentOnBody.removeEquipment(slot);
-    //         inventory.remove(e);
+    //         inventory.add(e);
     //     }
     // }
-
     // public void equip(EquipmentSlot slot, Equipment equipment) {
-    //     //testa!!
-    //     if (!equipmentOnBody.slotContainsEquipment(slot) && inventory.contains(equipment))
+
+    //     if (!equipmentOnBody.slotContainsEquipment(slot) && inventory.contains(equipment)) {
     //         equipmentOnBody.putEquipment(slot, equipment);
+    //         inventory.remove(equipment);
+    //     }
+
     // }
 
 
