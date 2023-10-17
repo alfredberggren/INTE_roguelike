@@ -98,7 +98,7 @@ public class CharacterTest {
     @DisplayName("Test throws exception if speed<0")
     public void testCharacterWithNegativeSpeed() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            new Character("Ragnar", 100, 0, new TextIO());
+            new Character("Ragnar", 100, -10, new TextIO());
         });
     }
 
@@ -191,39 +191,44 @@ public class CharacterTest {
     @Test
     @DisplayName("Test to equip a character")
     public void testToEquipCharacter() {
+        DEFAULT_CHARACTER.getInventory().add(new Equipment("Sword", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1)));
         DEFAULT_CHARACTER.equip(new Equipment("Sword", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1)));
-        assertEquals("LEFT_HAND: Sword", DEFAULT_CHARACTER.getEquipmentOnBody());
+        assertEquals("LEFT_HAND: Sword +50% DAMAGE", DEFAULT_CHARACTER.getEquipmentOnBody().toString());
     }
 
-    @Test //testa!
+    @Test
     @DisplayName("Test to equip a character when Equipment is null")
     public void testToEquipCharacterWhenEquipmentIsNull() {
+        DEFAULT_CHARACTER.getInventory().add(new Equipment("Sword", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1)));
         DEFAULT_CHARACTER.equip(null);
-        assertEquals(null, DEFAULT_CHARACTER.getEquipmentOnBody());
+        assertEquals("", DEFAULT_CHARACTER.getEquipmentOnBody().toString());
     }
 
     @Test
     @DisplayName("Test to unequip a character")
     public void testToUnEquipCharacter() {
         var testEquipment = new Equipment("Sword", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1));
+        DEFAULT_CHARACTER.getInventory().add( new Equipment("Sword", EquipmentSlot.LEFT_HAND, new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.UNEQUIP)), Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1)));
         DEFAULT_CHARACTER.equip(testEquipment);
         DEFAULT_CHARACTER.unEquip(testEquipment);
-        assertEquals(null, DEFAULT_CHARACTER.getEquipmentOnBody());
+        assertEquals("", DEFAULT_CHARACTER.getEquipmentOnBody().toString());
     }
 
-    @Test //testa
+    @Test
     @DisplayName("Test to unequip a character when Equipment is null")
     public void testToUnEquipCharacterWhenEquipmentIsNull() {
         Equipment equipment = new Equipment("Sword", EquipmentSlot.LEFT_HAND, new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP)), Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1));
+        DEFAULT_CHARACTER.getInventory().add(equipment);
         DEFAULT_CHARACTER.equip(equipment);
         DEFAULT_CHARACTER.unEquip(null);
-        assertEquals("LEFT_HAND: Sword", DEFAULT_CHARACTER.getEquipmentOnBody());
+        assertEquals("LEFT_HAND: Sword +50% DAMAGE", DEFAULT_CHARACTER.getEquipmentOnBody().toString());
     }
 
     @Test
     @DisplayName("Test that equipment which was Uneqiped was added to Inventory")
     public void testThatDiscardedEquipmentWasAddedToInventory() {
         Equipment equipment = new Equipment("Sword", EquipmentSlot.LEFT_HAND, new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.UNEQUIP)), Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1));
+        DEFAULT_CHARACTER.getInventory().add(equipment);
         DEFAULT_CHARACTER.equip(equipment);
         DEFAULT_CHARACTER.unEquip(equipment);
         assertTrue(DEFAULT_CHARACTER.getInventory().contains(equipment));
@@ -249,6 +254,7 @@ public class CharacterTest {
     @DisplayName("Test to remove ability from character after unEquip()")
     public void testRemoveAbilityFromCharacterAfterUnEquip() {
         Equipment equipment = new Equipment("Sword", EquipmentSlot.LEFT_HAND, new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP)), Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1));
+        DEFAULT_CHARACTER.getInventory().add(equipment);
         DEFAULT_CHARACTER.equip(equipment);
         DEFAULT_CHARACTER.unEquip(equipment);
         assertFalse(DEFAULT_CHARACTER.getAbilities().contains(new PhysicalAbility("Sword", 10, 1)));

@@ -5,6 +5,7 @@ import java.util.Map;
 public class EquipmentOnBody {
     private Map<EquipmentSlot, Equipment> equipmentOnBody = new HashMap<>();
 
+    public EquipmentOnBody(){}
     public EquipmentOnBody(Map<EquipmentSlot, Equipment> equipmentOnBody) {
         this.equipmentOnBody = equipmentOnBody;
     }
