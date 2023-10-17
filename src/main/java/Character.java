@@ -122,7 +122,7 @@ public class Character implements Interactable {
     }
 
     /**Checks if Arraylist is not empty and if so removes the spell*/
-    public void forgetAbility(Ability ability) {
+    public void removeAbility(Ability ability) {
         if (!abilities.isEmpty()) {
             abilities.remove(ability);
         }
@@ -211,7 +211,7 @@ public class Character implements Interactable {
         if (equipmentOnBody.slotContainsEquipment(equipment.getEquipmentSlot()) && equipment.equals(equipmentOnBody.getEquipment(equipment.getEquipmentSlot()))) {
             equipmentOnBody.removeEquipment(equipment.getEquipmentSlot());
             inventory.add(equipment);
-            forgetAbility(equipment.getAbility());
+            removeAbility(equipment.getAbility());
         }
     }
 
