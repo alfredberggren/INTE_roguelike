@@ -78,6 +78,7 @@ public class QuestTest {
         assertTrue(DEFAULT_QUEST.isCompleted());
     }
 
+
     @Test
     @DisplayName("Test if difficulty correspond to character's level")
     public void testThatDifficultyCorrespondToLevel() {
