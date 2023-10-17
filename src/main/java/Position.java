@@ -31,4 +31,16 @@ public class Position {
         return Objects.hashCode(codeString);
     }
 
+
+    //TODO: Decide on which of the toStrings are the best ??????
+    @Override
+    public String toString(){
+        return "Position [" + x + "." + y +"]";
+    }
+
+//    @Override
+//    public String toString(){
+//        return "Position=[ " + x + ", " + y + " ]";
+//    }
+
 }

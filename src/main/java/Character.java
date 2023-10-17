@@ -1,48 +1,89 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
+/**The Character class represents a game character that can interact with the game world. It implements Interactable.*/
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Character implements Interactable{
+    private static final Set<InteractableAction> STANDARD_CHARACTER_INTERACTABLE_ACTIONS = new HashSet<>(Arrays.asList(
+            InteractableAction.TALK,
+            InteractableAction.FIGHT)
+    );
+    private static final String NAME_PATTERN = "^[A-Za-z]\\w{1,11}$";
 
-    //variabel för turnsystem
+    private Set<InteractableAction> possibleInteractableActions;
 
-    //private String name;
+    protected String name;
     private int health;
     private int speed;
-    private int mana;
+    private int mana; 
+    protected int level;
     private Position pos;
     private boolean isDead = false;
-    protected Set<Ability> possibleAbilities;
-    private PhysicalAbility physicalAbility;
     private MagicAbility magicAbility;
     private boolean spell;
-    private ArrayList<Spell> knownSpells = new ArrayList<>();
-    private boolean canUseMagic = true;
+    private Set<Ability> abilities = new HashSet<>();
+    private InteractableInventory inventory = new InteractableInventory();
+    private boolean canUseMagic = true; // remove
+    private EquipmentOnBody equipmentOnBody;
+    private TurnSystem turnSystem;
 
-    public Character(int health, int speed){
+    public Character(String name, int health, int speed, IO io){
         if (health < 0 || speed < 0) {
             throw new IllegalArgumentException("Speed and health needs to be 0 or more");
         }
+        this.name = name;
         this.health = health;
         this.speed = speed;
         mana = 100;
-        this.magicAbility = new MagicAbility("Hands",1,"No Magic"); //standard magisk förmåga
-        this.pos = new Position(0, 0);
+        pos = new Position(0, 0);
         if(health > 0) {
             isDead = false;
         }
+        possibleInteractableActions = STANDARD_CHARACTER_INTERACTABLE_ACTIONS;
+        turnSystem = new TurnSystem(io);
     }
 
-    public Character(int health, int speed, Position pos){
+    public Character(String name, int health, int speed, Position pos, IO io){
         if (health < 0 || speed < 0) {
             throw new IllegalArgumentException("Speed and health needs to be 0 or more");
         }
+        this.name = name;
         this.health = health;
         this.speed = speed;
         this.pos = pos;
+        if(health > 0) {
+            isDead = false;
+        }
+        possibleInteractableActions = STANDARD_CHARACTER_INTERACTABLE_ACTIONS;
+        turnSystem = new TurnSystem(io);
     }
 
+    public void setName(String name) {
+        /** user input
+        the username consists of 2 to 10 characters. If less - invalid username
+        the username can only contain alphanumeric characters and underscores(_)
+        uppercase, lowercase and digits (0-9)
+        the first character must be an alphabetic character*/
+        if (name == null){
+            throw new NullPointerException("Error: name can't be null");
+        }
+        if (name.isEmpty()){
+            throw new IllegalArgumentException("Error: name can't be empty");
+        }
+        if(!matchesPattern(NAME_PATTERN, name)){
+            throw new IllegalArgumentException("Name doesn't match the pattern");
+        }
+        else
+            this.name = name;
+    }
+
+    boolean matchesPattern(String pattern, String name){
+        Pattern p = Pattern.compile(pattern);
+        Matcher m = p.matcher(name);
+        return m.find();
+    }
+
+    public String getName(){return name;}
 
     public Position getPosition() {return pos;}
     public int getHealth() {return health;}
@@ -50,30 +91,52 @@ public class Character implements Interactable{
 
     public int getMana() {return mana;}
 
+    public InteractableInventory getInventory() {
+        return inventory;
+    }
+    public EquipmentOnBody getEquipmentOnBody(){
+        return equipmentOnBody;
+    }
+
+    public TurnSystem getTurnSystem(){
+        return turnSystem;
+    }
+
     public boolean getSpell() {
         return spell;
     }
 
-    public void forgetSpell(Spell spell) {
-        if(!knownSpells.isEmpty()) {
-            knownSpells.remove(spell);
+    /**Checks if Arraylist is not empty and if so removes the spell*/
+    public void forgetAbility(MagicAbility spell) {
+        if(!abilities.isEmpty()) {
+            abilities.remove(spell);
         }
     }
 
-    public void addSpell(Spell spell) {
-        knownSpells.add(spell);
+    /**Adds a spell to the Arraylist*/
+    public void addAbility(Ability ability) {
+        abilities.add(ability);
+    }
+    public Set<Ability> getAbilities() {
+        return abilities;
     }
 
-    public Set<Ability> getPossibleAbilities() {return possibleAbilities;}
-
-    public MagicAbility getMagicAbility() {
+    /*public MagicAbility getMagicAbility() {
         return magicAbility;
-    }
-    public void setMagicAbility(MagicAbility magicAbility) {
+    }*/
+    /*public void setMagicAbility(MagicAbility magicAbility) {
         this.magicAbility = magicAbility;
-    }
-    public PhysicalAbility getPhysicalAbility() {return physicalAbility;}
-    public void setHealth(int health) {this.health = health;}
+    }*/
+
+    public void setHealth(int health) {
+        if(health<0){
+            throw new IllegalArgumentException("Health cannot be negative!");
+        }
+        if(health==0){
+            isDead = true;
+        }
+        this.health = health;}
+
     public void setPos(Position pos) {this.pos = pos;}
 
     public void setMana(int mana) {this.mana = mana;}
@@ -91,18 +154,15 @@ public class Character implements Interactable{
         setMana(result);
     }
 
-    public int increaseHealth(int add){
+    public void increaseHealth(int add){
         int result = health + add;
         setHealth(result);
-        return result;
     }
 
     public void decreaseHealth(int decrease) {
         int result = health - decrease;
         if(result<=0) {
             isDead = true;
-
-            //nollställa allt
             setHealth(0);
         }else {
             setHealth(result);
@@ -110,12 +170,54 @@ public class Character implements Interactable{
     }
 
     public boolean isDead() {
-        return isDead;
+        return health <= 0;
     }
-    public boolean canUseMagic(){return canUseMagic;}
+    public boolean canUseMagic(){
+        return mana == 0;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+
+    // For equip we might also want them to add/remove the ability they have form the ability set/list? -simon
+    public void unEquip(Equipment equipment){
+        if(equipmentOnBody.slotContainsEquipment(equipment.getEquipmentSlot()) && equipment.equals(equipmentOnBody.getEquipment(equipment.getEquipmentSlot()))){
+            equipmentOnBody.removeEquipment(equipment.getEquipmentSlot());
+            inventory.add(equipment);
+        }
+    }
+
+    public void equip(Equipment equipment) {
+        //testa!!
+        if (!equipmentOnBody.slotContainsEquipment(equipment.getEquipmentSlot()) && inventory.contains(equipment))
+            equipmentOnBody.putEquipment(equipment.getEquipmentSlot(), equipment);
+    }
+
+    //public void unEquip(EquipmentSlot slot){
+    //     if(equipmentOnBody.slotContainsEquipment(slot)){
+    //         Equipment e = equipmentOnBody.getEquipment(slot);
+    //         equipmentOnBody.removeEquipment(slot);
+    //         inventory.add(e);
+    //     }
+    // }
+    // public void equip(EquipmentSlot slot, Equipment equipment) {
+
+    //     if (!equipmentOnBody.slotContainsEquipment(slot) && inventory.contains(equipment)) {
+    //         equipmentOnBody.putEquipment(slot, equipment);
+    //         inventory.remove(equipment);
+    //     }
+
+    // }
+
 
     @Override
     public Set<InteractableAction> getPossibleActions() {
-        return null;
+        return possibleInteractableActions;
     }
 }

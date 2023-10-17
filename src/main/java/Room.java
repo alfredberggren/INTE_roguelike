@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -50,10 +49,17 @@ public class Room {
         }
     }
 
+
+    //Implementation with no uses at the moment
     public void removePossibleRoute(CardinalDirection... routes){
         for (CardinalDirection r: routes){
             possibleRoutes.remove(r);
         }
+    }
+
+    @Override
+    public String toString(){
+        return "Room at pos " + position + " with interactables: " + interactables.toString() + " and directions: " + possibleRoutes;
     }
 
 

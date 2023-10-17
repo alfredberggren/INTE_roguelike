@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class InteractableInventory {
     private ArrayList<Interactable> inventory;
@@ -19,7 +20,6 @@ public class InteractableInventory {
         }
 
     }
-
 
     public void remove(Interactable... interactables){
         for (Interactable i: interactables){
@@ -54,5 +54,10 @@ public class InteractableInventory {
         if (i == null){
             throw new NullPointerException("Interactable can not be null!");
         }
+    }
+
+    @Override
+    public String toString(){
+        return inventory.toString();
     }
 }

@@ -1,22 +1,10 @@
 import java.util.Objects;
-import java.util.Set;
 
-public class NPC extends Character {
-    private Set<InteractableAction> possibleInteractableActions;
-    private String name;
+public class NPC extends Character implements Interactable {
 
-    public NPC(String name, int health, int speed, Set<InteractableAction> possibleInteractableActions) {
-        super(health, speed);
-        this.name = name;
-        this.possibleInteractableActions = possibleInteractableActions;
-    }
-
-    public Set<InteractableAction> getPossibleActions() {
-        return possibleInteractableActions;
-    }
-
-    public String getName() {
-        return name;
+    public NPC(String name, int health, int speed,Position pos, IO io) {
+        //Kristian: removed use of experience points from constructor
+        super(name, health, speed, pos, io);
     }
 
     @Override
@@ -30,5 +18,9 @@ public class NPC extends Character {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    public String getName(){
+        return name;
     }
 }

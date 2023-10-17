@@ -1,18 +1,24 @@
 
+
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class RoomTest {
-    static final Position DEFAULT_POSITION = new Position(0,0);
 
+    //why is this mocking io? -simon
+    @Mock
+    static IO io;
+
+    static final Position DEFAULT_POSITION = new Position(0,0);
     static final Set<Interactable.InteractableAction> DEFAULT_NPC_ACTIONS = new HashSet<>(Arrays.asList(Interactable.InteractableAction.FIGHT, Interactable.InteractableAction.TALK));
     static final Set<Interactable.InteractableAction> DEFAULT_EQUIPMENT_ACTIONS = new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP));
-    static final NPC DEFAULT_NPC = new NPC("Harald", 100, 50, DEFAULT_NPC_ACTIONS);
+    static final NPC DEFAULT_NPC = new NPC("Harald", 100, 50, DEFAULT_POSITION, io);
 
-    static final Equipment DEFAULT_EQUIPMENT = new Equipment("Sword", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 40, new PhysicalAbility("Slash", 10, "Ability"));
+    static final Equipment DEFAULT_EQUIPMENT = new Equipment("Sword", EquipmentSlot.RIGHT_HAND, Equipment.Effect.DAMAGE, 40, new PhysicalAbility("Slash", 10, 1));
     static final InteractableInventory DEFAULT_INTERACTABLES = new InteractableInventory();
 
     static final ArrayList<CardinalDirection> DEFAULT_DIRECTIONS = new ArrayList<>(Arrays.asList(CardinalDirection.NORTH, CardinalDirection.SOUTH));
@@ -86,4 +92,5 @@ public class RoomTest {
 
 
 }
+
 

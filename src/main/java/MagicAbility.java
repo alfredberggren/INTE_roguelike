@@ -1,50 +1,104 @@
-public class MagicAbility extends Ability{
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
-    private String magicAbility;
+/**The MagicAbility class extends the abstract Ability class and represents a specific type of magical ability*/
+public class MagicAbility extends Ability{
     private Character character;
     private Player player;
-    private int MINIMUM_XP_TO_RETAIN_SPELL = 100;
+    private String description;
+    private int castingTime;
+    private int coolDown;
 
-    MagicAbility(String name, int baseDamage, String magicAbility){
-        super(name, baseDamage);
-        this.magicAbility = magicAbility;
+    /**Constructs an Ability object with the specified characteristics*/
+    MagicAbility(String name, int baseDamage, int minimumLevel, String description, int castingTime, int coolDown) {
+        super(name, baseDamage, AbilityType.MAGICAL, minimumLevel >= 1 ? minimumLevel:1);
+        this.description = description;
+        this.castingTime = castingTime;
+        this.coolDown = coolDown;
+
     }
 
-    MagicAbility(String name, int baseDamage, String magicAbility, Character character, Player player){
-        super(name, baseDamage);
-        this.magicAbility = magicAbility;
+    /**Sets the character associated with this magical ability*/
+    public void setCharacter(Character character) {
         this.character = character;
-        this.player = player;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getCastingTime() {
+        return castingTime;
+    }
+
+    public void setCastingTime(int castingTime){
+        this.castingTime = castingTime;
+    }
+
+    public int getCoolDown() {
+        return coolDown;
+    }
+
+    public void setCoolDown(int coolDown) {
+        this.coolDown = coolDown;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if(this == o) {
+            return true;
+        }
+        if(o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        MagicAbility spell = (MagicAbility) o;
+        return Objects.equals(name, spell.name);
     }
 
     @Override
-    public int calculateDamage(Player player) {
+    public int hashCode() {
+        return Objects.hash(name);
+    }
+
+    /** {@inheritDoc} Calculates the damage inflicted by this specific magical ability*/
+    @Override
+    public int calculateDamageOfAbility(Character character) {
         int baseDamage = 10;
-        int levelBonus = player.getLevel() * 5;
+        int levelBonus = character.getLevel() * 5;
         int experienceBonus = player.getExperiencePoint() / 10;
         return baseDamage + levelBonus + experienceBonus;
     }
 
-
-    @Override
-    public String typeOfAbility() {
-        return magicAbility;
-    }
-
-    public String calculateAffect() {
-        if(!character.getSpell() && player.getExperiencePoint() < MINIMUM_XP_TO_RETAIN_SPELL) {
-            character.forgetSpell(new Spell("Fire"));
-            return "You have forgotten a spell due to losing experience points";
+    /**Calculates the impact on the character's spellcasting ability, if the character does not meet the required conditions to retain the spell, the spell is forgotten*/
+    public boolean calculateImpactOnAbility() {
+        //int minimumLevelRetain = 10; //om man dör så förlorar man spells
+        int characterLevel = character.getLevel();
+        if(!character.getSpell() && characterLevel < minimumLevel) {
+            character.forgetAbility(new MagicAbility("Fire", 10,1, "Shoots fire",1,2));
+            return false;
         } else {
-            return "You have not forgotten any spells";
+            return true;
         }
     }
 
-
-
+    /**{@inheritDoc}*/
     @Override
     public String toString() {
-        return magicAbility;
+        return String.valueOf(AbilityType.MAGICAL);
     }
 
 }

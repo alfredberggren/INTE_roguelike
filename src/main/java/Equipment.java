@@ -1,20 +1,37 @@
-import java.util.Set;
-import java.util.ArrayList;
-import java.util.Objects;
+/**The Equipment class represents an item or piece of equipment, that can be used by characters. It extends the NonLivingEntity class*/
+
+import java.util.*;
 
 public class Equipment extends NonLivingEntity{
-    private Effect effect;
+    private static final Set<InteractableAction> STANDARD_INTERACTABLE_ACTIONS = new HashSet<>(Arrays.asList(
+            InteractableAction.LOOT,
+            InteractableAction.DROP,
+            InteractableAction.WEAR,
+            InteractableAction.UNEQUIP)
+    );
+
+    private Effect effect; //gör till egen klass?
     private int damage;
     private Ability ability;
-    private Position pos;
+    private EquipmentSlot equipmentSlot;
     private double damageBar;
 
-    public Equipment(String name, Set<InteractableAction> possibleActions, Effect effect, int damage, Ability ability) {
+
+    /**Constructs Equipment with the specified characteristics*/
+    public Equipment(String name, EquipmentSlot equipmentSlot, Effect effect, int damage, Ability ability) {
+        super(name, STANDARD_INTERACTABLE_ACTIONS);
+        this.effect = effect;
+        this.damage = damage;
+        this.ability = ability;
+        this.equipmentSlot = equipmentSlot;
+    }
+
+    public Equipment(String name, EquipmentSlot equipmentSlot, Set<Interactable.InteractableAction> possibleActions,  Effect effect, int damage, Ability ability) {
         super(name, possibleActions);
         this.effect = effect;
         this.damage = damage;
         this.ability = ability;
-        this.pos = new Position(0,0);
+        this.equipmentSlot = equipmentSlot;
     }
 
     /**
@@ -32,30 +49,35 @@ public class Equipment extends NonLivingEntity{
     public String getName(){
         return name;
     }
-
+    /**Retrieves the effect provided by the equipment*/
     public Effect getEffect() {
         return effect;
     }
+
+    public EquipmentSlot getEquipmentSlot() {return equipmentSlot;}
+
+    public int getDamage() {return damage;}
 
     public Set<InteractableAction> getPossibleActions() {
         return possibleInteractableActions;
     }
 
+    /**Represents the possible effects of the equipment*/
     public enum Effect {
-        SPEED, HEALTH, DAMAGE, NONE
+        SPEED, HEALTH, DAMAGE, ARMOR, NONE
     }
-
+    /**Represents different types of armor*/
     public enum Armor {
         HELMET, CHEST_ARMOR, LEGGING, BOOTS
     }
-
+    /**Retrieves the type of associated ability*/
     public String getAbility(){
         if (ability == null) {
             return "Equipment has no ability";
         }
         return ability.getTypeOfAbility();
     }
-
+    /**Modifies the damage to the equipment based on a damage bar value. If the damage bar falls to or below zero, the equipment is considered destroyed*/
     public void damageModifier(double damageBar) {
         double decreaseBy = 10;
         if(damageBar >= 10 && damageBar <= 100) {
@@ -65,15 +87,20 @@ public class Equipment extends NonLivingEntity{
             }
         }
         setDamageOnEquipment(damageBar);
+        //Simon:
+        //should this be a runtime exception? and how is this exception handled
+        //it could instead be handled in turnSystem
+        //where if any of the equipment on the char has reached 0 att the start of the turn
+        //it is removed from character
         if(damageBar == 0) {
             throw new RuntimeException("Equipment has been destroyed!");
         }
     }
-
+    /**Sets the damage bar value of the equipment*/
     public void setDamageOnEquipment(double damageBar){
         this.damageBar = damageBar;
     }
-
+    /**Retrieves the current damage bar value of the equipment*/
     public double getDamageOnEquipment(){
         return damageBar;
     }
@@ -91,6 +118,7 @@ public class Equipment extends NonLivingEntity{
         return Objects.hash(name, effect, damage, ability);
     }
 
+    /**Returns a string representation of the equipment, including its name, damage and effect*/
     @Override
     public String toString() {
         String s = name + " +" + damage + "% " + effect;
