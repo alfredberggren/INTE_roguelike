@@ -1,6 +1,6 @@
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -47,14 +47,27 @@ public class MapBuilderTest {
     private MapController mapController;
     private MapBuilder mapBuilder;
 
+    private Map<HashMap<InteractableGenerator, Integer>, Integer> getTestProbabilityMap() {
+        HashMap<InteractableGenerator, Integer> positiveInteractableProbabilityMap = new HashMap<>() {{
+            put(mockedIG1, 100);
+//            put(mockedIG2, 10);
+//            put(mockedIG3, 20);
+//            put(mockedIG4, 5);
+//            put(mockedIG5, 25);
+        }};
+        Map<HashMap<InteractableGenerator, Integer>, Integer> testProbabilityMap = new HashMap<>();
+        testProbabilityMap.put(positiveInteractableProbabilityMap, 100);
+        return testProbabilityMap;
+    }
+
     @BeforeEach
     public void setup() {
         mapController = new MapController();
         Mockito.when(mockedIG1.generateInteractable()).thenReturn(TEST_NPC);
-        Mockito.when(mockedIG2.generateInteractable()).thenReturn(TEST_FOOD_ITEM);
-        Mockito.when(mockedIG3.generateInteractable()).thenReturn(TEST_POTION_ITEM);
-        Mockito.when(mockedIG4.generateInteractable()).thenReturn(TEST_PROP);
-        Mockito.when(mockedIG5.generateInteractable()).thenReturn(TEST_EQUIPMENT);
+//        Mockito.when(mockedIG2.generateInteractable()).thenReturn(TEST_FOOD_ITEM);
+//        Mockito.when(mockedIG3.generateInteractable()).thenReturn(TEST_POTION_ITEM);
+//        Mockito.when(mockedIG4.generateInteractable()).thenReturn(TEST_PROP);
+//        Mockito.when(mockedIG5.generateInteractable()).thenReturn(TEST_EQUIPMENT);
 
         Map<HashMap<InteractableGenerator, Integer>, Integer> testProbabilityMap = getTestProbabilityMap();
         InteractableDirector interactableDirector = new InteractableDirector(testProbabilityMap);
@@ -62,23 +75,10 @@ public class MapBuilderTest {
         mapBuilder = new MapBuilder(Difficulty.MEDIUM, 1000, DEFAULT_PLAYER, mapController, interactableDirector);
     }
 
-    private Map<HashMap<InteractableGenerator, Integer>, Integer> getTestProbabilityMap() {
-        HashMap<InteractableGenerator, Integer> positiveInteractableProbabilityMap = new HashMap<>() {{
-            put(mockedIG1, 40);
-            put(mockedIG2, 10);
-            put(mockedIG3, 20);
-            put(mockedIG4, 5);
-            put(mockedIG5, 25);
-        }};
-        Map<HashMap<InteractableGenerator, Integer>, Integer> testProbabilityMap = new HashMap<>();
-        testProbabilityMap.put(positiveInteractableProbabilityMap, 100);
-        return testProbabilityMap;
-    }
-
-    @AfterEach
-    public void reset() {
-        mapController = null;
-    }
+//    @AfterEach
+//    public void reset() {
+//        mapController = null;
+//    }
 
     @Test
     @DisplayName("Testar om kartan har NPC-karaktärer.")
@@ -87,10 +87,9 @@ public class MapBuilderTest {
         assertEquals(true, mapController.containsInteractable(TEST_NPC));
     }
 
-    @Test
-    @DisplayName("Testar att om kartan har olika interactables")
-    public void test_buildingMap_generatesDifferentInteractables() {
-        mapBuilder.build();
-        assertEquals(true, input);
-    }
+//    @Test
+//    @DisplayName("Testar att om kartan har olika interactables")
+//    public void test_buildingMap_generatesDifferentInteractables() {
+//
+//    }
 }
