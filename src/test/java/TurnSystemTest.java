@@ -140,15 +140,15 @@ public class TurnSystemTest {
         actionSet.add(Interactable.InteractableAction.LOOT);
 
         PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 1);
-        Equipment testEquipment = new Equipment("Test Equipment", actionSet, Equipment.Effect.HEALTH, 1, testAbility);   
+        Equipment testEquipment = new Equipment("Test Equipment", EquipmentSlot.LEFT_HAND, actionSet, Equipment.Effect.HEALTH, 1, testAbility);   
 
         MapController worldMapController = new MapController();
         Position playerPosition = new Position(0, 0);
         Room playerRoom = new Room(playerPosition, new InteractableInventory(testEquipment));
         worldMapController.add(playerPosition, playerRoom);
 
-        TurnSystem player.getTurnSystem() = new TurnSystem(io);
-        Player player = new Player(1, 1, playerPosition);
+        TurnSystem turnSystem = new TurnSystem(io);
+        Player player = new Player("name", 1, 1, playerPosition, io);
 
 
         //need to make requestInteractable() and change requestAction()
@@ -173,15 +173,15 @@ public class TurnSystemTest {
         actionSet.add(Interactable.InteractableAction.DROP);
 
         PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 1);
-        Equipment testEquipment = new Equipment("Test Equipment", actionSet, Equipment.Effect.HEALTH, 1, testAbility);   
+        Equipment testEquipment = new Equipment("Test Equipment", EquipmentSlot.LEFT_HAND, actionSet, Equipment.Effect.HEALTH, 1, testAbility);   
 
         MapController worldMapController = new MapController();
         Position playerPosition = new Position(0, 0);
         Room playerRoom = new Room(playerPosition, new InteractableInventory());
         worldMapController.add(playerPosition, playerRoom);
 
-        TurnSystem player.getTurnSystem() = new TurnSystem(io);
-        Player player = new Player(1, 1, playerPosition);
+        TurnSystem turnSystem = new TurnSystem(io);
+        Player player = new Player("name", 1, 1, playerPosition, io);
 
         //don't know if there gonna be method in player for this
         player.getInventory().add(testEquipment);
@@ -210,15 +210,15 @@ public class TurnSystemTest {
 
         PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 1);
         //prob needs update when there is added what equipment slot it takes (EquipmentSlot.HEAD) 
-        Equipment testEquipment = new Equipment("Test Equipment", actionSet, Equipment.Effect.HEALTH, 1, testAbility);   
+        Equipment testEquipment = new Equipment("Test Equipment", EquipmentSlot.LEFT_HAND, actionSet, Equipment.Effect.HEALTH, 1, testAbility);   
 
         MapController worldMapController = new MapController();
         Position playerPosition = new Position(0, 0);
         Room playerRoom = new Room(playerPosition, new InteractableInventory(testEquipment));
         worldMapController.add(playerPosition, playerRoom);
 
-        TurnSystem player.getTurnSystem() = new TurnSystem(io);
-        Player player = new Player(1, 1, playerPosition);
+        TurnSystem turnSystem = new TurnSystem(io);
+        Player player = new Player("name", 1, 1, playerPosition, io);
 
         //this is gonna be fixed soon
         //need to make requestInteractable() and change requestAction()!! 
@@ -229,7 +229,7 @@ public class TurnSystemTest {
         player.unEquip(testEquipment);
         
         //need to wait for getEquipmentOnBody()
-        assertEquals(, "Character didn't equip the equipment.");
+        assertEquals(testEquipment, player.getEquipmentOnBody().getEquipment(EquipmentSlot.LEFT_HAND), "Character didn't equip the equipment.");
         assertTrue(playerRoom.getInteractables().isEmpty(), "Room does not have the expected inventory.");
     }
 
@@ -246,8 +246,8 @@ public class TurnSystemTest {
         Room playerRoom = new Room(playerPosition, new InteractableInventory(testPotion));
         worldMapController.add(playerPosition, playerRoom);
 
-        TurnSystem player.getTurnSystem() = new TurnSystem(io);
-        Player player = new Player(1, 1, playerPosition);
+        TurnSystem turnSystem = new TurnSystem(io);
+        Player player = new Player("name", 1, 1, playerPosition, io);
 
         //need to make requestInteractable() and change requestAction()
         Mockito.when(io.requestInteractable(worldMapController, player)).thenReturn(testPotion);
@@ -269,7 +269,7 @@ public class TurnSystemTest {
         HashSet<Interactable.InteractableAction> actionSet = new HashSet<>();
         actionSet.add(Interactable.InteractableAction.FIGHT);
         //Charater needs IO in constructor
-        NPC npc = new NPC("testNPC", 1, 1, 1, actionSet);
+        NPC npc = new NPC("testNPC", 1, 1, new Position(0, 0), new NPCAI());
 
         MapController worldMapController = new MapController();
         Position playerPosition = new Position(0, 0);
@@ -277,7 +277,7 @@ public class TurnSystemTest {
         worldMapController.add(playerPosition, playerRoom);
 
         TurnSystem playerTurnSystem = new TurnSystem(io);
-        Player player = new Player(100, 100, playerPosition);
+        Player player = new Player("name", 100, 100, playerPosition, io);
 
         //need to make requestInteractable() and change requestAction()
         Mockito.when(io.requestInteractable(worldMapController, player)).thenReturn(npc);
@@ -299,7 +299,7 @@ public class TurnSystemTest {
         HashSet<Interactable.InteractableAction> actionSet = new HashSet<>();
         actionSet.add(Interactable.InteractableAction.TALK);
         //Charater needs IO in constructor
-        NPC npc = new NPC("testNPC", 1, 1, 1, actionSet);
+        NPC npc = new NPC("testNPC", 1, 1, new Position(0, 0), new NPCAI());
 
         MapController worldMapController = new MapController();
         Position playerPosition = new Position(0, 0);
@@ -307,7 +307,7 @@ public class TurnSystemTest {
         worldMapController.add(playerPosition, playerRoom);
 
         TurnSystem playerTurnSystem = new TurnSystem(io);
-        Player player = new Player(100, 100, playerPosition);
+        Player player = new Player("name", 100, 100, playerPosition, io);
 
         //need to make requestInteractable() and change requestAction()
         Mockito.when(io.requestInteractable(worldMapController, player)).thenReturn(npc);
@@ -329,17 +329,17 @@ public class TurnSystemTest {
         actionSet.add(Interactable.InteractableAction.LOOT);
 
         PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 1);
-        Equipment testEquipmentOne = new Equipment("Test Equipment One", actionSet, Equipment.Effect.HEALTH, 1, testAbility);
-        Equipment testEquipmentTwo = new Equipment("Test Equipment Two", actionSet, Equipment.Effect.HEALTH, 1, testAbility);  
-        Equipment testEquipmentThree = new Equipment("Test Equipment Three", actionSet, Equipment.Effect.HEALTH, 1, testAbility);     
+        Equipment testEquipmentOne = new Equipment("Test Equipment One", EquipmentSlot.LEFT_HAND, actionSet, Equipment.Effect.HEALTH, 1, testAbility);
+        Equipment testEquipmentTwo = new Equipment("Test Equipment Two", EquipmentSlot.LEFT_HAND, actionSet, Equipment.Effect.HEALTH, 1, testAbility);  
+        Equipment testEquipmentThree = new Equipment("Test Equipment Three", EquipmentSlot.LEFT_HAND, actionSet, Equipment.Effect.HEALTH, 1, testAbility);     
 
         MapController worldMapController = new MapController();
         Position playerPosition = new Position(0, 0);
         Room playerRoom = new Room(playerPosition, new InteractableInventory(testEquipmentThree));
         worldMapController.add(playerPosition, playerRoom);
 
-        TurnSystem player.getTurnSystem() = new TurnSystem(io);
-        Player player = new Player(1, 1, playerPosition);
+        TurnSystem turnSystem = new TurnSystem(io);
+        Player player = new Player("name", 100, 100, playerPosition, io);
 
 
         //need to make requestInteractable() and change requestAction()
@@ -361,16 +361,16 @@ public class TurnSystemTest {
         actionSet.add(Interactable.InteractableAction.LOOT);
 
         PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 1);
-        Equipment testEquipmentOne = new Equipment("Test Equipment One", actionSet, Equipment.Effect.HEALTH, 1, testAbility);
-        Equipment testEquipmentTwo = new Equipment("Test Equipment Two", actionSet, Equipment.Effect.HEALTH, 1, testAbility);     
+        Equipment testEquipmentOne = new Equipment("Test Equipment One", EquipmentSlot.LEFT_HAND, actionSet, Equipment.Effect.HEALTH, 1, testAbility);
+        Equipment testEquipmentTwo = new Equipment("Test Equipment Two", EquipmentSlot.LEFT_HAND, actionSet, Equipment.Effect.HEALTH, 1, testAbility);     
 
         MapController worldMapController = new MapController();
         Position playerPosition = new Position(0, 0);
         Room playerRoom = new Room(playerPosition, new InteractableInventory(testEquipmentOne));
         worldMapController.add(playerPosition, playerRoom);
 
-        TurnSystem player.getTurnSystem() = new TurnSystem(io);
-        Player player = new Player(1, 1, playerPosition);
+        TurnSystem turnSystem = new TurnSystem(io);
+        Player player = new Player("name", 100, 100, playerPosition, io);
 
 
         //need to make requestInteractable() and change requestAction()
@@ -389,7 +389,7 @@ public class TurnSystemTest {
         actionSet.add(Interactable.InteractableAction.LOOT);
 
         PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 1);
-        Equipment testEquipment = new Equipment("Test Equipment One", actionSet, Equipment.Effect.HEALTH, 1, testAbility);
+        Equipment testEquipment = new Equipment("Test Equipment One", EquipmentSlot.LEFT_HAND, actionSet, Equipment.Effect.HEALTH, 1, testAbility);
   
 
         MapController worldMapController = new MapController();
@@ -397,8 +397,8 @@ public class TurnSystemTest {
         Room playerRoom = new Room(playerPosition, new InteractableInventory(testEquipment));
         worldMapController.add(playerPosition, playerRoom);
 
-        TurnSystem player.getTurnSystem() = new TurnSystem(io);
-        Player player = new Player(1, 1, playerPosition);
+        TurnSystem turnSystem = new TurnSystem(io);
+        Player player = new Player("name", 100, 100, playerPosition, io);
 
 
         //need to make requestInteractable() and change requestAction()
@@ -428,7 +428,7 @@ public class TurnSystemTest {
         Room playerRoom = new Room(playerPosition, new InteractableInventory(testEquipment));
         worldMapController.add(playerPosition, playerRoom);
 
-        TurnSystem player.getTurnSystem() = new TurnSystem(io);
+        TurnSystem turnSystem = new TurnSystem(io);
         Player player = new Player("name", 1, 1, playerPosition, io);
 
 
@@ -459,9 +459,9 @@ public class TurnSystemTest {
 
         Mockito.when(io.requestTurnCommand(worldMapController, character)).thenReturn(TurnSystem.TurnCommand.END);
         
-        TurnSystem player.getTurnSystem() = new TurnSystem(io);
-        player.getTurnSystem().startTurn(worldMapController, character, character.getSpeed());
-        assertTrue(player.getTurnSystem().isTurnEnded(), "Turn hasn't ended");
+        TurnSystem turnSystem = new TurnSystem(io);
+        turnSystem.startTurn(worldMapController, character, character.getSpeed());
+        assertTrue(turnSystem.isTurnEnded(), "Turn hasn't ended");
     }
 
     @Test
@@ -477,9 +477,9 @@ public class TurnSystemTest {
         Mockito.when(io.requestTurnCommand(worldMapController, character)).thenReturn(TurnSystem.TurnCommand.MOVE);
         Mockito.when(io.requestAnotherTurnCommand(worldMapController, character)).thenReturn(TurnSystem.TurnCommand.END);
         
-        TurnSystem player.getTurnSystem() = new TurnSystem(io);
-        player.getTurnSystem().startTurn(worldMapController, character, character.getSpeed());
-        assertTrue(player.getTurnSystem().isTurnEnded(), "Turn hasn't ended");
+        TurnSystem turnSystem = new TurnSystem(io);
+        turnSystem.startTurn(worldMapController, character, character.getSpeed());
+        assertTrue(turnSystem.isTurnEnded(), "Turn hasn't ended");
     }
 
     @Test
@@ -495,9 +495,9 @@ public class TurnSystemTest {
         Mockito.when(io.requestTurnCommand(worldMapController, character)).thenReturn(TurnSystem.TurnCommand.ACTION);
         Mockito.when(io.requestAnotherTurnCommand(worldMapController, character)).thenReturn(TurnSystem.TurnCommand.END);
         
-        TurnSystem player.getTurnSystem() = new TurnSystem(io);
-        player.getTurnSystem().startTurn(worldMapController, character, character.getSpeed());
-        assertTrue(player.getTurnSystem().isTurnEnded(), "Turn hasn't ended");
+        TurnSystem turnSystem = new TurnSystem(io);
+        turnSystem.startTurn(worldMapController, character, character.getSpeed());
+        assertTrue(turnSystem.isTurnEnded(), "Turn hasn't ended");
     }
 
     @Test
@@ -512,9 +512,9 @@ public class TurnSystemTest {
         Mockito.when(io.requestTurnCommand(worldMapController, character)).thenThrow(IllegalArgumentException.class);
         Mockito.when(io.requestAnotherTurnCommand(worldMapController, character)).thenReturn(TurnSystem.TurnCommand.END);
         
-        TurnSystem player.getTurnSystem() = new TurnSystem(io);
-        player.getTurnSystem().startTurn(worldMapController, character, character.getSpeed());
-        assertTrue(player.getTurnSystem().isTurnEnded(), "Turn hasn't ended");
+        TurnSystem turnSystem = new TurnSystem(io);
+        turnSystem.startTurn(worldMapController, character, character.getSpeed());
+        assertTrue(turnSystem.isTurnEnded(), "Turn hasn't ended");
     }
 
     /*
@@ -533,13 +533,13 @@ public class TurnSystemTest {
         Mockito.when(io.requestTurnCommand(worldMapController, character)).thenReturn(TurnSystem.TurnCommand.MOVE);
         Mockito.when(io.requestAnotherTurnCommand(worldMapController, character)).thenReturn(TurnSystem.TurnCommand.END);
         
-        TurnSystem player.getTurnSystem() = new TurnSystem(io);
-        TurnSystem spyTurnSystem = spy(player.getTurnSystem());
+        TurnSystem turnSystem = new TurnSystem(io);
+        TurnSystem spyTurnSystem = spy(turnSystem);
 
         
 
-        player.getTurnSystem().startTurn(worldMapController, character, character.getSpeed());
-        assertTrue(player.getTurnSystem().isTurnEnded(), "Turn hasn't ended");    
+        turnSystem.startTurn(worldMapController, character, character.getSpeed());
+        assertTrue(turnSystem.isTurnEnded(), "Turn hasn't ended");    
     }
 
 }
