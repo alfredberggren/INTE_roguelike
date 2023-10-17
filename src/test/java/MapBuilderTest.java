@@ -31,8 +31,10 @@ public class MapBuilderTest {
 
     @Mock
     MockedInteractableGenerator mockedIG1 = new MockedInteractableGenerator();
+    @Mock
+    IO io;
 
-    private static final NPC TEST_NPC = new NPC("Test Testsson", 100, 10, 0);
+    private static final NPC TEST_NPC = new NPC("Test Testsson", 100, 10, new Position(0,0), io);
     private static final Position DEFAULT_VALID_PLAYER_POSITION = new Position(0, 0);
     private static final Player DEFAULT_PLAYER = new Player(100, 10, DEFAULT_VALID_PLAYER_POSITION);
     private final HashMap<InteractableGenerator, Integer> NEGATIVE_INTERACTABLE_PROBABILITY_MAP = new HashMap<>() {{
