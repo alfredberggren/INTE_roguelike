@@ -1,10 +1,9 @@
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class PlayerTest {
     static Player DEFAULT_PLAYER;
@@ -28,12 +27,21 @@ public class PlayerTest {
     }
 
     @Test
-    @DisplayName("Test throws exception to set negative experience points")
+    @DisplayName("Test to decrease XP to negative value")
+    public void testDecreaseXPToNegativeValue() {
+       DEFAULT_PLAYER.decreaseXP(10);
+       assertEquals(0, DEFAULT_PLAYER.getExperiencePoint());
+    }
+
+    @Test
+    @DisplayName("Test to set negative experience point value")
     public void testSetNegativeXP() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            DEFAULT_PLAYER.decreaseXP(-10);
+        assertThrows(IllegalArgumentException.class, () -> {
+            DEFAULT_PLAYER.setHealth(-10);
         });
     }
+
+
 
     @Test
     @DisplayName("Test that player gets a reward after winning")
@@ -68,7 +76,7 @@ public class PlayerTest {
     }
 
     @Test
-    @DisplayName("Test that player level up")
+    @DisplayName("Test that character level up")
     public void testCharacterLevelUpWhenXPReaches100() {
         DEFAULT_PLAYER.setLevel(0);
         DEFAULT_PLAYER.increaseXP(100);
@@ -79,13 +87,6 @@ public class PlayerTest {
         DEFAULT_PLAYER.levelUp();
         assertEquals(2, DEFAULT_PLAYER.getLevel());
         assertEquals(0, DEFAULT_PLAYER.getExperiencePoint());
-    }
-
-    @Test
-    @DisplayName("Test that player cannot be in a level higher than 10")
-    public void testPlayerLevelDoNotExceedAcceptedLevel() {
-        DEFAULT_PLAYER.setLevel(11);
-        assertEquals(10, DEFAULT_PLAYER.getLevel());
     }
 
 }

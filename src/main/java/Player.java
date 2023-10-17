@@ -58,7 +58,7 @@ public class Player extends Character{
 
     public void getRewardsAfterWinning(Quest quest){
         if(quest.isCompleted()){
-            setExperiencePoint(experiencePoint += quest.getRewardXP());
+            setExperiencePoint(this.experiencePoint + quest.getRewardXP());
         }
     }
 

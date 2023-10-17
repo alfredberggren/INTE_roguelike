@@ -214,8 +214,6 @@ public class Character implements Interactable {
         }
     }
 
-    //get rewards after completed quest
-
     @Override
     public Set<InteractableAction> getPossibleActions() {
         return possibleInteractableActions;
