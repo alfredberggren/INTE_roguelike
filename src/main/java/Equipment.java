@@ -13,6 +13,8 @@ public class Equipment extends NonLivingEntity{
     private Effect effect; //gör till egen klass?
     private int damage;
     private Ability ability;
+
+    //Why would equipment need this?
     private EquipmentSlot equipmentSlot;
     private double damageBar;
 
@@ -34,6 +36,18 @@ public class Equipment extends NonLivingEntity{
         this.equipmentSlot = equipmentSlot;
     }
 
+    /**
+     * Constructor with fewer parameters, should be used for equipment that has "passive" uses, i.e. non-violent/non-magical.
+     * Sets effect to none, damage to 0, and ability to null.
+     * @param name
+     * The name of the Equipment
+     * @param possibleActions
+     * The actions that can be done with Equipment
+     */
+    public Equipment(String name, Set<InteractableAction> possibleActions) {
+        this(name, null, Effect.NONE, 0, null);
+    }
+
     public String getName(){
         return name;
     }
@@ -52,7 +66,7 @@ public class Equipment extends NonLivingEntity{
 
     /**Represents the possible effects of the equipment*/
     public enum Effect {
-        SPEED, HEALTH, DAMAGE, ARMOR
+        SPEED, HEALTH, DAMAGE, ARMOR, NONE
     }
     /**Represents different types of armor*/
     public enum Armor {
@@ -74,7 +88,7 @@ public class Equipment extends NonLivingEntity{
         setDamageOnEquipment(damageBar);
         //Simon:
         //should this be a runtime exception? and how is this exception handled
-        //it could instead be handled in turnSystem 
+        //it could instead be handled in turnSystem
         //where if any of the equipment on the char has reached 0 att the start of the turn
         //it is removed from character
         if(damageBar == 0) {
