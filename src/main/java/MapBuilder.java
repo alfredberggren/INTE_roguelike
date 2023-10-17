@@ -118,7 +118,6 @@ public class MapBuilder {
 
         for (int i = 0; i < amountOfInteractables; i++) {
             Interactable in = interactableDirector.getInteractable();
-            System.out.println(in);
             interactables.add(in);
         }
         return interactables;

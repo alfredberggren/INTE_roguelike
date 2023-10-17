@@ -1,3 +1,4 @@
+import org.junit.Before;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.Test;
@@ -44,35 +45,37 @@ public class MapBuilderTest {
     private static final Position DEFAULT_VALID_PLAYER_POSITION = new Position(0, 0);
     private static final Player DEFAULT_PLAYER = new Player("Spelarsson", 100, 10, DEFAULT_VALID_PLAYER_POSITION, io);
 
+    private InteractableDirector interactableDirector;
+
     private MapController mapController;
     private MapBuilder mapBuilder;
 
     private Map<HashMap<InteractableGenerator, Integer>, Integer> getTestProbabilityMap() {
         HashMap<InteractableGenerator, Integer> positiveInteractableProbabilityMap = new HashMap<>() {{
-            put(mockedIG1, 100);
-//            put(mockedIG2, 10);
-//            put(mockedIG3, 20);
-//            put(mockedIG4, 5);
-//            put(mockedIG5, 25);
+            put(mockedIG1, 40);
+            put(mockedIG2, 10);
+            put(mockedIG3, 20);
+            put(mockedIG4, 5);
+            put(mockedIG5, 25);
         }};
         Map<HashMap<InteractableGenerator, Integer>, Integer> testProbabilityMap = new HashMap<>();
         testProbabilityMap.put(positiveInteractableProbabilityMap, 100);
         return testProbabilityMap;
     }
 
-    @BeforeEach
+    @Before
     public void setup() {
         mapController = new MapController();
         Mockito.when(mockedIG1.generateInteractable()).thenReturn(TEST_NPC);
-//        Mockito.when(mockedIG2.generateInteractable()).thenReturn(TEST_FOOD_ITEM);
-//        Mockito.when(mockedIG3.generateInteractable()).thenReturn(TEST_POTION_ITEM);
-//        Mockito.when(mockedIG4.generateInteractable()).thenReturn(TEST_PROP);
-//        Mockito.when(mockedIG5.generateInteractable()).thenReturn(TEST_EQUIPMENT);
+        Mockito.when(mockedIG2.generateInteractable()).thenReturn(TEST_FOOD_ITEM);
+        Mockito.when(mockedIG3.generateInteractable()).thenReturn(TEST_POTION_ITEM);
+        Mockito.when(mockedIG4.generateInteractable()).thenReturn(TEST_PROP);
+        Mockito.when(mockedIG5.generateInteractable()).thenReturn(TEST_EQUIPMENT);
 
         Map<HashMap<InteractableGenerator, Integer>, Integer> testProbabilityMap = getTestProbabilityMap();
-        InteractableDirector interactableDirector = new InteractableDirector(testProbabilityMap);
+        interactableDirector = new InteractableDirector(testProbabilityMap);
 
-        mapBuilder = new MapBuilder(Difficulty.MEDIUM, 1000, DEFAULT_PLAYER, mapController, interactableDirector);
+        mapBuilder = new MapBuilder(Difficulty.MEDIUM, 3000000, DEFAULT_PLAYER, mapController, interactableDirector);
     }
 
 //    @AfterEach
