@@ -65,7 +65,7 @@ public class AbilityTest {
         MagicAbility ability = new MagicAbility(fireSpell.getName(), 10,1, "Fire",2,3);
         ability.setCharacter(character);
         player.decreaseXP(20);
-        character.forgetAbility(fireSpell);
+        character.removeAbility(fireSpell);
         assertFalse(ability.calculateImpactOnAbility());
     }
 

@@ -88,7 +88,7 @@ public class MagicAbility extends Ability{
         //int minimumLevelRetain = 10; //om man dör så förlorar man spells
         int characterLevel = character.getLevel();
         if(!character.getSpell() && characterLevel < minimumLevel) {
-            character.forgetAbility(new MagicAbility("Fire", 10,1, "Shoots fire",1,2));
+            character.removeAbility(new MagicAbility("Fire", 10,1, "Shoots fire",1,2));
             return false;
         } else {
             return true;
