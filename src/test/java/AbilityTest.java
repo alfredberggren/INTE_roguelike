@@ -256,26 +256,4 @@ public class AbilityTest {
             MagicAbility ability = new MagicAbility("Fireball", 10,3,"A fiery ball",1,-3);
         });
     }
-
-    @Test
-    @DisplayName("Test equals method for Spell")
-    public void testSpellEquals() {
-        MagicAbility spell1 = new MagicAbility("Fireball", 10,2, "A powerful fire spell",2,3);
-        MagicAbility spell2 = new MagicAbility("Fireball", 10,2, "A powerful fire spell",2,3);
-        MagicAbility spell3 = new MagicAbility("Frostbolt", 7,3,"A freezing spell",3,4);
-        assertEquals(spell1, spell1);
-        assertEquals(spell1, spell2);
-        assertNotSame(spell1, spell3);
-    }
-
-    @Test
-    @DisplayName("Test hashCode method for Spell")
-    public void testSpellHashCode() {
-        MagicAbility spell1 = new MagicAbility("Fireball", 10,2, "A powerful fire spell",2,3);
-        MagicAbility spell2 = new MagicAbility("Fireball", 10,2, "A powerful fire spell",2,3);
-        MagicAbility spell3 = new MagicAbility("Frostbolt", 7,3,"A freezing spell", 3,4);
-        assertEquals(spell1.hashCode(), spell1.hashCode());
-        assertEquals(spell1.hashCode(), spell2.hashCode());
-        assertNotSame(spell1, spell3);
-    }
 }

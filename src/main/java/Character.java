@@ -82,9 +82,6 @@ public class Character implements Interactable {
     public TurnSystem getTurnSystem() {
         return turnSystem;
     }
-    /*public boolean getSpell() {
-        return spell;
-    }*/
 
     public void setName(String name) {
         /** user input
@@ -123,10 +120,6 @@ public class Character implements Interactable {
     }
 
     public Set<Ability> getAbilities() {
-        return abilities;
-    }
-
-    public Set<Ability> setAbility() {
         return abilities;
     }
 
