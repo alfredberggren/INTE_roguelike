@@ -51,7 +51,7 @@ public class Character implements Interactable {
         this.name = name;
         this.health = health;
         this.speed = speed;
-        this.mana=0;
+        this.mana = 0;
         this.pos = pos;
         if (health > 0) {
             isDead = false;
@@ -59,21 +59,27 @@ public class Character implements Interactable {
         possibleInteractableActions = STANDARD_CHARACTER_INTERACTABLE_ACTIONS;
         turnSystem = new TurnSystem(io);
     }
+
     public String getName() {
         return name;
     }
+
     public Position getPosition() {
         return pos;
     }
+
     public int getHealth() {
         return health;
     }
+
     public int getSpeed() {
         return speed;
     }
+
     public int getMana() {
         return mana;
     }
+
     public InteractableInventory getInventory() {
         return inventory;
     }
@@ -81,6 +87,7 @@ public class Character implements Interactable {
     public EquipmentOnBody getEquipmentOnBody() {
         return equipmentOnBody;
     }
+
     public TurnSystem getTurnSystem() {
         return turnSystem;
     }
@@ -109,14 +116,18 @@ public class Character implements Interactable {
         return m.find();
     }
 
-    /**Checks if Arraylist is not empty and if so removes the spell*/
+    /**
+     * Checks if Arraylist is not empty and if so removes the spell
+     */
     public void removeAbility(Ability ability) {
         if (!abilities.isEmpty()) {
             abilities.remove(ability);
         }
     }
 
-    /**Adds a spell to the Arraylist*/
+    /**
+     * Adds a spell to the Arraylist
+     */
     public void addAbility(Ability ability) {
         abilities.add(ability);
     }
@@ -176,14 +187,14 @@ public class Character implements Interactable {
     }
 
     public boolean canUseMagic() {
-        if(mana!=0)
+        if (mana != 0)
             return true;
         else
             return false;
     }
 
     public void setLevel(int level) {
-        if(level <= 10) {
+        if (level <= 10) {
             this.level = level;
         } else {
             this.level = 10;
@@ -194,12 +205,13 @@ public class Character implements Interactable {
         return level;
     }
 
-    /** For unequip we check if this equipment is "on body".
+    /**
+     * For unequip we check if this equipment is "on body".
      * Then remove that ability which equipment had from list with abilities which character has.
-     * And add the equipment to the inventory*/
-
+     * And add the equipment to the inventory
+     */
     public void unEquip(Equipment equipment) {
-        if(equipment!=null) {
+        if (equipment != null) {
             if (equipmentOnBody.slotContainsEquipment(equipment.getEquipmentSlot()) && equipment.equals(equipmentOnBody.getEquipment(equipment.getEquipmentSlot()))) {
                 equipmentOnBody.removeEquipment(equipment.getEquipmentSlot());
                 inventory.add(equipment);
@@ -208,10 +220,11 @@ public class Character implements Interactable {
         }
     }
 
-    /** For equip we check if this equipment is not already "on body"
+    /**
+     * For equip we check if this equipment is not already "on body"
      * and that it is in inventory. Then add that ability which equipment has to list with abilities which character has.
-     * And remove the equipment from the inventory*/
-
+     * And remove the equipment from the inventory
+     */
     public void equip(Equipment equipment) {
         if (equipment != null) {
             if (!equipmentOnBody.slotContainsEquipment(equipment.getEquipmentSlot()) && inventory.contains(equipment))

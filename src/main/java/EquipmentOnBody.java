@@ -29,6 +29,9 @@ public class EquipmentOnBody {
         return equipmentOnBody.containsKey(slot);
     }
 
+    /**
+     * find the key(int the Map) - equipment's slot for a value (equipment)
+     */
     public EquipmentSlot checkWhereEquipmentWasPlaced(Equipment e) {
         Collection<EquipmentSlot> equipmentSlots = equipmentOnBody.keySet();
         for (EquipmentSlot key : equipmentSlots) {

@@ -10,6 +10,7 @@ public class EquipmentOnBodyTest {
     static EquipmentOnBody equipmentOnBody;
     static final EquipmentSlot equipmentSlot = EquipmentSlot.LEFT_HAND;
     static final Equipment equipment = new Equipment("Sword", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1));
+
     @BeforeEach
     void setUp() {
         equipmentOnBody = new EquipmentOnBody(new HashMap<EquipmentSlot, Equipment>());
@@ -17,9 +18,9 @@ public class EquipmentOnBodyTest {
 
     @Test
     @DisplayName("Test to get an equipment")
-        public void testToGetEquipment(){
-            assertEquals("LEFT_HAND: Sword +50% DAMAGE", equipmentOnBody.getEquipment(equipmentSlot).toString());
-        }
+    public void testToGetEquipment() {
+        assertEquals("LEFT_HAND: Sword +50% DAMAGE", equipmentOnBody.getEquipment(equipmentSlot).toString());
+    }
 
     @Test
     @DisplayName("Test to put an equipment in a slot")
