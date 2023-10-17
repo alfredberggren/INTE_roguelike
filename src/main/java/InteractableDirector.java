@@ -55,9 +55,8 @@ public class InteractableDirector {
      */
     public Interactable getInteractable() {
         int mapDeterminator = r.nextInt(100) + 1;
-        System.out.println(generatorProbabilityMaps);
         for (Map.Entry<HashMap<InteractableGenerator, Integer>, Integer> me : generatorProbabilityMaps.entrySet()) {
-            if (mapDeterminator < me.getValue()) {
+            if (mapDeterminator <= me.getValue()) {
                 return getInteractableFromProbabilityMap(me.getKey());
             }
         }
@@ -72,7 +71,7 @@ public class InteractableDirector {
     private Interactable getInteractableFromProbabilityMap(HashMap<InteractableGenerator, Integer> probMap) {
         int interactableGeneratorDeterminator = r.nextInt(100) + 1;
         for (Map.Entry<InteractableGenerator, Integer> e : probMap.entrySet()) {
-            if (interactableGeneratorDeterminator < e.getValue()) {
+            if (interactableGeneratorDeterminator <= e.getValue()) {
                 return e.getKey().generateInteractable();
             }
         }
@@ -105,19 +104,19 @@ public class InteractableDirector {
      *
      */
     private static <T> Map<T, Integer> convertPercentages(Map<T, Integer> mapToGenerateFrom){
-
         int check = 0;
         System.out.println(mapToGenerateFrom + " " + check);
 
+
         Map<T, Integer> newMap = new HashMap<>();
-        
+
         for (Map.Entry<T, Integer> e : mapToGenerateFrom.entrySet()) {
             check = check + e.getValue();
             System.out.println(e.getValue() + " : " + check);
 
             newMap.put(e.getKey(), check);
         }
-        System.out.println("Total check: " +check);
+        System.out.println("Total check: " + check);
 
         if (check != 100) {
             throw new IllegalStateException("Percentages must amount to exactly 100!");
