@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class DoorTest {
 
-    //TODO: needs alot of refractoring, and also should make a decisiontable to be sure everything is tested
+    //TODO: needs a lot of refactoring, and also should make a decision table to be sure everything is tested
 
     private static final int DEFAULT_KEY_USES = 1;
 
