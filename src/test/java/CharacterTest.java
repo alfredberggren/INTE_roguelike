@@ -167,9 +167,9 @@ public class CharacterTest {
         MagicAbility iceSpell = new MagicAbility("Ice", 12, 1, "Shoots ice", 1, 3);
         DEFAULT_CHARACTER.addAbility(fireSpell);
         assertTrue(DEFAULT_CHARACTER.getAbilities().contains(fireSpell));
-        DEFAULT_CHARACTER.forgetAbility(fireSpell);
+        DEFAULT_CHARACTER.removeAbility(fireSpell);
         assertFalse(DEFAULT_CHARACTER.getAbilities().contains(fireSpell));
-        assertDoesNotThrow(() -> DEFAULT_CHARACTER.forgetAbility(iceSpell));
+        assertDoesNotThrow(() -> DEFAULT_CHARACTER.removeAbility(iceSpell));
     }
 
     @Test
