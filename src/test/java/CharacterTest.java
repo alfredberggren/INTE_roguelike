@@ -189,15 +189,10 @@ public class CharacterTest {
 
     @Test
     @DisplayName("Test to equip a character")
-    public void testToEquipCharacter(){
+    public void testToEquipCharacter() {
         DEFAULT_CHARACTER.equip(new Equipment("Sword", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1)));
         assertEquals("LEFT_HAND: Sword", DEFAULT_CHARACTER.getEquipmentOnBody());
     }
-    // public void testToEquipCharacter() {
-    //     Equipment equipment = new Equipment("Sword", new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP)), Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1));
-    //     DEFAULT_CHARACTER.equip(EquipmentSlot.LEFT_HAND, equipment);
-    //     assertEquals("LEFT_HAND: Sword", DEFAULT_CHARACTER.getEquipmentOnBody());
-    // }
 
     @Test //testa!
     @DisplayName("Test to equip a character when Equipment is null")
@@ -208,19 +203,12 @@ public class CharacterTest {
 
     @Test
     @DisplayName("Test to unequip a character")
-    public void testToUnEquipCharacter(){
+    public void testToUnEquipCharacter() {
         var testEquipment = new Equipment("Sword", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1));
         DEFAULT_CHARACTER.equip(testEquipment);
         DEFAULT_CHARACTER.unEquip(testEquipment);
         assertEquals("", DEFAULT_CHARACTER.getEquipmentOnBody());
     }
-
-    // public void testToUnEquipCharacter() {
-    //     Equipment equipment = new Equipment("Sword", new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP)), Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1));
-    //     DEFAULT_CHARACTER.equip(EquipmentSlot.LEFT_HAND, equipment);
-    //     DEFAULT_CHARACTER.unEquip(EquipmentSlot.LEFT_HAND);
-    //     assertEquals("", DEFAULT_CHARACTER.getEquipmentOnBody());
-    // }
 
     @Test //testa
     @DisplayName("Test to unequip a character when Equipment is null")
@@ -230,7 +218,6 @@ public class CharacterTest {
         DEFAULT_CHARACTER.unEquip(null);
         assertEquals("LEFT_HAND: Sword", DEFAULT_CHARACTER.getEquipmentOnBody());
     }
-
 
     @Test
     @DisplayName("Test that equipment which was Uneqiped was added to Inventory")
@@ -248,5 +235,15 @@ public class CharacterTest {
         DEFAULT_CHARACTER.equip(equipment);
         assertFalse(DEFAULT_CHARACTER.getInventory().contains(equipment));
     }
+
+    @Test
+    @DisplayName("Test that character get the ability from the equipment after equip()")
+    public void testThatCharacterGetAbilityAfterEquip() {
+        Equipment equipment = new Equipment("Sword", EquipmentSlot.LEFT_HAND, new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP)), Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1));
+        DEFAULT_CHARACTER.equip(equipment);
+        assertTrue(DEFAULT_CHARACTER.getAbilities().contains(new PhysicalAbility("Sword", 10, 1)));
+    }
+
+
 
 }

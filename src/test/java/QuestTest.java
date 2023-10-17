@@ -104,7 +104,7 @@ public class QuestTest {
     }
 
     @Test //testa!!
-    @DisplayName("Test equals() when parameter i not insttance of Quest class")
+    @DisplayName("Test equals() when parameter i not instance of Quest class")
     public void testEqualityQuestWithNotQuest(){
         assertFalse(DEFAULT_QUEST.equals(new Equipment("Sword", new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP)), Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1))));
     }
