@@ -21,6 +21,12 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 @RunWith(MockitoJUnitRunner.class)
 public class MapBuilderTest {
+    class MockedGenerator implements InteractableGenerator {
+        public Interactable generateInteractable() {
+            return TEST_NPC;
+        }
+    }
+    MockedGenerator mockedG;
 
     @Mock InteractableGenerator mockedIG1;
     @Mock InteractableGenerator mockedIG2;
@@ -52,11 +58,11 @@ public class MapBuilderTest {
 
     private Map<HashMap<InteractableGenerator, Integer>, Integer> getTestProbabilityMap() {
         HashMap<InteractableGenerator, Integer> positiveInteractableProbabilityMap = new HashMap<>() {{
-            put(mockedIG1, 40);
-            put(mockedIG2, 10);
-            put(mockedIG3, 20);
-            put(mockedIG4, 5);
-            put(mockedIG5, 25);
+            put(mockedG, 100);
+//            put(mockedIG2, 10);
+//            put(mockedIG3, 20);
+//            put(mockedIG4, 5);
+//            put(mockedIG5, 25);
         }};
         Map<HashMap<InteractableGenerator, Integer>, Integer> testProbabilityMap = new HashMap<>();
         testProbabilityMap.put(positiveInteractableProbabilityMap, 100);
@@ -66,11 +72,11 @@ public class MapBuilderTest {
     @Before
     public void setup() {
         mapController = new MapController();
-        Mockito.when(mockedIG1.generateInteractable()).thenReturn(TEST_NPC);
-        Mockito.when(mockedIG2.generateInteractable()).thenReturn(TEST_FOOD_ITEM);
-        Mockito.when(mockedIG3.generateInteractable()).thenReturn(TEST_POTION_ITEM);
-        Mockito.when(mockedIG4.generateInteractable()).thenReturn(TEST_PROP);
-        Mockito.when(mockedIG5.generateInteractable()).thenReturn(TEST_EQUIPMENT);
+//        Mockito.when(mockedIG1.generateInteractable()).thenReturn(TEST_NPC);
+//        Mockito.when(mockedIG2.generateInteractable()).thenReturn(TEST_FOOD_ITEM);
+//        Mockito.when(mockedIG3.generateInteractable()).thenReturn(TEST_POTION_ITEM);
+//        Mockito.when(mockedIG4.generateInteractable()).thenReturn(TEST_PROP);
+//        Mockito.when(mockedIG5.generateInteractable()).thenReturn(TEST_EQUIPMENT);
 
         Map<HashMap<InteractableGenerator, Integer>, Integer> testProbabilityMap = getTestProbabilityMap();
         interactableDirector = new InteractableDirector(testProbabilityMap);
