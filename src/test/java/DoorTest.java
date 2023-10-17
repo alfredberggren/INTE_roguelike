@@ -72,9 +72,6 @@ public class DoorTest {
     //Tests used to implement open/close behaviour
     //OPEN/CLOSE-TESTS:
 
-    //When door is typeNone
-        //TODO: and open, Door closes
-        //TODO: and closed, Door opens
 
     //when door is broken
         // door does not open, with or without key
@@ -132,12 +129,9 @@ public class DoorTest {
 
         //TODO: door does not close if not correct key
 
-    //when door has same type as key
-        //TODO: When door closed, key gets used
-        //TODO: when door opened, key gets used
-        //TODO: if door consumes, key gets broken
 
-
+    //When door is typeNone
+    //and open, Door closes
     @Test
     public void test_whenDoorIsOpenWithTypeNone_DoorClosesWithOutKey() {
         Door d1 = new Door(Key.Type.NONE, false);
@@ -145,7 +139,48 @@ public class DoorTest {
         d1.close();
         assertEquals(false, d1.isOpen());
     }
+    //: and closed, Door opens
+    @Test
+    public void test_whenDoorIsTypeNoneAndClosed_thenDoorOpens(){
+        Door d1 = new Door(Key.Type.NONE, false);
+        d1.setOpen(false);
+        d1.open();
+        assertEquals(true, d1.isOpen());
+    }
+    //: and open, Door does not open
+    @Test
+    public void test_whenDoorIsTypeNoneAndOpen_thenDoorDoesNotOpen(){
+        Door d1 = new Door(Key.Type.NONE, false);
+        d1.setOpen(true);
+        assertEquals(false, d1.open());
+    }
+    //: and closed, Door does not close
+    @Test
+    public void test_whenDoorIsTypeNoneAndClosed_thenDoorDoesNotClose(){
+        Door d1 = new Door(Key.Type.NONE, false);
+        d1.setOpen(false);
+        assertEquals(false, d1.close());
+    }
 
+    //when door has same type as key
+        //: When door opened, key gets used
+    @Test
+    public void test_whenDoorHasSameTypeAsKeyAndOpens_thenKeyGetUsed(){
+        Door d1 = new Door(Key.Type.BLUE, false);
+        Key k = new Key(Key.Type.BLUE, 2);
+        d1.open(k);
+        assertEquals(1, k.getUses());
+    }
+        //: when door closed, key gets used
+    @Test
+    public void test_whenDoorHasSameTypeAsKeyAndCloses_thenKeyGetUsed(){
+        Door d1 = new Door(Key.Type.BLUE, false);
+        d1.setOpen(true);
+        Key k = new Key(Key.Type.BLUE, 2);
+        d1.close(k);
+        assertEquals(1, k.getUses());
+    }
+        //if door consumes, key gets broken
     //Used for implementation of open with key
     @Test
     public void test_KeyGetsConsumedWhenConsumesIsTrueAndDoorOpensWithKey() {

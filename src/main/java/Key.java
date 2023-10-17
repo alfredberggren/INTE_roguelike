@@ -11,10 +11,10 @@ public class Key extends Equipment{
 
     private int amountOfUses;
 
-
     private static final HashSet<InteractableAction> DEFAULT_ACTIONS = new HashSet<>(){{
             add(InteractableAction.DROP);
             add(InteractableAction.USE);
+            add(InteractableAction.LOOT);
     }};
 
 
