@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class PlayerTest {
     static Player DEFAULT_PLAYER;
@@ -67,7 +68,7 @@ public class PlayerTest {
     }
 
     @Test
-    @DisplayName("Test that character level up")
+    @DisplayName("Test that player level up")
     public void testCharacterLevelUpWhenXPReaches100() {
         DEFAULT_PLAYER.setLevel(0);
         DEFAULT_PLAYER.increaseXP(100);
@@ -78,6 +79,13 @@ public class PlayerTest {
         DEFAULT_PLAYER.levelUp();
         assertEquals(2, DEFAULT_PLAYER.getLevel());
         assertEquals(0, DEFAULT_PLAYER.getExperiencePoint());
+    }
+
+    @Test
+    @DisplayName("Test that player cannot be in a level higher than 10")
+    public void testPlayerLevelDoNotExceedAcceptedLevel() {
+        DEFAULT_PLAYER.setLevel(11);
+        assertEquals(10, DEFAULT_PLAYER.getLevel());
     }
 
 }

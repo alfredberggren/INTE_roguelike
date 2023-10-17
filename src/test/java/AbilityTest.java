@@ -12,7 +12,7 @@ public class AbilityTest {
     @BeforeEach
     void setUp() {
         character = new Character("Rudolf", 10, 100, new Position(1,1), new TextIO());
-        player = new Player("Rudolf",100,10, new Position(1,1), new TextIO());
+        player = new Player("Ragnar",100,10, new Position(1,1), new TextIO());
     }
     @Test
     @DisplayName("Returns if a Magic Ability exist")
@@ -134,27 +134,6 @@ public class AbilityTest {
     }
 
     @Test
-    @DisplayName("Test equals method for Ability")
-    public void testAbilityEquals() {
-        Ability ability1 = new PhysicalAbility("Physical Attack",20,1);
-        Ability ability2 = new PhysicalAbility("Physical Attack", 20,1);
-        Ability ability3 = new MagicAbility("Magical Spell",30,2, "Magic",1,1);
-        assertEquals(ability1, ability1);
-        assertEquals(ability1, ability2);
-        assertNotSame(ability1, ability3);
-    }
-
-    @Test
-    @DisplayName("Test hashCode method for Ability")
-    public void testAbilityHashCode() {
-        Ability ability1 = new PhysicalAbility("Physical Attack",20,1);
-        Ability ability2 = new PhysicalAbility("Physical Attack", 20,1);
-        Ability ability3 = new MagicAbility("Magical Spell",30,2, "Magic",2,3);
-        assertEquals(ability1.hashCode(), ability2.hashCode());
-        assertNotSame(ability1.hashCode(), ability3.hashCode());
-    }
-
-    @Test
     @DisplayName("Test getting the name of a spell")
     public void testSpellName() {
         MagicAbility spell = new MagicAbility("Fireball", 10, 2, "A fiery projectile",2,10);
@@ -255,5 +234,26 @@ public class AbilityTest {
         assertThrows(IllegalArgumentException.class, () -> {
             MagicAbility ability = new MagicAbility("Fireball", 10,3,"A fiery ball",1,-3);
         });
+    }
+
+    @Test
+    @DisplayName("Test equals method for Ability")
+    public void testAbilityEquals() {
+        Ability ability1 = new PhysicalAbility("Physical Attack",20,1);
+        Ability ability2 = new PhysicalAbility("Physical Attack", 20,1);
+        Ability ability3 = new MagicAbility("Magical Spell",30,2, "Magic",1,1);
+        assertEquals(ability1, ability1);
+        assertEquals(ability1, ability2);
+        assertNotSame(ability1, ability3);
+    }
+
+    @Test
+    @DisplayName("Test hashCode method for Ability")
+    public void testAbilityHashCode() {
+        Ability ability1 = new PhysicalAbility("Physical Attack",20,1);
+        Ability ability2 = new PhysicalAbility("Physical Attack", 20,1);
+        Ability ability3 = new MagicAbility("Magical Spell",30,2, "Magic",2,3);
+        assertEquals(ability1.hashCode(), ability2.hashCode());
+        assertNotSame(ability1.hashCode(), ability3.hashCode());
     }
 }

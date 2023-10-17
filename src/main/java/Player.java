@@ -44,6 +44,18 @@ public class Player extends Character{
         }
     }
 
+    public void setLevel(int level) {
+        if(level <= 10) {
+            this.level = level;
+        } else {
+            this.level = 10;
+        }
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
     public void getRewardsAfterWinning(Quest quest){
         if(quest.isCompleted()){
             setExperiencePoint(experiencePoint += quest.getRewardXP());

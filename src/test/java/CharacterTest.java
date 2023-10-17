@@ -268,6 +268,11 @@ public class CharacterTest {
     }
 
 
-
+    @Test
+    @DisplayName("Test that player cannot be in a level higher than 10")
+    public void testPlayerLevelDoNotExceedAcceptedLevel() {
+        DEFAULT_CHARACTER.setLevel(11);
+        assertEquals(10, DEFAULT_CHARACTER.getLevel());
+    }
 
 }

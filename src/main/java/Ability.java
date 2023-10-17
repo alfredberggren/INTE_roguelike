@@ -24,11 +24,6 @@ public abstract class Ability {
         PHYSICAL, MAGICAL
     }
 
-    /**Gets the type of ability*/
-    public AbilityType getTypeOfAbility(){
-        return type;
-    }
-
     /**Checks whether the ability is learnable by a character based on their level*/
     public boolean isLearnable(Character character) {
         return character.getLevel() >= minimumLevel;
