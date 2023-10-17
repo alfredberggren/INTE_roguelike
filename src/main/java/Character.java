@@ -61,23 +61,18 @@ public class Character implements Interactable {
     public String getName() {
         return name;
     }
-
     public Position getPosition() {
         return pos;
     }
-
     public int getHealth() {
         return health;
     }
-
     public int getSpeed() {
         return speed;
     }
-
     public int getMana() {
         return mana;
     }
-
     public InteractableInventory getInventory() {
         return inventory;
     }
@@ -85,11 +80,9 @@ public class Character implements Interactable {
     public EquipmentOnBody getEquipmentOnBody() {
         return equipmentOnBody;
     }
-
     public TurnSystem getTurnSystem() {
         return turnSystem;
     }
-
     public boolean getSpell() {
         return spell;
     }
@@ -133,13 +126,6 @@ public class Character implements Interactable {
     public Set<Ability> getAbilities() {
         return abilities;
     }
-
-    /*public MagicAbility getMagicAbility() {
-        return magicAbility;
-    }*/
-    /*public void setMagicAbility(MagicAbility magicAbility) {
-        this.magicAbility = magicAbility;
-    }*/
 
     public void setHealth(int health) {
         if (health < 0) {
@@ -218,6 +204,8 @@ public class Character implements Interactable {
             equipmentOnBody.putEquipment(equipment.getEquipmentSlot(), equipment);
             addAbility(equipment.getAbility());
     }
+
+    //get rewards after completed quest
 
     @Override
     public Set<InteractableAction> getPossibleActions() {

@@ -85,6 +85,7 @@ public class QuestTest {
         character.setLevel(5);
         assertTrue(DEFAULT_QUEST.correspondToLevel(character));
     }
+
     @Test
     @DisplayName("Test to check if difficulty correspond character's level when Character is null")
     public void testThatDifficultyCorrespondToLevelWhenCharacterIsNull(){
@@ -97,6 +98,7 @@ public class QuestTest {
         Quest test_quest = new Quest("Explore the Magic Wood", QuestType.EXPLORE, "Test description", 100, 7);
         assertFalse(DEFAULT_QUEST.equals(test_quest));
     }
+
     @Test
     @DisplayName("Test two equal quests")
     public void testTwoEqualTests(){
@@ -116,6 +118,6 @@ public class QuestTest {
         assertNotEquals(DEFAULT_QUEST.hashCode(), test_quest.hashCode());
     }
 
-
+    //test that character get rewards after the winning
 }
 
