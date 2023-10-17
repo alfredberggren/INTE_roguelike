@@ -46,6 +46,12 @@ public class Door extends Prop{
 
     //TODO: skapa en konstruktor som inte tar in interactableactions också
 
+    public Door(String name, Key.Type keyRequired, boolean open, boolean breaksKeyAfterUse) {
+        super(name, DEFAULT_POSSIBLE_ACTIONS);
+        setRequiredKeyType(keyRequired);
+        this.open = open;
+        this.breaksKeyAfterUse = breaksKeyAfterUse;
+    }
 
 
     /**
@@ -157,7 +163,7 @@ public class Door extends Prop{
     /**
      * The method to be used in game.
      * @return
-     * True if door could be closed, false otherwise
+     * True if door could be closed, false otherwise. Also false if door was already closed.
      */
     public boolean close(){
         if(isClosedOrBroken()){
@@ -173,6 +179,17 @@ public class Door extends Prop{
 
     }
 
+
+    /**
+     * The method to be used in game for closing a door with a key.
+     * The door will be closed if the key passed as argument has the right type. If so, the key's uses will decrease.
+     * If the key is broken, the door won't close.
+     * If the door is broken, the door won't close.
+     * @param key
+     * The key to be used.
+     * @return
+     * True if the door was closed, false if not (If key broken, if door broken, if key's type did not match door's).
+     */
     public boolean close(Key key){
 
         if(isClosedOrBroken())

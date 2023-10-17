@@ -8,6 +8,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class DoorTest {
 
+    //TODO: needs alot of refractoring, and also should make a decisiontable to be sure everything is tested
+
     private static final int DEFAULT_KEY_USES = 1;
 
     //Used for implementing default constructor
@@ -117,8 +119,24 @@ public class DoorTest {
 
 
     //when door has KeyType
-        //TODO: door opens if correct key
-        //TODO: door closes if correct key
+        // door opens if correct key
+    @Test
+    public void test_whenDoorHasKeyType_thenDoorOpensWithCorrectKey(){
+        Door d1 = new Door(Key.Type.BLUE, false);
+        Key k = new Key(Key.Type.BLUE, DEFAULT_KEY_USES);
+        d1.open(k);
+        assertEquals(true, d1.isOpen());
+    }
+
+        // door closes if correct key
+    @Test
+    public void test_whenDoorHasCorrectKeyType_doorClosesWithCorrectKey(){
+        Door d1 = new Door(Key.Type.BLUE, false);
+        Key k = new Key(Key.Type.BLUE, DEFAULT_KEY_USES);
+        d1.setOpen(true);
+        d1.close(k);
+        assertEquals(false, d1.isOpen());
+    }
         //TODO: door does not open if not correct key
     @Test
     public void test_whenDoorIsNotTypeNone_thenWontOpenWithoutKey(){
@@ -127,7 +145,16 @@ public class DoorTest {
         assertEquals(false, d1.isOpen());
     }
 
+
         //TODO: door does not close if not correct key
+    @Test
+    public void test_whenDoorHasKeyType_thenDoorDoesNotCloseWithWrongKey(){
+        Door d1 = new Door(Key.Type.BLUE, false);
+        Key k = new Key(Key.Type.YELLOW, DEFAULT_KEY_USES);
+        d1.close(k);
+        assertEquals(false, d1.isOpen());
+    }
+
 
 
     //When door is typeNone
@@ -216,13 +243,6 @@ public class DoorTest {
         d1.open();
         assertEquals(false, d1.isOpen());
     }
-
-
-
-
-
-
-
 
 
 }
