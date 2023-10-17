@@ -1,11 +1,16 @@
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
 public class EquipmentOnBody {
-    private Map<EquipmentSlot, Equipment> equipmentOnBody;
+    private Map<EquipmentSlot, Equipment> equipmentOnBody = new HashMap<>();
 
     public EquipmentOnBody(Map<EquipmentSlot, Equipment> equipmentOnBody) {
         this.equipmentOnBody = equipmentOnBody;
+    }
+
+    public Map<EquipmentSlot, Equipment> getEquipmentOnBody() {
+        return this.equipmentOnBody;
     }
 
     public Equipment getEquipment(EquipmentSlot slot) {

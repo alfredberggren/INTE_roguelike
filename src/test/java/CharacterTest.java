@@ -128,14 +128,15 @@ public class CharacterTest {
     @Test
     @DisplayName("Test to increase mana and ability to use magic if mana>0")
     public void testToIncreaseMana() {
-        DEFAULT_CHARACTER.increaseMana(20);
-        assertEquals(120, DEFAULT_CHARACTER.getMana());
+        DEFAULT_CHARACTER.increaseMana(100);
+        assertEquals(100, DEFAULT_CHARACTER.getMana());
         assertTrue(DEFAULT_CHARACTER.canUseMagic());
     }
 
     @Test
     @DisplayName("Test to decrease mana and ability to use magic if mana=0")
     public void testToDecreaseMana() {
+        DEFAULT_CHARACTER.increaseMana(100);
         DEFAULT_CHARACTER.decreaseMana(100);
         assertEquals(0, DEFAULT_CHARACTER.getMana());
         assertFalse(DEFAULT_CHARACTER.canUseMagic());
@@ -198,7 +199,7 @@ public class CharacterTest {
     @DisplayName("Test to equip a character when Equipment is null")
     public void testToEquipCharacterWhenEquipmentIsNull() {
         DEFAULT_CHARACTER.equip(null);
-        assertEquals("", DEFAULT_CHARACTER.getEquipmentOnBody());
+        assertEquals(null, DEFAULT_CHARACTER.getEquipmentOnBody());
     }
 
     @Test
@@ -207,7 +208,7 @@ public class CharacterTest {
         var testEquipment = new Equipment("Sword", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1));
         DEFAULT_CHARACTER.equip(testEquipment);
         DEFAULT_CHARACTER.unEquip(testEquipment);
-        assertEquals("", DEFAULT_CHARACTER.getEquipmentOnBody());
+        assertEquals(null, DEFAULT_CHARACTER.getEquipmentOnBody());
     }
 
     @Test //testa

@@ -35,7 +35,7 @@ public class Character implements Interactable {
         this.name = name;
         this.health = health;
         this.speed = speed;
-        mana = 100;
+        mana = 0;
         pos = new Position(0, 0);
         if (health > 0) {
             isDead = false;
@@ -51,6 +51,7 @@ public class Character implements Interactable {
         this.name = name;
         this.health = health;
         this.speed = speed;
+        this.mana=0;
         this.pos = pos;
         if (health > 0) {
             isDead = false;
@@ -178,7 +179,10 @@ public class Character implements Interactable {
     }
 
     public boolean canUseMagic() {
-        return mana == 0;
+        if(mana!=0)
+            return true;
+        else
+            return false;
     }
 
     public void setLevel(int level) {
@@ -191,18 +195,21 @@ public class Character implements Interactable {
 
     // For equip we might also want them to add/remove the ability they have form the ability set/list? -simon
     public void unEquip(Equipment equipment) {
-        if (equipmentOnBody.slotContainsEquipment(equipment.getEquipmentSlot()) && equipment.equals(equipmentOnBody.getEquipment(equipment.getEquipmentSlot()))) {
-            equipmentOnBody.removeEquipment(equipment.getEquipmentSlot());
-            inventory.add(equipment);
-            removeAbility(equipment.getAbility());
+        if(equipment!=null) {
+            if (equipmentOnBody.slotContainsEquipment(equipment.getEquipmentSlot()) && equipment.equals(equipmentOnBody.getEquipment(equipment.getEquipmentSlot()))) {
+                equipmentOnBody.removeEquipment(equipment.getEquipmentSlot());
+                inventory.add(equipment);
+                removeAbility(equipment.getAbility());
+            }
         }
     }
 
     public void equip(Equipment equipment) {
-        //testa!!
-        if (!equipmentOnBody.slotContainsEquipment(equipment.getEquipmentSlot()) && inventory.contains(equipment))
-            equipmentOnBody.putEquipment(equipment.getEquipmentSlot(), equipment);
+        if (equipment != null) {
+            if (!equipmentOnBody.slotContainsEquipment(equipment.getEquipmentSlot()) && inventory.contains(equipment))
+                equipmentOnBody.putEquipment(equipment.getEquipmentSlot(), equipment);
             addAbility(equipment.getAbility());
+        }
     }
 
     //get rewards after completed quest
