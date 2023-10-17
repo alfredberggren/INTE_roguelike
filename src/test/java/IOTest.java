@@ -194,7 +194,7 @@ public class IOTest {
 
         MapController tempMapController = new MapController();
         Character tempCharacter = new Character("name", 0, 0, new Position(0, 0), tempTextIO);
-        FoodItem tempInteractableItem = new FoodItem("name", 0);
+        FoodItem tempInteractableItem = new FoodItem("name", 1);
 
         assertEquals(Interactable.InteractableAction.LOOT, tempTextIO.requestAction(tempMapController, tempCharacter, tempInteractableItem),
                "Could not request move");
@@ -206,7 +206,7 @@ public class IOTest {
 
         MapController tempMapController = new MapController();
         Character tempCharacter = new Character("name", 0, 0, new Position(0, 0), tempTextIO);
-        FoodItem tempInteractableItem = new FoodItem("name", 0);
+        FoodItem tempInteractableItem = new FoodItem("name", 1);
 
         String[] movableDirections = {"loot", "drop", "fight", "wear", "talk", "use"};
         int correctDirections = 0;
@@ -231,7 +231,7 @@ public class IOTest {
 
         MapController tempMapController = new MapController();
         Character tempCharacter = new Character("name", 0, 0, new Position(0, 0), tempTextIO);
-        FoodItem tempInteractableItem = new FoodItem("name", 0);
+        FoodItem tempInteractableItem = new FoodItem("name", 1);
 
         assertThrows(IllegalArgumentException.class, () ->{
             tempTextIO.requestAction(tempMapController, tempCharacter, tempInteractableItem);
@@ -250,7 +250,7 @@ public class IOTest {
 
         IO tempTextIO = new TextIO();
         MapController tempMapController = new MapController();
-        FoodItem tempInteractableItem = new FoodItem("name", 0);
+        FoodItem tempInteractableItem = new FoodItem("name", 1);
         
         Character tempCharacter = new Character("name", 0, 0, new Position(0, 0), tempTextIO);
         assertEquals(Interactable.InteractableAction.LOOT, tempTextIO.requestAnotherAction(tempMapController, tempCharacter, tempInteractableItem));

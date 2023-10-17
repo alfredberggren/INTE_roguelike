@@ -17,7 +17,7 @@ public class TurnSystem{
     public void action(Player player, MapController worldMap) {
     }
 
-    public void startTurn(MapController worldMap, Character character, int i) {
+    public void startTurn(MapController worldMap, Character character, int speed) {
         while(true){
             if(io.requestTurnCommand(worldMap, character) == TurnCommand.END) return;
         }
@@ -27,4 +27,7 @@ public class TurnSystem{
         return true;
     }
     
+    public void startCombatTurn(){
+        
+    }
 }

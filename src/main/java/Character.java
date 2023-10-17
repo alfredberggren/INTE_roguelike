@@ -8,12 +8,11 @@ public class Character implements Interactable{
             InteractableAction.TALK,
             InteractableAction.FIGHT)
     );
-    private Set<InteractableAction> possibleInteractableActions;
-
-
-    protected String name;
     private static final String NAME_PATTERN = "^[A-Za-z]\\w{1,11}$";
 
+    private Set<InteractableAction> possibleInteractableActions;
+
+    protected String name;
     private int health;
     private int speed;
     private int mana; 
@@ -56,7 +55,7 @@ public class Character implements Interactable{
             isDead = false;
         }
         possibleInteractableActions = STANDARD_CHARACTER_INTERACTABLE_ACTIONS;
-        //turnSystem = new TurnSystem(io);
+        turnSystem = new TurnSystem(io);
     }
 
     public void setName(String name) {
@@ -99,7 +98,9 @@ public class Character implements Interactable{
         return equipmentOnBody;
     }
 
-    public TurnSystem getTurnSystem(){return turnSystem;}
+    public TurnSystem getTurnSystem(){
+        return turnSystem;
+    }
 
     public boolean getSpell() {
         return spell;
@@ -183,20 +184,35 @@ public class Character implements Interactable{
         return level;
     }
 
-    public void unEquip(EquipmentSlot slot){
-        if(equipmentOnBody.slotContainsEquipment(slot)){
-            Equipment e = equipmentOnBody.getEquipment(slot);
-            e.setPos(getPosition());
-            equipmentOnBody.removeEquipment(slot);
-            inventory.remove(e);
+
+    // For equip we might also want them to add/remove the ability they have form the ability set/list?
+    public void unEquip(Equipment equipment){
+        if(equipmentOnBody.slotContainsEquipment(equipment.getEquipmentSlot()) && equipment.equals(equipmentOnBody.getEquipment(equipment.getEquipmentSlot()))){
+            equipmentOnBody.removeEquipment(equipment.getEquipmentSlot());
+            inventory.add(equipment);
         }
     }
 
-    public void equip(EquipmentSlot slot, Equipment equipment) {
+    public void equip(Equipment equipment) {
         //testa!!
-        if (!equipmentOnBody.slotContainsEquipment(slot) && inventory.contains(equipment))
-            equipmentOnBody.putEquipment(slot, equipment);
+        if (!equipmentOnBody.slotContainsEquipment(equipment.getEquipmentSlot()) && inventory.contains(equipment))
+            equipmentOnBody.putEquipment(equipment.getEquipmentSlot(), equipment);
     }
+
+    // public void unEquip(EquipmentSlot slot){
+    //     if(equipmentOnBody.slotContainsEquipment(slot)){
+    //         Equipment e = equipmentOnBody.getEquipment(slot);
+    //         e.setPos(getPosition());
+    //         equipmentOnBody.removeEquipment(slot);
+    //         inventory.remove(e);
+    //     }
+    // }
+
+    // public void equip(EquipmentSlot slot, Equipment equipment) {
+    //     //testa!!
+    //     if (!equipmentOnBody.slotContainsEquipment(slot) && inventory.contains(equipment))
+    //         equipmentOnBody.putEquipment(slot, equipment);
+    // }
 
 
     @Override

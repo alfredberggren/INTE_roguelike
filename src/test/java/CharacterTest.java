@@ -190,14 +190,15 @@ public class CharacterTest {
     @Test
     @DisplayName("Test to equip a character")
     public void testToEquipCharacter(){
-        DEFAULT_CHARACTER.equip(EquipmentSlot.LEFT_HAND, new Equipment("Sword", new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP)), Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1)));
+        DEFAULT_CHARACTER.equip(new Equipment("Sword", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1)));
         assertEquals("LEFT_HAND: Sword", DEFAULT_CHARACTER.getEquipmentOnBody());
     }
     @Test
     @DisplayName("Test to unequip a character")
     public void testToUnEquipCharacter(){
-        DEFAULT_CHARACTER.equip(EquipmentSlot.LEFT_HAND, new Equipment("Sword", new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP)), Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1)));
-        DEFAULT_CHARACTER.unEquip(EquipmentSlot.LEFT_HAND);
+        var testEquipment = new Equipment("Sword", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1));
+        DEFAULT_CHARACTER.equip(testEquipment);
+        DEFAULT_CHARACTER.unEquip(testEquipment);
         assertEquals("", DEFAULT_CHARACTER.getEquipmentOnBody());
     }
     //test equipment's position

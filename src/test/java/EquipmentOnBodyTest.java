@@ -8,11 +8,10 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class EquipmentOnBodyTest {
-    static EquipmentOnBody EQUIPMENT_ON_BODY;
-    static EquipmentSlot DEFAULT_EQUIPMENT_SLOT = EquipmentSlot.LEFT_HAND;
-    static final Set<Interactable.InteractableAction> DEFAULT_EQUIPMENT_ACTIONS = new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP));
-    static Equipment DEFAULT_EQUIPMENT = new Equipment("Sword", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1));
-    static Player DEFAULT_PLAYER = new Player(100, 10, new Position(0,0));
+    static EquipmentOnBody EQUIPMENT_ON_BODY; //is this suppose to be a constant or a variable?
+    static final EquipmentSlot DEFAULT_EQUIPMENT_SLOT = EquipmentSlot.LEFT_HAND;
+    static final Equipment DEFAULT_EQUIPMENT = new Equipment("Sword", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1));
+    static final Player DEFAULT_PLAYER = new Player("Name", 100, 10, new Position(0,0), new TextIO());
 
     @BeforeEach
     void setUp() {
@@ -38,7 +37,7 @@ public class EquipmentOnBodyTest {
     @DisplayName("Test to put an equipment in an occupied slot")
     public void testToPutEquipmentInOccupiedSlot() {
         EQUIPMENT_ON_BODY.putEquipment(DEFAULT_EQUIPMENT_SLOT, DEFAULT_EQUIPMENT);
-        EQUIPMENT_ON_BODY.putEquipment(DEFAULT_EQUIPMENT_SLOT, new Equipment("Dagger", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Dagger", 20, 1)));
+        EQUIPMENT_ON_BODY.putEquipment(DEFAULT_EQUIPMENT_SLOT, new Equipment("Dagger", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Dagger", 20, 1)));
         assertEquals("LEFT_HAND: Sword +50% DAMAGE", EQUIPMENT_ON_BODY.toString());
     }
 
@@ -62,7 +61,7 @@ public class EquipmentOnBodyTest {
     @DisplayName("Test to check where the non-existent equipment was placed in the map")
     public void testToCheckWhereNonExistentEquipmentWasPlaced() {
         EQUIPMENT_ON_BODY.putEquipment(DEFAULT_EQUIPMENT_SLOT, DEFAULT_EQUIPMENT);
-        assertNull(EQUIPMENT_ON_BODY.checkWhereEquipmentWasPlaced(new Equipment("Dagger", DEFAULT_EQUIPMENT_ACTIONS, Equipment.Effect.DAMAGE, 60, new PhysicalAbility("Dagger", 20, 1))));
+        assertNull(EQUIPMENT_ON_BODY.checkWhereEquipmentWasPlaced(new Equipment("Dagger", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE, 60, new PhysicalAbility("Dagger", 20, 1))));
     }
 
 }

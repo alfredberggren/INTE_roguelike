@@ -35,7 +35,6 @@ public class TurnSystemTest {
         MapController worldMapController = new MapController();
         Position playerPosition = new Position(0, 0);
         Room playerRoom = new Room(playerPosition);
-        playerRoom.setPossibleRoutes(new ArrayList<CardinalDirection>());
         worldMapController.add(playerPosition, playerRoom);
 
         Player player = new Player("name", 1, 1, playerPosition, io);
@@ -48,68 +47,63 @@ public class TurnSystemTest {
     @Test
     public void whenMove_thenCharacterHasMoved(){
         MapController worldMapController = new MapController();
+
         Position originalPosition = new Position(0, 0);
         Room originalRoom = new Room(originalPosition);
-        Position otherPosition = new Position(0, 1);
-        Room otherRoom = new Room(originalPosition);
-
-        ArrayList<CardinalDirection> routes = new ArrayList<>();
-        routes.add(CardinalDirection.NORTH);
-        originalRoom.setPossibleRoutes(routes);
-
         worldMapController.add(originalPosition, originalRoom);
+
+        Position otherPosition = new Position(0, 1);
+        Room otherRoom = new Room(otherPosition);
         worldMapController.add(otherPosition, otherRoom);
-        Player player = new Player(1, 1, originalPosition);
-                
+
+        Player player = new Player("name", 1, 1, originalPosition, io);
+        
         Mockito.when(io.requestMove(worldMapController, player)).thenReturn(CardinalDirection.NORTH);
-        turnSystem.move(player, worldMapController);
+
+        player.getTurnSystem().move(player, worldMapController);
         assertEquals(otherPosition, player.getPosition(), "Player did not change position");
     }
 
     @Test
     public void whenMoveReRequestedTwoTimes_thenCharacterHasMoved(){
-        TurnSystem turnSystem = new TurnSystem(io);
         MapController worldMapController = new MapController();
+
         Position originalPosition = new Position(0, 0);
         Room originalRoom = new Room(originalPosition);
-        Position otherPosition = new Position(0, 1);
-        Room otherRoom = new Room(originalPosition);
-
-        ArrayList<CardinalDirection> routes = new ArrayList<>();
-        routes.add(CardinalDirection.NORTH);
-        originalRoom.setPossibleRoutes(routes);
-
         worldMapController.add(originalPosition, originalRoom);
+
+        Position otherPosition = new Position(0, 1);
+        Room otherRoom = new Room(otherPosition);
         worldMapController.add(otherPosition, otherRoom);
-        Player player = new Player(1, 1, originalPosition);
+
+        Player player = new Player("name", 1, 1, originalPosition, io);
                 
         Mockito.when(io.requestMove(worldMapController, player)).thenReturn(CardinalDirection.SOUTH);
         Mockito.when(io.requestAnotherMove(worldMapController, player)).thenReturn(CardinalDirection.EAST, CardinalDirection.NORTH);
-        turnSystem.move(player, worldMapController);
+
+        player.getTurnSystem().move(player, worldMapController);
         assertEquals(otherPosition, player.getPosition(), "Player did not change position");
     }
 
     @Test
     public void whenMoveReRequested_thenIAEThrown(){
-        TurnSystem turnSystem = new TurnSystem(io);
         MapController worldMapController = new MapController();
+
         Position originalPosition = new Position(0, 0);
         Room originalRoom = new Room(originalPosition);
-        Position otherPosition = new Position(0, 1);
-        Room otherRoom = new Room(originalPosition);
-
-        ArrayList<CardinalDirection> routes = new ArrayList<>();
-        routes.add(CardinalDirection.NORTH);
-        originalRoom.setPossibleRoutes(routes);
-
         worldMapController.add(originalPosition, originalRoom);
+
+        Position otherPosition = new Position(0, 1);
+        Room otherRoom = new Room(otherPosition);
         worldMapController.add(otherPosition, otherRoom);
-        Player player = new Player(1, 1, originalPosition);
+
+        Player player = new Player("name", 1, 1, originalPosition, io);
                 
         Mockito.when(io.requestMove(worldMapController, player)).thenReturn(CardinalDirection.SOUTH);
         Mockito.when(io.requestAnotherMove(worldMapController, player)).thenThrow(IllegalArgumentException.class);
+
         assertThrows(IllegalStateException.class, () -> {
-            turnSystem.move(player, worldMapController);
+            player.getTurnSystem().move(player, worldMapController);
         }, "Wrong input doesn't Throw Illegal Argument Exception");
     }
 
@@ -126,16 +120,17 @@ public class TurnSystemTest {
         Room playerRoom = new Room(playerPosition, new InteractableInventory());
         worldMapController.add(playerPosition, playerRoom);
 
-        TurnSystem turnSystem = new TurnSystem(io);
-        Player player = new Player(1, 1, playerPosition);
+        Player player = new Player("name", 1, 1, playerPosition, io);
 
         assertThrows(IllegalStateException.class, () -> {
-            turnSystem.action(player, worldMapController);
+            player.getTurnSystem().action(player, worldMapController);
         }, "When there is no option Interactables there wasn't an exception Thrown");
     }
 
     /*
      * Different Actions
+     * 
+     * loot:
     */
 
     @Test
@@ -152,7 +147,7 @@ public class TurnSystemTest {
         Room playerRoom = new Room(playerPosition, new InteractableInventory(testEquipment));
         worldMapController.add(playerPosition, playerRoom);
 
-        TurnSystem turnSystem = new TurnSystem(io);
+        TurnSystem player.getTurnSystem() = new TurnSystem(io);
         Player player = new Player(1, 1, playerPosition);
 
 
@@ -160,12 +155,16 @@ public class TurnSystemTest {
         Mockito.when(io.requestInteractable(worldMapController, player)).thenReturn(testEquipment);
         Mockito.when(io.requestAction(worldMapController, player, testEquipment)).thenReturn(Interactable.InteractableAction.LOOT);
 
-        turnSystem.action(player, worldMapController);
+        player.getTurnSystem().action(player, worldMapController);
         
         //need to wait for getInventory()
         assertEquals(player.getInventory().contains(testEquipment), "Player does not have the expected inventory.");
         assertEquals(playerRoom.getInteractables().isEmpty(), "Room does not have the expected inventory.");
     }
+
+    /*
+     * Drop:
+    */
 
     @Test
     public void whenActionDrop_thenItemIsInRoomInventoryNotCharacter() { 
@@ -181,7 +180,7 @@ public class TurnSystemTest {
         Room playerRoom = new Room(playerPosition, new InteractableInventory());
         worldMapController.add(playerPosition, playerRoom);
 
-        TurnSystem turnSystem = new TurnSystem(io);
+        TurnSystem player.getTurnSystem() = new TurnSystem(io);
         Player player = new Player(1, 1, playerPosition);
 
         //don't know if there gonna be method in player for this
@@ -192,12 +191,16 @@ public class TurnSystemTest {
         Mockito.when(io.requestInteractable(worldMapController, player)).thenReturn(testEquipment);
         Mockito.when(io.requestAction(worldMapController, player, testEquipment)).thenReturn(Interactable.InteractableAction.DROP);
 
-        turnSystem.action(player, worldMapController);
+        player.getTurnSystem().action(player, worldMapController);
         
         //need to wait for getInventory()
         assertTrue(playerRoom.getInteractables().contains(testEquipment), "Room does not have the expected inventory.");
         assertTrue(player.getInventory().isEmpty(), "Player does not have the expected inventory.");
     }
+
+    /*
+     * Wear:
+    */
 
     @Test
     public void whenActionWear_thenItemIsInEquippedNotInRoom() { 
@@ -214,7 +217,7 @@ public class TurnSystemTest {
         Room playerRoom = new Room(playerPosition, new InteractableInventory(testEquipment));
         worldMapController.add(playerPosition, playerRoom);
 
-        TurnSystem turnSystem = new TurnSystem(io);
+        TurnSystem player.getTurnSystem() = new TurnSystem(io);
         Player player = new Player(1, 1, playerPosition);
 
         //this is gonna be fixed soon
@@ -222,12 +225,17 @@ public class TurnSystemTest {
         Mockito.when(io.requestInteractable(worldMapController, player)).thenReturn(testEquipment);
         Mockito.when(io.requestAction(worldMapController, player, testEquipment)).thenReturn(Interactable.InteractableAction.WEAR);
 
-        turnSystem.action(player, worldMapController);
+        player.getTurnSystem().action(player, worldMapController);
+        player.unEquip(testEquipment);
         
         //need to wait for getEquipmentOnBody()
-        assertEquals(player.getEquipmentOnBody().getValue(EquipmentSlot.HEAD), "Character didn't equip the equipment.");
+        assertEquals(, "Character didn't equip the equipment.");
         assertTrue(playerRoom.getInteractables().isEmpty(), "Room does not have the expected inventory.");
     }
+
+    /*
+     * Use:
+    */
 
     @Test
     public void whenActionUse_thenItemIsNotInRoomAndEffectHasApplied() { 
@@ -238,19 +246,23 @@ public class TurnSystemTest {
         Room playerRoom = new Room(playerPosition, new InteractableInventory(testPotion));
         worldMapController.add(playerPosition, playerRoom);
 
-        TurnSystem turnSystem = new TurnSystem(io);
+        TurnSystem player.getTurnSystem() = new TurnSystem(io);
         Player player = new Player(1, 1, playerPosition);
 
         //need to make requestInteractable() and change requestAction()
         Mockito.when(io.requestInteractable(worldMapController, player)).thenReturn(testPotion);
         Mockito.when(io.requestAction(worldMapController, player, testPotion)).thenReturn(Interactable.InteractableAction.LOOT);
 
-        turnSystem.action(player, worldMapController);
+        player.getTurnSystem().action(player, worldMapController);
         
         //I don't know how Effect work or how the potion is gonna work so this is how the assert looks for now
         assertEquals(Equipment.Effect.HEALTH, player.getEffect(), "Player does not have the expected Effect.");
         assertTrue(playerRoom.getInteractables().isEmpty(), "Room does not have the expected inventory.");
     }
+
+    /*
+     * Use:
+    */
 
     @Test
     public void whenActionFight_thenNpcIsDeadPlayerAlive() { 
@@ -326,16 +338,16 @@ public class TurnSystemTest {
         Room playerRoom = new Room(playerPosition, new InteractableInventory(testEquipmentThree));
         worldMapController.add(playerPosition, playerRoom);
 
-        TurnSystem turnSystem = new TurnSystem(io);
+        TurnSystem player.getTurnSystem() = new TurnSystem(io);
         Player player = new Player(1, 1, playerPosition);
 
 
         //need to make requestInteractable() and change requestAction()
         Mockito.when(io.requestInteractable(worldMapController, player)).thenReturn(testEquipmentOne);
-        Mockito.when(io.requestAnotherInteractable(worldMapController, player)).thenReturn(testEquipmentTwo, testEquipmentThree);
+        Mockito.when(io.requestAnotherInteractble(worldMapController, player)).thenReturn(testEquipmentTwo, testEquipmentThree);
         Mockito.when(io.requestAction(worldMapController, player, testEquipmentThree)).thenReturn(Interactable.InteractableAction.LOOT);
 
-        turnSystem.action(player, worldMapController);
+        player.getTurnSystem().action(player, worldMapController);
         
         //need to wait for getInventory()
         assertTrue(player.getInventory().contains(testEquipmentThree), "Player does not have the expected inventory.");
@@ -357,16 +369,16 @@ public class TurnSystemTest {
         Room playerRoom = new Room(playerPosition, new InteractableInventory(testEquipmentOne));
         worldMapController.add(playerPosition, playerRoom);
 
-        TurnSystem turnSystem = new TurnSystem(io);
+        TurnSystem player.getTurnSystem() = new TurnSystem(io);
         Player player = new Player(1, 1, playerPosition);
 
 
         //need to make requestInteractable() and change requestAction()
         Mockito.when(io.requestInteractable(worldMapController, player)).thenReturn(testEquipmentTwo);
-        Mockito.when(io.requestAnotherInteractable(worldMapController, player)).thenThrow(IllegalArgumentException.class);
+        Mockito.when(io.requestAnotherInteractble(worldMapController, player)).thenThrow(IllegalArgumentException.class);
         
         assertThrows(IllegalStateException.class, () -> {
-            turnSystem.action(player, worldMapController);
+            player.getTurnSystem().action(player, worldMapController);
         }, "Wrong input doesn't Throw Illegal Argument Exception");
     }
 
@@ -385,7 +397,7 @@ public class TurnSystemTest {
         Room playerRoom = new Room(playerPosition, new InteractableInventory(testEquipment));
         worldMapController.add(playerPosition, playerRoom);
 
-        TurnSystem turnSystem = new TurnSystem(io);
+        TurnSystem player.getTurnSystem() = new TurnSystem(io);
         Player player = new Player(1, 1, playerPosition);
 
 
@@ -394,7 +406,7 @@ public class TurnSystemTest {
         Mockito.when(io.requestAction(worldMapController, player, testEquipment)).thenReturn(Interactable.InteractableAction.FIGHT);
         Mockito.when(io.requestAnotherAction(worldMapController, player, testEquipment)).thenReturn(Interactable.InteractableAction.USE,Interactable.InteractableAction.LOOT);
 
-        turnSystem.action(player, worldMapController);
+        player.getTurnSystem().action(player, worldMapController);
         
         //need to wait for getInventory()
         assertTrue(player.getInventory().contains(testEquipment), "Player does not have the expected inventory.");
@@ -408,7 +420,7 @@ public class TurnSystemTest {
         actionSet.add(Interactable.InteractableAction.LOOT);
 
         PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 1);
-        Equipment testEquipment = new Equipment("Test Equipment One", actionSet, Equipment.Effect.HEALTH, 1, testAbility);
+        Equipment testEquipment = new Equipment("Test Equipment One", EquipmentSlot.BELT, Equipment.Effect.HEALTH, 1, testAbility);
 
 
         MapController worldMapController = new MapController();
@@ -416,8 +428,8 @@ public class TurnSystemTest {
         Room playerRoom = new Room(playerPosition, new InteractableInventory(testEquipment));
         worldMapController.add(playerPosition, playerRoom);
 
-        TurnSystem turnSystem = new TurnSystem(io);
-        Player player = new Player(1, 1, playerPosition);
+        TurnSystem player.getTurnSystem() = new TurnSystem(io);
+        Player player = new Player("name", 1, 1, playerPosition, io);
 
 
         //need to make requestInteractable() and change requestAction()
@@ -426,7 +438,7 @@ public class TurnSystemTest {
         Mockito.when(io.requestAnotherAction(worldMapController, player, testEquipment)).thenThrow(IllegalArgumentException.class);
 
         assertThrows(IllegalStateException.class, () -> {
-            turnSystem.action(player, worldMapController);
+            player.getTurnSystem().action(player, worldMapController);
         }, "Wrong input doesn't Throw Illegal Argument Exception");
     }
 
@@ -443,13 +455,13 @@ public class TurnSystemTest {
 
         MapController worldMapController = new MapController();
         Position characterPosition = new Position(0, 0);
-        Character character = new Character(1, 1, characterPosition);
+        Character character = new Character("name", 1, 1, characterPosition, io);
 
         Mockito.when(io.requestTurnCommand(worldMapController, character)).thenReturn(TurnSystem.TurnCommand.END);
         
-        TurnSystem turnSystem = new TurnSystem(io);
-        turnSystem.startTurn(worldMapController, character, character.getSpeed());
-        assertTrue(turnSystem.isTurnEnded(), "Turn hasn't ended");
+        TurnSystem player.getTurnSystem() = new TurnSystem(io);
+        player.getTurnSystem().startTurn(worldMapController, character, character.getSpeed());
+        assertTrue(player.getTurnSystem().isTurnEnded(), "Turn hasn't ended");
     }
 
     @Test
@@ -460,14 +472,14 @@ public class TurnSystemTest {
         MapController worldMapController = new MapController();
         Position characterPosition = new Position(0, 0);
         //when character has 0 speed it can do neither action or movement
-        Character character = new Character(1, 0, characterPosition);
+        Character character = new Character("name", 1, 0, characterPosition, io);
 
         Mockito.when(io.requestTurnCommand(worldMapController, character)).thenReturn(TurnSystem.TurnCommand.MOVE);
         Mockito.when(io.requestAnotherTurnCommand(worldMapController, character)).thenReturn(TurnSystem.TurnCommand.END);
         
-        TurnSystem turnSystem = new TurnSystem(io);
-        turnSystem.startTurn(worldMapController, character, character.getSpeed());
-        assertTrue(turnSystem.isTurnEnded(), "Turn hasn't ended");
+        TurnSystem player.getTurnSystem() = new TurnSystem(io);
+        player.getTurnSystem().startTurn(worldMapController, character, character.getSpeed());
+        assertTrue(player.getTurnSystem().isTurnEnded(), "Turn hasn't ended");
     }
 
     @Test
@@ -478,14 +490,14 @@ public class TurnSystemTest {
         MapController worldMapController = new MapController();
         Position characterPosition = new Position(0, 0);
         //when character has 0 speed it can do neither action or movement
-        Character character = new Character(1, 0, characterPosition);
+        Character character = new Character("name", 1, 0, characterPosition, io);
 
         Mockito.when(io.requestTurnCommand(worldMapController, character)).thenReturn(TurnSystem.TurnCommand.ACTION);
         Mockito.when(io.requestAnotherTurnCommand(worldMapController, character)).thenReturn(TurnSystem.TurnCommand.END);
         
-        TurnSystem turnSystem = new TurnSystem(io);
-        turnSystem.startTurn(worldMapController, character, character.getSpeed());
-        assertTrue(turnSystem.isTurnEnded(), "Turn hasn't ended");
+        TurnSystem player.getTurnSystem() = new TurnSystem(io);
+        player.getTurnSystem().startTurn(worldMapController, character, character.getSpeed());
+        assertTrue(player.getTurnSystem().isTurnEnded(), "Turn hasn't ended");
     }
 
     @Test
@@ -495,14 +507,14 @@ public class TurnSystemTest {
 
         MapController worldMapController = new MapController();
         Position characterPosition = new Position(0, 0);
-        Character character = new Character(1, 1, characterPosition);
+        Character character = new Character("name", 1, 1, characterPosition, io);
 
         Mockito.when(io.requestTurnCommand(worldMapController, character)).thenThrow(IllegalArgumentException.class);
         Mockito.when(io.requestAnotherTurnCommand(worldMapController, character)).thenReturn(TurnSystem.TurnCommand.END);
         
-        TurnSystem turnSystem = new TurnSystem(io);
-        turnSystem.startTurn(worldMapController, character, character.getSpeed());
-        assertTrue(turnSystem.isTurnEnded(), "Turn hasn't ended");
+        TurnSystem player.getTurnSystem() = new TurnSystem(io);
+        player.getTurnSystem().startTurn(worldMapController, character, character.getSpeed());
+        assertTrue(player.getTurnSystem().isTurnEnded(), "Turn hasn't ended");
     }
 
     /*
@@ -516,20 +528,18 @@ public class TurnSystemTest {
 
         MapController worldMapController = new MapController();
         Position characterPosition = new Position(0, 0);
-        //when character has 0 speed it can do neither action or movement
-        Character character = new Character(1, 1, characterPosition);
+        Character character = new Character("name", 1, 1, characterPosition, io);
 
         Mockito.when(io.requestTurnCommand(worldMapController, character)).thenReturn(TurnSystem.TurnCommand.MOVE);
         Mockito.when(io.requestAnotherTurnCommand(worldMapController, character)).thenReturn(TurnSystem.TurnCommand.END);
         
-        TurnSystem turnSystem = new TurnSystem(io);
-        TurnSystem spyTurnSystem = spy(turnSystem);
+        TurnSystem player.getTurnSystem() = new TurnSystem(io);
+        TurnSystem spyTurnSystem = spy(player.getTurnSystem());
 
         
 
-        turnSystem.startTurn(worldMapController, character, character.getSpeed());
-        assertTrue(turnSystem.isTurnEnded(), "Turn hasn't ended");
-        
+        player.getTurnSystem().startTurn(worldMapController, character, character.getSpeed());
+        assertTrue(player.getTurnSystem().isTurnEnded(), "Turn hasn't ended");    
     }
 
 }

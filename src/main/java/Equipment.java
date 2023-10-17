@@ -3,20 +3,35 @@
 import java.util.*;
 
 public class Equipment extends NonLivingEntity{
+    private static final Set<InteractableAction> STANDARD_INTERACTABLE_ACTIONS = new HashSet<>(Arrays.asList(
+            InteractableAction.LOOT,
+            InteractableAction.DROP,
+            InteractableAction.WEAR,
+            InteractableAction.UNEQUIP)
+    );
+
     private Effect effect; //gör till egen klass?
     private int damage;
     private Ability ability;
-    private Position pos;
+    private EquipmentSlot equipmentSlot;
     private double damageBar;
 
 
     /**Constructs Equipment with the specified characteristics*/
-    public Equipment(String name, Set<InteractableAction> STANDARD_INTERACTABLE_ACTIONS, Effect effect, int damage, Ability ability) {
+    public Equipment(String name, EquipmentSlot equipmentSlot, Effect effect, int damage, Ability ability) {
         super(name, STANDARD_INTERACTABLE_ACTIONS);
         this.effect = effect;
         this.damage = damage;
         this.ability = ability;
-        this.pos = new Position(0,0);
+        this.equipmentSlot = equipmentSlot;
+    }
+
+    public Equipment(String name, EquipmentSlot equipmentSlot, Set<Interactable.InteractableAction> possibleActions,  Effect effect, int damage, Ability ability) {
+        super(name, possibleActions);
+        this.effect = effect;
+        this.damage = damage;
+        this.ability = ability;
+        this.equipmentSlot = equipmentSlot;
     }
 
     public String getName(){
@@ -27,9 +42,7 @@ public class Equipment extends NonLivingEntity{
         return effect;
     }
 
-    public Position getPos() {return pos;}
-
-    public void setPos(Position pos) {this.pos = pos;}
+    public EquipmentSlot getEquipmentSlot() {return equipmentSlot;}
 
     public int getDamage() {return damage;}
 
@@ -59,6 +72,11 @@ public class Equipment extends NonLivingEntity{
             }
         }
         setDamageOnEquipment(damageBar);
+        //Simon:
+        //should this be a runtime exception? and how is this exception handled
+        //it could instead be handled in turnSystem 
+        //where if any of the equipment on the char has reached 0 att the start of the turn
+        //it is removed from character
         if(damageBar == 0) {
             throw new RuntimeException("Equipment has been destroyed!");
         }

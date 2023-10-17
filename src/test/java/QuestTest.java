@@ -78,7 +78,7 @@ public class QuestTest {
     @Test
     @DisplayName("Test if difficulty correspond to character's level")
     public void testThatDifficultyCorrespondToLevel() {
-        Character character = new Character(100, 10, 100);
+        Character character = new Character("name", 100, 10, new TextIO());
         character.setLevel(5);
         assertTrue(DEFAULT_QUEST.correspondToLevel(character));
     }
