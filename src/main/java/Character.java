@@ -20,10 +20,12 @@ public class Character implements Interactable {
     protected int level;
     private Position pos;
     private boolean isDead = false;
+    private MagicAbility magicAbility;
+    private boolean spell;
     private Set<Ability> abilities = new HashSet<>();
     private InteractableInventory inventory = new InteractableInventory();
     private boolean canUseMagic = true; // remove
-    private EquipmentOnBody equipmentOnBody;
+    private EquipmentOnBody equipmentOnBody = new EquipmentOnBody();
     private TurnSystem turnSystem;
 
     public Character(String name, int health, int speed, IO io) {
@@ -81,6 +83,9 @@ public class Character implements Interactable {
     }
     public TurnSystem getTurnSystem() {
         return turnSystem;
+    }
+    public boolean getSpell() {
+        return spell;
     }
 
     public void setName(String name) {
@@ -204,6 +209,8 @@ public class Character implements Interactable {
             if (!equipmentOnBody.slotContainsEquipment(equipment.getEquipmentSlot()) && inventory.contains(equipment))
                 equipmentOnBody.putEquipment(equipment.getEquipmentSlot(), equipment);
             addAbility(equipment.getAbility());
+            inventory.remove(equipment);
+
         }
     }
 
