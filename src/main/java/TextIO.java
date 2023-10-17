@@ -38,7 +38,7 @@ public class TextIO extends IO{
     }
 
     @Override
-    public Interactable.InteractableAction requestAction(MapController map, Character character, Interactable interactable){
+    public Interactable.InteractableAction requestAction(Interactable interactable, Character character){
         String input = getUserInput();
         switch(input){
             case "loot": return Interactable.InteractableAction.LOOT;
@@ -52,7 +52,7 @@ public class TextIO extends IO{
     }
 
     @Override
-    public Interactable.InteractableAction requestAnotherAction(MapController map, Character character, Interactable interactable){
+    public Interactable.InteractableAction requestAnotherAction(Interactable interactable, Character character){
         System.out.println("Action is not allowed");
         return requestAction(map, character, interactable);
     }
@@ -66,14 +66,44 @@ public class TextIO extends IO{
     }
 
     @Override
-    public Interactable requestInteractable(MapController map, Character character) {
+    public Interactable requestInteractable(Room room, Character character) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'requestInteractable'");
     }
 
     @Override
-    public Interactable requestAnotherInteractble(MapController map, Character character) {
+    public Interactable requestAnotherInteractble(Room room, Character character) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'requestAnotherInteractble'");
+    }
+
+    @Override
+    public Interactable requestInteractable(Character from, Character to) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'requestInteractable'");
+    }
+
+    @Override
+    public Interactable requestAnotherInteractble(Character from, Character to) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'requestAnotherInteractble'");
+    }
+
+    @Override
+    public Ability requestAbility(Character from, Character at) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'requestAbility'");
+    }
+
+    @Override
+    public Ability requestAnotherAbility(Character from, Character at) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'requestAnotherAbility'");
+    }
+
+    @Override
+    public void retrieveDialogString(String string) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'retrieveDialogString'");
     }
 }

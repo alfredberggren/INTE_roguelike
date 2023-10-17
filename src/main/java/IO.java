@@ -29,4 +29,10 @@ public abstract class IO {
     public abstract Interactable requestInteractable(Character from, Character to);
 
     public abstract Interactable requestAnotherInteractble(Character from, Character to);
+
+    public abstract Ability requestAbility(Character from, Character at);
+
+    public abstract Ability requestAnotherAbility(Character from, Character at);
+
+    public abstract void retrieveDialogString(String string);
 }
