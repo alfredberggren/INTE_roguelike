@@ -15,8 +15,11 @@ public class MagicAbility extends Ability{
     MagicAbility(String name, int baseDamage, int minimumLevel, String description, int castingTime, int coolDown) {
         super(name, baseDamage, AbilityType.MAGICAL, minimumLevel >= 1 ? minimumLevel:1);
         this.description = description;
-        this.castingTime = castingTime >= 1 ? castingTime:1;
-        this.coolDown = coolDown >= 1 ? coolDown:1;
+        this.castingTime = castingTime;
+        this.coolDown = coolDown;
+        if(castingTime < 0 || coolDown < 0) {
+            throw new IllegalArgumentException("Casting time and Cool-down needs to be 0 or more");
+        }
 
     }
 

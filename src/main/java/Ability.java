@@ -51,7 +51,7 @@ public abstract class Ability {
         return Objects.hash(name, baseDamage, type, minimumLevel);
     }
 
-    /**Returns a string representation of the ability, its name*/
+    /**Returns a string representation of the ability, its type*/
     abstract public String toString();
 
 }

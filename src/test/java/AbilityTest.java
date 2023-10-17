@@ -244,15 +244,17 @@ public class AbilityTest {
     @Test
     @DisplayName("Test casting time cannot be negative")
     public void testCastingTimeCannotBeNegative() {
-        MagicAbility ability = new MagicAbility("Fireball", 10,3,"A fiery ball",-1,3);
-        assertEquals(1, ability.getCastingTime());
+        assertThrows(IllegalArgumentException.class, () -> {
+            MagicAbility ability = new MagicAbility("Fireball", 10,3,"A fiery ball",-1,3);
+        });
     }
 
     @Test
     @DisplayName("Test cool-down time cannot be negative")
     public void testCoolDownTimeCannotBeNegative() {
-        MagicAbility ability = new MagicAbility("Fireball", 10,3,"A fiery ball",2,-1);
-        assertEquals(1, ability.getCoolDown());
+        assertThrows(IllegalArgumentException.class, () -> {
+            MagicAbility ability = new MagicAbility("Fireball", 10,3,"A fiery ball",1,-3);
+        });
     }
 
     @Test
