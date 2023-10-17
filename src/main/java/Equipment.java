@@ -17,6 +17,18 @@ public class Equipment extends NonLivingEntity{
         this.pos = new Position(0,0);
     }
 
+    /**
+     * Constructor with fewer parameters, should be used for equipment that has "passive" uses, i.e. non-violent/non-magical.
+     * Sets effect to none, damage to 0, and ability to null.
+     * @param name
+     * The name of the Equipment
+     * @param possibleActions
+     * The actions that can be done with Equipment
+     */
+    public Equipment(String name, Set<InteractableAction> possibleActions) {
+        this(name, possibleActions, Effect.NONE, 0, null);
+    }
+
     public String getName(){
         return name;
     }
@@ -30,7 +42,7 @@ public class Equipment extends NonLivingEntity{
     }
 
     public enum Effect {
-        SPEED, HEALTH, DAMAGE
+        SPEED, HEALTH, DAMAGE, NONE
     }
 
     public enum Armor {
@@ -38,7 +50,10 @@ public class Equipment extends NonLivingEntity{
     }
 
     public String getAbility(){
-         return ability.getTypeOfAbility();
+        if (ability == null) {
+            return "Equipment has no ability";
+        }
+        return ability.getTypeOfAbility();
     }
 
     public void damageModifier(double damageBar) {
