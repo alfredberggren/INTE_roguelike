@@ -20,8 +20,6 @@ public class Character implements Interactable {
     protected int level;
     private Position pos;
     private boolean isDead = false;
-    private MagicAbility magicAbility;
-    private boolean spell;
     private Set<Ability> abilities = new HashSet<>();
     private InteractableInventory inventory = new InteractableInventory();
     private boolean canUseMagic = true; // remove
@@ -83,9 +81,6 @@ public class Character implements Interactable {
     }
     public TurnSystem getTurnSystem() {
         return turnSystem;
-    }
-    public boolean getSpell() {
-        return spell;
     }
 
     public void setName(String name) {
@@ -186,7 +181,11 @@ public class Character implements Interactable {
     }
 
     public void setLevel(int level) {
-        this.level = level;
+        if(level <= 10) {
+            this.level = level;
+        } else {
+            this.level = 10;
+        }
     }
 
     public int getLevel() {
