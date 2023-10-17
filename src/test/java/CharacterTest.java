@@ -244,6 +244,16 @@ public class CharacterTest {
         assertTrue(DEFAULT_CHARACTER.getAbilities().contains(new PhysicalAbility("Sword", 10, 1)));
     }
 
+    @Test
+    @DisplayName("Test to remove ability from character after unEquip()")
+    public void testRemoveAbilityFromCharacterAfterUnEquip() {
+        Equipment equipment = new Equipment("Sword", EquipmentSlot.LEFT_HAND, new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP)), Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1));
+        DEFAULT_CHARACTER.equip(equipment);
+        DEFAULT_CHARACTER.unEquip(equipment);
+        assertFalse(DEFAULT_CHARACTER.getAbilities().contains(new PhysicalAbility("Sword", 10, 1)));
+    }
+
+
 
 
 }
