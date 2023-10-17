@@ -17,7 +17,7 @@ public abstract class Ability {
     }
 
     /**Calculates the damage inflicted by this ability when used by a character. */
-    abstract public int calculateDamageOfAbility(Character character);
+    abstract public int calculateDamageOfAbility(Character character, Player player);
 
     /**Representing the type of ability*/
     public enum AbilityType {
