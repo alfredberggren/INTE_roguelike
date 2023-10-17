@@ -116,6 +116,5 @@ public class QuestTest {
         assertNotEquals(quest.hashCode(), test_quest.hashCode());
     }
 
-    //test that character get rewards after the winning
 }
 

@@ -15,8 +15,6 @@ public class EquipmentOnBodyTest {
         equipmentOnBody = new EquipmentOnBody(new HashMap<EquipmentSlot, Equipment>());
     }
 
-
-    //kolla alla tester!!!!!!!!!!!!!
     @Test
     @DisplayName("Test to put an equipment in a slot")
     public void testToPutEquipmentInSlot() {
