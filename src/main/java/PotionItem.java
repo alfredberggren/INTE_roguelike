@@ -5,7 +5,7 @@ public class PotionItem extends ConsumableItem {
     private int turnLimit;
     private Equipment.Effect effect;
 
-    public PotionItem(String name, Equipment.Effect effect, int turnLimit) {
+    public PotionItem(String name, Equipment.Effect effect, int turnLimit) {   //vilka påverkningar får character? -Palina
         super(name);
         if (effect == null) {
             throw new NullPointerException("Effect cannot be null!");
