@@ -1,5 +1,6 @@
 import java.util.*;
 
+//TODO: skapa dörrar i alla rum som skapas, med olika sannolikheter för om de är öppna eller ej.
 public class MapBuilder {
     private static final EnumMap<Difficulty, Integer> DIFF_RATIO = new EnumMap<>(Difficulty.class) {{
         put(Difficulty.EASY, 3);

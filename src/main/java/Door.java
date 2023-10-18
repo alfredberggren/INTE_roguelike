@@ -8,6 +8,8 @@ import java.util.Set;
  * not require a key.
  * @author Kristian
  */
+
+//TODO: borde kunna finnas en chans att, när man försöker öppna en dörr med en nyckel, att nyckeln och dörren går sönder och gör den ogenomtränglig.
 public class Door extends Prop{
 
     private boolean open;
