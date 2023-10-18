@@ -40,11 +40,14 @@ public class InteractableDirector {
 
     public InteractableDirector(Map<HashMap<InteractableGenerator, Integer>, Integer> generatorProbabilities) {
         generatorProbabilityMaps = convertPercentages(generatorProbabilities);
+        //TODO: Extract method
         Map<HashMap<InteractableGenerator, Integer>, Integer> temp = new HashMap<>();
         for (Map.Entry<HashMap<InteractableGenerator, Integer>, Integer> me : generatorProbabilityMaps.entrySet()) {
             temp.put((HashMap<InteractableGenerator, Integer>) convertPercentages(me.getKey()), me.getValue());
         }
         generatorProbabilityMaps = temp;
+        //Denna metod skiftar procentsatserna beroende på svårighetsgraden, men den fungerar inte i nuläget
+        //TODO: fixa
         determineProbabilities();
     }
 
@@ -55,9 +58,8 @@ public class InteractableDirector {
      */
     public Interactable getInteractable() {
         int mapDeterminator = r.nextInt(100) + 1;
-        System.out.println(generatorProbabilityMaps);
         for (Map.Entry<HashMap<InteractableGenerator, Integer>, Integer> me : generatorProbabilityMaps.entrySet()) {
-            if (mapDeterminator < me.getValue()) {
+            if (mapDeterminator <= me.getValue()) {
                 return getInteractableFromProbabilityMap(me.getKey());
             }
         }
@@ -72,13 +74,30 @@ public class InteractableDirector {
     private Interactable getInteractableFromProbabilityMap(HashMap<InteractableGenerator, Integer> probMap) {
         int interactableGeneratorDeterminator = r.nextInt(100) + 1;
         for (Map.Entry<InteractableGenerator, Integer> e : probMap.entrySet()) {
-            if (interactableGeneratorDeterminator < e.getValue()) {
+            if (interactableGeneratorDeterminator <= e.getValue()) {
                 return e.getKey().generateInteractable();
             }
         }
         return null;
     }
 
+    /**
+     * Shifts values in all probability maps based on difficulty,
+     * The method should maintain a total percentage of 100 in all probability maps
+     * EXAMPLE:
+     * probabilityMap contains values =
+     * { [InteractableGenerator1, 33.3],
+     *   [InteractableGenerator2, 33.3],
+     *   [InteractableGenerator3, 33.3] }
+     * If difficulty is HARD (which means a difficulty scale of 7) the map should be converted to:
+     * { [InteractableGenerator1, 26.3],
+     *   [InteractableGenerator2, 33.3],
+     *   [InteractableGenerator3, 40.3] }
+     * This is based on the presumption that the generators are ordered by their probability value (so that the least probable generator will
+     * have the most significant decrease in probability).
+     * @return
+     * Returns a generated interactable from a randomly selected InteractableGenerator.
+     */
     private void determineProbabilities() {
         for (HashMap<?, Integer> m : generatorProbabilityMaps.keySet()) {
             int tempDiffScale = difficultyScale;
@@ -105,19 +124,19 @@ public class InteractableDirector {
      *
      */
     private static <T> Map<T, Integer> convertPercentages(Map<T, Integer> mapToGenerateFrom){
-
         int check = 0;
         System.out.println(mapToGenerateFrom + " " + check);
 
+
         Map<T, Integer> newMap = new HashMap<>();
-        
+
         for (Map.Entry<T, Integer> e : mapToGenerateFrom.entrySet()) {
             check = check + e.getValue();
             System.out.println(e.getValue() + " : " + check);
 
             newMap.put(e.getKey(), check);
         }
-        System.out.println("Total check: " +check);
+        System.out.println("Total check: " + check);
 
         if (check != 100) {
             throw new IllegalStateException("Percentages must amount to exactly 100!");

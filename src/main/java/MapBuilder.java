@@ -65,8 +65,6 @@ public class MapBuilder {
         }
         //Set all rooms in maps available directions, should not be needed now
         //mapController.setAvailableDirectionsInRooms();
-
-
     }
 
 
@@ -117,12 +115,15 @@ public class MapBuilder {
         int amountOfInteractables = generateAmountOfInteractables();
 
         for (int i = 0; i < amountOfInteractables; i++) {
-            interactables.add(interactableDirector.getInteractable());
+            Interactable in = interactableDirector.getInteractable();
+            interactables.add(in);
         }
         return interactables;
     }
 
-    //Gaussian madness 9000
+    // This method will generate an amount of interactables to be placed in each room,
+    // based on a randomly selected value from a gaussian curve. The purpose of this is to significantly decrease
+    // the likelihood of generating a large amount of interactables in every room, but still preserving the possibility to do so.
     private int generateAmountOfInteractables() {
         return Math.abs((int) r.nextGaussian(0.0, 1.2)) + 1;
     }
