@@ -81,13 +81,8 @@ public class MapBuilderTest {
         Map<HashMap<InteractableGenerator, Integer>, Integer> testProbabilityMap = getTestProbabilityMap();
         interactableDirector = new InteractableDirector(testProbabilityMap);
 
-        mapBuilder = new MapBuilder(Difficulty.MEDIUM, 3000000, DEFAULT_PLAYER, mapController, interactableDirector);
+        mapBuilder = new MapBuilder(Difficulty.MEDIUM, 3000, DEFAULT_PLAYER, mapController, interactableDirector);
     }
-
-//    @AfterEach
-//    public void reset() {
-//        mapController = null;
-//    }
 
     @Test
     @DisplayName("Testar om kartan har NPC-karaktärer.")
