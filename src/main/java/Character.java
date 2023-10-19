@@ -13,7 +13,7 @@ public class Character implements Interactable {
             InteractableAction.LOOT,
             InteractableAction.DROP)
     );
-    private static final String NAME_PATTERN = "^[A-Za-z]\\w{1,11}$";
+    private static final String DEFAULT_NAME_PATTERN = "^[A-Za-z]\\w{1,11}$";
     private Set<InteractableAction> possibleInteractableActions;
     protected String name;
     private int health;
@@ -21,43 +21,49 @@ public class Character implements Interactable {
     private int mana;
     protected int level;
     private Position pos;
-    private boolean isDead = false;
-    private Set<Ability> abilities = new HashSet<>();
-    private InteractableInventory inventory = new InteractableInventory();
-    private boolean canUseMagic = true; // remove
-    private EquipmentOnBody equipmentOnBody = new EquipmentOnBody();
+    private Set<Ability> abilities;
+    private InteractableInventory inventory;
+    private EquipmentOnBody equipmentOnBody;
     private TurnSystem turnSystem;
 
     public Character(String name, int health, int speed, IO io) {
-        if (health < 0 || speed < 0) {
-            throw new IllegalArgumentException("Speed and health needs to be 0 or more");
+        if (health < 0) {
+            throw new IllegalArgumentException("Health needs to be 0 or more");
         }
-        this.name = name;
         this.health = health;
+        if (speed < 0) {
+            throw new IllegalArgumentException("Speed needs to be 0 or more");
+        }
         this.speed = speed;
+        this.name = name;
         mana = 0;
         pos = new Position(0, 0);
-        if (health > 0) {
-            isDead = false;
-        }
         possibleInteractableActions = STANDARD_CHARACTER_INTERACTABLE_ACTIONS;
         turnSystem = new TurnSystem(io);
+        inventory = new InteractableInventory();
+        abilities = new HashSet<>();
+        equipmentOnBody = new EquipmentOnBody();
+
+
     }
 
     public Character(String name, int health, int speed, Position pos, IO io) {
-        if (health < 0 || speed < 0) {
-            throw new IllegalArgumentException("Speed and health needs to be 0 or more");
+        if (health < 0) {
+            throw new IllegalArgumentException("Health needs to be 0 or more");
         }
-        this.name = name;
         this.health = health;
-        this.speed = speed;
-        this.mana = 0;
-        this.pos = pos;
-        if (health > 0) {
-            isDead = false;
+        if (speed < 0) {
+            throw new IllegalArgumentException("Speed needs to be 0 or more");
         }
+        this.speed = speed;
+        this.name = name;
+        mana = 0;
+        this.pos = pos;
         possibleInteractableActions = STANDARD_CHARACTER_INTERACTABLE_ACTIONS;
         turnSystem = new TurnSystem(io);
+        inventory = new InteractableInventory();
+        abilities = new HashSet<>();
+        equipmentOnBody = new EquipmentOnBody();
     }
 
     public String getName() {
@@ -92,25 +98,26 @@ public class Character implements Interactable {
         return turnSystem;
     }
 
+    /** user input
+     the username consists of 2 to 10 characters. If less - invalid username
+     the username can only contain alphanumeric characters and underscores(_)
+     uppercase, lowercase and digits (0-9)
+     the first character must be an alphabetic character*/
     public void setName(String name) {
-        /** user input
-         the username consists of 2 to 10 characters. If less - invalid username
-         the username can only contain alphanumeric characters and underscores(_)
-         uppercase, lowercase and digits (0-9)
-         the first character must be an alphabetic character*/
+
         if (name == null) {
             throw new NullPointerException("Error: name can't be null");
         }
         if (name.isEmpty()) {
             throw new IllegalArgumentException("Error: name can't be empty");
         }
-        if (!matchesPattern(NAME_PATTERN, name)) {
+        if (matchesPattern(DEFAULT_NAME_PATTERN, name)) this.name = name;
+        else {
             throw new IllegalArgumentException("Name doesn't match the pattern");
-        } else
-            this.name = name;
+        }
     }
 
-    boolean matchesPattern(String pattern, String name) {
+    private boolean matchesPattern(String pattern, String name) {
         Pattern p = Pattern.compile(pattern);
         Matcher m = p.matcher(name);
         return m.find();
@@ -140,9 +147,6 @@ public class Character implements Interactable {
         if (health < 0) {
             throw new IllegalArgumentException("Health cannot be negative!");
         }
-        if (health == 0) {
-            isDead = true;
-        }
         this.health = health;
     }
 
@@ -162,7 +166,6 @@ public class Character implements Interactable {
         int result = mana -= decrease;
         if (result <= 0) {
             setMana(0);
-            canUseMagic = false;
         }
         setMana(result);
     }
@@ -175,7 +178,6 @@ public class Character implements Interactable {
     public void decreaseHealth(int decrease) {
         int result = health - decrease;
         if (result <= 0) {
-            isDead = true;
             setHealth(0);
         } else {
             setHealth(result);
@@ -187,10 +189,8 @@ public class Character implements Interactable {
     }
 
     public boolean canUseMagic() {
-        if (mana != 0)
-            return true;
-        else
-            return false;
+        if (this.mana == 0) return false;
+        else return true;
     }
 
     public void setLevel(int level) {
