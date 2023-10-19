@@ -69,7 +69,7 @@ public class MagicAbility extends Ability{
         int levelBonus = character.getLevel() * LEVEL_BONUS_FOR_MAGIC;
         int experienceBonus = DEFAULT_XP;
         if(character instanceof Player player) {
-            experienceBonus = player.getExperiencePoint() / XP_BONUS_FOR_MAGIC;
+            experienceBonus = player.getAmountOfExperience() / XP_BONUS_FOR_MAGIC;
         }
         return baseDamage + levelBonus + experienceBonus;
     }

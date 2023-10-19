@@ -19,13 +19,13 @@ public class PhysicalAbilityTest {
 
     @Test
     @DisplayName("Returns if a Physical Ability exist")
-    public void testOnlyPhysicalAbility() {
+    public void whenPhysicalAbilityExist_thenReturnTheType() {
         assertEquals("PHYSICAL", physicalAbility.toString());
     }
 
     @Test
     @DisplayName("Test calculating damage for Slash")
-    public void testCalculateDamageForSword() {
+    public void whenCharacterUsePhysicalAbility_thenCalculateTheDamage() {
         character.setLevel(2);
         player.increaseXP(50);
         int damage = physicalAbility.calculateDamageOfPhysicalAbility(character);
@@ -34,7 +34,7 @@ public class PhysicalAbilityTest {
 
     @Test
     @DisplayName("Test for calculating damage for Physical Ability when character has low level")
-    public void testPhysicalCalculateDamageForLowLevelPlayer() {
+    public void whenCharacterHasLowLevel_thenCalculateTheDamageTheAbilityDo() {
         character.setLevel(1);
         player.increaseXP(0);
         int damage = physicalAbility.calculateDamageOfPhysicalAbility(character);
@@ -43,7 +43,7 @@ public class PhysicalAbilityTest {
 
     @Test
     @DisplayName("Test for calculating damage for Physical Ability when character has high level")
-    public void testPhysicalCalculateDamageForHighLevelPlayer() {
+    public void whenCharacterHasHighLevel_thenCalculateTheDamageTheAbilityDo() {
         character.setLevel(10);
         player.increaseXP(100);
         int damage = physicalAbility.calculateDamageOfPhysicalAbility(character);
@@ -52,7 +52,7 @@ public class PhysicalAbilityTest {
 
     @Test
     @DisplayName("Test getting the name of a physical ability")
-    public void testSpellName() {
+    public void whenGetPhysicalAbilityName_thenCheckIfItEquals() {
         assertEquals("Slash", physicalAbility.getName());
     }
 }

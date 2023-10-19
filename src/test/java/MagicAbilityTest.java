@@ -37,7 +37,7 @@ public class MagicAbilityTest {
 
     @Test
     @DisplayName("Test for calculating damage for Magic Ability when character has low level")
-    public void whenCharacteraHasLowLevel_thenCalculateTheDamageTheAbilityDo() {
+    public void whenCharacterHasLowLevel_thenCalculateTheDamageTheAbilityDo() {
         character.setLevel(1);
         if (character instanceof Player player) {
             player.increaseXP(0);
@@ -48,7 +48,7 @@ public class MagicAbilityTest {
 
     @Test
     @DisplayName("Test for calculating damage for Magic Ability when character has high level")
-    public void whenCharacteraHasHighLevel_thenCalculateTheDamageTheAbilityDo() {
+    public void whenCharacterHasHighLevel_thenCalculateTheDamageTheAbilityDo() {
         character.setLevel(10);
         if (character instanceof Player player) {
             player.increaseXP(100);
@@ -72,28 +72,28 @@ public class MagicAbilityTest {
     }
 
     @Test
-    @DisplayName("Test getting the name of a spell")
-    public void testSpellName() {
+    @DisplayName("Test getting the name of a magic ability")
+    public void whenGetMagicAbilityName_thenCheckIfItEquals() {
         assertEquals("Fireball", magicAbility.getName());
     }
 
     @Test
     @DisplayName("Test getting the casting time of a spell")
-    public void testSpellCastingTime() {
+    public void whenSetCastingTimeOfSpell_thenCheckIfItEqualsGetCastingTime() {
         magicAbility.setRequiredTimeToCast(3);
         assertEquals(3, magicAbility.getRequiredTimeToCast());
     }
 
     @Test
     @DisplayName("Test getting the cool-down time of a spell")
-    public void testSpellCoolDown() {
+    public void whenSetCoolDownTime_thenCheckIfItEqualsGetCoolDownTime() {
         magicAbility.setCoolDownTime(8);
         assertEquals(8, magicAbility.getCoolDownTime());
     }
 
     @Test
     @DisplayName("Test setting and getting the casting time of a spell")
-    public void testSetAndGetSpellCastingTime() {
+    public void whenSetAndGetOfTimeToCast_thenCheckIfItReturnCorrect() {
         magicAbility.setRequiredTimeToCast(4);
         assertEquals(4, magicAbility.getRequiredTimeToCast());
         magicAbility.setRequiredTimeToCast(3);
@@ -102,7 +102,7 @@ public class MagicAbilityTest {
 
     @Test
     @DisplayName("Test setting and getting the cool-down time of a spell")
-    public void testSetAndGetSpellCoolDown() {
+    public void whenSetAndGetOfCoolDownTime_thenCheckIfItReturnCorrect() {
         magicAbility.setCoolDownTime(10);
         assertEquals(10, magicAbility.getCoolDownTime());
         magicAbility.setCoolDownTime(5);
@@ -111,7 +111,7 @@ public class MagicAbilityTest {
 
     @Test
     @DisplayName("Required time to cast a magic spell cannot be negative")
-    public void testCastingTimeCannotBeNegative() {
+    public void whenTimeToCastIsNegative_thenThrowIllegalArgumentException() {
         assertThrows(IllegalArgumentException.class, () -> {
             magicAbility.setRequiredTimeToCast(-1);
         });
@@ -119,7 +119,7 @@ public class MagicAbilityTest {
 
     @Test
     @DisplayName("Test cool-down time cannot be negative")
-    public void testCoolDownTimeCannotBeNegative() {
+    public void whenCoolDownTimeIsNegative_thenThrowIllegalArgumentException() {
         assertThrows(IllegalArgumentException.class, () -> {
             magicAbility.setCoolDownTime(-1);
         });

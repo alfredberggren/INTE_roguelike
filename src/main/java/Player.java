@@ -1,6 +1,7 @@
 public class Player extends Character{
 
     private static final int AMOUNT_OF_XP_TO_LEVEL_UP = 1000;
+    private static final int MAX_LEVEL = 10;
     private int amountOfExperience;
 
 
@@ -44,7 +45,7 @@ public class Player extends Character{
     }
 
     private void increaseLevel() {
-        if(getLevel() < 10) {
+        if(getLevel() < MAX_LEVEL) {
             setLevel(getLevel() + 1);
         }
     }
