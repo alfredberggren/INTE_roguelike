@@ -15,6 +15,7 @@ public class Character implements Interactable {
     );
     private static final String DEFAULT_NAME_PATTERN = "^[A-Za-z]\\w{1,11}$";
     private static final int MAX_LEVEL = 10;
+    private static final int MAX_HEALTH = 100;
     private Set<InteractableAction> possibleInteractableActions;
     private String name;
     private int health;
@@ -28,14 +29,11 @@ public class Character implements Interactable {
     private TurnSystem turnSystem;
 
     public Character(String name, int health, int speed, int level, IO io) {
-        if (health < 0) {
-            throw new IllegalArgumentException("Health needs to be 0 or more");
-        }
         this.setHealth(health);
         if (speed < 0) {
             throw new IllegalArgumentException("Speed needs to be 0 or more");
         }
-        if (io == null) { //??
+        if (io == null) {
             throw new IllegalArgumentException("IO Cannot be null");
         }
         this.setLevel(level);
@@ -53,14 +51,11 @@ public class Character implements Interactable {
     }
 
     public Character(String name, int health, int speed, int level, Position pos, IO io) {
-        if (health < 0) {
-            throw new IllegalArgumentException("Health needs to be 0 or more");
-        }
         this.setHealth(health);
         if (speed < 0) {
             throw new IllegalArgumentException("Speed needs to be 0 or more");
         }
-        if (io == null) { //??
+        if (io == null) {
             throw new IllegalArgumentException("IO Cannot be null");
         }
         this.setLevel(level);
@@ -107,11 +102,22 @@ public class Character implements Interactable {
         return turnSystem;
     }
 
-    /** user input
-     the username consists of 2 to 10 characters. If less - invalid username
-     the username can only contain alphanumeric characters and underscores(_)
-     uppercase, lowercase and digits (0-9)
-     the first character must be an alphabetic character*/
+    public Set<Ability> getAbilities() {
+        return abilities;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+
+    /**
+     * user input
+     * the username consists of 2 to 10 characters. If less - invalid username
+     * the username can only contain alphanumeric characters and underscores(_)
+     * uppercase, lowercase and digits (0-9)
+     * the first character must be an alphabetic character
+     */
     public void setName(String name) {
 
         if (name == null) {
@@ -132,29 +138,14 @@ public class Character implements Interactable {
         return m.find();
     }
 
-    /**
-     * Checks if Set is not empty and...*/
-    public void removeAbility(Ability ability) {
-        int characterLevel = getLevel();
-        if (!abilities.contains(ability) && characterLevel < ability.getRequiredLevel()) {
-            abilities.remove(ability);
-        }
-    }
-
-    /**Adds an ability to the set*/
-    public void addAbility(Ability ability) {
-        abilities.add(ability);
-    }
-
-    public Set<Ability> getAbilities() {
-        return abilities;
-    }
-
     public void setHealth(int health) {
         if (health < 0) {
             throw new IllegalArgumentException("Health cannot be negative!");
         }
-        this.health = health;
+        if (health > MAX_HEALTH)
+            this.health = MAX_HEALTH;
+        else
+            this.health = health;
     }
 
     public void setPos(Position pos) {
@@ -165,41 +156,10 @@ public class Character implements Interactable {
     }
 
     public void setMana(int mana) {
+        if (mana < 0) {
+            throw new IllegalArgumentException("Mana cannot be negative!");
+        }
         this.mana = mana;
-    }
-
-    public void increaseMana(int add) {
-        setMana(mana += add);
-    }
-
-    public void decreaseMana(int decrease) {
-        int result = mana -= decrease;
-        if (result <= 0) {
-            setMana(0);
-        }
-        setMana(result);
-    }
-
-    public void increaseHealth(int add) {
-        int result = health + add;
-        setHealth(result);
-    }
-
-    public void decreaseHealth(int decrease) {
-        int result = health - decrease;
-        if (result <= 0) {
-            setHealth(0);
-        } else {
-            setHealth(result);
-        }
-    }
-
-    public boolean isDead() {
-        return health <= 0;
-    }
-
-    public boolean canUseMagic() {
-        return mana != 0;
     }
 
     public void setLevel(int level) {
@@ -212,9 +172,72 @@ public class Character implements Interactable {
         }
     }
 
-    public int getLevel() {
-        return level;
+    /**
+     * Checks if Set is not empty and...
+     */
+    public void removeAbility(Ability ability) {
+        int characterLevel = getLevel();
+        if (!abilities.contains(ability) && characterLevel < ability.getRequiredLevel()) {
+            abilities.remove(ability);
+        }
     }
+
+    /**
+     * Adds an ability to the set
+     */
+    public void addAbility(Ability ability) {
+        abilities.add(ability);
+    }
+
+    public void increaseMana(int add) {
+        if (add <= 0) {
+            throw new IllegalArgumentException("It is not possible to increase mana with zero or negative value!");
+        }
+        if (mana + add == Integer.MAX_VALUE) {
+            throw new StackOverflowError("The value is too big");
+        } else
+            setMana(mana + add);
+    }
+
+    public void decreaseMana(int decrease) {
+        if (decrease <= 0) {
+            throw new IllegalArgumentException("It is not possible to decrease mana with zero or negative value!");
+        }
+        if (mana - decrease <= 0) {
+            setMana(0);
+        } else
+            setMana(mana - decrease);
+    }
+
+    public void increaseHealth(int add) {
+        if (add <= 0) {
+            throw new IllegalArgumentException("It is not possible to increase health with zero or negative value!");
+        }
+        if (health + add < MAX_HEALTH)
+            setHealth(health + add);
+        else
+            setHealth(MAX_HEALTH);
+    }
+
+    public void decreaseHealth(int decrease) {
+        if (decrease <= 0) {
+            throw new IllegalArgumentException("It is not possible to decrease health with zero or negative value!");
+        }
+        if (health - decrease <= 0) {
+            setHealth(0);
+        } else {
+            setHealth(health - decrease);
+        }
+    }
+
+    public boolean isDead() {
+        return health == 0;
+    }
+
+    public boolean canUseMagic() {
+        return mana != 0;
+    }
+
 
     /**
      * For unequip we check if this equipment is "on body".
