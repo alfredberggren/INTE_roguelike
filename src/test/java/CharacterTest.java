@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CharacterTest {
     static Character character;
     static Character characterWithPos = new Character("Rudolf", 100, 1,1,  new Position(1, 2), new TextIO());
+    static Equipment equipment = new Equipment("Sword", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10,1, "Test"));
 
     @BeforeEach
     void setUp() {
@@ -102,6 +103,13 @@ public class CharacterTest {
     }
 
     @Test
+    @DisplayName("Test to set health equal to zero")
+    public void testIfCharacterIsDeadWhenHealthIsZero() {
+        character.setHealth(0);
+        assertTrue(character.isDead());
+    }
+
+    @Test
     @DisplayName("Test to set correct health")
     public void testToSetCorrectHealth() {
         character.setHealth(100);
@@ -118,19 +126,15 @@ public class CharacterTest {
     @Test
     @DisplayName("Test to set position equal to null")
     public void testToSetPositionEqualToNull_ThrowsException() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> {
            character.setPos(null);
         });
     }
 
-
-
-
-
     @Test
     @DisplayName("Test to set i constructor negative speed")
     public void testConstructorWithNegativeSpeed_ThrowsException() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> {
             new Character("Ragnar", 100, -10,1, new TextIO());
         });
     }
@@ -138,18 +142,133 @@ public class CharacterTest {
     @Test
     @DisplayName("Test to set i constructor IO equal to null")
     public void testConstructorWithNIOEqualToNull_ThrowsException() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> {
             new Character("Ragnar", 100, -10,1, null);
         });
     }
 
+    @Test
+    @DisplayName("Test to set negative mana")
+    public void testToSetNegativeMana_ThrowsException() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            character.setMana(-10);
+        });
+    }
 
     @Test
-    @DisplayName("Test to decrease health to 0")
-    public void testToDecreaseHealthToZero() {
-        character.decreaseHealth(80);
+    @DisplayName("Test to set mana larger than max mana")
+    public void testToSetManaLargeThanMaxMana_ShouldSetMaxMana() {
+        character.setMana(110);
+        assertEquals(100, character.getMana());
+    }
+
+    @Test
+    @DisplayName("Test to set mana equal to zero")
+    public void testToSetManaEqualToZero() {
+        character.setHealth(0);
+        assertEquals(0, character.getMana());
+        assertFalse(character.canUseMagic());
+    }
+
+    @Test
+    @DisplayName("Test to set correct mana")
+    public void testToSetCorrectMana() {
+        character.setMana(100);
+        assertEquals(100, character.getMana());
+    }
+
+    @Test
+    @DisplayName("Test to set correct level")
+    public void testToSetCorrectLevel() {
+        character.setLevel(1);
+        assertEquals(1, character.getLevel());
+    }
+
+    @Test
+    @DisplayName("Test to set level equal to zero")
+    public void testToSetLevelEqualToZero() {
+        character.setLevel(0);
+        assertEquals(0, character.getLevel());
+    }
+
+    @Test
+    @DisplayName("Test to set negative level")
+    public void testToSetNegativeLevel_ThrowsException() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            character.setLevel(-10);
+        });
+    }
+
+    @Test
+    @DisplayName("Test to set level larger than max level")
+    public void testToSetLevelLargeThanMaxLevel_ShouldSetMaxLevel() {
+        character.setLevel(80);
+        assertEquals(10, character.getLevel());
+    }
+
+    @Test
+    @DisplayName("Test to increase mana with correct value")
+    public void testToIncreaseManaWithCorrectValue() {
+        character.increaseMana(10);
+        assertEquals(10, character.getMana());
+        assertTrue(character.canUseMagic());
+    }
+
+    @Test
+    @DisplayName("Test to increase mana with negative value")
+    public void testToIncreaseManaWithNegativeValue_ThrowsException() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            character.increaseMana(-10);
+        });
+    }
+
+    @Test
+    @DisplayName("Test to decrease mana with correct value to zero")
+    public void testToDecreaseManaWithCorrectValueToZero() {
+        character.increaseMana(100);
+        character.decreaseMana(100);
+        assertEquals(0, character.getMana());
+        assertFalse(character.canUseMagic());
+    }
+
+    @Test
+    @DisplayName("Test to decrease mana with negative value")
+    public void testToDecreaseManaWithNegativeValue_ThrowsException() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            character.decreaseMana(-10);
+        });
+    }
+
+    @Test
+    @DisplayName("Test to increase health with correct value")
+    public void testToIncreaseHealthWithCorrectValue() {
+        character.increaseHealth(10);
+        assertEquals(10, character.getHealth());
+    }
+
+    @Test
+    @DisplayName("Test to increase health with negative value")
+    public void testToIncreaseHealthWithNegativeValue_ThrowsException() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            character.increaseHealth(-10);
+        });
+    }
+
+    @Test
+    @DisplayName("Test to decrease health with correct value to zero")
+    public void testToDecreaseHealthWithCorrectValueToZero() {
+        character.increaseHealth(100);
+        character.decreaseHealth(100);
         assertEquals(0, character.getHealth());
         assertTrue(character.isDead());
+    }
+
+    @Test
+    @DisplayName("Test to decrease health with negative value")
+    public void testToDecreaseHealthWithNegativeValue_ThrowsException() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            character.decreaseHealth(-10);
+        });
     }
 
     @Test
@@ -160,31 +279,8 @@ public class CharacterTest {
         assertTrue(character.isDead());
     }
 
-    @Test
-    @DisplayName("Test to increase health")
-    public void testToIncreaseHealth() {
-        character.increaseHealth(20);
-        assertEquals(100, character.getHealth());
-    }
 
-    @Test
-    @DisplayName("Test to increase mana and ability to use magic if mana>0")
-    public void testToIncreaseMana() {
-        character.increaseMana(100);
-        assertEquals(100, character.getMana());
-        assertTrue(character.canUseMagic());
-    }
-
-    @Test
-    @DisplayName("Test to decrease mana and ability to use magic if mana=0")
-    public void testToDecreaseMana() {
-        character.increaseMana(100);
-        character.decreaseMana(100);
-        assertEquals(0, character.getMana());
-        assertFalse(character.canUseMagic());
-    }
-
-
+    //kollade inte ability testerna
     @Test
     @DisplayName("Test that character get Magic Ability")
     public void testCharacterMagicAbility() {
@@ -221,34 +317,23 @@ public class CharacterTest {
         assertFalse(character.getAbilities().contains(fireSpell));
         assertDoesNotThrow(() -> character.removeAbility(iceSpell));
     }
+    //ability testerna
 
-    @Test
-    @DisplayName("Test set-method at health=0")
-    public void testIfCharacterIsDeadWhenHealthIsZero() {
-        character.setHealth(0);
-        assertTrue(character.isDead());
-    }
 
-    @Test
-    @DisplayName("Test throws Exception at negative health")
-    public void testThrowsExceptionWithNegativeHealth() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            character.setHealth(-10);
-        });
-    }
+
 
     @Test
     @DisplayName("Test to equip a character")
     public void testToEquipCharacter() {
-        character.getInventory().add(new Equipment("Sword", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1)));
-        character.equip(new Equipment("Sword", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1)));
+        character.getInventory().add(equipment);
+        character.equip(equipment);
         assertEquals("LEFT_HAND: Sword +50% DAMAGE", character.getEquipmentOnBody().toString());
     }
 
     @Test
     @DisplayName("Test to equip a character when Equipment is null")
     public void testToEquipCharacterWhenEquipmentIsNull() {
-        character.getInventory().add(new Equipment("Sword", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1)));
+        character.getInventory().add(equipment);
         character.equip(null);
         assertEquals("", character.getEquipmentOnBody().toString());
     }
@@ -256,17 +341,15 @@ public class CharacterTest {
     @Test
     @DisplayName("Test to unequip a character")
     public void testToUnEquipCharacter() {
-        Equipment testEquipment = new Equipment("Sword", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1));
-        character.getInventory().add(new Equipment("Sword", EquipmentSlot.LEFT_HAND, new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.UNEQUIP)), Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1)));
-        character.equip(testEquipment);
-        character.unEquip(testEquipment);
+        character.getInventory().add(equipment);
+        character.equip(equipment);
+        character.unEquip(equipment);
         assertEquals("", character.getEquipmentOnBody().toString());
     }
 
     @Test
     @DisplayName("Test to unequip a character when Equipment is null")
     public void testToUnEquipCharacterWhenEquipmentIsNull() {
-        Equipment equipment = new Equipment("Sword", EquipmentSlot.LEFT_HAND, new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP)), Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1));
         character.getInventory().add(equipment);
         character.equip(equipment);
         character.unEquip(null);
@@ -274,9 +357,8 @@ public class CharacterTest {
     }
 
     @Test
-    @DisplayName("Test that equipment which was Uneqiped was added to Inventory")
+    @DisplayName("Test that equipment which was uneqiped was added to Inventory")
     public void testThatDiscardedEquipmentWasAddedToInventory() {
-        Equipment equipment = new Equipment("Sword", EquipmentSlot.LEFT_HAND, new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.UNEQUIP)), Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1));
         character.getInventory().add(equipment);
         character.equip(equipment);
         character.unEquip(equipment);
@@ -286,7 +368,6 @@ public class CharacterTest {
     @Test
     @DisplayName("Test that equipment which was selected to equip was removed from Inventory")
     public void testThatChosenEquipmentWasRemovedFromInventory() {
-        Equipment equipment = new Equipment("Sword", EquipmentSlot.LEFT_HAND, new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP)), Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1));
         character.equip(equipment);
         assertFalse(character.getInventory().contains(equipment));
     }
@@ -294,27 +375,17 @@ public class CharacterTest {
     @Test
     @DisplayName("Test that character get the ability from the equipment after equip()")
     public void testThatCharacterGetAbilityAfterEquip() {
-        Equipment equipment = new Equipment("Sword", EquipmentSlot.LEFT_HAND, new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP)), Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1));
         character.equip(equipment);
-        assertTrue(character.getAbilities().contains(new PhysicalAbility("Sword", 10, 1)));
+        assertTrue(character.getAbilities().contains(new PhysicalAbility("Sword", 10, 1, "Test")));
     }
 
     @Test
     @DisplayName("Test to remove ability from character after unEquip()")
     public void testRemoveAbilityFromCharacterAfterUnEquip() {
-        Equipment equipment = new Equipment("Sword", EquipmentSlot.LEFT_HAND, new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP)), Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1));
         character.getInventory().add(equipment);
         character.equip(equipment);
         character.unEquip(equipment);
-        assertFalse(character.getAbilities().contains(new PhysicalAbility("Sword", 10, 1)));
-    }
-
-
-    @Test
-    @DisplayName("Test that player cannot be in a level higher than 10")
-    public void testPlayerLevelDoNotExceedAcceptedLevel() {
-        character.setLevel(11);
-        assertEquals(10, character.getLevel());
+        assertFalse(character.getAbilities().contains(new PhysicalAbility("Sword", 10, 1, "Test")));
     }
 
 }
