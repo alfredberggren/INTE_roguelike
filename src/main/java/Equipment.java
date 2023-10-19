@@ -5,6 +5,7 @@
 import java.util.*;
 
 public class Equipment extends NonLivingEntity {
+
     private static final Set<InteractableAction> STANDARD_INTERACTABLE_ACTIONS = new HashSet<>(Arrays.asList(
             InteractableAction.LOOT,
             InteractableAction.DROP,
@@ -12,28 +13,27 @@ public class Equipment extends NonLivingEntity {
             InteractableAction.UNEQUIP)
     );
 
-    private Effect effect; //gör till egen klass?
-    private int damage;
+    private Effect effect;
+    private int durability;
     private Ability ability;
 
     //Why would equipment need this?
     private EquipmentSlot equipmentSlot;
-    private double damageBar;
 
 
     /**Constructs Equipment with the specified characteristics*/
-    public Equipment(String name, EquipmentSlot equipmentSlot, Effect effect, int damage, Ability ability) {
+    public Equipment(String name, EquipmentSlot equipmentSlot, Effect effect, int durability, Ability ability) {
         super(name, STANDARD_INTERACTABLE_ACTIONS);
         this.effect = effect;
-        this.damage = damage;
+        this.durability = durability;
         this.ability = ability;
         this.equipmentSlot = equipmentSlot;
     }
 
-    public Equipment(String name, EquipmentSlot equipmentSlot, Set<Interactable.InteractableAction> possibleActions, Effect effect, int damage, Ability ability) {
+    public Equipment(String name, EquipmentSlot equipmentSlot, Set<Interactable.InteractableAction> possibleActions, Effect effect, int durability, Ability ability) {
         super(name, possibleActions);
         this.effect = effect;
-        this.damage = damage;
+        this.durability = durability;
         this.ability = ability;
         this.equipmentSlot = equipmentSlot;
     }
@@ -50,35 +50,16 @@ public class Equipment extends NonLivingEntity {
         this(name, null, Effect.NONE, 0, null);
     }
 
-    public String getName(){
-        return name;
-    }
-
-    /**Retrieves the effect provided by the equipment*/
-    public Effect getEffect() {
-        return effect;
-    }
-
     public EquipmentSlot getEquipmentSlot() {
         return equipmentSlot;
     }
 
-    public int getDamage() {
-        return damage;
+    public int getDurability() {
+        return durability;
     }
 
     public Set<InteractableAction> getPossibleActions() {
         return possibleInteractableActions;
-    }
-
-    /**Represents the possible effects of the equipment*/
-    public enum Effect {
-        SPEED, HEALTH, DAMAGE, ARMOR, NONE
-    }
-
-    /**Represents different types of armor*/
-    public enum Armor {
-        HELMET, CHEST_ARMOR, LEGGING, BOOTS
     }
 
     /**Retrieves the type of associated ability*/
@@ -87,33 +68,32 @@ public class Equipment extends NonLivingEntity {
     }
 
     /**Modifies the damage to the equipment based on a damage bar value. If the damage bar falls to or below zero, the equipment is considered destroyed*/
-    public void damageModifier(double damageBar) {
-        double decreaseBy = 10;
-        if (damageBar >= 10 && damageBar <= 100) {
-            damageBar -= decreaseBy;
-            if (damageBar <= 0) {
-                setDamageOnEquipment(0);
+    public void decreaseDurability(int decreaseBy) {
+        if (!isBroken()) {
+            durability -= decreaseBy;
+            if (durability <= 0) {
+                setDurabilityOnEquipment(0);
             }
         }
-        setDamageOnEquipment(damageBar);
-        //Simon:
-        //should this be a runtime exception? and how is this exception handled
-        //it could instead be handled in turnSystem
-        //where if any of the equipment on the char has reached 0 att the start of the turn
-        //it is removed from character
-        if (damageBar == 0) {
-            throw new RuntimeException("Equipment has been destroyed!");
-        }
+    }
+
+    private boolean isBroken() {
+        return durability == 0;
     }
 
     /**Sets the damage bar value of the equipment*/
-    public void setDamageOnEquipment(double damageBar) {
-        this.damageBar = damageBar;
+    private void setDurabilityOnEquipment(int durability) {
+        this.durability = durability;
     }
 
     /**Retrieves the current damage bar value of the equipment*/
-    public double getDamageOnEquipment() {
-        return damageBar;
+    public int getDamageOnEquipment() {
+        return durability;
+    }
+
+    /**Retrieves the effect provided by the equipment*/
+    public Effect getEffect() {
+        return effect;
     }
 
     @Override
@@ -121,18 +101,18 @@ public class Equipment extends NonLivingEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Equipment equipment = (Equipment) o;
-        return name.equals(equipment.getName()) && damage == equipment.damage && effect == equipment.effect && Objects.equals(ability, equipment.ability);
+        return name.equals(equipment.getName()) && durability == equipment.durability && effect == equipment.effect && Objects.equals(ability, equipment.ability);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, effect, damage, ability);
+        return Objects.hash(name, effect, durability, ability);
     }
 
     /**Returns a string representation of the equipment, including its name, damage and effect*/
     @Override
     public String toString() {
-        String s = name + " +" + damage + "% " + effect;
+        String s = name + " +" + durability + "% " + effect;
         return s;
     }
 }

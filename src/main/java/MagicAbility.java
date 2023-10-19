@@ -11,7 +11,6 @@ public class MagicAbility extends Ability{
     private static final int DEFAULT_XP = 0;
     private static final int DEFAULT_MANA_COST_TO_CAST_SPELL = 5;
     private static final int DEFAULT_REQUIRED_LEVEL_TO_USE_MAGIC = 1;
-    private Set<Ability> abilities;
     private int requiredTimeToCast;
     private int coolDownTime;
     private int manaCost;
@@ -74,25 +73,6 @@ public class MagicAbility extends Ability{
         }
         return baseDamage + levelBonus + experienceBonus;
     }
-
-    /**Calculates the impact on the character's spell casting ability, if the character does not meet the required conditions to retain the spell, the spell is forgotten*/
-    /*public boolean calculateImpactOnAbility(Character character) {
-        int characterLevel = character.getLevel();
-        if(!abilities().contains(getName()) && characterLevel < getRequiredLevel()) {
-            character.removeAbility(ability);
-            return true;
-        } else {
-            return false;
-        }
-    }*/
-
-   /* private boolean containMagic() {
-        if(abilities.contains(getName())) {
-            return true;
-        } else {
-            return false;
-        }
-    }*/
 
     @Override
     public boolean equals(Object o) {

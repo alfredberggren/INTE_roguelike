@@ -14,28 +14,33 @@ public class Character implements Interactable {
             InteractableAction.DROP)
     );
     private static final String DEFAULT_NAME_PATTERN = "^[A-Za-z]\\w{1,11}$";
+    private static final int MAX_LEVEL = 10;
     private Set<InteractableAction> possibleInteractableActions;
-    protected String name;
+    private String name;
     private int health;
     private int speed;
     private int mana;
-    protected int level;
+    private int level;
     private Position pos;
     private Set<Ability> abilities;
     private InteractableInventory inventory;
     private EquipmentOnBody equipmentOnBody;
     private TurnSystem turnSystem;
 
-    public Character(String name, int health, int speed, IO io) {
+    public Character(String name, int health, int speed, int level, IO io) {
         if (health < 0) {
             throw new IllegalArgumentException("Health needs to be 0 or more");
         }
-        this.health = health;
+        this.setHealth(health);
         if (speed < 0) {
             throw new IllegalArgumentException("Speed needs to be 0 or more");
         }
+        if (io == null) { //??
+            throw new IllegalArgumentException("IO Cannot be null");
+        }
+        this.setLevel(level);
         this.speed = speed;
-        this.name = name;
+        this.setName(name);
         mana = 0;
         pos = new Position(0, 0);
         possibleInteractableActions = STANDARD_CHARACTER_INTERACTABLE_ACTIONS;
@@ -47,18 +52,22 @@ public class Character implements Interactable {
 
     }
 
-    public Character(String name, int health, int speed, Position pos, IO io) {
+    public Character(String name, int health, int speed, int level, Position pos, IO io) {
         if (health < 0) {
             throw new IllegalArgumentException("Health needs to be 0 or more");
         }
-        this.health = health;
+        this.setHealth(health);
         if (speed < 0) {
             throw new IllegalArgumentException("Speed needs to be 0 or more");
         }
+        if (io == null) { //??
+            throw new IllegalArgumentException("IO Cannot be null");
+        }
+        this.setLevel(level);
         this.speed = speed;
-        this.name = name;
+        this.setName(name);
         mana = 0;
-        this.pos = pos;
+        this.setPos(pos);
         possibleInteractableActions = STANDARD_CHARACTER_INTERACTABLE_ACTIONS;
         turnSystem = new TurnSystem(io);
         inventory = new InteractableInventory();
@@ -124,17 +133,15 @@ public class Character implements Interactable {
     }
 
     /**
-     * Checks if Arraylist is not empty and if so removes the spell
-     */
+     * Checks if Set is not empty and...*/
     public void removeAbility(Ability ability) {
-        if (!abilities.isEmpty()) {
+        int characterLevel = getLevel();
+        if (!abilities.contains(ability) && characterLevel < ability.getRequiredLevel()) {
             abilities.remove(ability);
         }
     }
 
-    /**
-     * Adds a spell to the Arraylist
-     */
+    /**Adds an ability to the set*/
     public void addAbility(Ability ability) {
         abilities.add(ability);
     }
@@ -151,6 +158,9 @@ public class Character implements Interactable {
     }
 
     public void setPos(Position pos) {
+        if (pos == null) {
+            throw new IllegalArgumentException("Position cannot be null");
+        }
         this.pos = pos;
     }
 
@@ -189,15 +199,16 @@ public class Character implements Interactable {
     }
 
     public boolean canUseMagic() {
-        if (this.mana == 0) return false;
-        else return true;
+        return mana != 0;
     }
 
     public void setLevel(int level) {
-        if (level <= 10) {
+        if (level >= 0 && level <= MAX_LEVEL) {
             this.level = level;
+        } else if (level < 0) {
+            throw new IllegalArgumentException("Level cannot be negative");
         } else {
-            this.level = 10;
+            this.level = MAX_LEVEL;
         }
     }
 

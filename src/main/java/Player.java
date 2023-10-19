@@ -1,64 +1,68 @@
 public class Player extends Character{
 
-    
-    private int experiencePoint;
+    private static final int AMOUNT_OF_XP_TO_LEVEL_UP = 1000;
+    private int amountOfExperience;
 
 
-    public Player(String name, int health, int speed, Position pos, IO io) {
-        super(name, health, speed, pos, io);
-        experiencePoint=0;
+    public Player(String name, int health, int speed, int level, Position pos, IO io) {
+        super(name, health, speed, level, pos, io);
+        amountOfExperience = 0;
+        this.setLevel(level);
     }
 
-    public int getExperiencePoint() {
-        return experiencePoint;
+    public int getAmountOfExperience() {
+        return amountOfExperience;
     }
 
-    private void setExperiencePoint(int experiencePoint) {
-        if(experiencePoint<0)
+    private void setAmountOfExperience(int amountOfExperience) {
+        if(amountOfExperience < 0)
             throw new IllegalArgumentException("Experience points cannot be negative!");
-        this.experiencePoint = experiencePoint;
+        this.amountOfExperience = amountOfExperience;
     }
 
     /**Increases the character's experience points*/
     public void increaseXP(int add){
-        int result = experiencePoint + add;
-        setExperiencePoint(result);
+        if (add < 0) {
+            throw new IllegalArgumentException("XP increase value cannot be negative");
+        }
+        int result = amountOfExperience + add;
+        if (result < 0){
+            result = AMOUNT_OF_XP_TO_LEVEL_UP;
+        }
+        setAmountOfExperience(result);
+        levelUpOnTurn();
     }
 
     /**Decreases the character's experience points*/
     public void decreaseXP(int decrease){
-        int result = experiencePoint - decrease;
-        if(result<0){
-            setExperiencePoint(0);
+        int result = amountOfExperience - decrease;
+        if(result < 0){
+            setAmountOfExperience(0);
         }else {
-            setExperiencePoint(result);
+            setAmountOfExperience(result);
+        }
+    }
+
+    private void increaseLevel() {
+        if(getLevel() < 10) {
+            setLevel(getLevel() + 1);
         }
     }
 
     /**Checks if the character has gained enough experience points to level up. If the character's experience points are greater than or equal to the experience required for the next level and the character's level is less than 10, the character levels up*/
-    public void levelUp() {
-        int experiencePerLevelUp = 100;
-        while(experiencePoint >= experiencePerLevelUp && level < 10) {
-            experiencePoint -= experiencePerLevelUp;
-            level++;
+    public void levelUpOnTurn() {
+        while(getAmountOfExperience() >= AMOUNT_OF_XP_TO_LEVEL_UP) {
+            increaseLevel();
+            setAmountOfExperience(getAmountOfExperience() - AMOUNT_OF_XP_TO_LEVEL_UP);
         }
-    }
-
-    public void setLevel(int level) {
-        if(level <= 10) {
-            this.level = level;
-        } else {
-            this.level = 10;
+        if (getAmountOfExperience() == 0 && getLevel() > 1) {
+            setAmountOfExperience(0);
         }
-    }
-
-    public int getLevel() {
-        return level;
     }
 
     public void getRewardsAfterWinning(Quest quest){
         if(quest.isCompleted()){
-            setExperiencePoint(this.experiencePoint + quest.getRewardXP());
+            setAmountOfExperience(this.amountOfExperience + quest.getRewardXP());
         }
     }
 
