@@ -186,7 +186,7 @@ public class TurnSystemTest {
     public void whenActionLootDeadCharacter_thenItemIsInCharacterInventoryNotRoom() { 
         Position playerPosition = new Position(0, 0);
 
-        NPC lootNpc = new NPC("npc", 1, 1, playerPosition, io); 
+        NPC lootNpc = new NPC("npc", 1, 1,1, playerPosition, io);
         lootNpc.decreaseHealth(1);
 
         MapController worldMapController = new MapController();
@@ -207,12 +207,12 @@ public class TurnSystemTest {
 
     @Test
     public void whenActionLootFromDeadCharacter_thenItemIsInPlayerInventoryNotOnNpc() { 
-        PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 1);
+        PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 1,"Test Description");
         Equipment testEquipment = new Equipment("Test Equipment", EquipmentSlot.LEFT_HAND, Equipment.Effect.HEALTH, 1, testAbility);   
 
         Position playerPosition = new Position(0, 0);
 
-        NPC testNpc = new NPC("npc", 1, 1, playerPosition, io); 
+        NPC testNpc = new NPC("npc", 1, 1,1, playerPosition, io);
         testNpc.decreaseHealth(1);
         testNpc.getInventory().add(testEquipment);
 
@@ -221,7 +221,7 @@ public class TurnSystemTest {
         worldMapController.add(playerPosition, playerRoom);
 
         TurnSystem turnSystem = new TurnSystem(io);
-        Player player = new Player("name", 1, 1, playerPosition, io);
+        Player player = new Player("name", 1, 1,1, playerPosition, io);
 
         Mockito.when(io.requestInteractable(playerRoom, player)).thenReturn(testNpc);
         Mockito.when(io.requestAction(testNpc, player)).thenReturn(Interactable.InteractableAction.LOOT);
@@ -234,13 +234,13 @@ public class TurnSystemTest {
 
     @Test
     public void whenActionLootFromDeadCharacterReRequestTwoTimes_thenItemIsInPlayerInventoryNotOnNpc() { 
-        PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 1);
+        PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 1, "Test Description");
         Equipment rightEquipment = new Equipment("Test Equipment", EquipmentSlot.LEFT_HAND, Equipment.Effect.HEALTH, 1, testAbility);
         Equipment wrongEquipment = new Equipment("Wrong Equipment", EquipmentSlot.LEFT_HAND, Equipment.Effect.HEALTH, 1, testAbility);      
 
         Position playerPosition = new Position(0, 0);
 
-        NPC testNpc = new NPC("npc", 1, 1, playerPosition, io); 
+        NPC testNpc = new NPC("npc", 1, 1,1, playerPosition, io);
         testNpc.decreaseHealth(1);
         testNpc.getInventory().add(rightEquipment);
 
@@ -249,7 +249,7 @@ public class TurnSystemTest {
         worldMapController.add(playerPosition, playerRoom);
 
         TurnSystem turnSystem = new TurnSystem(io);
-        Player player = new Player("name", 1, 1, playerPosition, io);
+        Player player = new Player("name", 1, 1,1, playerPosition, io);
 
         Mockito.when(io.requestInteractable(playerRoom, player)).thenReturn(testNpc);
         Mockito.when(io.requestAction(testNpc, player)).thenReturn(Interactable.InteractableAction.LOOT);
@@ -263,12 +263,12 @@ public class TurnSystemTest {
 
     @Test
     public void whenActionLootFromDeadCharacterWrongInput_thenActionReturnFalse() { 
-        PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 1);
+        PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 1, "Test Description");
         Equipment testEquipment = new Equipment("Test Equipment", EquipmentSlot.LEFT_HAND, Equipment.Effect.HEALTH, 1, testAbility);     
 
         Position playerPosition = new Position(0, 0);
 
-        NPC testNpc = new NPC("npc", 1, 1, playerPosition, io); 
+        NPC testNpc = new NPC("npc", 1, 1,1, playerPosition, io);
         testNpc.decreaseHealth(1);
         testNpc.getInventory().add(testEquipment);
 
@@ -277,7 +277,7 @@ public class TurnSystemTest {
         worldMapController.add(playerPosition, playerRoom);
 
         TurnSystem turnSystem = new TurnSystem(io);
-        Player player = new Player("name", 1, 1, playerPosition, io);
+        Player player = new Player("name", 1, 1,1, playerPosition, io);
 
         Mockito.when(io.requestInteractable(playerRoom, player)).thenReturn(testNpc);
         Mockito.when(io.requestAction(testNpc, player)).thenReturn(Interactable.InteractableAction.LOOT);
@@ -289,13 +289,13 @@ public class TurnSystemTest {
 
     @Test
     public void whenActionLootFromDeadCharacterWrongInputInReRequest_thenActionReturnFalse() { 
-        PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 1);
+        PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 1, "Test Description");
         Equipment rightEquipment = new Equipment("Right Equipment", EquipmentSlot.LEFT_HAND, Equipment.Effect.HEALTH, 1, testAbility);     
         Equipment wrongEquipment = new Equipment("Wrong Equipment", EquipmentSlot.LEFT_HAND, Equipment.Effect.HEALTH, 1, testAbility);   
 
         Position playerPosition = new Position(0, 0);
 
-        NPC testNpc = new NPC("npc", 1, 1, playerPosition, io); 
+        NPC testNpc = new NPC("npc", 1, 1,1, playerPosition, io);
         testNpc.decreaseHealth(1);
         testNpc.getInventory().add(rightEquipment);
 
@@ -304,7 +304,7 @@ public class TurnSystemTest {
         worldMapController.add(playerPosition, playerRoom);
 
         TurnSystem turnSystem = new TurnSystem(io);
-        Player player = new Player("name", 1, 1, playerPosition, io);
+        Player player = new Player("name", 1, 1,1, playerPosition, io);
 
         Mockito.when(io.requestInteractable(playerRoom, player)).thenReturn(testNpc);
         Mockito.when(io.requestAction(testNpc, player)).thenReturn(Interactable.InteractableAction.LOOT);
@@ -319,7 +319,7 @@ public class TurnSystemTest {
     public void whenActionLootFromAliveCharacter_thenActionReturnFalse() {   
         Position playerPosition = new Position(0, 0);
 
-        NPC testNpc = new NPC("npc", 1, 1, playerPosition, io); 
+        NPC testNpc = new NPC("npc", 1, 1,1, playerPosition, io);
         testNpc.decreaseHealth(1);
 
         MapController worldMapController = new MapController();
@@ -327,7 +327,7 @@ public class TurnSystemTest {
         worldMapController.add(playerPosition, playerRoom);
 
         TurnSystem turnSystem = new TurnSystem(io);
-        Player player = new Player("name", 1, 1, playerPosition, io);
+        Player player = new Player("name", 1, 1,1, playerPosition, io);
 
         Mockito.when(io.requestInteractable(playerRoom, player)).thenReturn(testNpc);
         Mockito.when(io.requestAction(testNpc, player)).thenReturn(Interactable.InteractableAction.LOOT);
@@ -342,7 +342,7 @@ public class TurnSystemTest {
 
     @Test
     public void whenActionDrop_thenItemIsInRoomInventoryNotCharacter() { 
-        PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 1);
+        PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 1,"Test Description");
         Equipment testEquipment = new Equipment("Test Equipment", EquipmentSlot.LEFT_HAND, Equipment.Effect.HEALTH, 1, testAbility);   
 
         MapController worldMapController = new MapController();
@@ -351,7 +351,7 @@ public class TurnSystemTest {
         worldMapController.add(playerPosition, playerRoom);
 
         TurnSystem turnSystem = new TurnSystem(io);
-        Player player = new Player("name", 1, 1, playerPosition, io);
+        Player player = new Player("name", 1, 1,1, playerPosition, io);
         player.getInventory().add(testEquipment);
 
 
@@ -365,7 +365,7 @@ public class TurnSystemTest {
 
     @Test
     public void whenActionDropItemNotInPlayerInv_thenActionReturnFalse() { 
-        PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 1);
+        PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 1,"Test Description");
         Equipment testEquipment = new Equipment("Test Equipment", EquipmentSlot.LEFT_HAND, Equipment.Effect.HEALTH, 1, testAbility);   
 
         MapController worldMapController = new MapController();
@@ -374,7 +374,7 @@ public class TurnSystemTest {
         worldMapController.add(playerPosition, playerRoom);
 
         TurnSystem turnSystem = new TurnSystem(io);
-        Player player = new Player("name", 1, 1, playerPosition, io);
+        Player player = new Player("name", 1, 1,1, playerPosition, io);
         player.getInventory().add();
 
 
@@ -391,7 +391,7 @@ public class TurnSystemTest {
 
     @Test
     public void whenActionWear_thenItemIsInEquippedNotInInvenory() { 
-        PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 1);
+        PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 1,"Test Description");
         Equipment testEquipment = new Equipment("Test Equipment", EquipmentSlot.LEFT_HAND, Equipment.Effect.HEALTH, 1, testAbility);   
 
         MapController worldMapController = new MapController();
@@ -400,7 +400,7 @@ public class TurnSystemTest {
         worldMapController.add(playerPosition, playerRoom);
 
         TurnSystem turnSystem = new TurnSystem(io);
-        Player player = new Player("name", 1, 1, playerPosition, io);
+        Player player = new Player("name", 1, 1,1, playerPosition, io);
         player.getInventory().add(testEquipment);
 
         Mockito.when(io.requestInteractable(playerRoom, player)).thenReturn(testEquipment);
@@ -412,7 +412,7 @@ public class TurnSystemTest {
 
     @Test
     public void whenActionWearEquipmentNotInInventory_thenActionReturnFalse() { 
-        PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 1);
+        PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 1,"Test Description");
         Equipment testEquipment = new Equipment("Test Equipment", EquipmentSlot.LEFT_HAND, Equipment.Effect.HEALTH, 1, testAbility);   
 
         MapController worldMapController = new MapController();
@@ -421,7 +421,7 @@ public class TurnSystemTest {
         worldMapController.add(playerPosition, playerRoom);
 
         TurnSystem turnSystem = new TurnSystem(io);
-        Player player = new Player("name", 1, 1, playerPosition, io);
+        Player player = new Player("name", 1, 1,1, playerPosition, io);
 
         Mockito.when(io.requestInteractable(playerRoom, player)).thenReturn(testEquipment);
         Mockito.when(io.requestAction(testEquipment, player)).thenReturn(Interactable.InteractableAction.WEAR);
@@ -433,7 +433,7 @@ public class TurnSystemTest {
 
     @Test
     public void whenActionWearEquipmentOnBodySlotTaken_thenActionReturnFalse() { 
-        PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 1);
+        PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 1,"Test Description");
         Equipment testEquipmentOne = new Equipment("Test Equipment One", EquipmentSlot.LEFT_HAND, Equipment.Effect.HEALTH, 1, testAbility);   
         Equipment testEquipmentTwo = new Equipment("Test Equipment Two", EquipmentSlot.LEFT_HAND, Equipment.Effect.HEALTH, 1, testAbility);   
 
@@ -443,7 +443,7 @@ public class TurnSystemTest {
         worldMapController.add(playerPosition, playerRoom);
 
         TurnSystem turnSystem = new TurnSystem(io);
-        Player player = new Player("name", 1, 1, playerPosition, io);
+        Player player = new Player("name", 1, 1,1, playerPosition, io);
         player.equip(testEquipmentOne);
 
         Mockito.when(io.requestInteractable(playerRoom, player)).thenReturn(testEquipmentTwo);
@@ -460,7 +460,7 @@ public class TurnSystemTest {
 
     @Test
     public void whenActionUnEquip_thenItemIsInEquippedNotInInvenory() { 
-        PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 1);
+        PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 1,"Test Description");
         Equipment testEquipment = new Equipment("Test Equipment", EquipmentSlot.LEFT_HAND, Equipment.Effect.HEALTH, 1, testAbility);   
 
         MapController worldMapController = new MapController();
@@ -469,7 +469,7 @@ public class TurnSystemTest {
         worldMapController.add(playerPosition, playerRoom);
 
         TurnSystem turnSystem = new TurnSystem(io);
-        Player player = new Player("name", 1, 1, playerPosition, io);
+        Player player = new Player("name", 1, 1,1, playerPosition, io);
         player.getInventory().add(testEquipment);
         player.equip(testEquipment);
 
@@ -482,7 +482,7 @@ public class TurnSystemTest {
 
     @Test
     public void whenActionUnEquipEquipmentNotOnCharacter_thenActionReturnFalse() { 
-        PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 1);
+        PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 1,"Test Description");
         Equipment testEquipment = new Equipment("Test Equipment", EquipmentSlot.LEFT_HAND, Equipment.Effect.HEALTH, 1, testAbility);   
 
         MapController worldMapController = new MapController();
@@ -491,7 +491,7 @@ public class TurnSystemTest {
         worldMapController.add(playerPosition, playerRoom);
 
         TurnSystem turnSystem = new TurnSystem(io);
-        Player player = new Player("name", 1, 1, playerPosition, io);
+        Player player = new Player("name", 1, 1,1, playerPosition, io);
         player.getInventory().add(testEquipment);
 
         Mockito.when(io.requestInteractable(playerRoom, player)).thenReturn(testEquipment);
@@ -515,7 +515,7 @@ public class TurnSystemTest {
         worldMapController.add(playerPosition, playerRoom);
 
         TurnSystem turnSystem = new TurnSystem(io);
-        Player player = new Player("name", 1, 1, playerPosition, io);
+        Player player = new Player("name", 1, 1,,1 playerPosition, io);
         player.getInventory().add(testPotion);
 
         Mockito.when(io.requestInteractable(playerRoom, player)).thenReturn(testPotion);
@@ -536,7 +536,7 @@ public class TurnSystemTest {
         worldMapController.add(playerPosition, playerRoom);
 
         TurnSystem turnSystem = new TurnSystem(io);
-        Player player = new Player("name", 1, 1, playerPosition, io);
+        Player player = new Player("name", 1, 1,1, playerPosition, io);
 
         Mockito.when(io.requestInteractable(playerRoom, player)).thenReturn(testPotion);
         Mockito.when(io.requestAction(testPotion, player)).thenReturn(Interactable.InteractableAction.USE);
@@ -628,11 +628,11 @@ public class TurnSystemTest {
 
     @Test
     public void whenActionFightPlayerWins_thenNpcIsDeadPlayerIsAlive() { 
-        PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 0);
+        PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 0, "Test Description");
         Equipment playerEquipment = new Equipment("Player Equipment", EquipmentSlot.LEFT_HAND, Equipment.Effect.HEALTH, 100, testAbility);
         Equipment npcEquipment = new Equipment("Npc Equipment", EquipmentSlot.LEFT_HAND, Equipment.Effect.HEALTH, 1, testAbility); 
 
-        NPC npc = new NPC("testNPC", 1, 1, new Position(0, 0), io);
+        NPC npc = new NPC("testNPC", 1, 1, 1, new Position(0, 0), io);
         npc.getInventory().add(npcEquipment);
         npc.equip(npcEquipment);
 
@@ -642,7 +642,7 @@ public class TurnSystemTest {
         worldMapController.add(playerPosition, playerRoom);
 
         TurnSystem playerTurnSystem = new TurnSystem(io);
-        Player player = new Player("name", 100, 100, playerPosition, io);
+        Player player = new Player("name", 100, 100,1, playerPosition, io);
         player.getInventory().add(playerEquipment);
         player.equip(playerEquipment);
 
@@ -658,11 +658,11 @@ public class TurnSystemTest {
 
     @Test
     public void whenActionFightNpcWins_thenPlayerIsDeadNpcIsAlive() { 
-        PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 0);
+        PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 0, "Test Description");
         Equipment playerEquipment = new Equipment("Player Equipment", EquipmentSlot.LEFT_HAND, Equipment.Effect.HEALTH, 1, testAbility);
         Equipment npcEquipment = new Equipment("Npc Equipment", EquipmentSlot.LEFT_HAND, Equipment.Effect.HEALTH, 100, testAbility);  
 
-        NPC npc = new NPC("testNPC", 100, 100, new Position(0, 0), io);
+        NPC npc = new NPC("testNPC", 100, 100,1, new Position(0, 0), io);
         npc.getInventory().add(npcEquipment);
         npc.equip(npcEquipment);
 
@@ -672,7 +672,7 @@ public class TurnSystemTest {
         worldMapController.add(playerPosition, playerRoom);
 
         TurnSystem turnSystem = new TurnSystem(io);
-        Player player = new Player("name", 1, 1, playerPosition, io);
+        Player player = new Player("name", 1, 1,1, playerPosition, io);
         player.getInventory().add(playerEquipment);
         player.equip(playerEquipment);
 
@@ -688,11 +688,11 @@ public class TurnSystemTest {
 
     @Test
     public void whenActionFightPlayerFlee_thenPlayerAndNpcIsAlive() { 
-        PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 0);
+        PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 0, "Test Description");
         Equipment playerEquipment = new Equipment("Player Equipment", EquipmentSlot.LEFT_HAND, Equipment.Effect.HEALTH, 1, testAbility);
         Equipment npcEquipment = new Equipment("Npc Equipment", EquipmentSlot.LEFT_HAND, Equipment.Effect.HEALTH, 1, testAbility);  
 
-        NPC npc = new NPC("testNPC", 100, 1, new Position(0, 0), io);
+        NPC npc = new NPC("testNPC", 100, 1,1, new Position(0, 0), io);
         npc.getInventory().add(npcEquipment);
         npc.equip(npcEquipment);
 
@@ -702,7 +702,7 @@ public class TurnSystemTest {
         worldMapController.add(playerPosition, playerRoom);
 
         TurnSystem turnSystem = new TurnSystem(io);
-        Player player = new Player("name", 100, 10000, playerPosition, io);
+        Player player = new Player("name", 100,1, 10000, playerPosition, io);
         player.getInventory().add(playerEquipment);
         player.equip(playerEquipment);
 
@@ -718,11 +718,11 @@ public class TurnSystemTest {
 
     @Test
     public void whenActionFightNpcFlee_thenPlayerAndNpcIsAlive() { 
-        PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 0);
+        PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 0, "Test Description");
         Equipment playerEquipment = new Equipment("Player Equipment", EquipmentSlot.LEFT_HAND, Equipment.Effect.HEALTH, 1, testAbility);
         Equipment npcEquipment = new Equipment("Npc Equipment", EquipmentSlot.LEFT_HAND, Equipment.Effect.HEALTH, 1, testAbility);  
 
-        NPC npc = new NPC("testNPC", 100, 10000, new Position(0, 0), io);
+        NPC npc = new NPC("testNPC", 100, 10000, 1, new Position(0, 0), io);
         npc.getInventory().add(npcEquipment);
         npc.equip(npcEquipment);
 
@@ -732,7 +732,7 @@ public class TurnSystemTest {
         worldMapController.add(playerPosition, playerRoom);
 
         TurnSystem turnSystem = new TurnSystem(io);
-        Player player = new Player("name", 100, 1, playerPosition, io);
+        Player player = new Player("name", 100, 1,1, playerPosition, io);
         player.getInventory().add(playerEquipment);
         player.equip(playerEquipment);
 
@@ -761,7 +761,7 @@ public class TurnSystemTest {
         HashSet<Interactable.InteractableAction> actionSet = new HashSet<>();
         actionSet.add(Interactable.InteractableAction.TALK);
         //Charater needs IO in constructor
-        NPC npc = new NPC("testNPC", 1, 1, new Position(0, 0), new NPCAI());
+        NPC npc = new NPC("testNPC", 1, 1,1, new Position(0, 0), new NPCAI());
 
         MapController worldMapController = new MapController();
         Position playerPosition = new Position(0, 0);
@@ -769,7 +769,7 @@ public class TurnSystemTest {
         worldMapController.add(playerPosition, playerRoom);
 
         TurnSystem playerTurnSystem = new TurnSystem(io);
-        Player player = new Player("name", 100, 100, playerPosition, io);
+        Player player = new Player("name", 100, 100,1, playerPosition, io);
 
         //need to make requestInteractable() and change requestAction()
         Mockito.when(io.requestInteractable(playerRoom, player)).thenReturn(npc);
@@ -787,7 +787,7 @@ public class TurnSystemTest {
 
     @Test
     public void whenActionAsksForInteractableWrongInput_thenActionReturnFalse() { 
-        PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 1);
+        PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 1,"Test Description");
         Equipment testEquipment = new Equipment("Wrong Equipment", EquipmentSlot.LEFT_HAND, Equipment.Effect.HEALTH, 1, testAbility);     
 
         MapController worldMapController = new MapController();
@@ -796,7 +796,7 @@ public class TurnSystemTest {
         worldMapController.add(playerPosition, playerRoom);
 
         TurnSystem turnSystem = new TurnSystem(io);
-        Player player = new Player("name", 100, 100, playerPosition, io);
+        Player player = new Player("name", 100, 100,1, playerPosition, io);
 
         Mockito.when(io.requestInteractable(playerRoom, player)).thenThrow(IllegalArgumentException.class);
         
@@ -812,7 +812,7 @@ public class TurnSystemTest {
         HashSet<Interactable.InteractableAction> actionSet = new HashSet<>();
         actionSet.add(Interactable.InteractableAction.LOOT);
 
-        PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 1);
+        PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 1,"Test Description");
         Equipment rightEquipment = new Equipment("Right Equipment One", EquipmentSlot.LEFT_HAND, actionSet, Equipment.Effect.HEALTH, 1, testAbility);
         Equipment wrongEquipment = new Equipment("Wrong Equipment", EquipmentSlot.LEFT_HAND, actionSet, Equipment.Effect.HEALTH, 1, testAbility);  
 
@@ -822,7 +822,7 @@ public class TurnSystemTest {
         worldMapController.add(playerPosition, playerRoom);
 
         TurnSystem turnSystem = new TurnSystem(io);
-        Player player = new Player("name", 100, 100, playerPosition, io);
+        Player player = new Player("name", 100, 100,1, playerPosition, io);
 
 
         //need to make requestInteractable() and change requestAction()
@@ -837,7 +837,7 @@ public class TurnSystemTest {
     
     @Test
     public void whenActionAsksForInteractableReRequestWrongInput_thenActionReturnFalse() { 
-        PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 1);
+        PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 1,"Test Description");
         Equipment testEquipment = new Equipment("Wrong Equipment", EquipmentSlot.LEFT_HAND, Equipment.Effect.HEALTH, 1, testAbility);     
 
         MapController worldMapController = new MapController();
@@ -846,7 +846,7 @@ public class TurnSystemTest {
         worldMapController.add(playerPosition, playerRoom);
 
         TurnSystem turnSystem = new TurnSystem(io);
-        Player player = new Player("name", 100, 100, playerPosition, io);
+        Player player = new Player("name", 100, 100,1, playerPosition, io);
 
 
         //need to make requestInteractable() and change requestAction()
@@ -860,7 +860,7 @@ public class TurnSystemTest {
 
     @Test
     public void whenActionAsksForActionWrongInput_thenReturnFalse() { 
-        PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 1);
+        PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 1,"Test Description");
         Equipment testEquipment = new Equipment("Test Equipment One", EquipmentSlot.BELT, Equipment.Effect.HEALTH, 1, testAbility);
 
 
@@ -870,7 +870,7 @@ public class TurnSystemTest {
         worldMapController.add(playerPosition, playerRoom);
 
         TurnSystem turnSystem = new TurnSystem(io);
-        Player player = new Player("name", 1, 1, playerPosition, io);
+        Player player = new Player("name", 1, 1,1, playerPosition, io);
 
 
         //need to make requestInteractable() and change requestAction()
@@ -888,7 +888,7 @@ public class TurnSystemTest {
         HashSet<Interactable.InteractableAction> actionSet = new HashSet<>();
         actionSet.add(Interactable.InteractableAction.LOOT);
 
-        PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 1);
+        PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 1,"Test Description");
         Equipment testEquipment = new Equipment("Test Equipment One", EquipmentSlot.LEFT_HAND, actionSet, Equipment.Effect.HEALTH, 1, testAbility);
   
 
@@ -898,7 +898,7 @@ public class TurnSystemTest {
         worldMapController.add(playerPosition, playerRoom);
 
         TurnSystem turnSystem = new TurnSystem(io);
-        Player player = new Player("name", 100, 100, playerPosition, io);
+        Player player = new Player("name", 100, 100,1, playerPosition, io);
 
 
         //need to make requestInteractable() and change requestAction()
@@ -919,7 +919,7 @@ public class TurnSystemTest {
         HashSet<Interactable.InteractableAction> actionSet = new HashSet<>();
         actionSet.add(Interactable.InteractableAction.LOOT);
 
-        PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 1);
+        PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 1,"Test Description");
         Equipment testEquipment = new Equipment("Test Equipment One", EquipmentSlot.BELT, Equipment.Effect.HEALTH, 1, testAbility);
 
 
@@ -929,7 +929,7 @@ public class TurnSystemTest {
         worldMapController.add(playerPosition, playerRoom);
 
         TurnSystem turnSystem = new TurnSystem(io);
-        Player player = new Player("name", 1, 1, playerPosition, io);
+        Player player = new Player("name", 1, 1,1, playerPosition, io);
 
 
         //need to make requestInteractable() and change requestAction()
@@ -957,7 +957,7 @@ public class TurnSystemTest {
 
         MapController worldMapController = new MapController();
         Position characterPosition = new Position(0, 0);
-        Character character = new Character("name", 1, 1, characterPosition, io);
+        Character character = new Character("name", 1, 1,1, characterPosition, io);
 
         Mockito.when(io.requestTurnCommand(worldMapController, character)).thenReturn(TurnSystem.TurnCommand.END);
         
@@ -974,7 +974,7 @@ public class TurnSystemTest {
         MapController worldMapController = new MapController();
         Position characterPosition = new Position(0, 0);
         //when character has 0 speed it can do neither action or movement
-        Character character = new Character("name", 1, 0, characterPosition, io);
+        Character character = new Character("name", 1, 0,1, characterPosition, io);
 
         Mockito.when(io.requestTurnCommand(worldMapController, character)).thenReturn(TurnSystem.TurnCommand.MOVE);
         Mockito.when(io.requestAnotherTurnCommand(worldMapController, character)).thenReturn(TurnSystem.TurnCommand.END);
@@ -992,7 +992,7 @@ public class TurnSystemTest {
         MapController worldMapController = new MapController();
         Position characterPosition = new Position(0, 0);
         //when character has 0 speed it can do neither action or movement
-        Character character = new Character("name", 1, 0, characterPosition, io);
+        Character character = new Character("name", 1, 0,1, characterPosition, io);
 
         Mockito.when(io.requestTurnCommand(worldMapController, character)).thenReturn(TurnSystem.TurnCommand.ACTION);
         Mockito.when(io.requestAnotherTurnCommand(worldMapController, character)).thenReturn(TurnSystem.TurnCommand.END);
@@ -1009,7 +1009,7 @@ public class TurnSystemTest {
 
         MapController worldMapController = new MapController();
         Position characterPosition = new Position(0, 0);
-        Character character = new Character("name", 1, 1, characterPosition, io);
+        Character character = new Character("name", 1, 1,1, characterPosition, io);
 
         Mockito.when(io.requestTurnCommand(worldMapController, character)).thenThrow(IllegalArgumentException.class);
         Mockito.when(io.requestAnotherTurnCommand(worldMapController, character)).thenReturn(TurnSystem.TurnCommand.END);
@@ -1032,7 +1032,7 @@ public class TurnSystemTest {
 
         MapController worldMapController = new MapController();
         Position characterPosition = new Position(0, 0);
-        Character character = new Character("name", 1, 1, characterPosition, io);
+        Character character = new Character("name", 1, 1,1, characterPosition, io);
 
         Mockito.when(io.requestTurnCommand(worldMapController, character)).thenReturn(TurnSystem.TurnCommand.MOVE);
         Mockito.when(io.requestAnotherTurnCommand(worldMapController, character)).thenReturn(TurnSystem.TurnCommand.END);

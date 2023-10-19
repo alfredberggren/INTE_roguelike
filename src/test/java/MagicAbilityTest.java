@@ -12,8 +12,8 @@ public class MagicAbilityTest {
 
     @BeforeEach
     void setUp() {
-        character = new Character("Rudolf", 10, 100, new Position(1,1), new TextIO());
-        player = new Player("Ragnar",100,10, new Position(1,1), new TextIO());
+        character = new Character("Rudolf", 10, 100, 1, new Position(1,1), new TextIO());
+        player = new Player("Ragnar",100,10, 1, new Position(1,1), new TextIO());
         magicAbility = new MagicAbility("Fireball",10,1,"A fiery projectile",1,2,5);
 
     }
