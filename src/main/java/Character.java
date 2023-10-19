@@ -195,7 +195,7 @@ public class Character implements Interactable {
 
     public void increaseMana(int add) {
         if (add <= 0) {
-            throw new IllegalArgumentException("It is not possible to increase mana with zero or negative value!");
+            throw new IllegalArgumentException("Mana increase value can not to be equal zero or be negative!");
         }
         else
             setMana(mana + add);
@@ -203,7 +203,7 @@ public class Character implements Interactable {
 
     public void decreaseMana(int decrease) {
         if (decrease <= 0) {
-            throw new IllegalArgumentException("It is not possible to decrease mana with zero or negative value!");
+            throw new IllegalArgumentException("Mana decrease value can not to be equal zero or be negative!");
         }
         else
             setMana(mana - decrease);
@@ -211,7 +211,7 @@ public class Character implements Interactable {
 
     public void increaseHealth(int add) {
         if (add <= 0) {
-            throw new IllegalArgumentException("It is not possible to increase health with zero or negative value!");
+            throw new IllegalArgumentException("Health increase value can not to be equal zero or be negative!");
         }
         else
             setHealth(health+add);
@@ -219,7 +219,7 @@ public class Character implements Interactable {
 
     public void decreaseHealth(int decrease) {
         if (decrease <= 0) {
-            throw new IllegalArgumentException("It is not possible to decrease health with zero or negative value!");
+            throw new IllegalArgumentException("Health decrease value can not to be equal zero or be negative!");
         }
         else {
             setHealth(health - decrease);
