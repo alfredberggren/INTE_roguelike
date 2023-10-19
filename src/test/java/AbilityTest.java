@@ -8,18 +8,21 @@ public class AbilityTest {
     //namnen för testerna kan var whenBlaBla_thenBlabla
 
     private Character character;
+    private MagicAbility magicAbility;
+    private PhysicalAbility physicalAbility;
 
     @BeforeEach
     void setUp() {
         character = new Character("Rudolf", 10, 100, new Position(1,1), new TextIO());
+        magicAbility = new MagicAbility("Fireball",10,1,"A fiery projectile",1,2,5);
+        physicalAbility = new PhysicalAbility("Slash",5,0,"Physical Attack");
+
     }
 
     @Test
     @DisplayName("Returns if both Magic Ability and Physical Ability exist")
     public void testBothMagicAndPhysicalAbility() {
-        MagicAbility magicAbility = new MagicAbility("Fireball", 20,1,"A fiery ball",2,3,5);
-        PhysicalAbility physicalAbility = new PhysicalAbility("Slash", 10,1,"Physical attack");
-        assertEquals("MAGICAL" + "PHYSICAL", magicAbility.toString() + physicalAbility);
+        assertEquals("MAGICAL PHYSICAL", magicAbility.toString() + physicalAbility);
     }
 
 
@@ -48,54 +51,45 @@ public class AbilityTest {
     @Test
     @DisplayName("Test getting the description of a spell")
     public void testSpellDescription() {
-        MagicAbility spell = new MagicAbility("Ice Shard", 10,2, "A shard of ice",1,5,5);
-        assertEquals("A shard of ice", spell.getDescription());
+        assertEquals("A fiery projectile", magicAbility.getDescription());
     }
 
 
     @Test
     @DisplayName("Test setting and getting the name of a spell")
     public void testSetAndGetSpellName() {
-        MagicAbility spell = new MagicAbility("Earthquake", 10,5, "Shake the ground",5,20,5);
-        assertEquals("Earthquake", spell.getName());
-        spell.setName("Tornado");
-        assertEquals("Tornado", spell.getName());
+        assertEquals("Fireball", magicAbility.getName());
+        magicAbility.setName("Tornado");
+        assertEquals("Tornado", magicAbility.getName());
     }
 
     @Test
     @DisplayName("Test setting and getting the description of a spell")
     public void testSetAndGetSpellDescription() {
-        MagicAbility spell = new MagicAbility("Healing Touch", 0,2, "Heal allies",2,10,5);
-        assertEquals("Heal allies", spell.getDescription());
-        spell.setDescription("Revive the fallen");
-        assertEquals("Revive the fallen", spell.getDescription());
+        assertEquals("A fiery projectile", magicAbility.getDescription());
+        magicAbility.setDescription("Revive the fallen");
+        assertEquals("Revive the fallen", magicAbility.getDescription());
     }
 
     @Test
-    @DisplayName("Test minimum level cannot be negative")
+    @DisplayName("Test minimum level cannot be negative") //skriv om
     public void testMinimumLevelCannotBeNegative() {
-        MagicAbility ability = new MagicAbility("Fire",10,-2,"Shoots fire",1,1,5);
-        assertEquals(1, ability.getRequiredLevel());
+        magicAbility.getRequiredLevel();
+        assertEquals(1, magicAbility.getRequiredLevel());
     }
 
     @Test
     @DisplayName("Test equals method for Ability")
     public void testAbilityEquals() {
-        Ability ability1 = new PhysicalAbility("Physical Attack",20,1, "Physical attack");
-        Ability ability2 = new PhysicalAbility("Physical Attack", 20,1, "Physical attack");
-        Ability ability3 = new MagicAbility("Magical Spell",30,2, "Magic",1,1,5);
-        assertEquals(ability1, ability1);
-        assertEquals(ability1, ability2);
-        assertNotSame(ability1, ability3);
+        assertEquals(physicalAbility, physicalAbility);
+        assertEquals(physicalAbility, physicalAbility);
+        assertNotSame(physicalAbility, magicAbility);
     }
 
     @Test
     @DisplayName("Test hashCode method for Ability")
     public void testAbilityHashCode() {
-        Ability ability1 = new PhysicalAbility("Physical Attack",20,1, "Physical attack");
-        Ability ability2 = new PhysicalAbility("Physical Attack", 20,1, "Physical attack");
-        Ability ability3 = new MagicAbility("Magical Spell",30,2, "Magic",2,3,5);
-        assertEquals(ability1.hashCode(), ability2.hashCode());
-        assertNotSame(ability1.hashCode(), ability3.hashCode());
+        assertEquals(physicalAbility.hashCode(), physicalAbility.hashCode());
+        assertNotSame(physicalAbility.hashCode(), magicAbility.hashCode());
     }
 }
