@@ -6,6 +6,10 @@ import java.util.*;
 
 public class Equipment extends NonLivingEntity {
 
+    public enum Effect {
+        SPEED, HEALTH, DAMAGE, NONE
+    }
+
     private static final Set<InteractableAction> STANDARD_INTERACTABLE_ACTIONS = new HashSet<>(Arrays.asList(
             InteractableAction.LOOT,
             InteractableAction.DROP,

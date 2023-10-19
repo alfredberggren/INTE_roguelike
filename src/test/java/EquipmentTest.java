@@ -16,8 +16,6 @@ public class EquipmentTest {
             Interactable.InteractableAction.UNEQUIP)
     );
 
-    private Effect effect;
-
     @Test
     @DisplayName("Test that equipment has a name")
     public void testEquipmentName() {
@@ -37,7 +35,7 @@ public class EquipmentTest {
     @DisplayName("Test that equipment has effect")
     public void testEquipmentEffect() {
         Equipment e = new Equipment("test", EquipmentSlot.RIGHT_HAND, Equipment.Effect.DAMAGE, 100, new PhysicalAbility("MiniSword",2,1));
-        assertEquals(Effect.DAMAGE, e.getEffect());
+        assertEquals(Equipment.Effect.DAMAGE, e.getEffect());
     }
 
     @Test
