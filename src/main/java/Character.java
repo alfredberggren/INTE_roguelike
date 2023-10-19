@@ -16,6 +16,7 @@ public class Character implements Interactable {
     private static final String DEFAULT_NAME_PATTERN = "^[A-Za-z]\\w{1,11}$";
     private static final int MAX_LEVEL = 10;
     private static final int MAX_HEALTH = 100;
+    private static final int MAX_MANA = 100;
     private Set<InteractableAction> possibleInteractableActions;
     private String name;
     private int health;
@@ -159,7 +160,10 @@ public class Character implements Interactable {
         if (mana < 0) {
             throw new IllegalArgumentException("Mana cannot be negative!");
         }
-        this.mana = mana;
+        if (mana > MAX_MANA)
+            this.mana = MAX_MANA;
+        else
+            this.mana = mana;
     }
 
     public void setLevel(int level) {
@@ -193,9 +197,7 @@ public class Character implements Interactable {
         if (add <= 0) {
             throw new IllegalArgumentException("It is not possible to increase mana with zero or negative value!");
         }
-        if (mana + add == Integer.MAX_VALUE) {
-            throw new StackOverflowError("The value is too big");
-        } else
+        else
             setMana(mana + add);
     }
 
@@ -203,9 +205,7 @@ public class Character implements Interactable {
         if (decrease <= 0) {
             throw new IllegalArgumentException("It is not possible to decrease mana with zero or negative value!");
         }
-        if (mana - decrease <= 0) {
-            setMana(0);
-        } else
+        else
             setMana(mana - decrease);
     }
 
@@ -213,19 +213,15 @@ public class Character implements Interactable {
         if (add <= 0) {
             throw new IllegalArgumentException("It is not possible to increase health with zero or negative value!");
         }
-        if (health + add < MAX_HEALTH)
-            setHealth(health + add);
         else
-            setHealth(MAX_HEALTH);
+            setHealth(health+add);
     }
 
     public void decreaseHealth(int decrease) {
         if (decrease <= 0) {
             throw new IllegalArgumentException("It is not possible to decrease health with zero or negative value!");
         }
-        if (health - decrease <= 0) {
-            setHealth(0);
-        } else {
+        else {
             setHealth(health - decrease);
         }
     }
@@ -246,7 +242,7 @@ public class Character implements Interactable {
      */
     public void unEquip(Equipment equipment) {
         if (equipment != null) {
-            if (equipmentOnBody.slotContainsEquipment(equipment.getEquipmentSlot()) && equipment.equals(equipmentOnBody.getEquipment(equipment.getEquipmentSlot()))) {
+            if (equipment.equals(equipmentOnBody.getEquipment(equipment.getEquipmentSlot()))) {
                 equipmentOnBody.removeEquipment(equipment.getEquipmentSlot());
                 inventory.add(equipment);
                 removeAbility(equipment.getAbility());
@@ -261,10 +257,11 @@ public class Character implements Interactable {
      */
     public void equip(Equipment equipment) {
         if (equipment != null) {
-            if (!equipmentOnBody.slotContainsEquipment(equipment.getEquipmentSlot()) && inventory.contains(equipment))
+            if (inventory.contains(equipment)) {
                 equipmentOnBody.putEquipment(equipment.getEquipmentSlot(), equipment);
-            addAbility(equipment.getAbility());
-            inventory.remove(equipment);
+                addAbility(equipment.getAbility());
+                inventory.remove(equipment);
+            }
 
         }
     }
