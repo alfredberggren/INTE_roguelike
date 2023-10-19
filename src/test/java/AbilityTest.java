@@ -21,7 +21,7 @@ public class AbilityTest {
 
     @Test
     @DisplayName("Returns if both Magic Ability and Physical Ability exist")
-    public void testBothMagicAndPhysicalAbility() {
+    public void whenBothPhysicalAndMagicAbilityExist_thenReturnTheType() {
         assertEquals("MAGICAL PHYSICAL", magicAbility.toString() + physicalAbility);
     }
 
@@ -39,25 +39,23 @@ public class AbilityTest {
 
     @Test //flytta till characters test
     @DisplayName("Testing that magic ability is not affected")
-    public void testMagicAbilityNotAffected() {
-        MagicAbility iceSpell = new MagicAbility("Ice",5,1, "Shoots ice",1,2,5);
-        character.addAbility(iceSpell);
-        MagicAbility ability = new MagicAbility(iceSpell.getName(), 10,1,"Ice",2,3,5);
+    public void whenCharacterHaveMagicAbilityAndLevelIsMinimumRequired_thenNotRemoveAbility() {
+        character.addAbility(magicAbility);
         character.setLevel(1);
-        //assertFalse(ability.calculateImpactOnAbility(character));
+        //assertFalse(character.removeAbility(ability));
     }
 
 
     @Test
     @DisplayName("Test getting the description of a spell")
-    public void testSpellDescription() {
+    public void whenGetDescriptionOfAbility_thenCheckIfItIsEquals() {
         assertEquals("A fiery projectile", magicAbility.getDescription());
     }
 
 
     @Test
     @DisplayName("Test setting and getting the name of a spell")
-    public void testSetAndGetSpellName() {
+    public void whenSetAndGetNameOfAbility_thenCheckIfItReturnCorrect() {
         assertEquals("Fireball", magicAbility.getName());
         magicAbility.setName("Tornado");
         assertEquals("Tornado", magicAbility.getName());
@@ -65,15 +63,15 @@ public class AbilityTest {
 
     @Test
     @DisplayName("Test setting and getting the description of a spell")
-    public void testSetAndGetSpellDescription() {
+    public void whenSetAndGetDescription_thenCheckIfItReturnCorrect() {
         assertEquals("A fiery projectile", magicAbility.getDescription());
         magicAbility.setDescription("Revive the fallen");
         assertEquals("Revive the fallen", magicAbility.getDescription());
     }
 
     @Test
-    @DisplayName("Test minimum level cannot be negative") //skriv om
-    public void testMinimumLevelCannotBeNegative() {
+    @DisplayName("Test minimum required level cannot be negative") //skriv om
+    public void whenMinimumRequiredLevelIsNegative_then() {
         magicAbility.getRequiredLevel();
         assertEquals(1, magicAbility.getRequiredLevel());
     }
