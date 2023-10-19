@@ -21,35 +21,49 @@ public class Character implements Interactable {
     private int mana;
     protected int level;
     private Position pos;
-    private Set<Ability> abilities = new HashSet<>();
-    private InteractableInventory inventory = new InteractableInventory();
-    private EquipmentOnBody equipmentOnBody = new EquipmentOnBody();
+    private Set<Ability> abilities;
+    private InteractableInventory inventory;
+    private EquipmentOnBody equipmentOnBody;
     private TurnSystem turnSystem;
 
     public Character(String name, int health, int speed, IO io) {
-        if (health < 0 || speed < 0) {
-            throw new IllegalArgumentException("Speed and health needs to be 0 or more");
+        if (health < 0) {
+            throw new IllegalArgumentException("Health needs to be 0 or more");
         }
-        this.name = name;
         this.health = health;
+        if (speed < 0) {
+            throw new IllegalArgumentException("Speed needs to be 0 or more");
+        }
         this.speed = speed;
+        this.name = name;
         mana = 0;
         pos = new Position(0, 0);
         possibleInteractableActions = STANDARD_CHARACTER_INTERACTABLE_ACTIONS;
         turnSystem = new TurnSystem(io);
+        inventory = new InteractableInventory();
+        abilities = new HashSet<>();
+        equipmentOnBody = new EquipmentOnBody();
+
+
     }
 
     public Character(String name, int health, int speed, Position pos, IO io) {
-        if (health < 0 || speed < 0) {
-            throw new IllegalArgumentException("Speed and health needs to be 0 or more");
+        if (health < 0) {
+            throw new IllegalArgumentException("Health needs to be 0 or more");
         }
-        this.name = name;
         this.health = health;
+        if (speed < 0) {
+            throw new IllegalArgumentException("Speed needs to be 0 or more");
+        }
         this.speed = speed;
-        this.mana = 0;
+        this.name = name;
+        mana = 0;
         this.pos = pos;
         possibleInteractableActions = STANDARD_CHARACTER_INTERACTABLE_ACTIONS;
         turnSystem = new TurnSystem(io);
+        inventory = new InteractableInventory();
+        abilities = new HashSet<>();
+        equipmentOnBody = new EquipmentOnBody();
     }
 
     public String getName() {
