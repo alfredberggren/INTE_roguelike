@@ -8,11 +8,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class CharacterTest {
     static Character character;
-    static Character characterWithPos = new Character("Rudolf", 100, 1, new Position(1, 2), new TextIO());
+    static Character characterWithPos = new Character("Rudolf", 100, 1,1,  new Position(1, 2), new TextIO());
 
     @BeforeEach
     void setUp() {
-        character = new Character("Ragnar", 80, 20, new TextIO());
+        character = new Character("Ragnar", 80, 20,1, new TextIO());
     }
 
     //name tests
@@ -23,42 +23,42 @@ public class CharacterTest {
     }
 
     @Test
-    public void testNameInputIsNull() {
+    public void whenNameIsNullThrowsException() {
         assertThrows(NullPointerException.class, () -> {
             character.setName(null);
         });
     }
 
     @Test
-    public void testNameInputIsEmpty() {
+    public void whenNameIsEmptyThrowsException() {
         assertThrows(IllegalArgumentException.class, () -> {
             character.setName("");
         });
     }
 
     @Test
-    public void testTooShortName() {
+    public void whenNameIsTooShortThrowsException() {
         assertThrows(IllegalArgumentException.class, () -> {
             character.setName("A");
         });
     }
 
     @Test
-    public void testNameBeginsWithDigit() {
+    public void whenNameBeginsWithDigitThrowsException() {
         assertThrows(IllegalArgumentException.class, () -> {
             character.setName("1Ab");
         });
     }
 
     @Test
-    public void testTooLongName() {
+    public void whenNameIsTooLongThrowsException() {
         assertThrows(IllegalArgumentException.class, () -> {
             character.setName("tooLongNameToBeAccepted");
         });
     }
 
     @Test
-    public void testNameContainsNotOnlyAlphanumericCharactersAndUnderscores() {
+    public void whenNameContainsNotOnlyAlphanumericCharactersAndUnderscores_ThrowsException() {
         assertThrows(IllegalArgumentException.class, () -> {
             character.setName("Aabba&&");
         });
@@ -67,14 +67,14 @@ public class CharacterTest {
 
 
     @Test
-    @DisplayName("Test character's health")
-    public void testCharactersHealth() {
+    @DisplayName("Test to get character's health")
+    public void testToGetCharactersHealth() {
         assertEquals(80, character.getHealth());
     }
 
     @Test
-    @DisplayName("Test character's position")
-    public void testCharactersPosition() {
+    @DisplayName("Test to get character's position")
+    public void testToGetCharactersPosition() {
         assertEquals(new Position(1, 2), characterWithPos.getPosition());
         assertEquals(1, characterWithPos.getPosition().getX());
         assertEquals(2, characterWithPos.getPosition().getY());
@@ -82,25 +82,67 @@ public class CharacterTest {
 
     @Test
     @DisplayName("Test to get character's speed")
-    public void testCharactersSpeed() {
+    public void testToGetCharactersSpeed() {
         assertEquals(20, character.getSpeed());
     }
 
     @Test
-    @DisplayName("Test throws exception if health<0")
-    public void testCharacterWithNegativeHealth() {
+    @DisplayName("Test to set negative health")
+    public void testToSetNegativeHealth_ThrowsException() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            new Character("Ragnar", -100, 0, new TextIO());
+            new Character("Ragnar", -100, 0, 1, new TextIO());
         });
     }
 
     @Test
-    @DisplayName("Test throws exception if speed<0")
-    public void testCharacterWithNegativeSpeed() {
+    @DisplayName("Test to set health larger than max health")
+    public void testToSetHealthLargeThanMaxHealth_ShouldSetMaxHealth() {
+        character.setHealth(110);
+        assertEquals(100, character.getHealth());
+    }
+
+    @Test
+    @DisplayName("Test to set correct health")
+    public void testToSetCorrectHealth() {
+        character.setHealth(100);
+        assertEquals(100, character.getHealth());
+    }
+
+    @Test
+    @DisplayName("Test to set correct position")
+    public void testToSetCorrectPosition() {
+        character.setPos(new Position(2,2));
+        assertEquals(new Position(2,2).toString(), character.getPosition().toString());
+    }
+
+    @Test
+    @DisplayName("Test to set position equal to null")
+    public void testToSetPositionEqualToNull_ThrowsException() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            new Character("Ragnar", 100, -10, new TextIO());
+           character.setPos(null);
         });
     }
+
+
+
+
+
+    @Test
+    @DisplayName("Test to set i constructor negative speed")
+    public void testConstructorWithNegativeSpeed_ThrowsException() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            new Character("Ragnar", 100, -10,1, new TextIO());
+        });
+    }
+
+    @Test
+    @DisplayName("Test to set i constructor IO equal to null")
+    public void testConstructorWithNIOEqualToNull_ThrowsException() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            new Character("Ragnar", 100, -10,1, null);
+        });
+    }
+
 
     @Test
     @DisplayName("Test to decrease health to 0")
