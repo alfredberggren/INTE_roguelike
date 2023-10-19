@@ -48,7 +48,7 @@ public class EquipmentTest {
     @Test
     @DisplayName("Checking that Equipment have Magic Ability")
     public void testEquipmentHaveMagicAbility() {
-        Equipment e = new Equipment("test", EquipmentSlot.RIGHT_HAND, Equipment.Effect.HEALTH, 100, new MagicAbility("IceBall", 5,1,"Shoots ice",1,2));
+        Equipment e = new Equipment("test", EquipmentSlot.RIGHT_HAND, Equipment.Effect.HEALTH, 100, new MagicAbility("IceBall", 5,1,"Shoots ice",1,2,5));
         assertEquals("MAGICAL", e.getAbility());
     }
 
@@ -62,7 +62,7 @@ public class EquipmentTest {
     @Test
     @DisplayName("Check that damage has been modified")
     public void testDamageModified() {
-        Equipment e = new Equipment("test", EquipmentSlot.RIGHT_HAND, Equipment.Effect.DAMAGE, 50, new MagicAbility("Fireball", 30,1,"Shoots fire",2,1));
+        Equipment e = new Equipment("test", EquipmentSlot.RIGHT_HAND, Equipment.Effect.DAMAGE, 50, new MagicAbility("Fireball", 30,1,"Shoots fire",2,1,5));
         e.damageModifier(60);
         assertEquals(50, e.getDamageOnEquipment());
     }
@@ -77,13 +77,13 @@ public class EquipmentTest {
     @Test
     @DisplayName("Two unequal equipments have unequal hashCode")
     public void testTwoUnequalEquipmentsHaveUnequalHashCode(){
-        assertNotEquals(new Equipment("Dagger", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE, 100, new PhysicalAbility("Dagger",5,1)).hashCode(), new Equipment("Sword", EquipmentSlot.RIGHT_HAND, Equipment.Effect.HEALTH, 50, new MagicAbility("FireBall",10,1,"Shoots fire",2,1)).hashCode());
+        assertNotEquals(new Equipment("Dagger", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE, 100, new PhysicalAbility("Dagger",5,1,5)).hashCode(), new Equipment("Sword", EquipmentSlot.RIGHT_HAND, Equipment.Effect.HEALTH, 50, new MagicAbility("FireBall",10,1,"Shoots fire",2,1,5)).hashCode());
     }
 
     @Test
     @DisplayName("Two equipments which are unequal")
     public void testTwoUnequalEquipments() {
-        assertNotEquals(new Equipment("Dagger", EquipmentSlot.RIGHT_HAND, Equipment.Effect.DAMAGE, 100, new PhysicalAbility("Dagger",5,1)), new Equipment("Sword", EquipmentSlot.RIGHT_HAND, Equipment.Effect.HEALTH, 100, new MagicAbility("IceBall", 5,1,"Shoots ice",2,1)));
+        assertNotEquals(new Equipment("Dagger", EquipmentSlot.RIGHT_HAND, Equipment.Effect.DAMAGE, 100, new PhysicalAbility("Dagger",5,1)), new Equipment("Sword", EquipmentSlot.RIGHT_HAND, Equipment.Effect.HEALTH, 100, new MagicAbility("IceBall", 5,1,"Shoots ice",2,1,5)));
     }
 
     @Test
