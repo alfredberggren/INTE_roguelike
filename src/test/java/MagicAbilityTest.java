@@ -25,6 +25,14 @@ public class MagicAbilityTest {
     }
 
     @Test
+    @DisplayName("Send null to constructor, should throw exception")
+    public void whenConstructorGetNull_thenShouldThrowException() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new MagicAbility(null,0,0,null,0,0,0);
+        });
+    }
+
+    @Test
     @DisplayName("Test calculating damage for Fireball")
     public void whenCharacterUseSpell_thenCalculateTheDamage() {
         character.setLevel(2);

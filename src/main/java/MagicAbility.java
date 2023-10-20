@@ -83,7 +83,7 @@ public class MagicAbility extends Ability{
             return false;
         }
         MagicAbility ability = (MagicAbility) o;
-        return Objects.equals(getName(), ability.getName()); //getAbilityType?
+        return Objects.equals(getName(), ability.getName()); //getAbilityType? super()
     }
 
     @Override

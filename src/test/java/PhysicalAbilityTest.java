@@ -3,6 +3,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class PhysicalAbilityTest {
 
@@ -21,6 +22,14 @@ public class PhysicalAbilityTest {
     @DisplayName("Returns if a Physical Ability exist")
     public void whenPhysicalAbilityExist_thenReturnTheType() {
         assertEquals("PHYSICAL", physicalAbility.toString());
+    }
+
+    @Test
+    @DisplayName("Send null to constructor, should throw exception")
+    public void whenConstructorGetNull_thenShouldThrowException() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new PhysicalAbility(null,0,0,null);
+        });
     }
 
     @Test
