@@ -49,10 +49,10 @@ public class MapBuilder {
             currentPos = decideNextPosition(currentPos);
 
             //Check if interactables should generate in new room
-            randomInteractableDeterminator = r.nextInt(TOTAL_PERCENT) + 1;
-            if (randomInteractableDeterminator <= INTERACTABLE_PERCENTAGE) {
+            //randomInteractableDeterminator = r.nextInt(TOTAL_PERCENT) + 1;
+            //if (randomInteractableDeterminator <= INTERACTABLE_PERCENTAGE) {
                 dynInteractables = generateInteractables();
-            }
+           // }
 
             Room newRoom = new Room(currentPos, dynInteractables);
             mapController.add(currentPos, newRoom);
@@ -115,8 +115,8 @@ public class MapBuilder {
         int amountOfInteractables = generateAmountOfInteractables();
 
         for (int i = 0; i < amountOfInteractables; i++) {
-            Interactable in = interactableDirector.getInteractable();
-            interactables.add(in);
+            //Interactable in = interactableDirector.getInteractable();
+            interactables.add(interactableDirector.getInteractable());
         }
         return interactables;
     }
