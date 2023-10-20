@@ -1,4 +1,4 @@
-import java.util.Collection;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,11 +8,6 @@ public class EquipmentOnBody {
     public EquipmentOnBody() {
         equipmentOnBody  = new HashMap<>();
     }
-
-    /*public EquipmentOnBody(Map<EquipmentSlot, Equipment> equipmentOnBody)
-    {
-        this.equipmentOnBody  = new HashMap<>();
-    }*/
 
     public Equipment getEquipment(EquipmentSlot slot) {
         return equipmentOnBody.get(slot);
@@ -34,14 +29,11 @@ public class EquipmentOnBody {
     /**
      * find the key(int the Map) - equipment's slot for a value (equipment)
      */
-    public EquipmentSlot checkWhereEquipmentWasPlaced(Equipment e) {
-        Collection<EquipmentSlot> equipmentSlots = equipmentOnBody.keySet(); //entrySet
-        for (EquipmentSlot key : equipmentSlots) {
-            Equipment equipment = equipmentOnBody.get(key);
-            if (key != null) {
-                if (e.equals(equipment)) {
-                    return key;
-                }
+    public EquipmentSlot checkWhereEquipmentWasPlaced(Equipment equipment) {
+        if(equipment!=null) {
+            for (Map.Entry<EquipmentSlot, Equipment> e : equipmentOnBody.entrySet()) {
+                if (equipment == e.getValue())
+                    return e.getKey();
             }
         }
         return null;
