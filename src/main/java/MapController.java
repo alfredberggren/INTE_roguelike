@@ -19,11 +19,15 @@ public class MapController {
 
     public void add(Position p, Room r) {
         gameMap.put(p, r);
-        allPositions.add(p);
     }
 
     public boolean roomExists(Position position) {
+        addAllPos();
         return allPositions.contains(position);
+    }
+
+    private void addAllPos() {
+        allPositions.addAll(gameMap.keySet());
     }
 
     public List<CardinalDirection> getAvailableDirections(Position position) {
