@@ -62,5 +62,4 @@ public class Room {
         return "Room at pos " + position + " with interactables: " + interactables.toString() + " and directions: " + possibleRoutes;
     }
 
-
 }

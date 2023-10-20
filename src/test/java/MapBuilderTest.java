@@ -13,27 +13,34 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/*
- * TODO: Skriv ett test som kollar om sannolikhetsvärdena i probabilityMap stämmer överrens med hur många av varje Interactable som faktiskt genereras.
- */
+//TODO: Testa så att inga "öar" skapas
+//TODO: Testa att alla rum som har rum brevid sig har riktningar dit och rummet intill har riktning tillbaks till rummet man kom ifrån
 
 @ExtendWith(MockitoExtension.class)
 @RunWith(MockitoJUnitRunner.class)
 public class MapBuilderTest {
 
-    @Mock InteractableGenerator mockedIG1;
-    @Mock InteractableGenerator mockedIG2;
-    @Mock InteractableGenerator mockedIG3;
-    @Mock InteractableGenerator mockedIG4;
-    @Mock InteractableGenerator mockedIG5;
+    @Mock
+    InteractableGenerator mockedIG1;
+    @Mock
+    InteractableGenerator mockedIG2;
+    @Mock
+    InteractableGenerator mockedIG3;
+    @Mock
+    InteractableGenerator mockedIG4;
+    @Mock
+    InteractableGenerator mockedIG5;
 
-    @Mock static IO io;
+    @Mock
+    static IO io;
 
     private static final Set<Interactable.InteractableAction> DEFAULT_INTERACTABLE_ACTIONS = new HashSet<>(Arrays.asList(
             Interactable.InteractableAction.LOOT,
             Interactable.InteractableAction.DROP,
             Interactable.InteractableAction.USE)
     );
+
+    private static final Room TEST_ROOM = new Room(new Position(0, 0), new InteractableInventory());
 
     private static final NPC TEST_NPC = new NPC("Test Testsson", 100, 10, new Position(0, 0), io);
     private static final FoodItem TEST_FOOD_ITEM = new FoodItem("Bread", 10);
@@ -44,6 +51,8 @@ public class MapBuilderTest {
     private static final Position DEFAULT_VALID_PLAYER_POSITION = new Position(0, 0);
     private static final Player DEFAULT_PLAYER = new Player("Spelarsson", 100, 10, DEFAULT_VALID_PLAYER_POSITION, io);
 
+    private HashMap<InteractableGenerator, Integer> positiveInteractableProbabilityMap;
+
     private InteractableDirector interactableDirector;
 
     private MapController mapController;
@@ -51,14 +60,14 @@ public class MapBuilderTest {
 
     private Map<HashMap<InteractableGenerator, Integer>, Integer> getTestProbabilityMap() {
         // Innehåller InteractableGenerators som genererar Interactables när kartan byggs, och Integers som är ett värde i procent för sannolikheten att den korrsponderande generatorn används.
-        HashMap<InteractableGenerator, Integer> positiveInteractableProbabilityMap = new HashMap<>() {{
+        Map<HashMap<InteractableGenerator, Integer>, Integer> testProbabilityMap = new HashMap<>();
+        positiveInteractableProbabilityMap = new HashMap<>() {{
             put(mockedIG1, 10);
             put(mockedIG2, 40);
             put(mockedIG3, 20);
             put(mockedIG4, 5);
             put(mockedIG5, 25);
         }};
-        Map<HashMap<InteractableGenerator, Integer>, Integer> testProbabilityMap = new HashMap<>();
         testProbabilityMap.put(positiveInteractableProbabilityMap, 100);
         return testProbabilityMap;
     }
@@ -75,7 +84,8 @@ public class MapBuilderTest {
         Map<HashMap<InteractableGenerator, Integer>, Integer> testProbabilityMap = getTestProbabilityMap();
         interactableDirector = new InteractableDirector(testProbabilityMap);
 
-        mapBuilder = new MapBuilder(Difficulty.MEDIUM, 4_000_000, DEFAULT_PLAYER, mapController, interactableDirector);
+        mapBuilder = new MapBuilder(Difficulty.MEDIUM, 4_000, DEFAULT_PLAYER, mapController, interactableDirector);
+        mapBuilder.build();
     }
 
     @After
@@ -87,14 +97,12 @@ public class MapBuilderTest {
     @Test
     @DisplayName("Testar om kartan har NPC-karaktärer.")
     public void test_buildingMap_generatesNPCs() {
-        mapBuilder.build();
         assertEquals(true, mapController.containsInteractable(TEST_NPC));
     }
 
     @Test
     @DisplayName("Testar om antalet interactables av varje typ stämmer överrens med procentsatserna i positiveInteractableProbabilityMap")
     public void test_buildingMap_generatesInteractableAmountsInAccordanceWithProbabilityMap() {
-        mapBuilder.build();
         TreeMap<Position, Room> gameMap = mapController.getGameMap();
         ArrayList<Interactable> allInteractables = new ArrayList<>();
         for (Room r : gameMap.values()) {
@@ -109,23 +117,59 @@ public class MapBuilderTest {
 
         for (Interactable i : allInteractables) {
             switch (i.getClass().toString()) {
-                case "class NPC": npc++; break;
-                case "class FoodItem": food++; break;
-                case "class PotionItem": potion++; break;
-                case "class Equipment": equip++; break;
-                case "class Prop": prop++; break;
-                default: break;
+                case "class NPC" -> npc++;
+                case "class FoodItem" -> food++;
+                case "class PotionItem" -> potion++;
+                case "class Equipment" -> equip++;
+                case "class Prop" -> prop++;
+                default -> {
+                }
             }
         }
 
         double total = allInteractables.size();
 
-        System.out.println("NPC: " + (npc / total) * 100 + " %\nFoodItem: " + (food / total) * 100 + " %\nPotionItem: " + (potion / total) * 100 +  " %\nProp: " + (prop / total) * 100 + " %\nEquipment: " + (equip / total) * 100 + " %");
+        assertTrue(((npc / total) * 100) > positiveInteractableProbabilityMap.get(mockedIG1) - 2
+                        && ((npc / total) * 100) < positiveInteractableProbabilityMap.get(mockedIG1) + 2,
+                "Antalet NPC borde ligga nära den procentsats som finns i sannolikhetsmappen.");
+        assertTrue(((food / total) * 100) > positiveInteractableProbabilityMap.get(mockedIG2) - 2
+                        && ((food / total) * 100) < positiveInteractableProbabilityMap.get(mockedIG2) + 2,
+                "Antalet Food borde ligga nära den procentsats som finns i sannolikhetsmappen.");
+        assertTrue(((potion / total) * 100) > positiveInteractableProbabilityMap.get(mockedIG3) - 2
+                        && ((potion / total) * 100) < positiveInteractableProbabilityMap.get(mockedIG3) + 2,
+                "Antalet Potion borde ligga nära den procentsats som finns i sannolikhetsmappen.");
+        assertTrue(((prop / total) * 100) > positiveInteractableProbabilityMap.get(mockedIG4) - 2
+                        && ((prop / total) * 100) < positiveInteractableProbabilityMap.get(mockedIG4) + 2,
+                "Antalet Prop borde ligga nära den procentsats som finns i sannolikhetsmappen.");
+        assertTrue(((equip / total) * 100) > positiveInteractableProbabilityMap.get(mockedIG5) - 2
+                        && ((equip / total) * 100) < positiveInteractableProbabilityMap.get(mockedIG5) + 2,
+                "Antalet Equipment borde ligga nära den procentsats som finns i sannolikhetsmappen.");
     }
+// TODO: should be in another class
+//    @Test
+//    @DisplayName("Testar TreeMappen gameMap (compareTo i position)")
+//    public void test_whenBuildingMap_gameMapHasAllPositions() {
+//        mapController.add(new Position(0, 0), TEST_ROOM);
+//        mapController.add(new Position(1, 0), TEST_ROOM);
+//        mapController.add(new Position(2, 0), TEST_ROOM);
+//        mapController.add(new Position(1, 1), TEST_ROOM);
+//        TreeMap<Position, Room> gameMap = mapController.getGameMap();
+//        Set<Position> expectedPositions = new HashSet<>();
+//        expectedPositions.add(new Position(0, 0));
+//        expectedPositions.add(new Position(1, 0));
+//        expectedPositions.add(new Position(2, 0));
+//        expectedPositions.add(new Position(1, 1));
+//        assertEquals(expectedPositions, gameMap.keySet());
+//    }
 
     @Test
-    @DisplayName("Test som ska användas med profiler")
-    public void test_Profiler(){
-        mapBuilder.build();
+    @DisplayName("Testar så att alla rum på kartan kan besökas av spelaren")
+    public void test_whenBuildingMap_allRoomsCanBeVisited() {
+        List<Room> visited = new ArrayList<>();
+        Position start = new Position(0, 0);
+        visited.add(mapController.getRoom(start));
+        for (Room r : visited) {
+            visited.addAll(mapController.getAdjacentRooms(r));
+        }
     }
 }

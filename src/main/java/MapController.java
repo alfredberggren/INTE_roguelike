@@ -97,4 +97,8 @@ public class MapController {
         }
         return sb.toString();
     }
+
+    public Collection<Room> getAdjacentRooms(Room r) {
+
+    }
 }
