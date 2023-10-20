@@ -95,7 +95,7 @@ public class MapBuilderTest {
     @DisplayName("Testar om antalet interactables av varje typ stämmer överrens med procentsatserna i positiveInteractableProbabilityMap")
     public void test_buildingMap_generatesInteractableAmountsInAccordanceWithProbabilityMap() {
         mapBuilder.build();
-        HashMap<Position, Room> gameMap = mapController.getGameMap();
+        TreeMap<Position, Room> gameMap = mapController.getGameMap();
         ArrayList<Interactable> allInteractables = new ArrayList<>();
         for (Room r : gameMap.values()) {
             allInteractables.addAll(r.getInteractables().getAll());

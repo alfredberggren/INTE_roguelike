@@ -8,12 +8,12 @@ import java.util.*;
  */
 
 public class MapController {
-    private HashMap<Position, Room> gameMap;
-    private TreeSet<Position> allPositions;
+    private TreeMap<Position, Room> gameMap;
+    //private TreeSet<Position> allPositions;
     private Position positionMarker;
 
     public MapController() {
-        gameMap = new HashMap<>();
+        gameMap = new TreeMap<>();
         positionMarker = new Position(0, 0);
     }
 
@@ -22,12 +22,7 @@ public class MapController {
     }
 
     public boolean roomExists(Position position) {
-        addAllPos();
-        return allPositions.contains(position);
-    }
-
-    private void addAllPos() {
-        allPositions.addAll(gameMap.keySet());
+        return gameMap.containsKey(position);
     }
 
     public List<CardinalDirection> getAvailableDirections(Position position) {
@@ -55,7 +50,7 @@ public class MapController {
         return directions;
     }
 
-    public HashMap<Position, Room> getGameMap() {
+    public TreeMap<Position, Room> getGameMap() {
         return gameMap;
     }
 
