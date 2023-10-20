@@ -17,7 +17,7 @@ public class PhysicalAbility extends Ability{
         int levelBonus = character.getLevel() * LEVEL_BONUS_FOR_PHYSICAL;
         int experienceBonus = DEFAULT_XP;
         if(character instanceof Player player) {
-            experienceBonus = player.getExperiencePoint() / XP_BONUS_FOR_PHYSICAL;
+            experienceBonus = player.getAmountOfExperience() / XP_BONUS_FOR_PHYSICAL;
         }
         return baseDamage + levelBonus + experienceBonus;
     }

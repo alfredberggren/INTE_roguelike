@@ -1,3 +1,4 @@
+/*
 
 public class NPCAI extends IO{
 
@@ -66,3 +67,4 @@ public class NPCAI extends IO{
 }
 
 
+*/

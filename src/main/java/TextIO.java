@@ -52,10 +52,15 @@ public class TextIO extends IO{
     }
 
     @Override
+    public Interactable.InteractableAction requestAnotherAction(Interactable interactable, Character character) {
+        return null;
+    }
+
+    /*@Override
     public Interactable.InteractableAction requestAnotherAction(Interactable interactable, Character character){
         System.out.println("Action is not allowed");
         return requestAction(map, character, interactable);
-    }
+    }*/
 
 
     private String getUserInput(){
