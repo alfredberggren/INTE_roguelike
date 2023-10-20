@@ -10,16 +10,23 @@ public class EquipmentOnBody {
     }
 
     public Equipment getEquipment(EquipmentSlot slot) {
-        return equipmentOnBody.get(slot);
+        if(slot!=null) {
+            return equipmentOnBody.get(slot);
+        }
+        return null;
     }
 
     public void removeEquipment(EquipmentSlot slot) {
-        equipmentOnBody.remove(slot);
+        if(slot!=null) {
+            equipmentOnBody.remove(slot);
+        }
     }
 
     public void putEquipment(EquipmentSlot slot, Equipment equipment) {
-        if (!slotContainsEquipment(slot))
-            equipmentOnBody.put(slot, equipment);
+        if(slot!=null && equipment!=null) {
+            if (!slotContainsEquipment(slot))
+                equipmentOnBody.put(slot, equipment);
+        }
     }
 
     public boolean slotContainsEquipment(EquipmentSlot slot) {
@@ -40,9 +47,10 @@ public class EquipmentOnBody {
     }
 
     public String toString() {
+        StringBuilder sb = new StringBuilder();
         for (Map.Entry<EquipmentSlot, Equipment> pair : equipmentOnBody.entrySet()) {
-            return pair.getKey() + ": " + pair.getValue();
+            sb.append(pair.getKey().toString()).append(": ").append(pair.getValue());
         }
-        return "";
+        return sb.toString();
     }
 }
