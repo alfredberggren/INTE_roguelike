@@ -15,7 +15,7 @@ public class Player extends Character{
         return amountOfExperience;
     }
 
-    private void setAmountOfExperience(int amountOfExperience) {
+    protected void setAmountOfExperience(int amountOfExperience) {
         if(amountOfExperience < 0)
             throw new IllegalArgumentException("Experience points cannot be negative!");
         this.amountOfExperience = amountOfExperience;
@@ -61,7 +61,7 @@ public class Player extends Character{
         }
     }
 
-    public void getRewardsAfterWinning(Quest quest){
+    public void getXPAfterWinning(Quest quest){
         if(quest.isCompleted()){
             setAmountOfExperience(this.amountOfExperience + quest.getRewardXP());
         }
