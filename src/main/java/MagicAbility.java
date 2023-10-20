@@ -10,7 +10,7 @@ public class MagicAbility extends Ability{
     private static final int DEFAULT_MANA_COST_TO_CAST_SPELL = 5;
     private int requiredTimeToCast;
     private int coolDownTime;
-    private int manaCost;
+    private final int manaCost;
 
     /**Constructs an Ability object with the specified characteristics*/
     MagicAbility(String name, int baseDamage, int requiredLevel, String description, int requiredTimeToCast, int coolDownTime, int manaCost) {

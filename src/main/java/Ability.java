@@ -11,7 +11,7 @@ public abstract class Ability {
     private static final int MINIMUM_LEVEL_REQUIRED_TO_USE_PHYSICAL = 0;
     private String name;
     private int baseDamage;
-    private AbilityType type;
+    private final AbilityType type;
     private int requiredLevel;
     private String description;
 
