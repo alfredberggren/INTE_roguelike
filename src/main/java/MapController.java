@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * TODO: Mindre hårdkodade grunkor
@@ -12,6 +9,7 @@ import java.util.Map;
 
 public class MapController {
     private HashMap<Position, Room> gameMap;
+    private TreeSet<Position> allPositions;
     private Position positionMarker;
 
     public MapController() {
@@ -21,10 +19,11 @@ public class MapController {
 
     public void add(Position p, Room r) {
         gameMap.put(p, r);
+        allPositions.add(p);
     }
 
     public boolean roomExists(Position position) {
-        return gameMap.containsKey(position);
+        return allPositions.contains(position);
     }
 
     public List<CardinalDirection> getAvailableDirections(Position position) {

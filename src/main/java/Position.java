@@ -1,6 +1,7 @@
+import java.util.Comparator;
 import java.util.Objects;
 
-public class Position {
+public class Position implements Comparable<Position> {
     private int x;
     private int y;
 
@@ -44,6 +45,17 @@ public class Position {
     @Override
     public String toString(){
         return "Position [" + x + "." + y +"]";
+    }
+
+    @Override
+    public int compareTo(Position o) {
+        if (x > o.getX()) {
+            return 1;
+        } else if (x < o.getX()) {
+            return -1;
+        } else {
+            return y - o.getY();
+        }
     }
 
 //    @Override
