@@ -132,7 +132,6 @@ public class Equipment extends NonLivingEntity {
     /**Returns a string representation of the equipment, including its name, damage and effect*/
     @Override
     public String toString() {
-        String s = name + " +" + durability + "% " + effect;
-        return s;
+        return name + " +" + durability + "% " + effect;
     }
 }
