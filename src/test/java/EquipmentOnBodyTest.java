@@ -13,7 +13,7 @@ public class EquipmentOnBodyTest {
 
     @BeforeEach
     void setUp() {
-        equipmentOnBody = new EquipmentOnBody(new HashMap<EquipmentSlot, Equipment>());
+        equipmentOnBody = new EquipmentOnBody();
     }
 
     @Test

@@ -242,8 +242,8 @@ public class Character implements Interactable {
      */
     public void unEquip(Equipment equipment) {
         if (equipment != null) {
-            if (equipment.equals(equipmentOnBody.getEquipment(equipment.getEquipmentSlot()))) {
-                equipmentOnBody.removeEquipment(equipment.getEquipmentSlot());
+            if (equipment.equals(equipmentOnBody.getEquipment(equipment.getCanBePlacedInSlot()))) {
+                equipmentOnBody.removeEquipment(equipment.getCanBePlacedInSlot());
                 inventory.add(equipment);
                 removeAbility(equipment.getAbility());
             }
@@ -258,7 +258,7 @@ public class Character implements Interactable {
     public void equip(Equipment equipment) {
         if (equipment != null) {
             if (inventory.contains(equipment)) {
-                equipmentOnBody.putEquipment(equipment.getEquipmentSlot(), equipment);
+                equipmentOnBody.putEquipment(equipment.getCanBePlacedInSlot(), equipment);
                 addAbility(equipment.getAbility());
                 inventory.remove(equipment);
             }
