@@ -15,13 +15,15 @@ public class Player extends Character{
         return amountOfExperience;
     }
 
+    /**This method checks that amountOfExperience is not negative and if so then throw IllegalArgumentException*/
     protected void setAmountOfExperience(int amountOfExperience) {
         if(amountOfExperience < 0)
             throw new IllegalArgumentException("Experience points cannot be negative!");
         this.amountOfExperience = amountOfExperience;
     }
 
-    /**Increases the character's experience points*/
+    /**Increases the character's experience points and checks that add is not negative.
+     * The method also calls on levelUpOnTurn() to level the Player up when experience points is enough*/
     public void increaseXP(int add){
         if (add < 0) {
             throw new IllegalArgumentException("XP increase value cannot be negative");
@@ -41,13 +43,15 @@ public class Player extends Character{
         }
     }
 
+    /**Increases the level if the Player is below the max level*/
     private void increaseLevel() {
         if(getLevel() < MAX_LEVEL) {
             setLevel(getLevel() + 1);
         }
     }
 
-    /**Checks if the character has gained enough experience points to level up. If the character's experience points are greater than or equal to the experience required for the next level and the character's level is less than 10, the character levels up*/
+    /**Checks if the Player has gained enough experience points to level up.
+     * If the Player levels up, then the experience points should be 0 again*/
     public void levelUpOnTurn() {
         while(getAmountOfExperience() >= AMOUNT_OF_XP_TO_LEVEL_UP) {
             increaseLevel();
