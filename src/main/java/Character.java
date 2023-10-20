@@ -181,7 +181,7 @@ public class Character implements Interactable {
      */
     public void removeAbility(Ability ability) {
         int characterLevel = getLevel();
-        if (!abilities.contains(ability) && characterLevel < ability.getRequiredLevel()) {
+        if (abilities.contains(ability) || characterLevel < ability.getRequiredLevel()) {
             abilities.remove(ability);
         }
     }

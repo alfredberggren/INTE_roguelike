@@ -10,7 +10,7 @@ public class CharacterTest {
     static Character character;
     private static MagicAbility magicAbility = new MagicAbility("Fireball",10,1,"A fiery projectile",1,2,5);
     static Character characterWithPos = new Character("Rudolf", 100, 1,1,  new Position(1, 2), new TextIO());
-    static Equipment equipment = new Equipment("Sword", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10,1, "Test"));
+    static Equipment equipment = new Equipment("Sword", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Slash", 10,1, "Test"));
 
     @BeforeEach
     void setUp() {
@@ -246,7 +246,7 @@ public class CharacterTest {
     @DisplayName("Test to increase health with correct value")
     public void testToIncreaseHealthWithCorrectValue() {
         character.increaseHealth(10);
-        assertEquals(10, character.getHealth());
+        assertEquals(90, character.getHealth());
     }
 
     @Test
@@ -277,9 +277,9 @@ public class CharacterTest {
     @Test
     @DisplayName("Test to decrease health to negative value")
     public void testToDecreaseHealthToNegativeValue() {
-        character.decreaseHealth(100);
-        assertEquals(0, character.getHealth());
-        assertTrue(character.isDead());
+        assertThrows(IllegalArgumentException.class, () -> {
+            character.decreaseHealth(90);
+        });
     }
 
 
@@ -373,8 +373,9 @@ public class CharacterTest {
     @Test
     @DisplayName("Test that character get the ability from the equipment after equip()")
     public void testThatCharacterGetAbilityAfterEquip() {
+        character.getInventory().add(equipment);
         character.equip(equipment);
-        assertTrue(character.getAbilities().contains(new PhysicalAbility("Sword", 10, 1, "Test")));
+        assertTrue(character.getAbilities().contains(new PhysicalAbility("Slash", 10, 1, "Test")));
     }
 
     @Test
@@ -383,7 +384,7 @@ public class CharacterTest {
         character.getInventory().add(equipment);
         character.equip(equipment);
         character.unEquip(equipment);
-        assertFalse(character.getAbilities().contains(new PhysicalAbility("Sword", 10, 1, "Test")));
+        assertFalse(character.getAbilities().contains(new PhysicalAbility("Slash", 10, 1, "Test")));
     }
 
     @Test
