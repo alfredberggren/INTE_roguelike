@@ -17,7 +17,7 @@ public class MapController {
         gameMap = new HashMap<>();
     }
 
-    public void add(Position p, Room r){
+    public void add(Position p, Room r) {
         gameMap.put(p, r);
     }
 
@@ -42,8 +42,12 @@ public class MapController {
         return directions;
     }
 
+    public HashMap<Position, Room> getGameMap() {
+        return gameMap;
+    }
+
     public List<CardinalDirection> getUnavailableDirections(Position position) {
-        List<CardinalDirection> allDirections = new ArrayList<>(){{
+        List<CardinalDirection> allDirections = new ArrayList<>() {{
             add(CardinalDirection.SOUTH);
             add(CardinalDirection.NORTH);
             add(CardinalDirection.EAST);
@@ -54,13 +58,13 @@ public class MapController {
         return allDirections;
     }
 
-    public void setAvailableDirectionsInRooms(){
-        for (Map.Entry<Position, Room> e: gameMap.entrySet()){
+    public void setAvailableDirectionsInRooms() {
+        for (Map.Entry<Position, Room> e : gameMap.entrySet()) {
             e.getValue().setPossibleRoutes(getAvailableDirections(e.getKey()));
         }
     }
 
-    public Room getRoom(Position pos){
+    public Room getRoom(Position pos) {
         return gameMap.get(pos);
     }
 

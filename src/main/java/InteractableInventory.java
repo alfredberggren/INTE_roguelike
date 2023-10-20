@@ -45,6 +45,10 @@ public class InteractableInventory {
         return inventory.contains(i);
     }
 
+    public ArrayList<Interactable> getAll() {
+        return inventory;
+    }
+
     public boolean isEmpty() {
         return inventory.isEmpty();
     }
