@@ -10,36 +10,48 @@ public class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        player = new Player("Rudolf", 80, 20, new Position(0, 0), new TextIO());
+        player = new Player("Rudolf", 80, 20,1, new Position(0, 0), new TextIO());
     }
 
     @Test
-    @DisplayName("Test that new player has XP=0")
-    public void testNewCharactersXP() {
-        assertEquals(0, player.getExperiencePoint());
+    @DisplayName("Test to get player's amount of experience")
+    public void testToGetAmountOfExperience() {
+        assertEquals(0, player.getAmountOfExperience());
     }
 
     @Test
-    @DisplayName("Test to set correct experience points")
+    @DisplayName("Test to set correct amount of experience points")
     public void testSetCorrectXP() {
-        player.increaseXP(100);
-        assertEquals(100, player.getExperiencePoint());
+        player.setAmountOfExperience(100);
+        assertEquals(100, player.getAmountOfExperience());
+    }
+
+    @Test
+    @DisplayName("Test to set negative amount of experience point value")
+    public void whenSetNegativeXP_ThrowsException() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            player.setHealth(-10);
+        });
+    }
+
+
+    ///
+    @Test
+    @DisplayName("Test to increase amount of experience points with correct value")
+    public void testToIncreaseXP() {
+        player.increaseXP(10);
+        player.increaseXP(10);
+        assertEquals(20, player.getAmountOfExperience());
     }
 
     @Test
     @DisplayName("Test to decrease XP to negative value")
     public void testDecreaseXPToNegativeValue() {
         player.decreaseXP(10);
-        assertEquals(0, player.getExperiencePoint());
+        assertEquals(0, player.getAmountOfExperience());
     }
 
-    @Test
-    @DisplayName("Test to set negative experience point value")
-    public void testSetNegativeXP() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            player.setHealth(-10);
-        });
-    }
+
 
     @Test
     @DisplayName("Test that player gets a reward after winning")
@@ -47,7 +59,7 @@ public class PlayerTest {
         Quest DEFAULT_QUEST = new Quest("Kill Fido", QuestType.KILL, "Test description", 50, 5);
         DEFAULT_QUEST.completeQuest();
         player.getRewardsAfterWinning(DEFAULT_QUEST);
-        assertEquals(50, player.getExperiencePoint());
+        assertEquals(50, player.getAmountOfExperience());
     }
 
     @Test
@@ -55,22 +67,16 @@ public class PlayerTest {
     public void testDoNotGetRewardsIfQuestNotCompleted() {
         Quest DEFAULT_QUEST = new Quest("Kill Fido", QuestType.KILL, "Test description", 50, 5);
         player.getRewardsAfterWinning(DEFAULT_QUEST);
-        assertEquals(0, player.getExperiencePoint());
+        assertEquals(0, player.getAmountOfExperience());
     }
 
-    @Test
-    @DisplayName("Test to increase XP")
-    public void testToIncreaseXP() {
-        player.increaseXP(10);
-        player.increaseXP(10);
-        assertEquals(20, player.getExperiencePoint());
-    }
+
 
     @Test
     @DisplayName("Test to decrease XP")
     public void testToDecreaseXP() {
         player.decreaseXP(10);
-        assertEquals(0, player.getExperiencePoint());
+        assertEquals(0, player.getAmountOfExperience());
     }
 
     @Test
@@ -78,13 +84,13 @@ public class PlayerTest {
     public void testCharacterLevelUpWhenXPReaches100() {
         player.setLevel(0);
         player.increaseXP(100);
-        player.levelUp();
+        player.levelUpOnTurn();
         assertEquals(1, player.getLevel());
-        assertEquals(0, player.getExperiencePoint());
+        assertEquals(0, player.getAmountOfExperience());
         player.increaseXP(100);
-        player.levelUp();
+        player.levelUpOnTurn();
         assertEquals(2, player.getLevel());
-        assertEquals(0, player.getExperiencePoint());
+        assertEquals(0, player.getAmountOfExperience());
     }
 
     @Test
