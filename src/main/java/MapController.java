@@ -12,9 +12,11 @@ import java.util.Map;
 
 public class MapController {
     private HashMap<Position, Room> gameMap;
+    private Position positionMarker;
 
     public MapController() {
         gameMap = new HashMap<>();
+        positionMarker = new Position(0, 0);
     }
 
     public void add(Position p, Room r) {
@@ -27,16 +29,24 @@ public class MapController {
 
     public List<CardinalDirection> getAvailableDirections(Position position) {
         List<CardinalDirection> directions = new ArrayList<>();
-        if (roomExists(new Position(position.getX() + 1, position.getY()))) {
+        positionMarker.setX(position.getX() + 1);
+        positionMarker.setY(position.getY());
+        if (roomExists(positionMarker)) {
             directions.add(CardinalDirection.EAST);
         }
-        if (roomExists(new Position(position.getX(), position.getY() + 1))) {
+        positionMarker.setX(position.getX());
+        positionMarker.setY(position.getY() + 1);
+        if (roomExists(positionMarker)) {
             directions.add(CardinalDirection.NORTH);
         }
-        if (roomExists(new Position(position.getX() - 1, position.getY()))) {
+        positionMarker.setX(position.getX() - 1);
+        positionMarker.setY(position.getY());
+        if (roomExists(positionMarker)) {
             directions.add(CardinalDirection.WEST);
         }
-        if (roomExists(new Position(position.getX(), position.getY() - 1))) {
+        positionMarker.setX(position.getX());
+        positionMarker.setY(position.getY() - 1);
+        if (roomExists(positionMarker)) {
             directions.add(CardinalDirection.SOUTH);
         }
         return directions;
