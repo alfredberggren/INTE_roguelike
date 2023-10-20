@@ -84,7 +84,7 @@ public class MapBuilderTest {
         Map<HashMap<InteractableGenerator, Integer>, Integer> testProbabilityMap = getTestProbabilityMap();
         interactableDirector = new InteractableDirector(testProbabilityMap);
 
-        mapBuilder = new MapBuilder(Difficulty.MEDIUM, 4_000, DEFAULT_PLAYER, mapController, interactableDirector);
+        mapBuilder = new MapBuilder(Difficulty.MEDIUM, 1000, DEFAULT_PLAYER, mapController, interactableDirector);
         mapBuilder.build();
     }
 
@@ -168,8 +168,15 @@ public class MapBuilderTest {
         List<Room> visited = new ArrayList<>();
         Position start = new Position(0, 0);
         visited.add(mapController.getRoom(start));
-        for (Room r : visited) {
-            visited.addAll(mapController.getAdjacentRooms(r));
+
+        for (int i = 0; i < mapController.getGameMap().values().size(); i++) {
+            List<Room> visitedTemp = new ArrayList<>(visited);
+            for (Room r : visitedTemp) {
+                visited.addAll(mapController.getAdjacentRooms(r));
+            }
         }
+
+
+        assertEquals(mapController.getGameMap().values().size(), visited.size(), "All rooms should be able to be visited by the player!");
     }
 }
