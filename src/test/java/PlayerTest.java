@@ -34,8 +34,6 @@ public class PlayerTest {
         });
     }
 
-
-    ///
     @Test
     @DisplayName("Test to increase amount of experience points with correct value")
     public void testToIncreaseXP() {
@@ -45,37 +43,49 @@ public class PlayerTest {
     }
 
     @Test
+    @DisplayName("Test to increase amount of experience points with negative value")
+    public void whenIncreaseXPWithNegativeValue_ThrowsException() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            player.increaseXP(-10);
+        });
+    }
+    @Test
+    @DisplayName("Test to decrease amount of experience points with negative value")
+    public void whenDecreaseXPWithNegativeValue_ThrowsException() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            player.decreaseXP(-10);
+        });
+    }
+
+    @Test
     @DisplayName("Test to decrease XP to negative value")
-    public void testDecreaseXPToNegativeValue() {
-        player.decreaseXP(10);
+    public void whenDecreaseXPToNegativeValue_thenSetXPToZero() {
+        player.decreaseXP(100);
         assertEquals(0, player.getAmountOfExperience());
     }
 
-
+    @Test
+    @DisplayName("Test to decrease XP with correct value")
+    public void testToDecreaseXPWithCorrectValue() {
+        player.increaseXP(20);
+        player.decreaseXP(10);
+        assertEquals(10, player.getAmountOfExperience());
+    }
 
     @Test
-    @DisplayName("Test that player gets a reward after winning")
-    public void testToGetRewardsAfterWinning() {
+    @DisplayName("Test that player gets XP after winning a quest")
+    public void testToGetXPAfterWinningQuest() {
         Quest DEFAULT_QUEST = new Quest("Kill Fido", QuestType.KILL, "Test description", 50, 5);
         DEFAULT_QUEST.completeQuest();
-        player.getRewardsAfterWinning(DEFAULT_QUEST);
+        player.getXPAfterWinning(DEFAULT_QUEST);
         assertEquals(50, player.getAmountOfExperience());
     }
 
     @Test
-    @DisplayName("Test that player does not get a reward if the quest is not completed")
-    public void testDoNotGetRewardsIfQuestNotCompleted() {
+    @DisplayName("Test that player does not get XP if the quest is not completed")
+    public void testDoNotGetXPIfQuestNotCompleted() {
         Quest DEFAULT_QUEST = new Quest("Kill Fido", QuestType.KILL, "Test description", 50, 5);
-        player.getRewardsAfterWinning(DEFAULT_QUEST);
-        assertEquals(0, player.getAmountOfExperience());
-    }
-
-
-
-    @Test
-    @DisplayName("Test to decrease XP")
-    public void testToDecreaseXP() {
-        player.decreaseXP(10);
+        player.getXPAfterWinning(DEFAULT_QUEST);
         assertEquals(0, player.getAmountOfExperience());
     }
 
