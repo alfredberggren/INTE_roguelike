@@ -20,26 +20,42 @@ public class Equipment extends NonLivingEntity {
     private Effect effect;
     private int durability;
     private Ability ability;
-
-    //Why would equipment need this?
-    private EquipmentSlot equipmentSlot;
+    private EquipmentSlot canBePlacedInSlot;
 
 
     /**Constructs Equipment with the specified characteristics*/
-    public Equipment(String name, EquipmentSlot equipmentSlot, Effect effect, int durability, Ability ability) {
+    public Equipment(String name, EquipmentSlot canBePlacedInSlot, Effect effect, int durability, Ability ability) {
         super(name, STANDARD_INTERACTABLE_ACTIONS);
+        if(effect == null){
+            throw new IllegalArgumentException("Effect can not be null");
+        }
         this.effect = effect;
-        this.durability = durability;
+        setDurabilityOnEquipment(durability);
+        if(ability == null){
+            throw new IllegalArgumentException("Ability can not be null");
+        }
         this.ability = ability;
-        this.equipmentSlot = equipmentSlot;
+        if(canBePlacedInSlot == null){
+            throw new IllegalArgumentException("Slot can not be null");
+        }
+        this.canBePlacedInSlot = canBePlacedInSlot;
     }
 
-    public Equipment(String name, EquipmentSlot equipmentSlot, Set<Interactable.InteractableAction> possibleActions, Effect effect, int durability, Ability ability) {
+    public Equipment(String name, EquipmentSlot canBePlacedInSlot, Set<Interactable.InteractableAction> possibleActions, Effect effect, int durability, Ability ability) {
         super(name, possibleActions);
+        if(effect == null){
+            throw new IllegalArgumentException("Effect can not be null");
+        }
         this.effect = effect;
-        this.durability = durability;
+        setDurabilityOnEquipment(durability);
+        if(ability == null){
+            throw new IllegalArgumentException("Ability can not be null");
+        }
         this.ability = ability;
-        this.equipmentSlot = equipmentSlot;
+        if(canBePlacedInSlot == null){
+            throw new IllegalArgumentException("Slot can not be null");
+        }
+        this.canBePlacedInSlot = canBePlacedInSlot;
     }
 
     /**
@@ -54,8 +70,8 @@ public class Equipment extends NonLivingEntity {
         this(name, null, Effect.NONE, 0, null);
     }
 
-    public EquipmentSlot getEquipmentSlot() {
-        return equipmentSlot;
+    public EquipmentSlot getCanBePlacedInSlot() {
+        return canBePlacedInSlot;
     }
 
     public int getDurability() {
