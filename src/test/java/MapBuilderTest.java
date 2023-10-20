@@ -75,7 +75,7 @@ public class MapBuilderTest {
         Map<HashMap<InteractableGenerator, Integer>, Integer> testProbabilityMap = getTestProbabilityMap();
         interactableDirector = new InteractableDirector(testProbabilityMap);
 
-        mapBuilder = new MapBuilder(Difficulty.MEDIUM, 100000, DEFAULT_PLAYER, mapController, interactableDirector);
+        mapBuilder = new MapBuilder(Difficulty.MEDIUM, 4_000_000, DEFAULT_PLAYER, mapController, interactableDirector);
     }
 
     @After
@@ -121,5 +121,11 @@ public class MapBuilderTest {
         double total = allInteractables.size();
 
         System.out.println("NPC: " + (npc / total) * 100 + " %\nFoodItem: " + (food / total) * 100 + " %\nPotionItem: " + (potion / total) * 100 +  " %\nProp: " + (prop / total) * 100 + " %\nEquipment: " + (equip / total) * 100 + " %");
+    }
+
+    @Test
+    @DisplayName("Test som ska användas med profiler")
+    public void test_Profiler(){
+        mapBuilder.build();
     }
 }
