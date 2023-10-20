@@ -1,6 +1,4 @@
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 /**The MagicAbility class extends the abstract Ability class and represents a specific type of magical ability*/
 public class MagicAbility extends Ability{
@@ -10,7 +8,6 @@ public class MagicAbility extends Ability{
     private static final int XP_BONUS_FOR_MAGIC = 10;
     private static final int DEFAULT_XP = 0;
     private static final int DEFAULT_MANA_COST_TO_CAST_SPELL = 5;
-    private static final int DEFAULT_REQUIRED_LEVEL_TO_USE_MAGIC = 1;
     private int requiredTimeToCast;
     private int coolDownTime;
     private int manaCost;
@@ -27,11 +24,11 @@ public class MagicAbility extends Ability{
         return requiredTimeToCast;
     }
 
-    public void setRequiredTimeToCast(int castingTime){
+    public void setRequiredTimeToCast(int requiredTimeToCast){
         if (requiredTimeToCast < 0) {
             throw new IllegalArgumentException("Casting time needs to be 1 or more");
         } else {
-            this.requiredTimeToCast = castingTime;
+            this.requiredTimeToCast = requiredTimeToCast;
         }
     }
 
@@ -39,11 +36,11 @@ public class MagicAbility extends Ability{
         return coolDownTime;
     }
 
-    public void setCoolDownTime(int coolDown) {
+    public void setCoolDownTime(int coolDownTime) {
         if (coolDownTime < 0) {
             throw new IllegalArgumentException("Cool-down needs to be 1 or more");
         } else {
-            this.coolDownTime = coolDown;
+            this.coolDownTime = coolDownTime;
         }
     }
 

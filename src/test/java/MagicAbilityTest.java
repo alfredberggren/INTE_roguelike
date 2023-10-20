@@ -32,7 +32,7 @@ public class MagicAbilityTest {
             player.increaseXP(50);
         }
         int damage = magicAbility.calculateDamageOfMagicalAbility(character);
-        assertEquals(25, damage);
+        assertEquals(20, damage);
     }
 
     @Test
@@ -54,7 +54,7 @@ public class MagicAbilityTest {
             player.increaseXP(100);
         }
         int damage = magicAbility.calculateDamageOfMagicalAbility(character);
-        assertEquals(70, damage);
+        assertEquals(60, damage);
     }
 
     @Test

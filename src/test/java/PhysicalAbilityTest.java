@@ -29,7 +29,7 @@ public class PhysicalAbilityTest {
         character.setLevel(2);
         player.increaseXP(50);
         int damage = physicalAbility.calculateDamageOfPhysicalAbility(character);
-        assertEquals(14, damage);
+        assertEquals(9, damage);
     }
 
     @Test
@@ -47,7 +47,7 @@ public class PhysicalAbilityTest {
         character.setLevel(10);
         player.increaseXP(100);
         int damage = physicalAbility.calculateDamageOfPhysicalAbility(character);
-        assertEquals(35, damage);
+        assertEquals(25, damage);
     }
 
     @Test

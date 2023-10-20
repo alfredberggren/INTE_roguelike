@@ -5,9 +5,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AbilityTest {
-    //namnen för testerna kan var whenBlaBla_thenBlabla
 
-    private Character character;
+    private Character character; //ta bort ifall den inte behövs till testerna
     private MagicAbility magicAbility;
     private PhysicalAbility physicalAbility;
 
@@ -22,7 +21,7 @@ public class AbilityTest {
     @Test
     @DisplayName("Returns if both Magic Ability and Physical Ability exist")
     public void whenBothPhysicalAndMagicAbilityExist_thenReturnTheType() {
-        assertEquals("MAGICAL PHYSICAL", magicAbility.toString() + physicalAbility);
+        assertEquals("MAGICAL PHYSICAL", magicAbility.toString() + " " + physicalAbility);
     }
 
     @Test
