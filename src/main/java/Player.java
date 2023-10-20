@@ -27,7 +27,7 @@ public class Player extends Character{
             throw new IllegalArgumentException("XP increase value cannot be negative");
         }
         int result = amountOfExperience + add;
-        if (result < 0){
+        if (result < 0){    //onödig (resultat kan inte vara mindre än noll)
             result = AMOUNT_OF_XP_TO_LEVEL_UP;
         }
         setAmountOfExperience(result);
