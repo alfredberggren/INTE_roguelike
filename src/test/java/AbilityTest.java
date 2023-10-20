@@ -25,27 +25,6 @@ public class AbilityTest {
         assertEquals("MAGICAL PHYSICAL", magicAbility.toString() + physicalAbility);
     }
 
-
-    @Test //flytta till characters test
-    @DisplayName("Testing that magic ability is affected")
-    public void testMagicAbilityAffected() {
-        MagicAbility fireSpell = new MagicAbility("Fire",10,1,"Shoots fire",1,3,5);
-        character.addAbility(fireSpell);
-        MagicAbility ability = new MagicAbility(fireSpell.getName(), 10,1, "Fire",2,3,5);
-        character.setLevel(0);
-        character.removeAbility(fireSpell);
-        //assertTrue(ability.calculateImpactOnAbility(character));
-    }
-
-    @Test //flytta till characters test
-    @DisplayName("Testing that magic ability is not affected")
-    public void whenCharacterHaveMagicAbilityAndLevelIsMinimumRequired_thenNotRemoveAbility() {
-        character.addAbility(magicAbility);
-        character.setLevel(1);
-        //assertFalse(character.removeAbility(ability));
-    }
-
-
     @Test
     @DisplayName("Test getting the description of a spell")
     public void whenGetDescriptionOfAbility_thenCheckIfItIsEquals() {

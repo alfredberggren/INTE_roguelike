@@ -8,13 +8,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class CharacterTest {
     static Character character;
+    private static MagicAbility magicAbility = new MagicAbility("Fireball",10,1,"A fiery projectile",1,2,5);
     static Character characterWithPos = new Character("Rudolf", 100, 1,1,  new Position(1, 2), new TextIO());
     static Equipment equipment = new Equipment("Sword", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10,1, "Test"));
 
     @BeforeEach
     void setUp() {
         character = new Character("Ragnar", 80, 20,1, new TextIO());
+
     }
+
 
     //name tests
     @Test
@@ -284,38 +287,33 @@ public class CharacterTest {
     @Test
     @DisplayName("Test that character get Magic Ability")
     public void testCharacterMagicAbility() {
-        Character c = new Character("Rudolf", 10, 10, new Position(0, 0), new TextIO());
-        MagicAbility fireMagic = new MagicAbility("Fireball", 20, 1, "Shoots fire", 2, 1);
-        c.addAbility(fireMagic);
-        assertEquals("Fireball", fireMagic.name);
+        character.addAbility(magicAbility);
+        assertEquals("Fireball", magicAbility.getName());
     }
 
     @Test
     @DisplayName("Test setting and getting Magic Ability")
     public void testCharacterSetAndGetMagicAbility() {
-        MagicAbility fireMagic = new MagicAbility("Fireball", 20, 1, "Shoots fire", 2, 1);
-        character.addAbility(fireMagic);
-        assertTrue(character.getAbilities().contains(fireMagic));
+        character.addAbility(magicAbility);
+        assertTrue(character.getAbilities().contains(magicAbility));
     }
 
     @Test
     @DisplayName("Test setting and getting Physical Ability")
     public void testCharacterSetAndGetPhysicalAbility() {
-        PhysicalAbility sword = new PhysicalAbility("Sword", 10, 1);
-        character.addAbility(sword);
-        assertTrue(character.getAbilities().contains(sword));
+        PhysicalAbility slash = new PhysicalAbility("Slash", 5, 0,"Physical Attack");
+        character.addAbility(slash);
+        assertTrue(character.getAbilities().contains(slash));
     }
 
     @Test
     @DisplayName("Test adding and forgetting spells")
     public void testCharacterSpellHandling() {
-        MagicAbility fireSpell = new MagicAbility("Fire", 10, 1, "Shoots fire", 1, 2);
-        MagicAbility iceSpell = new MagicAbility("Ice", 12, 1, "Shoots ice", 1, 3);
-        character.addAbility(fireSpell);
-        assertTrue(character.getAbilities().contains(fireSpell));
-        character.removeAbility(fireSpell);
-        assertFalse(character.getAbilities().contains(fireSpell));
-        assertDoesNotThrow(() -> character.removeAbility(iceSpell));
+        character.addAbility(magicAbility);
+        assertTrue(character.getAbilities().contains(magicAbility));
+        character.removeAbility(magicAbility);
+        assertFalse(character.getAbilities().contains(magicAbility));
+        assertDoesNotThrow(() -> character.removeAbility(magicAbility));
     }
     //ability testerna
 
@@ -386,6 +384,22 @@ public class CharacterTest {
         character.equip(equipment);
         character.unEquip(equipment);
         assertFalse(character.getAbilities().contains(new PhysicalAbility("Sword", 10, 1, "Test")));
+    }
+
+    @Test
+    @DisplayName("Testing that magic ability is affected")
+    public void testMagicAbilityAffected() {
+        character.addAbility(magicAbility);
+        character.setLevel(0);
+        //assertTrue(character.removeAbility(magicAbility));
+    }
+
+    @Test
+    @DisplayName("Testing that magic ability is not affected")
+    public void whenCharacterHaveMagicAbilityAndLevelIsMinimumRequired_thenNotRemoveAbility() {
+        character.addAbility(magicAbility);
+        character.setLevel(1);
+        //assertFalse(character.removeAbility(magicAbility));
     }
 
 }
