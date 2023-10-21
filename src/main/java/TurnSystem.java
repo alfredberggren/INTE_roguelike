@@ -77,7 +77,20 @@ public class TurnSystem{
     }
 
     public boolean move(MapController worldMap, Character character) {
-        return false;
+        List<CardinalDirection> directions = worldMap.getAvailableDirections(character.getPosition());
+        if(directions.isEmpty()){
+            return false;
+        }
+        try {
+            CardinalDirection requestedDirection = io.requestMove(worldMap, character);
+            while(!directions.contains(requestedDirection)){
+                requestedDirection = io.requestAnotherMove(worldMap, character);
+            }
+            worldMap.moveCharacter(requestedDirection, character);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public boolean hasDoneTurn() {

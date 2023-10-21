@@ -17,6 +17,11 @@ public class Position {
         return y;
     }
 
+    public void translate(int xShift, int yShift){
+        x = x + xShift;
+        y = y + yShift;
+    }
+
     @Override
     public boolean equals(Object o){
         if (o instanceof Position p) {

@@ -86,4 +86,29 @@ public class MapController {
         }
         return sb.toString();
     }
+
+    public void moveCharacter(CardinalDirection direction, Character character) {
+        switch(direction){
+            case NORTH -> {
+                gameMap.get(character.getPosition()).getInteractables().remove(character);
+                character.getPosition().translate(0, 1);
+                gameMap.get(character.getPosition()).getInteractables().add(character);
+            }
+            case EAST -> {
+                gameMap.get(character.getPosition()).getInteractables().remove(character);
+                character.getPosition().translate(1, 0);
+                gameMap.get(character.getPosition()).getInteractables().add(character);
+            }
+            case SOUTH -> {
+                gameMap.get(character.getPosition()).getInteractables().remove(character);
+                character.getPosition().translate(0, -1);
+                gameMap.get(character.getPosition()).getInteractables().add(character);
+            }
+            case WEST -> {
+                gameMap.get(character.getPosition()).getInteractables().remove(character);
+                character.getPosition().translate(-1, 0);
+                gameMap.get(character.getPosition()).getInteractables().add(character);
+            }
+        }
+    }
 }
