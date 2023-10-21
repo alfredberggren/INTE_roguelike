@@ -22,14 +22,13 @@ public class TurnSystem{
 
 
     public void startTurn(MapController worldMap, Character character, int speed) {
+        int amountOfMoves = speed;
+        int amountOfActions = speed;
         if (character.isDead() || doneTurn){
             throw new IllegalStateException("A characters turn should not be run if they are dead or has already done their turn");
         }
         
         //character.update() ~~~ or something alike that checks if there are updates like damaged equipment, removes effects etc.
-
-        int amountOfMoves = speed;
-        int amountOfActions = speed;
 
         // try{
             TurnCommand command = io.requestTurnCommand(worldMap, character, amountOfActions, amountOfMoves);
@@ -67,14 +66,46 @@ public class TurnSystem{
             // doneTurn = true;
         // }
     }
-
-    TurnCommand r(MapController m, Character c, int move, int action){
-        return io.requestTurnCommand(m, c, move, action);
-    }
     
     public boolean action(MapController worldMap, Character character) {
-        return false;
+        InteractableInventory ri = worldMap.getRoom(character.getPosition()).getInteractables();
+        InteractableInventory ci = character.getInventory();
+        ArrayList<Interactable> el = new ArrayList<>();
+        for (EquipmentSlot s : EquipmentSlot.values()){
+            el.add(character.getEquipmentOnBody().getEquipment(s));
+        }
+        if (ri.size() <= 1 || ci.size() == 0 || el.size() == 0){
+            return false;
+        }
+        try {
+            Interactable requestedInteractable = io.requestInteractable(worldMap.getRoom(character.getPosition()), character);
+            while(!ri.contains(requestedInteractable) || ci.contains(requestedInteractable) || el.contains(requestedInteractable)){
+                requestedInteractable = io.requestAnotherInteractble(worldMap.getRoom(character.getPosition()), character);
+            }
+            Interactable.InteractableAction requestedAction = io.requestAction(requestedInteractable, character);
+            while(requestedInteractable.getPossibleActions().contains(requestedAction)){
+                requestedAction = io.requestAnotherAction(requestedInteractable, character);
+            }
+            return performAction(worldMap, character, requestedInteractable, requestedAction); 
+        } catch (Exception e) {
+            return false;
+        }
+
     }
+
+    private boolean performAction(MapController map, Character character, Interactable requestedInteractable, Interactable.InteractableAction requestedAction) {
+        switch(requestedAction){
+            case LOOT -> {return true;}
+            case DROP -> {return true;}
+            case FIGHT -> {return true;}
+            case WEAR -> {return true;}
+            case TALK -> {return true;}
+            case USE -> {return true;}
+            case UNEQUIP -> {return true;}
+            default -> {return false;}
+        }
+    }
+
 
     public boolean move(MapController worldMap, Character character) {
         List<CardinalDirection> directions = worldMap.getAvailableDirections(character.getPosition());
@@ -97,9 +128,9 @@ public class TurnSystem{
         return doneTurn;
     }
     
-    public void startCombatTurn(){
+    // public void startCombatTurn(){
         
-    }
+    // }
 
     private void resetTurn(){
         doneTurn = false;
