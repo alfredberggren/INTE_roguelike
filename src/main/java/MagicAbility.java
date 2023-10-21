@@ -1,58 +1,74 @@
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 /**The MagicAbility class extends the abstract Ability class and represents a specific type of magical ability*/
 public class MagicAbility extends Ability{
 
-    private Set<Ability> abilities = new HashSet<>();
-
-    private String description;
-    private int castingTime;
-    private int coolDown;
+    private static final int BASE_DAMAGE_FOR_MAGIC = 10;
+    private static final int LEVEL_BONUS_FOR_MAGIC = 5;
+    private static final int XP_BONUS_FOR_MAGIC = 10;
+    private static final int DEFAULT_XP = 0;
+    private static final int DEFAULT_MANA_COST_TO_CAST_SPELL = 5;
+    private int requiredTimeToCast;
+    private int coolDownTime;
+    private final int manaCost;
 
     /**Constructs an Ability object with the specified characteristics*/
-    MagicAbility(String name, int baseDamage, int minimumLevel, String description, int castingTime, int coolDown) {
-        super(name, baseDamage, AbilityType.MAGICAL, minimumLevel >= 1 ? minimumLevel:1);
-        this.description = description;
-        this.castingTime = castingTime;
-        this.coolDown = coolDown;
-        if(castingTime < 0 || coolDown < 0) {
-            throw new IllegalArgumentException("Casting time and Cool-down needs to be 0 or more");
+    MagicAbility(String name, int baseDamage, int requiredLevel, String description, int requiredTimeToCast, int coolDownTime, int manaCost) {
+        super(name, baseDamage, AbilityType.MAGICAL, requiredLevel, description);
+        this.setRequiredTimeToCast(requiredTimeToCast);
+        this.setCoolDownTime(coolDownTime);
+        this.manaCost = DEFAULT_MANA_COST_TO_CAST_SPELL;
+    }
+
+    public int getRequiredTimeToCast() {
+        return requiredTimeToCast;
+    }
+
+    public void setRequiredTimeToCast(int requiredTimeToCast){
+        if (requiredTimeToCast < 0) {
+            throw new IllegalArgumentException("Casting time needs to be 1 or more");
+        } else {
+            this.requiredTimeToCast = requiredTimeToCast;
         }
-
     }
 
-    public String getName() {
-        return name;
+    public int getCoolDownTime() {
+        return coolDownTime;
     }
 
-    public void setName(String name){
-        this.name = name;
+    public void setCoolDownTime(int coolDownTime) {
+        if (coolDownTime < 0) {
+            throw new IllegalArgumentException("Cool-down needs to be 1 or more");
+        } else {
+            this.coolDownTime = coolDownTime;
+        }
     }
 
-    public String getDescription() {
-        return description;
+    public void manaCostForMagic(Character character) {
+        int mana = character.getMana();
+        if (manaCost < 0){
+            throw new IllegalArgumentException("Mana cost cannot be negative");
+        }
+        if (mana < manaCost) {
+            throw new IllegalArgumentException("Not enough mana to cast the spell");
+        }
+        character.decreaseMana(manaCost);
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    /**Checks whether the ability is learnable by a character based on their level*/
+    protected boolean isLearnable(Character character) {
+        return character.getLevel() >= getRequiredLevel();
     }
 
-    public int getCastingTime() {
-        return castingTime;
-    }
-
-    public void setCastingTime(int castingTime){
-        this.castingTime = castingTime;
-    }
-
-    public int getCoolDown() {
-        return coolDown;
-    }
-
-    public void setCoolDown(int coolDown) {
-        this.coolDown = coolDown;
+    /** {@inheritDoc} Calculates the damage inflicted by this specific magical ability*/
+    protected int calculateDamageOfMagicalAbility(Character character) {
+        int baseDamage = BASE_DAMAGE_FOR_MAGIC;
+        int levelBonus = character.getLevel() * LEVEL_BONUS_FOR_MAGIC;
+        int experienceBonus = DEFAULT_XP;
+        if(character instanceof Player player) {
+            experienceBonus = player.getAmountOfExperience() / XP_BONUS_FOR_MAGIC;
+        }
+        return baseDamage + levelBonus + experienceBonus;
     }
 
     @Override
@@ -63,42 +79,16 @@ public class MagicAbility extends Ability{
         if(o == null || getClass() != o.getClass()) {
             return false;
         }
-        MagicAbility spell = (MagicAbility) o;
-        return Objects.equals(name, spell.name);
+        if(!super.equals(o)) {
+            return false;
+        }
+        MagicAbility ability = (MagicAbility) o;
+        return Objects.equals(getName(), ability.getName()); //getAbilityType? super()
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
-    }
-
-    /** {@inheritDoc} Calculates the damage inflicted by this specific magical ability*/
-    @Override
-    public int calculateDamageOfAbility(Character character, Player player) {
-        int baseDamage = 10;
-        int levelBonus = character.getLevel() * 5;
-        int experienceBonus = player.getExperiencePoint() / 10;
-        return baseDamage + levelBonus + experienceBonus;
-    }
-
-    /**Calculates the impact on the character's spell casting ability, if the character does not meet the required conditions to retain the spell, the spell is forgotten*/
-    public boolean calculateImpactOnAbility(Character character) {
-        int characterLevel = character.getLevel();
-        if(!containMagic() && characterLevel < minimumLevel) {
-            character.removeAbility(new MagicAbility("Fire", 10,1, "Shoots fire",1,2));
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**Checks if magical ability is in the Set*/
-    private boolean containMagic() {
-        if(abilities.contains(name)) {
-            return true;
-        } else {
-            return false;
-        }
+        return Objects.hash(getName());
     }
 
     /**{@inheritDoc}*/

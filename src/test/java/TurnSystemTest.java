@@ -36,7 +36,7 @@ public class TurnSystemTest {
         worldMapController.add(characterPosition, characterRoom);
 
         turnSystem = new TurnSystem(io);
-        character = new Character("name", 1, 1, characterPosition, io);
+        character = new Character("name", 1, 1, 0, characterPosition, io);
 
     }
 
@@ -127,7 +127,7 @@ public class TurnSystemTest {
         Thread.sleep(1_000);
 
         //when character has 0 speed it can do neither action or movement
-        character = new Character("name", 1, 0, characterPosition, io);
+        character = new Character("name", 1, 0, 0, characterPosition, io);
 
         when(io.requestTurnCommand(worldMapController, character, character.getSpeed(), character.getSpeed())).thenReturn(TurnSystem.TurnCommand.MOVE);
         when(io.requestAnotherTurnCommand(worldMapController, character, character.getSpeed(), character.getSpeed())).thenReturn(TurnSystem.TurnCommand.END);
@@ -142,7 +142,7 @@ public class TurnSystemTest {
         Thread.sleep(5_000);
 
         //when character has 0 speed it can do neither action or movement
-        character = new Character("name", 1, 0, characterPosition, io);
+        character = new Character("name", 1, 0, 0, characterPosition, io);
 
         when(io.requestTurnCommand(worldMapController, character, character.getSpeed(), character.getSpeed())).thenReturn(TurnSystem.TurnCommand.ACTION);
         when(io.requestAnotherTurnCommand(worldMapController, character, character.getSpeed(), character.getSpeed())).thenReturn(TurnSystem.TurnCommand.END);
@@ -156,7 +156,7 @@ public class TurnSystemTest {
     public void whenWrongInput_thenCommandIsReRequested() throws InterruptedException {
         Thread.sleep(5_000);
 
-        character = new Character("name", 1, 1, characterPosition, io);
+        character = new Character("name", 1, 1, 0, characterPosition, io);
 
         when(io.requestTurnCommand(worldMapController, character, character.getSpeed(), character.getSpeed())).thenThrow(IllegalArgumentException.class);
         when(io.requestAnotherTurnCommand(worldMapController, character, character.getSpeed(), character.getSpeed())).thenReturn(TurnSystem.TurnCommand.END);
@@ -236,7 +236,7 @@ public class TurnSystemTest {
 
     @Test
     public void whenResetTurn_thenAllTurnsDoneTurnSetToFalse() throws InterruptedException {        
-        Character otherCharacter = new Character("other Character", 1, 1, characterPosition, io);
+        Character otherCharacter = new Character("other Character", 1, 1, 0, characterPosition, io);
 
         when(io.requestTurnCommand(worldMapController, character, character.getSpeed(), character.getSpeed())).thenReturn(TurnSystem.TurnCommand.END);
 

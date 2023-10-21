@@ -28,7 +28,7 @@ public class IOTest {
         defaultOutputStream = new PrintStream(System.out);
 
         tempTextIO = new TextIO();
-        tempCharacter = new Character("name", 1, 1, new Position(0, 0), tempTextIO);
+        tempCharacter = new Character("name", 1, 1, 0, new Position(0, 0), tempTextIO);
     }
   
     @AfterEach

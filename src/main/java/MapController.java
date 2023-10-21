@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * TODO: Singleton?
  * TODO: Mindre hårdkodade grunkor
  * TODO: Items som genereras på mappen ska skickas in som en map med interactables som har en key för sannolikhetsvärdet.
  * TODO: De interactables som väljs ut ska baseras på gausskurvan.

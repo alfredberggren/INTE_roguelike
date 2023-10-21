@@ -9,17 +9,18 @@ import static org.junit.jupiter.api.Assertions.*;
 public class EquipmentOnBodyTest {
     static EquipmentOnBody equipmentOnBody;
     static final EquipmentSlot equipmentSlot = EquipmentSlot.LEFT_HAND;
-    static final Equipment equipment = new Equipment("Sword", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1));
+    static final Equipment equipment = new Equipment("Sword", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Slash", 10, 1,"Physical Attack"));
 
     @BeforeEach
     void setUp() {
-        equipmentOnBody = new EquipmentOnBody(new HashMap<EquipmentSlot, Equipment>());
+        equipmentOnBody = new EquipmentOnBody();
     }
 
     @Test
     @DisplayName("Test to get an equipment")
     public void testToGetEquipment() {
-        assertEquals("LEFT_HAND: Sword +50% DAMAGE", equipmentOnBody.getEquipment(equipmentSlot).toString());
+        equipmentOnBody.putEquipment(equipmentSlot, equipment);
+        assertEquals("LEFT_HAND: Sword +50% DAMAGE", equipmentOnBody.toString());
     }
 
     @Test
@@ -41,7 +42,7 @@ public class EquipmentOnBodyTest {
     @DisplayName("Test to put an equipment in an occupied slot")
     public void testToPutEquipmentInOccupiedSlot() {
         equipmentOnBody.putEquipment(equipmentSlot, equipment);
-        equipmentOnBody.putEquipment(equipmentSlot, new Equipment("Dagger", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Dagger", 20, 1)));
+        equipmentOnBody.putEquipment(equipmentSlot, new Equipment("Dagger", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Slash", 20, 1, "Physical Attack")));
         assertEquals("LEFT_HAND: Sword +50% DAMAGE", equipmentOnBody.toString());
     }
 
@@ -64,7 +65,7 @@ public class EquipmentOnBodyTest {
     @DisplayName("Test to check where the non-existent equipment was placed in the map")
     public void testToCheckWhereNonExistentEquipmentWasPlaced() {
         equipmentOnBody.putEquipment(equipmentSlot, equipment);
-        assertNull(equipmentOnBody.checkWhereEquipmentWasPlaced(new Equipment("Dagger", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE, 60, new PhysicalAbility("Dagger", 20, 1))));
+        assertNull(equipmentOnBody.checkWhereEquipmentWasPlaced(new Equipment("Dagger", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE, 60, new PhysicalAbility("Slash", 20, 1,"Physical Attack"))));
     }
 
 }
