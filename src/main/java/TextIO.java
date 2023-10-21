@@ -5,6 +5,7 @@ public class TextIO extends IO{
     @Override
     public TurnSystem.TurnCommand requestTurnCommand(MapController map, Character character, int amountOfActions, int amountOfMoves){
         String input = getUserInput();
+        System.out.println("move");
         switch(input){
             case "action": return TurnSystem.TurnCommand.ACTION;
             case "move": return TurnSystem.TurnCommand.MOVE;
