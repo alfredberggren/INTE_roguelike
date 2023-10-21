@@ -9,9 +9,9 @@ public abstract class IO {
      * 
     */
 
-    public abstract TurnSystem.TurnCommand requestTurnCommand(MapController map, Character character);
+    public abstract TurnSystem.TurnCommand requestTurnCommand(MapController map, Character character, int amountOfActions, int amountOfMoves);
 
-    public abstract TurnSystem.TurnCommand requestAnotherTurnCommand(MapController map, Character character);
+    public abstract TurnSystem.TurnCommand requestAnotherTurnCommand(MapController map, Character character, int amountOfActions, int amountOfMoves);
 
     public abstract CardinalDirection requestMove(MapController map, Character character);
 
