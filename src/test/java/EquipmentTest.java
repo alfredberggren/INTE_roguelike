@@ -25,7 +25,6 @@ public class EquipmentTest {
 
     }
 
-
     @Test
     @DisplayName("Test that equipment has a name")
     public void testEquipmentName() {
@@ -38,6 +37,29 @@ public class EquipmentTest {
         assertEquals("Sword +10% DAMAGE", equipment.toString());
     }
 
+    @Test
+    @DisplayName("Test to create an equipment with effect equal to null")
+    public void testConstructorWithEffectEqualToNull_ThrowsException() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Equipment("Dagger", EquipmentSlot.LEFT_HAND, null,1, new PhysicalAbility("Test ability", 10, 1, "test"));
+        });
+    }
+
+    @Test
+    @DisplayName("Test to create an equipment with ability equal to null")
+    public void testConstructorWithAbilityEqualToNull_ThrowsException() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Equipment("Dagger", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE,1, null);
+        });
+    }
+
+    @Test
+    @DisplayName("Test to create an equipment with slot equal to null")
+    public void testConstructorWithSlotEqualToNull_ThrowsException() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Equipment("Dagger", null, Equipment.Effect.DAMAGE,1, new PhysicalAbility("Test ability", 10, 1, "test"));
+        });
+    }
 
     @Test
     @DisplayName("Test that equipment has effect")
