@@ -17,10 +17,9 @@ public class EquipmentOnBodyTest {
     }
 
     @Test
-    @DisplayName("Test to get an equipment")
-    public void testToGetEquipment() {
-        equipmentOnBody.putEquipment(equipmentSlot, equipment);
-        assertEquals("LEFT_HAND: Sword +50% DAMAGE", equipmentOnBody.toString());
+    @DisplayName("Test that constructor generate new HashMap")
+    public void testToGenerateNewHashMapInConstructor(){
+        assertNotNull(equipmentOnBody.toString());
     }
 
     @Test
@@ -28,6 +27,34 @@ public class EquipmentOnBodyTest {
     public void testToPutEquipmentInSlot() {
         equipmentOnBody.putEquipment(equipmentSlot, equipment);
         assertEquals("LEFT_HAND: Sword +50% DAMAGE", equipmentOnBody.toString());
+    }
+
+    @Test
+    @DisplayName("Test to put an equipment equal to null in a slot")
+    public void testToPutEquipmentEqualToNullInSlot() {
+        equipmentOnBody.putEquipment(equipmentSlot, null);
+        assertEquals("", equipmentOnBody.toString());
+    }
+
+    @Test
+    @DisplayName("Test to put an equipment in a slot equal to null")
+    public void testToPutEquipmentInSlotEqualToNull() {
+        equipmentOnBody.putEquipment(null, equipment);
+        assertEquals("", equipmentOnBody.toString());
+    }
+
+    @Test
+    @DisplayName("Test to get an equipment")
+    public void testToGetEquipment() {
+        equipmentOnBody.putEquipment(equipmentSlot, equipment);
+        assertEquals("Sword +50% DAMAGE", equipmentOnBody.getEquipment(equipmentSlot).toString());
+    }
+
+    @Test
+    @DisplayName("Test to get an equipment equal to null")
+    public void testToGetEquipmentEqualToNull() {
+        equipmentOnBody.putEquipment(equipmentSlot, equipment);
+        assertNull(equipmentOnBody.getEquipment(null));
     }
 
     @Test
@@ -55,6 +82,14 @@ public class EquipmentOnBodyTest {
     }
 
     @Test
+    @DisplayName("Test to remove an equipment equal to null")
+    public void testToRemoveAnEquipmentEqualToNull() {
+        equipmentOnBody.putEquipment(equipmentSlot, equipment);
+        equipmentOnBody.removeEquipment(null);
+        assertEquals("LEFT_HAND: Sword +50% DAMAGE", equipmentOnBody.toString());
+    }
+
+    @Test
     @DisplayName("Test to check where the equipment was placed")
     public void testToCheckWhereEquipmentWasPlaced() {
         equipmentOnBody.putEquipment(equipmentSlot, equipment);
@@ -67,7 +102,6 @@ public class EquipmentOnBodyTest {
         equipmentOnBody.putEquipment(equipmentSlot, equipment);
         assertNull(equipmentOnBody.checkWhereEquipmentWasPlaced(new Equipment("Dagger", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE, 60, new PhysicalAbility("Slash", 20, 1,"Physical Attack"))));
     }
-
 
 }
 
