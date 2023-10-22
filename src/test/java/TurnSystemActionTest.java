@@ -247,7 +247,7 @@ public class TurnSystemActionTest {
         Mockito.when(io.requestInteractable(playerRoom, player)).thenReturn(testEquipment);
         Mockito.when(io.requestAction(testEquipment, player)).thenReturn(Interactable.InteractableAction.WEAR);
 
-        assertFalse(turnSystem.action(worldMapController, player), "action() did not return true");
+        assertFalse(turnSystem.action(worldMapController, player), "action() did not return false");
         assertTrue(playerRoom.getInteractables().contains(testEquipment), "Room does not have the expected inventory.");
         assertNotEquals(testEquipment, player.getEquipmentOnBody().getEquipment(EquipmentSlot.LEFT_HAND), "PLayer does not have the right item equiped");
     }
@@ -259,13 +259,14 @@ public class TurnSystemActionTest {
         Equipment testEquipmentTwo = new Equipment("Test Equipment Two", EquipmentSlot.LEFT_HAND, Equipment.Effect.HEALTH, 1, testAbility);   
 
         player.getInventory().add(testEquipmentOne);
+        player.getInventory().add(testEquipmentTwo);
         player.equip(testEquipmentOne);
 
         Mockito.when(io.requestInteractable(playerRoom, player)).thenReturn(testEquipmentTwo);
         Mockito.when(io.requestAction(testEquipmentTwo, player)).thenReturn(Interactable.InteractableAction.WEAR);
 
-        assertFalse(turnSystem.action(worldMapController, player), "action() did not return true");
-        assertTrue(playerRoom.getInteractables().contains(testEquipmentTwo), "Character does not have the expected inventory.");
+        assertFalse(turnSystem.action(worldMapController, player), "action() did not return false");
+        assertTrue(player.getInventory().contains(testEquipmentTwo), "Character does not have the expected inventory.");
         assertEquals(testEquipmentOne, player.getEquipmentOnBody().getEquipment(EquipmentSlot.LEFT_HAND), "PLayer does not have the right item equiped");
     }
 
@@ -285,7 +286,7 @@ public class TurnSystemActionTest {
         Mockito.when(io.requestAction(testEquipment, player)).thenReturn(Interactable.InteractableAction.UNEQUIP);
 
         assertTrue(turnSystem.action(worldMapController, player), "action() did not return true");
-        assertEquals(testEquipment, player.getInventory().contains(testEquipment), "Character didn't unequip the equipment.");
+        assertTrue(player.getInventory().contains(testEquipment), "Character didn't unequip the equipment.");
     }
 
     @Test
@@ -565,7 +566,7 @@ public class TurnSystemActionTest {
 
         assertTrue(turnSystem.action(worldMapController, player), "action() did not return true");
         assertTrue(player.getInventory().contains(rightEquipment), "Character does not have the expected inventory.");
-        assertTrue(playerRoom.getInteractables().isEmpty(), "Room does not have the expected inventory.");
+        assertTrue(playerRoom.getInteractables().size() == 1, "Room does not have the expected inventory.");
     } 
     
     @Test
@@ -588,6 +589,8 @@ public class TurnSystemActionTest {
     public void whenActionAsksForActionWrongInput_thenReturnFalse() { 
         PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 1, "description");
         Equipment testEquipment = new Equipment("Test Equipment One", EquipmentSlot.BELT, Equipment.Effect.HEALTH, 1, testAbility);
+        
+        playerRoom.getInteractables().add(testEquipment);
 
         Mockito.when(io.requestInteractable(playerRoom, player)).thenReturn(testEquipment);
         Mockito.when(io.requestAction(testEquipment, player)).thenThrow(IllegalArgumentException.class);
@@ -605,19 +608,23 @@ public class TurnSystemActionTest {
         PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 1, "description");
         Equipment testEquipment = new Equipment("Test Equipment One", EquipmentSlot.LEFT_HAND, actionSet, Equipment.Effect.HEALTH, 1, testAbility);
 
+        playerRoom.getInteractables().add(testEquipment);
+
         Mockito.when(io.requestInteractable(playerRoom, player)).thenReturn(testEquipment);
         Mockito.when(io.requestAction(testEquipment, player )).thenReturn(Interactable.InteractableAction.FIGHT);
         Mockito.when(io.requestAnotherAction(testEquipment, player )).thenReturn(Interactable.InteractableAction.FIGHT,Interactable.InteractableAction.LOOT);
         
         assertTrue(turnSystem.action(worldMapController, player), "action() did not return true");
         assertTrue(player.getInventory().contains(testEquipment), "Character does not have the expected inventory.");
-        assertTrue(playerRoom.getInteractables().isEmpty(), "Room does not have the expected inventory.");
+        assertTrue(playerRoom.getInteractables().size() == 1, "Room does not have the expected inventory.");
     } 
 
     @Test
     public void whenActionAsksForActionReRequestWrongInput_thenReturnFalse() { 
         PhysicalAbility testAbility = new PhysicalAbility("Test Ability", 1, 1, "description");
         Equipment testEquipment = new Equipment("Test Equipment One", EquipmentSlot.BELT, Equipment.Effect.HEALTH, 1, testAbility);
+
+        playerRoom.getInteractables().add(testEquipment);
 
         Mockito.when(io.requestInteractable(playerRoom, player)).thenReturn(testEquipment);
         Mockito.when(io.requestAction(testEquipment, player)).thenReturn(Interactable.InteractableAction.FIGHT);
