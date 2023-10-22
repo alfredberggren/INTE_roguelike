@@ -28,7 +28,7 @@ public class TurnSystem{
             throw new IllegalStateException("A characters turn should not be run if they are dead or has already done their turn");
         }
         
-        //character.update() ~~~ or something alike that checks if there are updates like damaged equipment, removes effects etc.
+        //character.update() ~~~ or something alike that checks if there are updates like damaged equipment, effects that are over etc.
 
         // try{
             TurnCommand command = io.requestTurnCommand(worldMap, character, amountOfActions, amountOfMoves);
@@ -72,18 +72,18 @@ public class TurnSystem{
         InteractableInventory ci = character.getInventory();
         ArrayList<Interactable> el = new ArrayList<>();
         for (EquipmentSlot s : EquipmentSlot.values()){
-            el.add(character.getEquipmentOnBody().getEquipment(s));
+            el.add(character.getEquipmentOnBody().getEquipment(s)); // adds null atm
         }
-        if (ri.size() <= 1 || ci.size() == 0 || el.size() == 0){
+        if (ri.size() <= 1 && ci.size() == 0 && el.size() == 0){
             return false;
         }
         try {
             Interactable requestedInteractable = io.requestInteractable(worldMap.getRoom(character.getPosition()), character);
-            while(!ri.contains(requestedInteractable) || ci.contains(requestedInteractable) || el.contains(requestedInteractable)){
+            while(!ri.contains(requestedInteractable) && !ci.contains(requestedInteractable) && !el.contains(requestedInteractable)){
                 requestedInteractable = io.requestAnotherInteractble(worldMap.getRoom(character.getPosition()), character);
             }
             Interactable.InteractableAction requestedAction = io.requestAction(requestedInteractable, character);
-            while(requestedInteractable.getPossibleActions().contains(requestedAction)){
+            while(!requestedInteractable.getPossibleActions().contains(requestedAction)){
                 requestedAction = io.requestAnotherAction(requestedInteractable, character);
             }
             return performAction(worldMap, character, requestedInteractable, requestedAction); 
@@ -93,20 +93,72 @@ public class TurnSystem{
 
     }
 
-    private boolean performAction(MapController map, Character character, Interactable requestedInteractable, Interactable.InteractableAction requestedAction) {
+    private boolean performAction(MapController map, Character character, Interactable requestedInteractable, Interactable.InteractableAction requestedAction) throws NullPointerException {
         switch(requestedAction){
-            case LOOT -> {return true;}
-            case DROP -> {return true;}
-            case FIGHT -> {return true;}
-            case WEAR -> {return true;}
-            case TALK -> {return true;}
-            case USE -> {return true;}
-            case UNEQUIP -> {return true;}
+            case LOOT -> {return loot(map, requestedInteractable, character);}
+            case DROP -> {return drop(map, requestedInteractable, character);}
+            case FIGHT -> {return fight(map, requestedInteractable, character);}
+            case WEAR -> {return wear(map, requestedInteractable, character);}
+            case TALK -> {return talk(map, requestedInteractable, character);}
+            case USE -> {return use(map, requestedInteractable, character);}
+            case UNEQUIP -> {return unequip(map, requestedInteractable, character);}
             default -> {return false;}
         }
     }
 
+    private boolean loot(MapController map, Interactable requestedInteractable, Character character) {
+        InteractableInventory roomInv = map.getRoom(character.getPosition()).getInteractables();
+        InteractableInventory charInv = character.getInventory();
+        if(!roomInv.contains(requestedInteractable) || requestedInteractable.equals(character))return false;
+        if(!(requestedInteractable instanceof Character)){
+            roomInv.remove(requestedInteractable);
+            charInv.add(requestedInteractable);
+            return true;
+        }
+        if(!((Character)requestedInteractable).isDead()) return false;
+        InteractableInventory inInv = ((Character)requestedInteractable).getInventory();
+        if(inInv.isEmpty()){
+            roomInv.remove(requestedInteractable);
+            charInv.add(requestedInteractable);
+            return true;
+        }
+        try {
+            Interactable ri = io.requestInteractable(((Character)requestedInteractable), character);
+            while(!inInv.contains(ri)){
+                ri = io.requestAnotherInteractble(((Character)requestedInteractable), character);
+            }
+            inInv.remove(ri);
+            charInv.add(ri);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    
+    private boolean drop(MapController map, Interactable requestedInteractable, Character character) {
+        return false;
+    }
 
+    private boolean fight(MapController map, Interactable requestedInteractable, Character character) {
+        return false;
+    }
+    
+    private boolean wear(MapController map, Interactable requestedInteractable, Character character) {
+        return false;
+    }
+
+    private boolean talk(MapController map, Interactable requestedInteractable, Character character) {
+        return false;
+    }
+
+    private boolean use(MapController map, Interactable requestedInteractable, Character character) {
+        return false;
+    }
+    
+    private boolean unequip(MapController map, Interactable requestedInteractable, Character character) {
+        return false;
+    }
+    
     public boolean move(MapController worldMap, Character character) {
         List<CardinalDirection> directions = worldMap.getAvailableDirections(character.getPosition());
         if(directions.isEmpty()){
@@ -127,14 +179,6 @@ public class TurnSystem{
     public boolean hasDoneTurn() {
         return doneTurn;
     }
-    
-    // public void startCombatTurn(){
-        
-    // }
-
-    private void resetTurn(){
-        doneTurn = false;
-    }
 
     // I had to look up how to do this:
     // https://stackoverflow.com/questions/61848418/how-to-change-an-instance-variable-of-all-instances-of-a-class-at-once-java
@@ -143,5 +187,9 @@ public class TurnSystem{
             TurnSystem.all.removeIf(ref -> ref.get() == null);
             TurnSystem.all.stream().map(WeakReference::get).forEach(TurnSystem::resetTurn);
         }
+    }
+    
+    private void resetTurn(){
+        doneTurn = false;
     }
 }

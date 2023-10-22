@@ -20,7 +20,7 @@ public class NPC extends Character implements Interactable {
         return Objects.hash(getName());
     }
 
-    public String getName(){
-        return getName();
-    }
+    // public String getName(){
+    //     return getName();
+    // }
 }

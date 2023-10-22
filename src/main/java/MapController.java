@@ -74,19 +74,6 @@ public class MapController {
         return false;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Map: \n");
-        int counter = 1;
-        for (Position p : gameMap.keySet()) {
-            sb.append(counter);
-            sb.append("- \t - ").append(gameMap.get(p).toString()).append(" }\n");
-            counter++;
-        }
-        return sb.toString();
-    }
-
     public void moveCharacter(CardinalDirection direction, Character character) {
         switch(direction){
             case NORTH -> {
@@ -110,5 +97,18 @@ public class MapController {
                 gameMap.get(character.getPosition()).getInteractables().add(character);
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Map: \n");
+        int counter = 1;
+        for (Position p : gameMap.keySet()) {
+            sb.append(counter);
+            sb.append("- \t - ").append(gameMap.get(p).toString()).append(" }\n");
+            counter++;
+        }
+        return sb.toString();
     }
 }
