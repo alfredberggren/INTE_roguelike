@@ -74,10 +74,6 @@ public class Equipment extends NonLivingEntity {
         return canBePlacedInSlot;
     }
 
-    public int getDurability() {
-        return durability;
-    }
-
     public Set<InteractableAction> getPossibleActions() {
         return possibleInteractableActions;
     }
@@ -87,7 +83,7 @@ public class Equipment extends NonLivingEntity {
         return ability;
     }
 
-    /**Modifies the damage to the equipment based on a damage bar value. If the damage bar falls to or below zero, the equipment is considered destroyed*/
+    /**Modifies the damage to the equipment based on a durability value. If the durability falls to or below zero, the equipment is considered destroyed*/
     public void decreaseDurability(int decreaseBy) {
         if (!isBroken()) {
             durability -= decreaseBy;
@@ -97,17 +93,20 @@ public class Equipment extends NonLivingEntity {
         }
     }
 
-    private boolean isBroken() {
+    public boolean isBroken() {
         return durability == 0;
     }
 
     /**Sets the damage bar value of the equipment*/
     private void setDurabilityOnEquipment(int durability) {
+        if(durability < 0) {
+            throw new IllegalArgumentException("Durability on Equipment cannot be less than zero");
+        }
         this.durability = durability;
     }
 
     /**Retrieves the current damage bar value of the equipment*/
-    public int getDamageOnEquipment() {
+    public int getDurabilityOnEquipment() {
         return durability;
     }
 
