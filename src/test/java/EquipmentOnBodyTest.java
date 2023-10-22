@@ -68,6 +68,7 @@ public class EquipmentOnBodyTest {
         assertNull(equipmentOnBody.checkWhereEquipmentWasPlaced(new Equipment("Dagger", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE, 60, new PhysicalAbility("Slash", 20, 1,"Physical Attack"))));
     }
 
+
 }
 
 
