@@ -46,10 +46,10 @@ public class MapBuilderTest {
     private static final FoodItem TEST_FOOD_ITEM = new FoodItem("Bread", 10);
     private static final PotionItem TEST_POTION_ITEM = new PotionItem("HealthPotion", Equipment.Effect.HEALTH, 5);
     private static final Prop TEST_PROP = new Prop("Key", DEFAULT_INTERACTABLE_ACTIONS);
-    private static final Equipment TEST_EQUIPMENT = new Equipment("Stone Sword", EquipmentSlot.RIGHT_HAND, Equipment.Effect.DAMAGE, 10, new PhysicalAbility("Swipe", 10, 5));
+    private static final Equipment TEST_EQUIPMENT = new Equipment("Stone Sword", EquipmentSlot.RIGHT_HAND, Equipment.Effect.DAMAGE, 10, new PhysicalAbility("Swipe", 10, 5,"Take a swipe"));
 
     private static final Position DEFAULT_VALID_PLAYER_POSITION = new Position(0, 0);
-    private static final Player DEFAULT_PLAYER = new Player("Spelarsson", 100, 10, DEFAULT_VALID_PLAYER_POSITION, io);
+    private static final Player DEFAULT_PLAYER = new Player("Spelarsson", 100, 10,1, DEFAULT_VALID_PLAYER_POSITION, io);
 
     private InteractableDirector interactableDirector;
 

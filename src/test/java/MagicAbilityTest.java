@@ -66,9 +66,38 @@ public class MagicAbilityTest {
     }
 
     @Test
+    @DisplayName("Test for zero experience bonus")
+    public void whenCharacterHasZeroXP_thenCalculateTheDamage() {
+        character.setLevel(10);
+        if(character instanceof Player player) {
+            player.setAmountOfExperience(0);
+        }
+        int damage = magicAbility.calculateDamageOfMagicalAbility(character);
+        assertEquals(60, damage);
+    }
+
+    @Test
+    @DisplayName("Test for negative experience bonus, should treat negative XP as zero XP")
+    public void whenCharacterHasNegativeXP_thenCalculateTheDamage() {
+        character.setLevel(10);
+        if(character instanceof Player player) {
+            player.setAmountOfExperience(-100);
+        }
+        int damage = magicAbility.calculateDamageOfMagicalAbility(character);
+        assertEquals(60, damage);
+    }
+
+    @Test
     @DisplayName("Test that a character is able to learn Magic")
     public void whenCharacterIsAboveRequiredLevelToUseMagic_thenCharacterCanLearnMagicAbility() {
         character.setLevel(10);
+        assertTrue(magicAbility.isLearnable(character));
+    }
+
+    @Test
+    @DisplayName("Test that a character is able to learn Magic, when they are at required level")
+    public void whenCharacterIsAtRequiredLevel_thenCharacterCanLearnMagicAbility() {
+        character.setLevel(1);
         assertTrue(magicAbility.isLearnable(character));
     }
 
@@ -133,27 +162,64 @@ public class MagicAbilityTest {
         });
     }
 
+    @Test
+    @DisplayName("Test negative base damage")
+    public void whenNegativeBaseDamage_thenThrowException() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new MagicAbility("Negative damage",-5,1,"Negative damage",0,0,0);
+        });
+    }
 
-    //ska implementera bättre equals + hashTester
+    @Test
+    @DisplayName("Test casting a spell with not enough mana")
+    public void whenNotEnoughManaForSpell_thenThrowException() {
+        character.setMana(0);
+        assertThrows(IllegalArgumentException.class, () -> {
+            magicAbility.manaCostForMagic(character);
+        });
+    }
+
+    @Test
+    @DisplayName("Test casting a spell with negative mana")
+    public void whenNegativeMana_thenThrowException() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            character.setMana(-1);
+        });
+    }
+
+    @Test
+    @DisplayName("Test casting a spell with exact mana")
+    public void whenExactlyEnoughManaForSpell_thenNoException() {
+        character.setMana(5);
+        assertDoesNotThrow(() -> {
+            magicAbility.manaCostForMagic(character);
+        });
+    }
+
+    @Test
+    @DisplayName("Test casting a spell with more mana than needed")
+    public void whenMoreManaThanNeededForSpell_thenNoException() {
+        character.setMana(100);
+        assertDoesNotThrow(() -> {
+            magicAbility.manaCostForMagic(character);
+        });
+    }
+
+
     @Test
     @DisplayName("Test equals method for Ability")
     public void testAbilityEquals() {
-        Ability abilityOne = new MagicAbility("Magical Spell",30,2, "Magic",2,3,5);
-        Ability abilityTwo = new MagicAbility("Magical Spell",30,2, "Magic",2,3,5);
-        Ability abilityThree = new MagicAbility("Magical Spell",30,2, "Magic",2,3,5);
-        assertEquals(abilityOne, abilityOne);
-        assertEquals(abilityOne, abilityTwo);
-        assertNotSame(abilityOne, abilityThree);
+        Ability ability = new MagicAbility("Magical Spell",30,2, "Magic",2,3,5);
+        assertEquals(magicAbility, magicAbility);
+        assertNotSame(magicAbility, ability);
 
     }
 
     @Test
     @DisplayName("Test hashCode method for Ability")
     public void testAbilityHashCode() {
-        Ability abilityOne = new MagicAbility("Magical Spell",30,2, "Magic",2,3,5);
-        Ability abilityTwo = new MagicAbility("Magical Spell",30,2, "Magic",2,3,5);
-        Ability abilityThree = new MagicAbility("Magical Spell",30,2, "Magic",2,3,5);
-        assertEquals(abilityOne.hashCode(), abilityTwo.hashCode());
-        assertNotSame(abilityOne.hashCode(), abilityThree.hashCode());
+        Ability ability = new MagicAbility("Magical Spell",30,2, "Magic",2,3,5);
+        assertEquals(magicAbility.hashCode(), magicAbility.hashCode());
+        assertNotSame(magicAbility.hashCode(), ability.hashCode());
     }
 }

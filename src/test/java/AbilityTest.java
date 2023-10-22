@@ -5,14 +5,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AbilityTest {
-
-    private Character character; //ta bort ifall den inte behövs till testerna
     private MagicAbility magicAbility;
     private PhysicalAbility physicalAbility;
 
     @BeforeEach
     void setUp() {
-        character = new Character("Rudolf", 10, 100, 1, new Position(1,1), new TextIO());
         magicAbility = new MagicAbility("Fireball",10,1,"A fiery projectile",1,2,5);
         physicalAbility = new PhysicalAbility("Slash",5,0,"Physical Attack");
 
@@ -48,10 +45,12 @@ public class AbilityTest {
     }
 
     @Test
-    @DisplayName("Test minimum required level cannot be negative") //skriv om
-    public void whenMinimumRequiredLevelIsNegative_then() {
-        magicAbility.getRequiredLevel();
-        assertEquals(1, magicAbility.getRequiredLevel());
+    @DisplayName("Test minimum required level cannot be negative")
+    public void whenMinimumRequiredLevelIsSetForAbility_thenItCannotBeNegative() {
+            assertThrows(IllegalArgumentException.class, () ->
+                    new PhysicalAbility("NegativeLevel", 10,-1, "Negative Level"));
+            assertThrows(IllegalArgumentException.class, () ->
+                    new MagicAbility("Negative level", 10,-1,"Negative level",0,0,0));
     }
 
     @Test

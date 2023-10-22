@@ -64,4 +64,12 @@ public class PhysicalAbilityTest {
     public void whenGetPhysicalAbilityName_thenCheckIfItEquals() {
         assertEquals("Slash", physicalAbility.getName());
     }
+
+    @Test
+    @DisplayName("Test negative base damage")
+    public void whenNegativeBaseDamage_thenThrowException() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new PhysicalAbility("Negative damage",-5,0,"Negative damage");
+        });
+    }
 }

@@ -27,11 +27,16 @@ public abstract class Ability {
             throw new IllegalArgumentException("Required level cannot be negative");
         }
         if (type == AbilityType.PHYSICAL) {
-            this.requiredLevel = MINIMUM_LEVEL_REQUIRED_TO_USE_PHYSICAL;
+            if(requiredLevel < MINIMUM_LEVEL_REQUIRED_TO_USE_PHYSICAL){
+                throw new IllegalArgumentException("Required level for Physical Ability cannot be less than " + MINIMUM_LEVEL_REQUIRED_TO_USE_PHYSICAL);
+            }
         } else if (type == AbilityType.MAGICAL){
-            this.requiredLevel = MINIMUM_LEVEL_REQUIRED_TO_USE_MAGIC;
+            if(requiredLevel < MINIMUM_LEVEL_REQUIRED_TO_USE_MAGIC) {
+                throw new IllegalArgumentException("Required level for Magical Ability cannot be less than " + MINIMUM_LEVEL_REQUIRED_TO_USE_MAGIC);
+            }
         }
         this.setName(name);
+        this.requiredLevel = requiredLevel;
         this.baseDamage = baseDamage;
         this.type = type;
         this.setDescription(description);
