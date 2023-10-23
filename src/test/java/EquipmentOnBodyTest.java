@@ -2,8 +2,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.*;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class EquipmentOnBodyTest {
@@ -91,14 +89,14 @@ public class EquipmentOnBodyTest {
 
     @Test
     @DisplayName("Test to check where the equipment was placed")
-    public void testToCheckWhereEquipmentWasPlaced() {
+    public void testToCheckWhereEquipmentWasPlaced_ShouldReturnCorrectSlot() {
         equipmentOnBody.putEquipment(equipmentSlot, equipment);
         assertEquals(equipmentSlot, equipmentOnBody.checkWhereEquipmentWasPlaced(equipment));
     }
 
     @Test
     @DisplayName("Test to check where the non-existent equipment was placed in the map")
-    public void testToCheckWhereNonExistentEquipmentWasPlaced() {
+    public void testToCheckWhereNonExistentEquipmentWasPlaced_ShouldBeNull() {
         equipmentOnBody.putEquipment(equipmentSlot, equipment);
         assertNull(equipmentOnBody.checkWhereEquipmentWasPlaced(new Equipment("Dagger", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE, 60, new PhysicalAbility("Slash", 20, 1,"Physical Attack"))));
     }

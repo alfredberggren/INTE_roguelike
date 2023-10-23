@@ -155,7 +155,7 @@ public class CharacterTest {
 
     @Test
     @DisplayName("Test to set mana larger than max mana")
-    public void testToSetManaLargeThanMaxMana_ShouldSetMaxMana() {
+    public void testToSetManaLargerThanMaxMana_ShouldSetMaxMana() {
         character.setMana(110);
         assertEquals(100, character.getMana());
     }
