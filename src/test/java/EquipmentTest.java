@@ -22,7 +22,6 @@ public class EquipmentTest {
     @BeforeEach
     void setUp() {
         equipment = new Equipment("Sword", EquipmentSlot.RIGHT_HAND, Equipment.Effect.DAMAGE, 10, new PhysicalAbility("Slash",10,1,"Physical Attack"));
-
     }
 
     @Test

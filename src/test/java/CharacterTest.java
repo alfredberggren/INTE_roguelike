@@ -1,9 +1,4 @@
-
 import org.junit.jupiter.api.*;
-
-import java.util.Arrays;
-import java.util.HashSet;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CharacterTest {
@@ -282,8 +277,6 @@ public class CharacterTest {
         });
     }
 
-
-    //kollade inte ability testerna
     @Test
     @DisplayName("Test that character get Magic Ability")
     public void testCharacterMagicAbility() {
@@ -315,9 +308,6 @@ public class CharacterTest {
         assertFalse(character.getAbilities().contains(magicAbility));
         assertDoesNotThrow(() -> character.removeAbility(magicAbility));
     }
-    //ability testerna
-
-
 
 
     @Test
@@ -392,7 +382,8 @@ public class CharacterTest {
     public void testMagicAbilityAffected() {
         character.addAbility(magicAbility);
         character.setLevel(0);
-        //assertTrue(character.removeAbility(magicAbility));
+        character.removeAbility(magicAbility);
+        assertFalse(character.getAbilities().contains(magicAbility));
     }
 
     @Test
@@ -400,7 +391,7 @@ public class CharacterTest {
     public void whenCharacterHaveMagicAbilityAndLevelIsMinimumRequired_thenNotRemoveAbility() {
         character.addAbility(magicAbility);
         character.setLevel(1);
-        //assertFalse(character.removeAbility(magicAbility));
+        assertTrue(character.getAbilities().contains(magicAbility));
     }
 
 }
