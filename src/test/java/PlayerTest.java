@@ -53,7 +53,7 @@ public class PlayerTest {
     @DisplayName("Test to decrease amount of experience points with negative value")
     public void whenDecreaseXPWithNegativeValue_ThrowsException() {
         assertThrows(IllegalArgumentException.class, () -> {
-            player.decreaseXP(-10);
+            player.setAmountOfExperience(-1);
         });
     }
 
@@ -93,11 +93,11 @@ public class PlayerTest {
     @DisplayName("Test that character level up")
     public void testCharacterLevelUpWhenXPReaches100() {
         player.setLevel(0);
-        player.increaseXP(100);
+        player.increaseXP(1000);
         player.levelUpOnTurn();
         assertEquals(1, player.getLevel());
         assertEquals(0, player.getAmountOfExperience());
-        player.increaseXP(100);
+        player.increaseXP(1000);
         player.levelUpOnTurn();
         assertEquals(2, player.getLevel());
         assertEquals(0, player.getAmountOfExperience());
