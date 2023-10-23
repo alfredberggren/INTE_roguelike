@@ -7,12 +7,12 @@ public class PhysicalAbility extends Ability{
     private static final int DEFAULT_XP = 0;
 
     /**Constructs an Ability object with the specified characteristics*/
-    PhysicalAbility(String name, int baseDamage, int requiredLevel, String description){
+    public PhysicalAbility(String name, int baseDamage, int requiredLevel, String description){
         super(name, baseDamage, AbilityType.PHYSICAL, requiredLevel, description);
     }
 
     /** {@inheritDoc} Calculates the damage inflicted by this specific physical ability*/
-    protected int calculateDamageOfPhysicalAbility(Character character) {
+    public int calculateDamageOfPhysicalAbility(Character character) {
         int baseDamage = BASE_DAMAGE_FOR_PHYSICAL;
         int levelBonus = character.getLevel() * LEVEL_BONUS_FOR_PHYSICAL;
         int experienceBonus = DEFAULT_XP;

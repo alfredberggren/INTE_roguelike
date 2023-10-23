@@ -13,7 +13,7 @@ public class MagicAbility extends Ability{
     private final int manaCost;
 
     /**Constructs an Ability object with the specified characteristics*/
-    MagicAbility(String name, int baseDamage, int requiredLevel, String description, int requiredTimeToCast, int coolDownTime, int manaCost) {
+    public MagicAbility(String name, int baseDamage, int requiredLevel, String description, int requiredTimeToCast, int coolDownTime, int manaCost) {
         super(name, baseDamage, AbilityType.MAGICAL, requiredLevel, description);
         this.setRequiredTimeToCast(requiredTimeToCast);
         this.setCoolDownTime(coolDownTime);
@@ -56,12 +56,12 @@ public class MagicAbility extends Ability{
     }
 
     /**Checks whether the ability is learnable by a character based on their level*/
-    protected boolean isLearnable(Character character) {
+    public boolean isLearnable(Character character) {
         return character.getLevel() >= getRequiredLevel();
     }
 
     /** {@inheritDoc} Calculates the damage inflicted by this specific magical ability*/
-    protected int calculateDamageOfMagicalAbility(Character character) {
+    public int calculateDamageOfMagicalAbility(Character character) {
         int baseDamage = BASE_DAMAGE_FOR_MAGIC;
         int levelBonus = character.getLevel() * LEVEL_BONUS_FOR_MAGIC;
         int experienceBonus = DEFAULT_XP;

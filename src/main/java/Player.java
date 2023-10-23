@@ -16,7 +16,7 @@ public class Player extends Character{
     }
 
     /**This method checks that amountOfExperience is not negative and if so then throw IllegalArgumentException*/
-    protected void setAmountOfExperience(int amountOfExperience) {
+    public void setAmountOfExperience(int amountOfExperience) {
         if(amountOfExperience < 0)
             throw new IllegalArgumentException("Experience points cannot be negative!");
         this.amountOfExperience = amountOfExperience;
