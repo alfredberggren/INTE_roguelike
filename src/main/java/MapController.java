@@ -97,4 +97,21 @@ public class MapController {
         }
         return sb.toString();
     }
+
+    public Collection<Room> getAdjacentRooms(Room r) {
+        List<CardinalDirection> dirs = r.getPossibleRoutes();
+        List<Room> adjacentRooms = new ArrayList<>();
+        for (CardinalDirection c : dirs) {
+            if (c == CardinalDirection.NORTH) {
+                adjacentRooms.add(getRoom(new Position(r.getPosition().getX(), r.getPosition().getY() + 1)));
+            } if (c == CardinalDirection.SOUTH) {
+                adjacentRooms.add(getRoom(new Position(r.getPosition().getX(), r.getPosition().getY() - 1)));
+            } if (c == CardinalDirection.WEST) {
+                adjacentRooms.add(getRoom(new Position(r.getPosition().getX() - 1, r.getPosition().getY())));
+            } if (c == CardinalDirection.EAST) {
+                adjacentRooms.add(getRoom(new Position(r.getPosition().getX() + 1, r.getPosition().getY())));
+            }
+        }
+        return adjacentRooms;
+    }
 }
