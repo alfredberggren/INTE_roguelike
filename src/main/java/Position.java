@@ -53,9 +53,12 @@ public class Position implements Comparable<Position> {
             return 1;
         } else if (x < o.getX()) {
             return -1;
-        } else {
-            return y - o.getY();
+        } else if (y > o.getY()){
+            return 1;
+        } else if (y < o.getY()) {
+            return -1;
         }
+        return 0;
     }
 
 //    @Override
