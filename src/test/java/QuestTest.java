@@ -37,14 +37,14 @@ public class QuestTest {
     }
 
     @Test
-    @DisplayName("Test that quest is nor completed in constructor")
+    @DisplayName("Test that quest is not completed in constructor")
     public void testThatQuestIsNotCompletedInConstructor() {
         assertFalse(quest.isCompleted());
     }
 
     @Test
     @DisplayName("Test to create a quest with negative rewardXP")
-    public void testConstructorWithNegativeRewardXP() {
+    public void testConstructorWithNegativeRewardXP_shouldThrowException() {
         assertThrows(IllegalArgumentException.class, () -> {
             new Quest("Kill Fido", QuestType.KILL, "Test description", -10, 5);
         });
@@ -74,7 +74,6 @@ public class QuestTest {
         quest.completeQuest();
         assertTrue(quest.isCompleted());
     }
-
 
     @Test
     @DisplayName("Test if difficulty correspond to character's level")
