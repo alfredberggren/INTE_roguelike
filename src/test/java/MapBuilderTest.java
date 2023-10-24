@@ -181,7 +181,18 @@ public class MapBuilderTest {
 
     @Test
     @DisplayName("Testar så att rummens möjliga riktningar blir korrekta efter byggning")
-    public void test_whenBuildingMap_allRoomsHaveCorrectPossibleRoutes(){
+    public void test_whenBuildingMap_allRoomsHaveCorrectPossibleRoutes() {
 
+    }
+
+    @Test
+    @DisplayName("Testar så att rummens riktning går åt båda hållen, alltså att om ett rum har en riktning till ett annat rum, så har de andra rummet en riktning tillbaka till det som det kom ifrån.")
+    public void test_whenBuildingMap_directionsWorkInBothWays() {
+        for (Room r : mapController.getGameMap().values()) {
+            List<Room> adjacentRooms = mapController.getAdjacentRooms(r);
+            for (Room r2 : adjacentRooms) {
+                assertTrue(mapController.getAdjacentRooms(r2).contains(r));
+            }
+        }
     }
 }
