@@ -1,7 +1,6 @@
 import org.junit.After;
 import org.junit.Before;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -13,7 +12,6 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-//TODO: Testa så att inga "öar" skapas
 //TODO: Testa att alla rum som har rum brevid sig har riktningar dit och rummet intill har riktning tillbaks till rummet man kom ifrån
 
 @ExtendWith(MockitoExtension.class)
@@ -72,7 +70,7 @@ public class MapBuilderTest {
         return testProbabilityMap;
     }
 
-    @Before
+    @BeforeEach
     public void setup() {
         mapController = new MapController();
         Mockito.when(mockedIG1.generateInteractable()).thenReturn(TEST_NPC);
@@ -88,7 +86,7 @@ public class MapBuilderTest {
         mapBuilder.build();
     }
 
-    @After
+    @AfterEach
     public void reset() {
         mapController = null;
         mapBuilder = null;
@@ -145,7 +143,7 @@ public class MapBuilderTest {
                         && ((equip / total) * 100) < positiveInteractableProbabilityMap.get(mockedIG5) + 2,
                 "Antalet Equipment borde ligga nära den procentsats som finns i sannolikhetsmappen.");
     }
-// TODO: should be in another class
+// TODO: should be in a different class
 //    @Test
 //    @DisplayName("Testar TreeMappen gameMap (compareTo i position)")
 //    public void test_whenBuildingMap_gameMapHasAllPositions() {
@@ -169,14 +167,21 @@ public class MapBuilderTest {
         Position start = new Position(0, 0);
         visited.add(mapController.getRoom(start));
 
-        for (int i = 0; i < mapController.getGameMap().values().size(); i++) {
-            List<Room> visitedTemp = new ArrayList<>(visited);
-            for (Room r : visitedTemp) {
-                visited.addAll(mapController.getAdjacentRooms(r));
+        for (int i = 0; i < visited.size(); i++) {
+            List<Room> adjacentRooms = mapController.getAdjacentRooms(visited.get(i));
+            for (Room r : adjacentRooms) {
+                if (!visited.contains(r)) {
+                    visited.add(r);
+                }
             }
         }
 
+        assertEquals(mapController.getGameMap().values().size(), visited.size(), "Alla rum ska kunna besökas! Det verkar som att antalet rum man kan besöka inte stämmer överrens med det totala antalet rum.");
+    }
 
-        assertEquals(mapController.getGameMap().values().size(), visited.size(), "All rooms should be able to be visited by the player!");
+    @Test
+    @DisplayName("Testar så att rummens möjliga riktningar blir korrekta efter byggning")
+    public void test_whenBuildingMap_allRoomsHaveCorrectPossibleRoutes(){
+
     }
 }

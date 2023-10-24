@@ -49,24 +49,27 @@ public class MapBuilder {
             currentPos = decideNextPosition(currentPos);
 
             //Check if interactables should generate in new room
-            //randomInteractableDeterminator = r.nextInt(TOTAL_PERCENT) + 1;
-            //if (randomInteractableDeterminator <= INTERACTABLE_PERCENTAGE) {
+            randomInteractableDeterminator = r.nextInt(TOTAL_PERCENT) + 1;
+            if (randomInteractableDeterminator <= INTERACTABLE_PERCENTAGE) {
                 dynInteractables = generateInteractables();
-           // }
+            }
 
             Room newRoom = new Room(currentPos, dynInteractables);
             mapController.add(currentPos, newRoom);
             newRoom.setPossibleRoutes(mapController.getAvailableDirections(currentPos));
 
             //Sets routes on current/old room even if new room is not directly connected. Should not matter, but could mean extra computing.
+            // Finding: När dessa routes sätts, så uppdateras de inte föränn efter byggandet,
+            // ifall ett nytt rum skulle byggas intill detta senare än i nuvarande iteration,
+            // det betyder att när byggaren backtrackar kan den inte gå till ett rum som är nyare än sig självt
+            // eller det som precis byggts.
             currentRoom.setPossibleRoutes(mapController.getAvailableDirections(oldPos));
             currentRoom = newRoom;
 
         }
         //Set all rooms in maps available directions, should not be needed now
-        //mapController.setAvailableDirectionsInRooms();
+        mapController.setAvailableDirectionsInRooms();
     }
-
 
     private Position decideNextPosition(Position pos) {
         int rndDirectionIndex;

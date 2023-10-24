@@ -29,8 +29,7 @@ public class Position implements Comparable<Position> {
     @Override
     public boolean equals(Object o){
         if (o instanceof Position p) {
-            if (p.getX() == x && p.getY() == y)
-                return true;
+            return p.getX() == x && p.getY() == y;
         }
         return false;
     }
