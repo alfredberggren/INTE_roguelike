@@ -64,7 +64,6 @@ public class Door extends Prop{
         this.open = true;
         this.breaksKeyAfterUse = false;
         this.requiredKeyType = Key.Type.NONE;
-
     }
 
     /**

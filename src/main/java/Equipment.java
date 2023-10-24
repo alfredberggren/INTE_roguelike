@@ -58,17 +58,6 @@ public class Equipment extends NonLivingEntity {
         this.canBePlacedInSlot = canBePlacedInSlot;
     }
 
-    /**
-     * Constructor with fewer parameters, should be used for equipment that has "passive" uses, i.e. non-violent/non-magical.
-     * Sets effect to none, damage to 0, and ability to null.
-     * @param name
-     * The name of the Equipment
-     * @param possibleActions
-     * The actions that can be done with Equipment
-     */
-    public Equipment(String name, Set<InteractableAction> possibleActions) {
-        this(name, null, Effect.NONE, 0, null);
-    }
 
     public EquipmentSlot getCanBePlacedInSlot() {
         return canBePlacedInSlot;
