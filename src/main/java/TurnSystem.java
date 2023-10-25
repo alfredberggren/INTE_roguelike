@@ -24,9 +24,13 @@ public class TurnSystem {
     public void startTurn(MapController worldMap, Character character, int speed) {
         int amountOfMoves = speed;
         int amountOfActions = speed;
-        if (character.isDead() || doneTurn) {
+        if (doneTurn) {
             throw new IllegalStateException(
-                    "A characters turn should not be run if they are dead or has already done their turn");
+                    "A characters turn should not be start if a character has already done their turn.");
+        }
+        if (character.isDead()) {
+            throw new IllegalStateException(
+                    "A characters turn should not be start if charcter is dead.");
         }
 
         // character.update()~~ or something alike that checks if there are updates
