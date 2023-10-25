@@ -1,15 +1,18 @@
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class DoorTest {
 
-    //MERGEMERGE
-    //TODO: needs a lot of refactoring, and also should make a decision table to be sure everything is tested
+    //TODO: needs a lot of refactoring
 
     private static final int DEFAULT_KEY_USES = 2;
     private static final int DEFAULT_USES_LEFT_AFTER_USE = 1;
@@ -97,10 +100,11 @@ public class DoorTest {
     @Test
     public void test_whenDoorIsBroken_thenDoorCanNotBeOpenedOrClosed() {
         d1 = new Door(Key.Type.BROKEN, DOES_NOT_BREAK_KEY);
-        assertEquals(false, d1.open(), "could open");
-        assertEquals(false, d1.close(), "could close");
+        d1.setOpen(CLOSED);
+        assertEquals(false, d1.use(), "could open");
+        d1.setOpen(OPEN);
+        assertEquals(false, d1.use(), "could close");
     }
-
     @Test
     public void test_whenDoorIsBroken_ThenDoorCanNotBeOpenedOrClosedWithKey(){
         d1 = new Door(Key.Type.BROKEN, DOES_NOT_BREAK_KEY);
@@ -109,7 +113,6 @@ public class DoorTest {
         assertEquals(false, d1.close());
 
     }
-
     @Test
     public void test_whenDoorIsBroken_thenDoorDoesNotBreakKey(){
         d1 = new Door(Key.Type.BROKEN, BREAKS_KEY);
@@ -119,7 +122,6 @@ public class DoorTest {
         d1.close(k);
         assertEquals(DEFAULT_CORRECT_KEY_TYPE, k.getKeyType(), "key's type was changed when closing door");
     }
-
     @Test
     public void test_whenDoorIsBroken_thenKeyIsNotUsed(){
         d1 = new Door(Key.Type.BROKEN, DOES_NOT_BREAK_KEY);
@@ -129,8 +131,6 @@ public class DoorTest {
         d1.close(k);
         assertEquals(DEFAULT_KEY_USES, k.getUses());
     }
-
-
     //when door has KeyType
         // door opens if correct key
     @Test
@@ -150,7 +150,7 @@ public class DoorTest {
         d1.close(k);
         assertEquals(false, d1.isOpen());
     }
-        //TODO: door does not open if not correct key
+        //door does not open if not correct key
     @Test
     public void test_whenDoorIsNotTypeNone_thenWontOpenWithoutKey(){
         d1 = new Door(DEFAULT_CORRECT_KEY_TYPE, DOES_NOT_BREAK_KEY);
@@ -158,8 +158,7 @@ public class DoorTest {
         assertEquals(false, d1.isOpen());
     }
 
-
-        //TODO: door does not close if not correct key
+        // door does not close if not correct key
     @Test
     public void test_whenDoorHasKeyType_thenDoorDoesNotCloseWithWrongKey(){
         d1 = new Door(DEFAULT_CORRECT_KEY_TYPE, DOES_NOT_BREAK_KEY);
@@ -167,8 +166,6 @@ public class DoorTest {
         d1.close(k);
         assertEquals(false, d1.isOpen());
     }
-
-
 
     //When door is typeNone
     //and open, Door closes
@@ -292,12 +289,13 @@ public class DoorTest {
         assertEquals(DEFAULT_CORRECT_KEY_TYPE, k.getKeyType(), "The key was broken although door was set to BROKEN");
     }
 
-    @Test
-    public void test_R3_NotCorrectKeyType(){
-        d1 = new Door(DEFAULT_CORRECT_KEY_TYPE, BREAKS_KEY);
+    @ParameterizedTest
+    @MethodSource("provideWrongCombinationsOfKeyTypes")
+    public void test_R3_NotCorrectKeyType(Key.Type doorType, Key.Type keyType){
+        d1 = new Door(doorType, BREAKS_KEY);
         d1.setOpen(CLOSED);
 
-        Key k = new Key(DEFAULT_WRONG_KEY_TYPE, DEFAULT_KEY_USES);
+        Key k = new Key(keyType, DEFAULT_KEY_USES);
 
         assertEquals(false, d1.use(), "Use method returned true, when door had a colored key type");
         assertEquals(CLOSED, d1.isOpen(), "The door was opened although it required a key");
@@ -306,7 +304,48 @@ public class DoorTest {
         assertEquals(CLOSED, d1.isOpen(), "The door was opened although supplied with wrong key");
 
         assertEquals(DEFAULT_KEY_USES, k.getUses(), "The key was used even though it had wrong keytype");
-        assertEquals(DEFAULT_WRONG_KEY_TYPE, k.getKeyType(), "The keys' type was changed although it had the wrong keytype");
+        assertEquals(keyType, k.getKeyType(), "The keys' type was changed although it had the wrong keytype");
+    }
+
+    @ParameterizedTest
+    @EnumSource(value = Key.Type.class, names = {"YELLOW", "BLUE", "RED"})
+    public void test_R6_CorrectKeyTypeAndBreaksKey(Key.Type type){
+        d1 = new Door(type, BREAKS_KEY);
+        d1.setOpen(CLOSED);
+
+        Key k = new Key(type, DEFAULT_KEY_USES);
+
+        assertEquals(true, d1.use(k), "Use-method returned false even though correct keytype was used");
+        assertEquals(OPEN, d1.isOpen(), "Door was not opened even though correct keytype was used");
+
+        assertEquals(DEFAULT_USES_LEFT_AFTER_USE, k.getUses(), "Key was not used even though it should have been");
+        assertEquals(Key.Type.BROKEN, k.getKeyType(), "Key was not set to broken after use on a keybreaking door");
+    }
+
+    @ParameterizedTest
+    @EnumSource(value = Key.Type.class, names = {"YELLOW", "BLUE", "RED"})
+    public void test_R9_CorrectKeyTypeAndDoesNotBreakKey(Key.Type type){
+        d1 = new Door(type, DOES_NOT_BREAK_KEY);
+        d1.setOpen(CLOSED);
+
+        Key k = new Key(type, DEFAULT_KEY_USES);
+
+        assertEquals(true, d1.use(k), "Usemethod did not return true when it should have");
+        assertEquals(OPEN, d1.isOpen(), "Door was not opened after use with correct key");
+
+        assertEquals(DEFAULT_USES_LEFT_AFTER_USE, k.getUses());
+        assertEquals(type, k.getKeyType());
+    }
+
+    private static Stream<Arguments> provideWrongCombinationsOfKeyTypes() {
+        return Stream.of(
+                Arguments.of(Key.Type.YELLOW, Key.Type.RED),
+                Arguments.of(Key.Type.YELLOW, Key.Type.BLUE),
+                Arguments.of(Key.Type.RED, Key.Type.YELLOW),
+                Arguments.of(Key.Type.RED, Key.Type.BLUE),
+                Arguments.of(Key.Type.BLUE, Key.Type.RED),
+                Arguments.of(Key.Type.BLUE, Key.Type.YELLOW)
+        );
     }
 
 
