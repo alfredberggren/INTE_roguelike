@@ -90,8 +90,8 @@ public class PlayerTest {
     }
 
     @Test
-    @DisplayName("Test that character level up")
-    public void testCharacterLevelUpWhenXPReaches100() {
+    @DisplayName("Test that Player level up")
+    public void testCharacterLevelUpWhenXPReachesAmountOfXPToLevelUp() {
         player.setLevel(0);
         player.increaseXP(1000);
         player.levelUpOnTurn();
