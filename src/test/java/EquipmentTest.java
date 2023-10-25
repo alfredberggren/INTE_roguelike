@@ -114,6 +114,14 @@ public class EquipmentTest {
     }
 
     @Test
+    @DisplayName("Test to set negative durability on equipment")
+    public void testSetNegativeDurability_ThrowsException() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            equipment.setDurabilityOnEquipment(-10);
+        });
+    }
+
+    @Test
     @DisplayName("Two unequal equipments have unequal hashCode")
     public void testTwoUnequalEquipmentsHaveUnequalHashCode(){
         assertNotEquals(new Equipment("Dagger", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE, 100, new PhysicalAbility("Slash",5,1,"Physical Attack")).hashCode(), new Equipment("Sword", EquipmentSlot.RIGHT_HAND, Equipment.Effect.HEALTH, 50, new MagicAbility("FireBall",10,1,"Shoots fire",2,1,5)).hashCode());

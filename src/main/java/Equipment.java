@@ -87,7 +87,7 @@ public class Equipment extends NonLivingEntity {
     }
 
     /**Sets the damage bar value of the equipment*/
-    private void setDurabilityOnEquipment(int durability) {
+    public void setDurabilityOnEquipment(int durability) {
         if(durability < 0) {
             throw new IllegalArgumentException("Durability on Equipment cannot be less than zero");
         }
