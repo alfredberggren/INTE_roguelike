@@ -1,6 +1,6 @@
 import java.util.Objects;
 
-public class NPC extends Character implements Interactable {
+public class NPC extends Character {
 
     public NPC(String name, int health, int speed, int level, Position pos, IO io) {
         //Kristian: removed use of experience points from constructor
