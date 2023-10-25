@@ -44,15 +44,12 @@ public class Door extends Prop{
         this.breaksKeyAfterUse = breaksKeyAfterUse;
     }
 
-    //TODO: skapa en konstruktor som inte tar in interactableactions också
-
     public Door(String name, Key.Type keyRequired, boolean open, boolean breaksKeyAfterUse) {
         super(name, DEFAULT_POSSIBLE_ACTIONS);
         setRequiredKeyType(keyRequired);
         this.open = open;
         this.breaksKeyAfterUse = breaksKeyAfterUse;
     }
-
 
     /**
      * Creates an open door, with name "Open door", keyType as NONE, and Use as only possible interaction
@@ -62,7 +59,6 @@ public class Door extends Prop{
         this.open = true;
         this.breaksKeyAfterUse = false;
         this.requiredKeyType = Key.Type.NONE;
-
     }
 
     /**
