@@ -13,7 +13,7 @@ public class KeyTest {
 
     //Used for implementing constructor and getKeyType
     @ParameterizedTest
-    @EnumSource(Key.Type.class)
+    @EnumSource(value = Key.Type.class, names = {"YELLOW", "BLUE", "RED", "BROKEN"})
     public void test_ConstructorSetsTypeCorrectly(Key.Type k){
         Key key = new Key(k);
         assertEquals(k, key.getKeyType());
@@ -52,6 +52,11 @@ public class KeyTest {
         Key k = new Key(Key.Type.RED, DEFAULT_AMOUNT_OF_USES_FOR_TEST);
         k.setBroken();
         assertEquals(Key.Type.BROKEN, k.getKeyType());
+    }
+
+    @Test
+    public void test_whenSettingKeyTypeToNone_ExceptionIsCast() {
+        assertThrows(IllegalArgumentException.class, () -> new Key(Key.Type.NONE, DEFAULT_AMOUNT_OF_USES_FOR_TEST));
     }
 
 

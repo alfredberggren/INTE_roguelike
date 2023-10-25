@@ -31,7 +31,7 @@ public class Key extends Equipment{
      */
     public Key(Type type) {
         super(type.toString() + " key", EquipmentSlot.BELT, DEFAULT_ACTIONS, DEFAULT_EFFECT, DEFAULT_DURABILITY, DEFAULT_ABILITY);
-        this.type = type;
+        setKeyType(type);
         this.amountOfUses = DEFAULT_AMOUNT_OF_USES;
     }
 
@@ -78,6 +78,15 @@ public class Key extends Equipment{
 
     public void setBroken() {
         this.type = Type.BROKEN;
+    }
+
+    private void setKeyType(Type keyType){
+        if (keyType == Type.NONE){
+            throw new IllegalArgumentException("A key cannot have none as Type!");
+        } else {
+            this.type = keyType;
+        }
+
     }
 
 

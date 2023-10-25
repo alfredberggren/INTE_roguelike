@@ -20,6 +20,9 @@ public class DoorTest {
 
     private static final boolean BREAKS_KEY = true;
 
+    private static final boolean CLOSED = false;
+    private static final boolean OPEN = true;
+
     private Door d1;
 
     //Used for implementing default constructor
@@ -252,6 +255,60 @@ public class DoorTest {
         d1.open();
         assertEquals(false, d1.isOpen());
     }
+
+    //TESTS BASED ON DECISIONTABLE:
+    @Test
+    public void test_R1_DoorTypeNone(){
+        d1 = new Door(Key.Type.NONE, BREAKS_KEY);
+        d1.setOpen(CLOSED);
+
+        Key k = new Key(DEFAULT_CORRECT_KEY_TYPE, DEFAULT_KEY_USES);
+
+        assertEquals(true, d1.use(), "use-method did not return true when it should from a closed door");
+        assertEquals(OPEN, d1.isOpen(), "Door was not opened when closed");
+        assertEquals(true, d1.use(), "use-method did not return true when it should from an open door");
+        assertEquals(CLOSED, d1.isOpen(), "Door did not close when open");
+
+        assertEquals(true, d1.use(k));
+        assertEquals(OPEN, d1.isOpen());
+        assertEquals(DEFAULT_KEY_USES, k.getUses(), "Key was used when Door had type NONE");
+        assertEquals(DEFAULT_CORRECT_KEY_TYPE, k.getKeyType(), "Key was broken when door had type NONE");
+    }
+
+    @Test
+    public void test_R2_DoorTypeBroken(){
+        d1 = new Door(Key.Type.BROKEN, BREAKS_KEY);
+        d1.setOpen(CLOSED);
+        Key k = new Key(DEFAULT_CORRECT_KEY_TYPE, DEFAULT_KEY_USES);
+
+        assertEquals(false, d1.use(), "The use-method returned true, when door type was BROKEN");
+        assertEquals(CLOSED, d1.isOpen(), "The door was opened, when door type was BROKEN");
+
+        assertEquals(false, d1.use(k), "The use method with key returned true, when door type was BROKEN");
+        assertEquals(CLOSED, d1.isOpen(), "The door was opened when door type was BROKEN");
+
+        assertEquals(DEFAULT_KEY_USES, k.getUses(), "The key was used even though door type was BROKEN");
+        assertEquals(DEFAULT_CORRECT_KEY_TYPE, k.getKeyType(), "The key was broken although door was set to BROKEN");
+    }
+
+    @Test
+    public void test_R3_NotCorrectKeyType(){
+        d1 = new Door(DEFAULT_CORRECT_KEY_TYPE, BREAKS_KEY);
+        d1.setOpen(CLOSED);
+
+        Key k = new Key(DEFAULT_WRONG_KEY_TYPE, DEFAULT_KEY_USES);
+
+        assertEquals(false, d1.use(), "Use method returned true, when door had a colored key type");
+        assertEquals(CLOSED, d1.isOpen(), "The door was opened although it required a key");
+
+        assertEquals(false, d1.use(k), "The use-method returned true when supplied with incorrect key");
+        assertEquals(CLOSED, d1.isOpen(), "The door was opened although supplied with wrong key");
+
+        assertEquals(DEFAULT_KEY_USES, k.getUses(), "The key was used even though it had wrong keytype");
+        assertEquals(DEFAULT_WRONG_KEY_TYPE, k.getKeyType(), "The keys' type was changed although it had the wrong keytype");
+    }
+
+
 
 
 }
