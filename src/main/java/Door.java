@@ -12,6 +12,7 @@ import java.util.Set;
 //TODO: borde kunna finnas en chans att, när man försöker öppna en dörr med en nyckel, att nyckeln och dörren går sönder och gör den ogenomtränglig.
 public class Door extends Prop{
 
+    //MERGEMERGRE
     private boolean open;
 
     /**

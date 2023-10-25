@@ -1,6 +1,8 @@
 import java.util.HashSet;
 
 public class Key extends Equipment{
+
+    //MERGEMERGE
     public enum Type {
         BLUE, RED, YELLOW, BROKEN, NONE;
     }

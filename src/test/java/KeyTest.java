@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class KeyTest {
 
+    //MERGEMERGE
     private static final int DEFAULT_AMOUNT_OF_USES_FOR_TEST = 1;
     private static final int AMOUNT_OF_USES_THAT_SHOULD_THROW = -1;
 
