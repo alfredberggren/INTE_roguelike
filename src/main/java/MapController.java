@@ -98,6 +98,16 @@ public class MapController {
         return sb.toString();
     }
 
+    public String toLog() {
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<Position, Room> me : gameMap.entrySet()) {
+            sb.append(me.getKey().getX()).append(";").append(me.getKey().getY()).append(";");
+            sb.append(me.getValue().toLog());
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
+
     public List<Room> getAdjacentRooms(Room r) {
         List<CardinalDirection> dirs = r.getPossibleRoutes();
         List<Room> adjacentRooms = new ArrayList<>();

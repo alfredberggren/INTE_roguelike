@@ -8,6 +8,8 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -94,13 +96,13 @@ public class MapBuilderTest {
 
     @Test
     @DisplayName("Testar om kartan har NPC-karaktärer.")
-    public void test_buildingMap_generatesNPCs() {
+    public void test_afterBuildingMap_generatesNPCs() {
         assertEquals(true, mapController.containsInteractable(TEST_NPC));
     }
 
     @Test
     @DisplayName("Testar om antalet interactables av varje typ stämmer överrens med procentsatserna i positiveInteractableProbabilityMap")
-    public void test_buildingMap_generatesInteractableAmountsInAccordanceWithProbabilityMap() {
+    public void test_afterBuildingMap_generatesInteractableAmountsInAccordanceWithProbabilityMap() {
         TreeMap<Position, Room> gameMap = mapController.getGameMap();
         ArrayList<Interactable> allInteractables = new ArrayList<>();
         for (Room r : gameMap.values()) {
@@ -162,7 +164,7 @@ public class MapBuilderTest {
 
     @Test
     @DisplayName("Testar så att alla rum på kartan kan besökas av spelaren")
-    public void test_whenBuildingMap_allRoomsCanBeVisited() {
+    public void test_afterBuildingMap_allRoomsCanBeVisited() {
         List<Room> visited = new ArrayList<>();
         Position start = new Position(0, 0);
         visited.add(mapController.getRoom(start));
@@ -187,12 +189,75 @@ public class MapBuilderTest {
 
     @Test
     @DisplayName("Testar så att rummens riktning går åt båda hållen, alltså att om ett rum har en riktning till ett annat rum, så har de andra rummet en riktning tillbaka till det som det kom ifrån.")
-    public void test_whenBuildingMap_directionsWorkInBothWays() {
+    public void test_afterBuildingMap_directionsWorkInBothWays() {
         for (Room r : mapController.getGameMap().values()) {
             List<Room> adjacentRooms = mapController.getAdjacentRooms(r);
             for (Room r2 : adjacentRooms) {
                 assertTrue(mapController.getAdjacentRooms(r2).contains(r));
             }
         }
+    }
+
+    @Test
+    @DisplayName("Medan man bygger, är alla rummens riktningar korrekta?")
+    public void test_whileBuildingMap_allRoomsHaveCorrectPossibleRoutes() {
+        mapBuilder.setLogMap(true);
+        mapBuilder.build();
+        mapBuilder.setLogMap(false);
+        Map<Position, Room> testMap = parseLogMap("logs/MapBuilderLog.log");
+        for (Room r : testMap.values()) {
+            List<Room> adjacentRooms = mapController.getAdjacentRooms(r);
+            for (Room r2 : adjacentRooms) {
+                assertTrue(mapController.getAdjacentRooms(r2).contains(r));
+            }
+        }
+    }
+
+    private Map<Position, Room> parseLogMap(String s) {
+        Map<Position, Room> testMap = new HashMap<>();
+        try {
+            File mapFile = new File(s);
+            Scanner reader = new Scanner(mapFile);
+            while (reader.hasNextLine()) {
+                String data = reader.nextLine();
+                String[] parts = data.split(";");
+                if (parts[0].isEmpty()) {
+                    continue;
+                }
+                int x = Integer.parseInt(parts[0]);
+                int y = Integer.parseInt(parts[1]);
+                Position p = new Position(x, y);
+                Room r = new Room(p);
+                int amtOfDirs = Integer.parseInt(parts[2]);
+                List<CardinalDirection> testDirs = new ArrayList<>();
+                for (int i = 0; i < amtOfDirs; i++) {
+                    r.addPossibleRoute(parseDir(parts[i + 3]));
+                }
+                testMap.put(p, r);
+            }
+            reader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+        return testMap;
+    }
+
+    private CardinalDirection parseDir(String part) {
+        switch (part) {
+            case "EAST" -> {
+                return CardinalDirection.EAST;
+            }
+            case "SOUTH" -> {
+                return CardinalDirection.SOUTH;
+            }
+            case "WEST" -> {
+                return CardinalDirection.WEST;
+            }
+            case "NORTH" -> {
+                return CardinalDirection.NORTH;
+            }
+        }
+        return null;
     }
 }

@@ -1,4 +1,11 @@
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
+import java.util.logging.FileHandler;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 public class MapBuilder {
     private static final EnumMap<Difficulty, Integer> DIFF_RATIO = new EnumMap<>(Difficulty.class) {{
@@ -18,6 +25,9 @@ public class MapBuilder {
     private Player player;
     private Random r = new Random();
     private InteractableDirector interactableDirector;
+
+    private PrintWriter printWriter;
+    private boolean logMap = false;
 
     public MapBuilder(Difficulty difficulty, int amountOfRooms, Player player, MapController mapController, InteractableDirector interactableDirector) {
         difficultyScale = DIFF_RATIO.get(difficulty);
@@ -54,12 +64,17 @@ public class MapBuilder {
                 dynInteractables = generateInteractables();
             }
 
+            // Logs entire gamemap halfway through build for testing, if logging is enabled
+            if (i == amountOfRooms / 2 && logMap) {
+                log(mapController.toLog());
+            }
+
             Room newRoom = new Room(currentPos, dynInteractables);
             mapController.add(currentPos, newRoom);
             newRoom.setPossibleRoutes(mapController.getAvailableDirections(currentPos));
 
             //Sets routes on current/old room even if new room is not directly connected. Should not matter, but could mean extra computing.
-            // Finding: När dessa routes sätts, så uppdateras de inte föränn efter byggandet,
+            // Finding: När dessa routes sätts, så uppdateras de inte förrän efter byggandet,
             // ifall ett nytt rum skulle byggas intill detta senare än i nuvarande iteration,
             // det betyder att när byggaren backtrackar kan den inte gå till ett rum som är nyare än sig självt
             // eller det som precis byggts.
@@ -69,6 +84,33 @@ public class MapBuilder {
         }
         //Set all rooms in maps available directions, should not be needed now
         mapController.setAvailableDirectionsInRooms();
+    }
+
+    private void setUpLogger() {
+        try {
+            FileWriter fileWriter = new FileWriter("logs/MapBuilderLog.log");
+            printWriter = new PrintWriter(fileWriter);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void closeLogger() {
+        printWriter.close();
+    }
+
+    private void log(String string) {
+        printWriter.println(string);
+        printWriter.flush();
+    }
+
+    // Enables and disables logging of gameMap
+    public void setLogMap(boolean logMap) {
+        this.logMap = logMap;
+        if (logMap)
+            setUpLogger();
+        else
+            closeLogger();
     }
 
     private Position decideNextPosition(Position pos) {

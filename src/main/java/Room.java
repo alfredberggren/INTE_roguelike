@@ -62,4 +62,12 @@ public class Room {
         return "Room at pos " + position + " with interactables: " + interactables.toString() + " and directions: " + possibleRoutes;
     }
 
+    public String toLog() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(possibleRoutes.size()).append(";");
+        for (CardinalDirection c : getPossibleRoutes()) {
+            sb.append(c.toString()).append(";");
+        }
+        return sb.toString();
+    }
 }
