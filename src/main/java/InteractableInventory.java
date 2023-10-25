@@ -4,34 +4,35 @@ import java.util.List;
 public class InteractableInventory {
     private ArrayList<Interactable> inventory;
 
-    public InteractableInventory(){
+    public InteractableInventory() {
         inventory = new ArrayList<>();
     }
 
-    public InteractableInventory(Interactable... interactables){
+    public InteractableInventory(Interactable... interactables) {
         this();
         add(interactables);
     }
 
     public void add(Interactable... interactables) {
-        for (Interactable i: interactables) {
+        for (Interactable i : interactables) {
             checkNull(i);
             inventory.add(i);
         }
 
     }
 
-    public void remove(Interactable... interactables){
-        for (Interactable i: interactables){
+    public void remove(Interactable... interactables) {
+        for (Interactable i : interactables) {
             checkNull(i);
             inventory.remove(i);
         }
     }
-    public void removeAll(){
+
+    public void removeAll() {
         inventory.clear();
     }
 
-    public void transfer(Interactable i, InteractableInventory inv){
+    public void transfer(Interactable i, InteractableInventory inv) {
         if (contains(i)) {
             inv.add(i);
             remove(i);
@@ -42,7 +43,7 @@ public class InteractableInventory {
         return inventory.size();
     }
 
-    public boolean contains(Interactable i){
+    public boolean contains(Interactable i) {
         return inventory.contains(i);
     }
 
@@ -54,14 +55,14 @@ public class InteractableInventory {
         return inventory.size();
     }
 
-    private void checkNull(Interactable i){
-        if (i == null){
+    private void checkNull(Interactable i) {
+        if (i == null) {
             throw new NullPointerException("Interactable can not be null!");
         }
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return inventory.toString();
     }
 }

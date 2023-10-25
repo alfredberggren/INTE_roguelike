@@ -1,3 +1,4 @@
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -103,3 +104,4 @@ public class InteractableTest {
         assertNotEquals(new NPC("test1234", 10, 10,1, DEFAULT_POSITION, new TextIO()).hashCode(), new NPC("test123", 13, 23, 1,DEFAULT_POSITION, new TextIO()).hashCode());
     }
 }
+
