@@ -7,8 +7,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class DoorTest {
 
@@ -256,60 +255,63 @@ public class DoorTest {
 
     //TESTS BASED ON DECISIONTABLE:
     @Test
-    public void test_R1_DoorTypeNone(){
+    public void test_DT1_WhenDoorTypeNoneAndBreaksKey_ThenNothingHappensToKey(){
         d1 = new Door(Key.Type.NONE, BREAKS_KEY);
         d1.setOpen(CLOSED);
 
-        Key k = new Key(DEFAULT_CORRECT_KEY_TYPE, DEFAULT_KEY_USES);
+        Key k = new Key(Key.Type.YELLOW, DEFAULT_KEY_USES);
 
-        assertEquals(true, d1.use(), "use-method did not return true when it should from a closed door");
-        assertEquals(OPEN, d1.isOpen(), "Door was not opened when closed");
-        assertEquals(true, d1.use(), "use-method did not return true when it should from an open door");
-        assertEquals(CLOSED, d1.isOpen(), "Door did not close when open");
-
-        assertEquals(true, d1.use(k));
-        assertEquals(OPEN, d1.isOpen());
-        assertEquals(DEFAULT_KEY_USES, k.getUses(), "Key was used when Door had type NONE");
-        assertEquals(DEFAULT_CORRECT_KEY_TYPE, k.getKeyType(), "Key was broken when door had type NONE");
+        assertEquals(true, d1.use(k), "Method did not return true");
+        assertEquals(DEFAULT_KEY_USES, k.getUses(), "Key was improperly used when Door had type NONE");
+        assertKeyTypeNotBroken(k);
+        assertEquals(Key.Type.YELLOW, k.getKeyType(), "Key improperly changed type when door had type NONE");
+        assertEquals(OPEN, d1.isOpen(), "Door did not open when door had type NONE");
     }
 
     @Test
-    public void test_R2_DoorTypeBroken(){
+    public void test_DT2_WhenDoorTypeNoneAndDoesNotBreakKey_ThenNothingHappensToKey(){
+        d1 = new Door(Key.Type.NONE, DOES_NOT_BREAK_KEY);
+        d1.setOpen(OPEN);
+
+        Key k = new Key(Key.Type.BLUE, DEFAULT_KEY_USES);
+
+        assertEquals(true, d1.use(k), "Method did not return true");
+        assertEquals(DEFAULT_KEY_USES, k.getUses(), "Key was improperly used when Door had type NONE");
+        assertKeyTypeNotBroken(k);
+        assertEquals(Key.Type.BLUE, k.getKeyType(), "Key improperly changed type when door had type NONE");
+        assertEquals(CLOSED, d1.isOpen(), "Door did not close when door had type NONE");
+    }
+
+    @Test
+    public void test_DT3_WhenDoorTypeBrokenAndBreaksKey_ThenNothingHappensToKey(){
         d1 = new Door(Key.Type.BROKEN, BREAKS_KEY);
-        d1.setOpen(CLOSED);
-        Key k = new Key(DEFAULT_CORRECT_KEY_TYPE, DEFAULT_KEY_USES);
+        d1.setOpen(OPEN);
+        Key k = new Key(Key.Type.RED, DEFAULT_KEY_USES);
 
-        assertEquals(false, d1.use(), "The use-method returned true, when door type was BROKEN");
-        assertEquals(CLOSED, d1.isOpen(), "The door was opened, when door type was BROKEN");
-
-        assertEquals(false, d1.use(k), "The use method with key returned true, when door type was BROKEN");
-        assertEquals(CLOSED, d1.isOpen(), "The door was opened when door type was BROKEN");
+        assertEquals(false, d1.use(k), "The use method returned true, when door type was BROKEN");
+        assertEquals(OPEN, d1.isOpen(), "The door was closed when door type was BROKEN");
 
         assertEquals(DEFAULT_KEY_USES, k.getUses(), "The key was used even though door type was BROKEN");
-        assertEquals(DEFAULT_CORRECT_KEY_TYPE, k.getKeyType(), "The key was broken although door was set to BROKEN");
+        assertKeyTypeNotBroken(k);
+        assertEquals(Key.Type.RED, k.getKeyType(), "The key changed type although door was set to BROKEN");
     }
 
-    @ParameterizedTest
-    @MethodSource("provideWrongCombinationsOfKeyTypes")
-    public void test_R3_NotCorrectKeyType(Key.Type doorType, Key.Type keyType){
-        d1 = new Door(doorType, BREAKS_KEY);
+    @Test
+    public void test_DT4_WhenDoorTypeBrokenAndDoesNotBreakKey_ThenNothingHappensToKey(){
+        d1 = new Door(Key.Type.BROKEN, DOES_NOT_BREAK_KEY);
         d1.setOpen(CLOSED);
+        Key k = new Key(Key.Type.BROKEN, DEFAULT_KEY_USES);
 
-        Key k = new Key(keyType, DEFAULT_KEY_USES);
+        assertEquals(false, d1.use(k), "The use method returned true, when door type was BROKEN");
+        assertEquals(CLOSED, d1.isOpen(), "The door was closed when door type was BROKEN");
 
-        assertEquals(false, d1.use(), "Use method returned true, when door had a colored key type");
-        assertEquals(CLOSED, d1.isOpen(), "The door was opened although it required a key");
+        assertEquals(DEFAULT_KEY_USES, k.getUses(), "The key was used even though door type was BROKEN");
+        assertEquals(Key.Type.BROKEN, k.getKeyType(), "The key changed type although door was set to BROKEN");
 
-        assertEquals(false, d1.use(k), "The use-method returned true when supplied with incorrect key");
-        assertEquals(CLOSED, d1.isOpen(), "The door was opened although supplied with wrong key");
-
-        assertEquals(DEFAULT_KEY_USES, k.getUses(), "The key was used even though it had wrong keytype");
-        assertEquals(keyType, k.getKeyType(), "The keys' type was changed although it had the wrong keytype");
     }
-
     @ParameterizedTest
     @EnumSource(value = Key.Type.class, names = {"YELLOW", "BLUE", "RED"})
-    public void test_R6_CorrectKeyTypeAndBreaksKey(Key.Type type){
+    public void test_DT5_CorrectKeyTypeAndBreaksKey(Key.Type type){
         d1 = new Door(type, BREAKS_KEY);
         d1.setOpen(CLOSED);
 
@@ -324,17 +326,74 @@ public class DoorTest {
 
     @ParameterizedTest
     @EnumSource(value = Key.Type.class, names = {"YELLOW", "BLUE", "RED"})
-    public void test_R9_CorrectKeyTypeAndDoesNotBreakKey(Key.Type type){
+    public void test_DT6_WhenDoorUsedWithCorrectKeyTypeAndDoesNotBreakKey_KeyIsUsedAndNotBroken(Key.Type type){
         d1 = new Door(type, DOES_NOT_BREAK_KEY);
-        d1.setOpen(CLOSED);
+        d1.setOpen(OPEN);
 
         Key k = new Key(type, DEFAULT_KEY_USES);
 
         assertEquals(true, d1.use(k), "Usemethod did not return true when it should have");
-        assertEquals(OPEN, d1.isOpen(), "Door was not opened after use with correct key");
+        assertEquals(CLOSED, d1.isOpen(), "Door was not opened after use with correct key");
 
         assertEquals(DEFAULT_USES_LEFT_AFTER_USE, k.getUses());
-        assertEquals(type, k.getKeyType());
+        assertEquals(type, k.getKeyType(), "Key changed type when it should not have");
+        assertKeyTypeNotBroken(k);
+    }
+    @ParameterizedTest
+    @MethodSource("provideWrongCombinationsOfKeyTypes")
+    public void test_DT7_WhenDoorUsedWithIncorrectKeyAndBreaksKey_KeyIsNotUsedAndNotBroken(Key.Type doorType, Key.Type keyType){
+        d1 = new Door(doorType, BREAKS_KEY);
+        d1.setOpen(CLOSED);
+
+        Key k = new Key(keyType, DEFAULT_KEY_USES);
+
+        assertEquals(false, d1.use(), "Use method returned true, when door had a colored key type");
+        assertEquals(CLOSED, d1.isOpen(), "The door was opened although it required a key");
+
+        assertEquals(false, d1.use(k), "The use-method returned true when supplied with incorrect key");
+        assertEquals(CLOSED, d1.isOpen(), "The door was opened although supplied with wrong key");
+
+        assertEquals(DEFAULT_KEY_USES, k.getUses(), "The key was used even though it had wrong keytype");
+        assertKeyTypeNotBroken(k);
+        assertEquals(keyType, k.getKeyType(), "The keys' type was changed although it had the wrong keytype");
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideWrongCombinationsOfKeyTypes")
+    public void test_DT8_WhenDoorUsedWithIncorrectKeyAndDoesNotBreakKey_KeyIsNotUsedAndNotBroken(Key.Type doorType, Key.Type keyType){
+        d1 = new Door(doorType, DOES_NOT_BREAK_KEY);
+        d1.setOpen(CLOSED);
+
+        Key k = new Key(keyType, DEFAULT_KEY_USES);
+
+        assertEquals(false, d1.use(), "Use method returned true, when door had a colored key type");
+        assertEquals(CLOSED, d1.isOpen(), "The door was opened although it required a key");
+
+        assertEquals(false, d1.use(k), "The use-method returned true when supplied with incorrect key");
+        assertEquals(CLOSED, d1.isOpen(), "The door was opened although supplied with wrong key");
+
+        assertEquals(DEFAULT_KEY_USES, k.getUses(), "The key was used even though it had wrong keytype");
+        assertKeyTypeNotBroken(k);
+        assertEquals(keyType, k.getKeyType(), "The keys' type was changed although it had the wrong keytype");
+    }
+
+    @Test
+    public void test_DT9_whenDoorBroken_UseMethodDoesNothing(){
+        d1 = new Door(Key.Type.BROKEN, BREAKS_KEY);
+        d1.setOpen(CLOSED);
+
+        assertEquals(false, d1.use());
+        assertEquals(CLOSED, d1.isOpen());
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = {OPEN, CLOSED})
+    public void test_DT10_whenDoorTypeNone_UseMethodWorks(boolean doorState){
+        d1 = new Door(Key.Type.NONE, DOES_NOT_BREAK_KEY);
+        d1.setOpen(doorState);
+
+        assertEquals(true, d1.use());
+        assertEquals(!doorState, d1.isOpen());
     }
 
     private static Stream<Arguments> provideWrongCombinationsOfKeyTypes() {
@@ -346,6 +405,10 @@ public class DoorTest {
                 Arguments.of(Key.Type.BLUE, Key.Type.RED),
                 Arguments.of(Key.Type.BLUE, Key.Type.YELLOW)
         );
+    }
+
+    private static void assertKeyTypeNotBroken(Key key){
+        assertNotEquals(Key.Type.BROKEN, key.getKeyType(), "The key changed to broken when it should not have");
     }
 
 
