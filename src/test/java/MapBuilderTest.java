@@ -35,8 +35,6 @@ public class MapBuilderTest {
             Interactable.InteractableAction.USE)
     );
 
-    private static final Room TEST_ROOM = new Room(new Position(0, 0), new InteractableInventory());
-
     private static final NPC TEST_NPC = new NPC("Test Testsson", 100, 10, new Position(0, 0), io);
     private static final FoodItem TEST_FOOD_ITEM = new FoodItem("Bread", 10);
     private static final PotionItem TEST_POTION_ITEM = new PotionItem("HealthPotion", Equipment.Effect.HEALTH, 5);
@@ -140,22 +138,6 @@ public class MapBuilderTest {
                         && ((equip / total) * 100) < positiveInteractableProbabilityMap.get(mockedIG5) + 2,
                 "Antalet Equipment borde ligga nära den procentsats som finns i sannolikhetsmappen.");
     }
-// TODO: should be in a different class
-//    @Test
-//    @DisplayName("Testar TreeMappen gameMap (compareTo i position)")
-//    public void test_whenBuildingMap_gameMapHasAllPositions() {
-//        mapController.add(new Position(0, 0), TEST_ROOM);
-//        mapController.add(new Position(1, 0), TEST_ROOM);
-//        mapController.add(new Position(2, 0), TEST_ROOM);
-//        mapController.add(new Position(1, 1), TEST_ROOM);
-//        TreeMap<Position, Room> gameMap = mapController.getGameMap();
-//        Set<Position> expectedPositions = new HashSet<>();
-//        expectedPositions.add(new Position(0, 0));
-//        expectedPositions.add(new Position(1, 0));
-//        expectedPositions.add(new Position(2, 0));
-//        expectedPositions.add(new Position(1, 1));
-//        assertEquals(expectedPositions, gameMap.keySet());
-//    }
 
     @Test
     @DisplayName("Testar så att alla rum på kartan kan besökas av spelaren")
@@ -177,35 +159,45 @@ public class MapBuilderTest {
     }
 
     @Test
-    @DisplayName("Testar så att rummens möjliga riktningar blir korrekta efter byggning")
-    public void test_whenBuildingMap_allRoomsHaveCorrectPossibleRoutes() {
-
-    }
-
-    @Test
     @DisplayName("Testar så att rummens riktning går åt båda hållen, alltså att om ett rum har en riktning till ett annat rum, så har de andra rummet en riktning tillbaka till det som det kom ifrån.")
     public void test_afterBuildingMap_directionsWorkInBothWays() {
         for (Room r : mapController.getGameMap().values()) {
             List<Room> adjacentRooms = mapController.getAdjacentRooms(r);
             for (Room r2 : adjacentRooms) {
-                assertTrue(mapController.getAdjacentRooms(r2).contains(r));
+                assertTrue(mapController.getAdjacentRooms(r2).contains(r), "Det närliggande rummet: " + r2 + " har inte en riktning till rummet " + r + " (som har en riktning till det förstnämnda rummet).");
             }
         }
     }
 
     @Test
-    @DisplayName("Medan man bygger, är alla rummens riktningar korrekta?")
+    @DisplayName("Ovanstående test, men testar kartans rum under pågående byggning av kartan.")
     public void test_whileBuildingMap_allRoomsHaveCorrectPossibleRoutes() {
         mapBuilder.setLogMap(true);
         mapBuilder.build();
         mapBuilder.setLogMap(false);
         Map<Position, Room> testMap = parseLogMap("logs/MapBuilderLog.log");
         for (Room r : testMap.values()) {
-            List<Room> adjacentRooms = mapController.getAdjacentRooms(r);
+            List<Room> adjacentRooms = getAdjacentRoomsInTestMap(r, testMap);
             for (Room r2 : adjacentRooms) {
-                assertTrue(mapController.getAdjacentRooms(r2).contains(r));
+                assertTrue(getAdjacentRoomsInTestMap(r2, testMap).contains(r), "Det närliggande rummet: " + r2 + " har inte en riktning till rummet " + r + " (som har en riktning till det förstnämnda rummet) under pågående byggning av kartan.");
             }
         }
+    }
+
+    private List<Room> getAdjacentRoomsInTestMap(Room r, Map<Position, Room> testMap) {
+        List<CardinalDirection> dirs = r.getPossibleRoutes();
+        List<Room> adjacentRooms = new ArrayList<>();
+        for (CardinalDirection c : dirs) {
+            if (c == CardinalDirection.NORTH)
+                adjacentRooms.add(testMap.get(new Position(r.getPosition().getX(), r.getPosition().getY() + 1)));
+            if (c == CardinalDirection.SOUTH)
+                adjacentRooms.add(testMap.get(new Position(r.getPosition().getX(), r.getPosition().getY() - 1)));
+            if (c == CardinalDirection.WEST)
+                adjacentRooms.add(testMap.get(new Position(r.getPosition().getX() - 1, r.getPosition().getY())));
+            if (c == CardinalDirection.EAST)
+                adjacentRooms.add(testMap.get(new Position(r.getPosition().getX() + 1, r.getPosition().getY())));
+        }
+        return adjacentRooms;
     }
 
     private Map<Position, Room> parseLogMap(String s) {

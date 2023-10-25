@@ -1,15 +1,7 @@
 import java.util.*;
 
-/**
- * TODO: Mindre hårdkodade grunkor
- * TODO: Items som genereras på mappen ska skickas in som en map med interactables som har en key för sannolikhetsvärdet.
- * TODO: De interactables som väljs ut ska baseras på gausskurvan.
- * TODO: Skulle också kunna implementera en "Density" i MapBuilder, d.v.s. bestämma om kartan ska vara långa korridorer eller kompakta rum, svårt och kanske onödigt
- */
-
 public class MapController {
     private TreeMap<Position, Room> gameMap;
-    //private TreeSet<Position> allPositions;
     private Position positionMarker;
 
     public MapController() {
