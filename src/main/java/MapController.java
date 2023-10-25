@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * TODO: Singleton?
  * TODO: Mindre hårdkodade grunkor
  * TODO: Items som genereras på mappen ska skickas in som en map med interactables som har en key för sannolikhetsvärdet.
  * TODO: De interactables som väljs ut ska baseras på gausskurvan.
@@ -71,6 +72,31 @@ public class MapController {
             }
         }
         return false;
+    }
+
+    public void moveCharacter(CardinalDirection direction, Character character) {
+        switch(direction){
+            case NORTH -> {
+                gameMap.get(character.getPosition()).getInteractables().remove(character);
+                character.getPosition().translate(0, 1);
+                gameMap.get(character.getPosition()).getInteractables().add(character);
+            }
+            case EAST -> {
+                gameMap.get(character.getPosition()).getInteractables().remove(character);
+                character.getPosition().translate(1, 0);
+                gameMap.get(character.getPosition()).getInteractables().add(character);
+            }
+            case SOUTH -> {
+                gameMap.get(character.getPosition()).getInteractables().remove(character);
+                character.getPosition().translate(0, -1);
+                gameMap.get(character.getPosition()).getInteractables().add(character);
+            }
+            case WEST -> {
+                gameMap.get(character.getPosition()).getInteractables().remove(character);
+                character.getPosition().translate(-1, 0);
+                gameMap.get(character.getPosition()).getInteractables().add(character);
+            }
+        }
     }
 
     @Override

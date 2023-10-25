@@ -13,51 +13,62 @@ public class Character implements Interactable {
             InteractableAction.LOOT,
             InteractableAction.DROP)
     );
-    private static final String NAME_PATTERN = "^[A-Za-z]\\w{1,11}$";
+    private static final String DEFAULT_NAME_PATTERN = "^[A-Za-z]\\w{1,11}$";
+    private static final int MAX_LEVEL = 10;
+    private static final int MAX_HEALTH = 100;
+    private static final int MAX_MANA = 100;
     private Set<InteractableAction> possibleInteractableActions;
-    protected String name;
+    private String name;
     private int health;
     private int speed;
     private int mana;
-    protected int level;
+    private int level;
     private Position pos;
-    private boolean isDead = false;
-    private Set<Ability> abilities = new HashSet<>();
-    private InteractableInventory inventory = new InteractableInventory();
-    private boolean canUseMagic = true; // remove
-    private EquipmentOnBody equipmentOnBody = new EquipmentOnBody();
+    private Set<Ability> abilities;
+    private InteractableInventory inventory;
+    private EquipmentOnBody equipmentOnBody;
     private TurnSystem turnSystem;
 
-    public Character(String name, int health, int speed, IO io) {
-        if (health < 0 || speed < 0) {
-            throw new IllegalArgumentException("Speed and health needs to be 0 or more");
+    public Character(String name, int health, int speed, int level, IO io) {
+        this.setHealth(health);
+        if (speed < 0) {
+            throw new IllegalArgumentException("Speed needs to be 0 or more");
         }
-        this.name = name;
-        this.health = health;
+        if (io == null) {
+            throw new IllegalArgumentException("IO Cannot be null");
+        }
+        this.setLevel(level);
         this.speed = speed;
+        this.setName(name);
         mana = 0;
         pos = new Position(0, 0);
-        if (health > 0) {
-            isDead = false;
-        }
         possibleInteractableActions = STANDARD_CHARACTER_INTERACTABLE_ACTIONS;
         turnSystem = new TurnSystem(io);
+        inventory = new InteractableInventory();
+        abilities = new HashSet<>();
+        equipmentOnBody = new EquipmentOnBody();
+
+
     }
 
-    public Character(String name, int health, int speed, Position pos, IO io) {
-        if (health < 0 || speed < 0) {
-            throw new IllegalArgumentException("Speed and health needs to be 0 or more");
+    public Character(String name, int health, int speed, int level, Position pos, IO io) {
+        this.setHealth(health);
+        if (speed < 0) {
+            throw new IllegalArgumentException("Speed needs to be 0 or more");
         }
-        this.name = name;
-        this.health = health;
+        if (io == null) {
+            throw new IllegalArgumentException("IO Cannot be null");
+        }
+        this.setLevel(level);
         this.speed = speed;
-        this.mana = 0;
-        this.pos = pos;
-        if (health > 0) {
-            isDead = false;
-        }
+        this.setName(name);
+        mana = 0;
+        this.setPos(pos);
         possibleInteractableActions = STANDARD_CHARACTER_INTERACTABLE_ACTIONS;
         turnSystem = new TurnSystem(io);
+        inventory = new InteractableInventory();
+        abilities = new HashSet<>();
+        equipmentOnBody = new EquipmentOnBody();
     }
 
     public String getName() {
@@ -92,118 +103,137 @@ public class Character implements Interactable {
         return turnSystem;
     }
 
+    public Set<Ability> getAbilities() {
+        return abilities;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+
+    /**
+     * user input
+     * the username consists of 2 to 10 characters. If less - invalid username
+     * the username can only contain alphanumeric characters and underscores(_)
+     * uppercase, lowercase and digits (0-9)
+     * the first character must be an alphabetic character
+     */
     public void setName(String name) {
-        /** user input
-         the username consists of 2 to 10 characters. If less - invalid username
-         the username can only contain alphanumeric characters and underscores(_)
-         uppercase, lowercase and digits (0-9)
-         the first character must be an alphabetic character*/
+
         if (name == null) {
             throw new NullPointerException("Error: name can't be null");
         }
         if (name.isEmpty()) {
             throw new IllegalArgumentException("Error: name can't be empty");
         }
-        if (!matchesPattern(NAME_PATTERN, name)) {
+        if (matchesPattern(DEFAULT_NAME_PATTERN, name)) this.name = name;
+        else {
             throw new IllegalArgumentException("Name doesn't match the pattern");
-        } else
-            this.name = name;
-    }
-
-    boolean matchesPattern(String pattern, String name) {
-        Pattern p = Pattern.compile(pattern);
-        Matcher m = p.matcher(name);
-        return m.find();
-    }
-
-    /**
-     * Checks if Arraylist is not empty and if so removes the spell
-     */
-    public void removeAbility(Ability ability) {
-        if (!abilities.isEmpty()) {
-            abilities.remove(ability);
         }
     }
 
-    /**
-     * Adds a spell to the Arraylist
-     */
-    public void addAbility(Ability ability) {
-        abilities.add(ability);
-    }
-
-    public Set<Ability> getAbilities() {
-        return abilities;
+    private boolean matchesPattern(String pattern, String name) {
+        Pattern p = Pattern.compile(pattern);
+        Matcher m = p.matcher(name);
+        return m.find();
     }
 
     public void setHealth(int health) {
         if (health < 0) {
             throw new IllegalArgumentException("Health cannot be negative!");
         }
-        if (health == 0) {
-            isDead = true;
-        }
-        this.health = health;
+        if (health > MAX_HEALTH)
+            this.health = MAX_HEALTH;
+        else
+            this.health = health;
     }
 
     public void setPos(Position pos) {
+        if (pos == null) {
+            throw new IllegalArgumentException("Position cannot be null");
+        }
         this.pos = pos;
     }
 
     public void setMana(int mana) {
-        this.mana = mana;
+        if (mana < 0) {
+            throw new IllegalArgumentException("Mana cannot be negative!");
+        }
+        if (mana > MAX_MANA)
+            this.mana = MAX_MANA;
+        else
+            this.mana = mana;
+    }
+
+    public void setLevel(int level) {
+        if (level >= 0 && level <= MAX_LEVEL) {
+            this.level = level;
+        } else if (level < 0) {
+            throw new IllegalArgumentException("Level cannot be negative");
+        } else {
+            this.level = MAX_LEVEL;
+        }
+    }
+
+    /**
+     * Checks if Set is not empty and...
+     */
+    public void removeAbility(Ability ability) {
+        int characterLevel = getLevel();
+        if (abilities.contains(ability) || characterLevel < ability.getRequiredLevel()) {
+            abilities.remove(ability);
+        }
+    }
+
+    /**
+     * Adds an ability to the set
+     */
+    public void addAbility(Ability ability) {
+        abilities.add(ability);
     }
 
     public void increaseMana(int add) {
-        setMana(mana += add);
+        if (add <= 0) {
+            throw new IllegalArgumentException("Mana increase value can not to be equal zero or be negative!");
+        }
+        else
+            setMana(mana + add);
     }
 
     public void decreaseMana(int decrease) {
-        int result = mana -= decrease;
-        if (result <= 0) {
-            setMana(0);
-            canUseMagic = false;
+        if (decrease <= 0) {
+            throw new IllegalArgumentException("Mana decrease value can not to be equal zero or be negative!");
         }
-        setMana(result);
+        else
+            setMana(mana - decrease);
     }
 
     public void increaseHealth(int add) {
-        int result = health + add;
-        setHealth(result);
+        if (add <= 0) {
+            throw new IllegalArgumentException("Health increase value can not to be equal zero or be negative!");
+        }
+        else
+            setHealth(health+add);
     }
 
     public void decreaseHealth(int decrease) {
-        int result = health - decrease;
-        if (result <= 0) {
-            isDead = true;
-            setHealth(0);
-        } else {
-            setHealth(result);
+        if (decrease <= 0) {
+            throw new IllegalArgumentException("Health decrease value can not to be equal zero or be negative!");
+        }
+        else {
+            setHealth(health - decrease);
         }
     }
 
     public boolean isDead() {
-        return health <= 0;
+        return health == 0;
     }
 
     public boolean canUseMagic() {
-        if (mana != 0)
-            return true;
-        else
-            return false;
+        return mana != 0;
     }
 
-    public void setLevel(int level) {
-        if (level <= 10) {
-            this.level = level;
-        } else {
-            this.level = 10;
-        }
-    }
-
-    public int getLevel() {
-        return level;
-    }
 
     /**
      * For unequip we check if this equipment is "on body".
@@ -212,8 +242,8 @@ public class Character implements Interactable {
      */
     public void unEquip(Equipment equipment) {
         if (equipment != null) {
-            if (equipmentOnBody.slotContainsEquipment(equipment.getEquipmentSlot()) && equipment.equals(equipmentOnBody.getEquipment(equipment.getEquipmentSlot()))) {
-                equipmentOnBody.removeEquipment(equipment.getEquipmentSlot());
+            if (equipment.equals(equipmentOnBody.getEquipment(equipment.getCanBePlacedInSlot()))) {
+                equipmentOnBody.removeEquipment(equipment.getCanBePlacedInSlot());
                 inventory.add(equipment);
                 removeAbility(equipment.getAbility());
             }
@@ -227,10 +257,11 @@ public class Character implements Interactable {
      */
     public void equip(Equipment equipment) {
         if (equipment != null) {
-            if (!equipmentOnBody.slotContainsEquipment(equipment.getEquipmentSlot()) && inventory.contains(equipment))
-                equipmentOnBody.putEquipment(equipment.getEquipmentSlot(), equipment);
-            addAbility(equipment.getAbility());
-            inventory.remove(equipment);
+            if (inventory.contains(equipment)) {
+                equipmentOnBody.putEquipment(equipment.getCanBePlacedInSlot(), equipment);
+                addAbility(equipment.getAbility());
+                inventory.remove(equipment);
+            }
 
         }
     }

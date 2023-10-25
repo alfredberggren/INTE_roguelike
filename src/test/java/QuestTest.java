@@ -37,14 +37,14 @@ public class QuestTest {
     }
 
     @Test
-    @DisplayName("Test that quest is nor completed in constructor")
+    @DisplayName("Test that quest is not completed in constructor")
     public void testThatQuestIsNotCompletedInConstructor() {
         assertFalse(quest.isCompleted());
     }
 
     @Test
     @DisplayName("Test to create a quest with negative rewardXP")
-    public void testConstructorWithNegativeRewardXP() {
+    public void testConstructorWithNegativeRewardXP_shouldThrowException() {
         assertThrows(IllegalArgumentException.class, () -> {
             new Quest("Kill Fido", QuestType.KILL, "Test description", -10, 5);
         });
@@ -75,11 +75,10 @@ public class QuestTest {
         assertTrue(quest.isCompleted());
     }
 
-
     @Test
     @DisplayName("Test if difficulty correspond to character's level")
     public void testThatDifficultyCorrespondToLevel() {
-        Character character = new Character("Rudolf", 10, 10, new TextIO());
+        Character character = new Character("Rudolf", 10, 10,1, new TextIO());
         character.setLevel(5);
         assertTrue(quest.correspondToLevel(character));
     }
@@ -106,7 +105,7 @@ public class QuestTest {
     @Test
     @DisplayName("Test equals() when parameter i not instance of Quest class")
     public void testEqualityQuestWithNotQuest() {
-        assertFalse(quest.equals(new Equipment("Sword", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Sword", 10, 1))));
+        assertFalse(quest.equals(new Equipment("Sword", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE, 50, new PhysicalAbility("Slash", 10, 1,"Physical Attack"))));
     }
 
     @Test

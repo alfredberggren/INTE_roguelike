@@ -55,5 +55,22 @@ public class PositionTest {
         assertEquals(false, pos1.equals(pos2));
     }
 
+    @Test
+    @DisplayName("assert tanslate changes the position if the values are positive")
+    public void testTranslateMethodPositiveValues() {
+        Position pos1 = new Position(DEFAULT_X, DEFAULT_Y);
+        Position pos2 = new Position(DEFAULT_NEGATIVE_X, DEFAULT_NEGATIVE_Y);
+        pos2.translate(DEFAULT_POSITIVE_X, DEFAULT_POSITIVE_Y);
+        assertEquals(pos1, pos2);
+    }
+
+    @Test
+    @DisplayName("assert tanslate changes the position if the values are positive")
+    public void testTranslateMethodNegativeValues() {
+        Position pos1 = new Position(DEFAULT_X, DEFAULT_Y);
+        Position pos2 = new Position(DEFAULT_POSITIVE_X, DEFAULT_POSITIVE_Y);
+        pos2.translate(DEFAULT_NEGATIVE_X, DEFAULT_NEGATIVE_Y);
+        assertEquals(pos1, pos2);
+    }
 
 }

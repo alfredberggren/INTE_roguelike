@@ -27,7 +27,7 @@ public class InteractableTest {
     @DisplayName("Testar en NPC-karaktärs actions")
     public void testNPCHasCorrectActions() {
         Set<Interactable.InteractableAction> possibleInteractableActions = new HashSet<>(Arrays.asList(Interactable.InteractableAction.FIGHT, Interactable.InteractableAction.TALK));
-        Interactable i1 = new NPC("Fido", 10, 100,DEFAULT_POSITION, new TextIO());
+        Interactable i1 = new NPC("Fido", 10, 100,1,DEFAULT_POSITION, new TextIO());
         assertEquals(possibleInteractableActions, i1.getPossibleActions());
     }
 
@@ -35,7 +35,7 @@ public class InteractableTest {
     @DisplayName("Testar Equipments actions")
     public void testEquipmentHasCorrectActions() {
         Set<Interactable.InteractableAction> possibleInteractableActions = new HashSet<>(Arrays.asList(Interactable.InteractableAction.LOOT, Interactable.InteractableAction.DROP, Interactable.InteractableAction.WEAR));
-        Interactable i1 = new Equipment("Steel Sword", EquipmentSlot.RIGHT_HAND, possibleInteractableActions, Equipment.Effect.HEALTH, 0, new PhysicalAbility("SuperArrow",15,1));
+        Interactable i1 = new Equipment("Steel Sword", EquipmentSlot.RIGHT_HAND, possibleInteractableActions, Equipment.Effect.HEALTH, 0, new PhysicalAbility("SuperArrow",15,1, "Physical Attack"));
         assertEquals(possibleInteractableActions, i1.getPossibleActions());
     }
 
@@ -82,24 +82,24 @@ public class InteractableTest {
     @Test
     @DisplayName("Två NPC:s med samma namn ska vara lika")
     public void testTwoNPCsWithSameNameAreEqual() {
-        assertEquals(new NPC("test123", 10, 10, DEFAULT_POSITION, new TextIO()), new NPC("test123", 13, 23, DEFAULT_POSITION, new TextIO()));
+        assertEquals(new NPC("test123", 10, 10,1, DEFAULT_POSITION, new TextIO()), new NPC("test123", 13, 23,1, DEFAULT_POSITION, new TextIO()));
     }
 
     @Test
     @DisplayName("Två NPC:s med samma namn ska ha samma hashCode")
     public void testTwoNPCsWithSameNameShouldHaveSameHashCode() {
-        assertEquals(new NPC("test123", 10, 10, DEFAULT_POSITION, new TextIO()).hashCode(), new NPC("test123", 13, 23,DEFAULT_POSITION, new TextIO()).hashCode());
+        assertEquals(new NPC("test123", 10, 10,1, DEFAULT_POSITION, new TextIO()).hashCode(), new NPC("test123", 13, 23,1,DEFAULT_POSITION, new TextIO()).hashCode());
     }
 
     @Test
     @DisplayName("Två NPCs som är olika")
     public void testTwoUnequalNPCs() {
-        assertNotEquals(new NPC("test1234", 10, 10, DEFAULT_POSITION, new TextIO()), new NPC("test123", 13, 23, new Position(3,6), new TextIO()));
+        assertNotEquals(new NPC("test1234", 10, 10,1, DEFAULT_POSITION, new TextIO()), new NPC("test123", 13, 23,1, new Position(3,6), new TextIO()));
     }
 
     @Test
     @DisplayName("Två olika NPCs har olika hashCode")
     public void testTwoUnequalNPCsShouldHaveUnequalHashCodes() {
-        assertNotEquals(new NPC("test1234", 10, 10, DEFAULT_POSITION, new TextIO()).hashCode(), new NPC("test123", 13, 23, DEFAULT_POSITION, new TextIO()).hashCode());
+        assertNotEquals(new NPC("test1234", 10, 10,1, DEFAULT_POSITION, new TextIO()).hashCode(), new NPC("test123", 13, 23, 1,DEFAULT_POSITION, new TextIO()).hashCode());
     }
 }

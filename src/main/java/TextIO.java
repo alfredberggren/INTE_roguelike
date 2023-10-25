@@ -3,8 +3,9 @@ import java.util.Scanner;
 public class TextIO extends IO{
 
     @Override
-    public TurnSystem.TurnCommand requestTurnCommand(MapController map, Character character){
+    public TurnSystem.TurnCommand requestTurnCommand(MapController map, Character character, int amountOfActions, int amountOfMoves){
         String input = getUserInput();
+        System.out.println("move");
         switch(input){
             case "action": return TurnSystem.TurnCommand.ACTION;
             case "move": return TurnSystem.TurnCommand.MOVE;
@@ -14,9 +15,9 @@ public class TextIO extends IO{
     }
 
     @Override
-    public TurnSystem.TurnCommand requestAnotherTurnCommand(MapController map, Character character){
+    public TurnSystem.TurnCommand requestAnotherTurnCommand(MapController map, Character character, int amountOfActions, int amountOfMoves){
         System.out.println("Command is not allowed");
-        return requestTurnCommand(map, character);
+        return requestTurnCommand(map, character, amountOfActions, amountOfMoves);
     }
 
     @Override
@@ -52,10 +53,15 @@ public class TextIO extends IO{
     }
 
     @Override
+    public Interactable.InteractableAction requestAnotherAction(Interactable interactable, Character character) {
+        return null;
+    }
+
+    /*@Override
     public Interactable.InteractableAction requestAnotherAction(Interactable interactable, Character character){
         System.out.println("Action is not allowed");
         return requestAction(map, character, interactable);
-    }
+    }*/
 
 
     private String getUserInput(){

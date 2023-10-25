@@ -19,10 +19,16 @@ public class IOTest {
     private InputStream defaultInputStream;
     private PrintStream defaultOutputStream;
 
+    IO tempTextIO;
+    Character tempCharacter;
+
     @BeforeEach
     public void setDefaultInputStream() {
         defaultInputStream = System.in;
         defaultOutputStream = new PrintStream(System.out);
+
+        tempTextIO = new TextIO();
+        tempCharacter = new Character("name", 1, 1, 0, new Position(0, 0), tempTextIO);
     }
   
     @AfterEach
@@ -37,23 +43,15 @@ public class IOTest {
         InputStream tempInputStream = new ByteArrayInputStream(inputString.getBytes());
         System.setIn(tempInputStream);
 
-        IO tempTextIO = new TextIO();
-
         MapController tempMapController = new MapController();
-     
-        Character tempCharacter = new Character("name", 0, 0, new Position(0, 0), tempTextIO);
 
-        assertEquals(TurnSystem.TurnCommand.ACTION, tempTextIO.requestTurnCommand(tempMapController, tempCharacter),
+        assertEquals(TurnSystem.TurnCommand.ACTION, tempTextIO.requestTurnCommand(tempMapController, tempCharacter, tempCharacter.getSpeed(), tempCharacter.getSpeed()),
                "Could not request Turn Command");
     }
 
     @Test
     public void testRequestTurnCommandsAllTurnCommands() {
-        IO tempTextIO = new TextIO();
-
         MapController tempMapController = new MapController();
-        
-        Character tempCharacter = new Character("name", 0, 0, new Position(0, 0), tempTextIO);
 
         String[] availableCommands = {"action", "move", "end turn"};
         int correctCommand = 0;
@@ -61,7 +59,7 @@ public class IOTest {
             InputStream tempInputStream = new ByteArrayInputStream(availableCommands[i].getBytes());
             System.setIn(tempInputStream);
 
-            if(TurnSystem.TurnCommand.values()[i].equals(tempTextIO.requestTurnCommand(tempMapController, tempCharacter))){
+            if(TurnSystem.TurnCommand.values()[i].equals(tempTextIO.requestTurnCommand(tempMapController, tempCharacter, tempCharacter.getSpeed(), tempCharacter.getSpeed()))){
                 correctCommand++;
             }
         }
@@ -74,13 +72,10 @@ public class IOTest {
         InputStream tempInputStream = new ByteArrayInputStream(inputString.getBytes());
         System.setIn(tempInputStream);
 
-        IO tempTextIO = new TextIO();
-
         MapController tempMapController = new MapController();  
-        Character tempCharacter = new Character("name", 0, 0, new Position(0, 0), tempTextIO);
 
         assertThrows(IllegalArgumentException.class, () ->{
-            tempTextIO.requestTurnCommand(tempMapController, tempCharacter);
+            tempTextIO.requestTurnCommand(tempMapController, tempCharacter, tempCharacter.getSpeed(), tempCharacter.getSpeed());
         });
     }
 
@@ -94,13 +89,10 @@ public class IOTest {
         System.setIn(tempInputStream);
         System.setOut(printStream);
 
-        TextIO tempTextIO = new TextIO();
+        MapController tempMapController = new MapController();  
 
-        MapController tempMapController = new MapController(); 
-        Character tempCharacter = new Character("name", 0, 0, new Position(0, 0), tempTextIO);
-        
         //Checks the method outputs the correct string
-        assertEquals(TurnSystem.TurnCommand.ACTION, tempTextIO.requestAnotherTurnCommand(tempMapController, tempCharacter));
+        assertEquals(TurnSystem.TurnCommand.ACTION, tempTextIO.requestAnotherTurnCommand(tempMapController, tempCharacter, tempCharacter.getSpeed(), tempCharacter.getSpeed()));
         InputStream outputStreamRead = new ByteArrayInputStream(outputStream.toByteArray());
         Scanner scanner = new Scanner(outputStreamRead);
         String scannedLine = scanner.nextLine();
@@ -114,10 +106,7 @@ public class IOTest {
         InputStream tempInputStream = new ByteArrayInputStream(inputString.getBytes());
         System.setIn(tempInputStream);
 
-        IO tempTextIO = new TextIO();
-
         MapController tempMapController = new MapController();
-        Character tempCharacter = new Character("name", 0, 0, new Position(0, 0), tempTextIO);
 
         assertEquals(CardinalDirection.NORTH, tempTextIO.requestMove(tempMapController, tempCharacter),
                "Could not request move");
@@ -125,11 +114,7 @@ public class IOTest {
 
     @Test
     public void testRequestMoveInAllDirections() {
-        TextIO tempTextIO = new TextIO();
-
-
         MapController tempMapController = new MapController();
-        Character tempCharacter = new Character("name", 0, 0, new Position(0, 0), tempTextIO);
 
         String[] movableDirections = {"north", "east", "south", "west"};
         int correctDirections = 0;
@@ -150,10 +135,7 @@ public class IOTest {
         InputStream tempInputStream = new ByteArrayInputStream(inputString.getBytes());
         System.setIn(tempInputStream);
 
-        IO tempTextIO = new TextIO();
-
         MapController tempMapController = new MapController();
-        Character tempCharacter = new Character("name", 0, 0, new Position(0, 0), tempTextIO);
 
         assertThrows(IllegalArgumentException.class, () ->{
             tempTextIO.requestMove(tempMapController, tempCharacter);
@@ -170,10 +152,7 @@ public class IOTest {
         System.setIn(tempInputStream);
         System.setOut(printStream);
 
-        IO tempTextIO = new TextIO();
-
         MapController tempMapController = new MapController();
-        Character tempCharacter = new Character("name", 0, 0, new Position(0, 0), tempTextIO);
         
         //Checks the method outputs the correct string
         assertEquals(CardinalDirection.NORTH, tempTextIO.requestAnotherMove(tempMapController, tempCharacter));
@@ -190,10 +169,6 @@ public class IOTest {
         InputStream tempInputStream = new ByteArrayInputStream(inputString.getBytes());
         System.setIn(tempInputStream);
 
-        IO tempTextIO = new TextIO();
-
-        MapController tempMapController = new MapController();
-        Character tempCharacter = new Character("name", 0, 0, new Position(0, 0), tempTextIO);
         FoodItem tempInteractableItem = new FoodItem("name", 1);
 
         assertEquals(Interactable.InteractableAction.LOOT, tempTextIO.requestAction(tempInteractableItem, tempCharacter),
@@ -202,10 +177,6 @@ public class IOTest {
 
     @Test
     public void testRequestActionAllActions() {
-        IO tempTextIO = new TextIO();
-
-        MapController tempMapController = new MapController();
-        Character tempCharacter = new Character("name", 0, 0, new Position(0, 0), tempTextIO);
         FoodItem tempInteractableItem = new FoodItem("name", 1);
 
         String[] movableDirections = {"loot", "drop", "fight", "wear", "talk", "use"};
@@ -227,10 +198,6 @@ public class IOTest {
         InputStream tempInputStream = new ByteArrayInputStream(inputString.getBytes());
         System.setIn(tempInputStream);
 
-        IO tempTextIO = new TextIO();
-
-        MapController tempMapController = new MapController();
-        Character tempCharacter = new Character("name", 0, 0, new Position(0, 0), tempTextIO);
         FoodItem tempInteractableItem = new FoodItem("name", 1);
 
         assertThrows(IllegalArgumentException.class, () ->{
@@ -248,11 +215,7 @@ public class IOTest {
         System.setIn(tempInputStream);
         System.setOut(printStream);
 
-        IO tempTextIO = new TextIO();
-        MapController tempMapController = new MapController();
         FoodItem tempInteractableItem = new FoodItem("name", 1);
-        
-        Character tempCharacter = new Character("name", 0, 0, new Position(0, 0), tempTextIO);
         assertEquals(Interactable.InteractableAction.LOOT, tempTextIO.requestAnotherAction(tempInteractableItem, tempCharacter));
         
         //Checks the method outputs the correct string

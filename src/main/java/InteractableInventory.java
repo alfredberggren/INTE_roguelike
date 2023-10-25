@@ -50,6 +50,10 @@ public class InteractableInventory {
         return inventory.isEmpty();
     }
 
+    public int size(){
+        return inventory.size();
+    }
+
     private void checkNull(Interactable i){
         if (i == null){
             throw new NullPointerException("Interactable can not be null!");

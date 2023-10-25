@@ -8,6 +8,8 @@ import java.util.Set;
  * not require a key.
  * @author Kristian
  */
+
+//TODO: borde kunna finnas en chans att, när man försöker öppna en dörr med en nyckel, att nyckeln och dörren går sönder och gör den ogenomtränglig.
 public class Door extends Prop{
 
     private boolean open;
@@ -31,7 +33,7 @@ public class Door extends Prop{
      * @param possibleInteractableActions
      * The interactions possible to do with door.
      * @param keyRequired
-     * The key.type required to unlock door. If BROKEN, door won't be able to open/close. If NONE, no keyType is required.
+     * The key.type required to unlock door. If BROKEN, door won't be able to open/close.
      * @param open
      * boolean that signifies if door is open.
      * @param breaksKeyAfterUse
@@ -67,6 +69,8 @@ public class Door extends Prop{
      * The Key.Type able to unlock door.
      * @param breaksKeyAfterUse
      * boolean that if true, signifies that key will be "broken" and destroyed after use.
+     * @implNote
+     * If door has been set to Key.Type.NONE or BROKEN, breaksKeyAfterUse will be ignored when door is used, and key will not be broken.
      */
     public Door(Key.Type requiredKeyType, boolean breaksKeyAfterUse) {
         super("Door", DEFAULT_POSSIBLE_ACTIONS);
@@ -206,18 +210,53 @@ public class Door extends Prop{
         return false;
     }
 
-    private boolean isClosedOrBroken(){
-        if(!open) {
+
+    /**
+     * Will open/close door if door has KeyType NONE.
+     * @return
+     * True if door was opened or closed. False if door requires key or broken, and therefore not opened or closed.
+     * @implNote
+     * Will ignore breaksKeyAfterUse, and therefore not use or break a key.
+     */
+    public boolean use() {
+        if (requiredKeyType == Key.Type.NONE) {
+            setOpen(!open);
+            return true;
+        }
+        return false;
+    }
+
+
+    /**
+     * Will open/close door if door has KeyType NONE, or if the key passed has same type as door. Will not open/close if door is broken.
+     * @param key
+     * The key to be used in door. If key matches: the key will be used (amount of uses decreases), and if door has been set to breaksKeyAfterUse, set to broken.
+     * @return
+     * True if opened/closed, false otherwise.
+     * @implNote
+     * If door could be opened/closed without key or if door was broken, the key will not be used or break.
+     */
+    public boolean use(Key key){
+        boolean couldBeUsedWithoutKey = use();
+        if (couldBeUsedWithoutKey){
             return true;
         }
 
-        if(requiredKeyType == Key.Type.BROKEN) {
+        if (requiredKeyType == Key.Type.BROKEN) {
+            return false;
+        }
+
+        if (requiredKeyType == key.getKeyType()){
+            setOpen(!open);
+            key.use();
+            if (breaksKeyAfterUse){
+                key.setBroken();
+            }
             return true;
         }
 
         return false;
     }
-
 
 
     /**
@@ -240,6 +279,18 @@ public class Door extends Prop{
                     d.breaksKeyAfterUse == this.breaksKeyAfterUse &&
                     d.getPossibleActions().equals(this.getPossibleActions()));
         }
+        return false;
+    }
+
+    private boolean isClosedOrBroken(){
+        if(!open) {
+            return true;
+        }
+
+        if(requiredKeyType == Key.Type.BROKEN) {
+            return true;
+        }
+
         return false;
     }
 }
