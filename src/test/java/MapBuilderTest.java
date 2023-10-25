@@ -1,11 +1,7 @@
-import org.junit.After;
-import org.junit.Before;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.File;
@@ -17,7 +13,6 @@ import static org.junit.jupiter.api.Assertions.*;
 //TODO: Testa att alla rum som har rum brevid sig har riktningar dit och rummet intill har riktning tillbaks till rummet man kom ifrån
 
 @ExtendWith(MockitoExtension.class)
-@RunWith(MockitoJUnitRunner.class)
 public class MapBuilderTest {
 
     @Mock
