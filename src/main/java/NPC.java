@@ -19,8 +19,4 @@ public class NPC extends Character {
     public int hashCode() {
         return Objects.hash(getName());
     }
-
-    // public String getName(){
-    //     return getName();
-    // }
 }

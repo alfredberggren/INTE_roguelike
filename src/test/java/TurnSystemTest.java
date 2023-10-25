@@ -50,7 +50,7 @@ public class TurnSystemTest {
 
     @Test
     public void whenMoveAndNoMoveAvailable_thenReturnFalse() {
-        assertFalse(turnSystem.move(character, worldMapController), "move() did not return false when no move was available");
+        assertFalse(turnSystem.move(worldMapController, character), "move() did not return false when no move was available");
     }
 
     @Test
@@ -61,7 +61,7 @@ public class TurnSystemTest {
         
         when(io.requestMove(worldMapController, character)).thenReturn(CardinalDirection.NORTH);
 
-        assertTrue(turnSystem.move(character, worldMapController));
+        assertTrue(turnSystem.move(worldMapController, character));
         assertEquals(otherPosition, character.getPosition(), "Player did not change position");
     }
 
@@ -74,7 +74,7 @@ public class TurnSystemTest {
         when(io.requestMove(worldMapController, character)).thenReturn(CardinalDirection.SOUTH);
         when(io.requestAnotherMove(worldMapController, character)).thenReturn(CardinalDirection.EAST, CardinalDirection.NORTH);
 
-        assertTrue(turnSystem.move(character, worldMapController));
+        assertTrue(turnSystem.move(worldMapController, character));
         assertEquals(otherPosition, character.getPosition(), "Player did not change position");
     }
 
@@ -86,7 +86,7 @@ public class TurnSystemTest {
                 
         when(io.requestMove(worldMapController, character)).thenThrow(IllegalArgumentException.class);
 
-        assertFalse(turnSystem.move(character, worldMapController), "move() did not return false when wrong input was given");
+        assertFalse(turnSystem.move(worldMapController, character), "move() did not return false when wrong input was given");
     }
 
     @Test
@@ -98,7 +98,7 @@ public class TurnSystemTest {
         when(io.requestMove(worldMapController, character)).thenReturn(CardinalDirection.SOUTH);
         when(io.requestAnotherMove(worldMapController, character)).thenThrow(IllegalArgumentException.class);
 
-        assertFalse(turnSystem.move(character, worldMapController), "move() did not return false when wrong input was given");
+        assertFalse(turnSystem.move(worldMapController, character), "move() did not return false when wrong input was given");
     }
 
     
@@ -179,7 +179,7 @@ public class TurnSystemTest {
         when(io.requestAnotherTurnCommand(worldMapController, character, character.getSpeed(), character.getSpeed())).thenReturn(TurnSystem.TurnCommand.END);
 
         TurnSystem spyTurnSystem = spy(turnSystem);
-        when(spyTurnSystem.move(character, worldMapController)).thenReturn(true);
+        when(spyTurnSystem.move(worldMapController, character)).thenReturn(true);
 
         spyTurnSystem.startTurn(worldMapController, character, character.getSpeed());
         assertTrue(spyTurnSystem.hasDoneTurn(), "Turn hasn't ended");    
@@ -194,7 +194,7 @@ public class TurnSystemTest {
         when(io.requestAnotherTurnCommand(worldMapController, character, character.getSpeed(), character.getSpeed())).thenReturn(TurnSystem.TurnCommand.END);
 
         TurnSystem spyTurnSystem = spy(turnSystem);
-        when(spyTurnSystem.action(character, worldMapController)).thenReturn(true);
+        when(spyTurnSystem.action(worldMapController, character)).thenReturn(true);
 
         spyTurnSystem.startTurn(worldMapController, character, character.getSpeed());
         assertTrue(spyTurnSystem.hasDoneTurn(), "Turn hasn't ended");    
