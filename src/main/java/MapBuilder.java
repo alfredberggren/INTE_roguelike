@@ -1,3 +1,6 @@
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 
 //TODO: skapa dörrar i alla rum som skapas, med olika sannolikheter för om de är öppna eller ej.
@@ -20,6 +23,9 @@ public class MapBuilder {
     private Player player;
     private Random r = new Random();
     private InteractableDirector interactableDirector;
+
+    private PrintWriter printWriter;
+    private boolean logMap = false;
 
     public MapBuilder(Difficulty difficulty, int amountOfRooms, Player player, MapController mapController, InteractableDirector interactableDirector) {
         difficultyScale = DIFF_RATIO.get(difficulty);
@@ -56,19 +62,54 @@ public class MapBuilder {
                 dynInteractables = generateInteractables();
             }
 
+            // Logs entire gamemap halfway through build for testing, if logging is enabled
+            if (i == amountOfRooms / 2 && logMap) {
+                log(mapController.toLog());
+            }
+
             Room newRoom = new Room(currentPos, dynInteractables);
             mapController.add(currentPos, newRoom);
             newRoom.setPossibleRoutes(mapController.getAvailableDirections(currentPos));
 
             //Sets routes on current/old room even if new room is not directly connected. Should not matter, but could mean extra computing.
+            // Finding: När dessa routes sätts, så uppdateras de inte förrän efter byggandet,
+            // ifall ett nytt rum skulle byggas intill detta senare än i nuvarande iteration,
+            // det betyder att när byggaren backtrackar kan den inte gå till ett rum som är nyare än sig självt
+            // eller det som precis byggts.
             currentRoom.setPossibleRoutes(mapController.getAvailableDirections(oldPos));
             currentRoom = newRoom;
 
         }
         //Set all rooms in maps available directions, should not be needed now
-        //mapController.setAvailableDirectionsInRooms();
+        mapController.setAvailableDirectionsInRooms();
     }
 
+    private void setUpLogger() {
+        try {
+            FileWriter fileWriter = new FileWriter("logs/MapBuilderLog.log");
+            printWriter = new PrintWriter(fileWriter);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void closeLogger() {
+        printWriter.close();
+    }
+
+    private void log(String string) {
+        printWriter.println(string);
+        printWriter.flush();
+    }
+
+    // Enables and disables logging of gameMap
+    public void setLogMap(boolean logMap) {
+        this.logMap = logMap;
+        if (logMap)
+            setUpLogger();
+        else
+            closeLogger();
+    }
 
     private Position decideNextPosition(Position pos) {
         int rndDirectionIndex;
@@ -117,8 +158,8 @@ public class MapBuilder {
         int amountOfInteractables = generateAmountOfInteractables();
 
         for (int i = 0; i < amountOfInteractables; i++) {
-            Interactable in = interactableDirector.getInteractable();
-            interactables.add(in);
+            //Interactable in = interactableDirector.getInteractable();
+            interactables.add(interactableDirector.getInteractable());
         }
         return interactables;
     }

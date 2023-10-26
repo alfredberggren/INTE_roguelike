@@ -1,24 +1,15 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-/**
- * TODO: Singleton?
- * TODO: Mindre hårdkodade grunkor
- * TODO: Items som genereras på mappen ska skickas in som en map med interactables som har en key för sannolikhetsvärdet.
- * TODO: De interactables som väljs ut ska baseras på gausskurvan.
- * TODO: Skulle också kunna implementera en "Density" i MapBuilder, d.v.s. bestämma om kartan ska vara långa korridorer eller kompakta rum, svårt och kanske onödigt
- */
+import java.util.*;
 
 public class MapController {
-    private HashMap<Position, Room> gameMap;
+    private TreeMap<Position, Room> gameMap;
+    private Position positionMarker;
 
     public MapController() {
-        gameMap = new HashMap<>();
+        gameMap = new TreeMap<>();
+        positionMarker = new Position(0, 0);
     }
 
-    public void add(Position p, Room r){
+    public void add(Position p, Room r) {
         gameMap.put(p, r);
     }
 
@@ -28,23 +19,35 @@ public class MapController {
 
     public List<CardinalDirection> getAvailableDirections(Position position) {
         List<CardinalDirection> directions = new ArrayList<>();
-        if (roomExists(new Position(position.getX() + 1, position.getY()))) {
+        positionMarker.setX(position.getX() + 1);
+        positionMarker.setY(position.getY());
+        if (roomExists(positionMarker)) {
             directions.add(CardinalDirection.EAST);
         }
-        if (roomExists(new Position(position.getX(), position.getY() + 1))) {
+        positionMarker.setX(position.getX());
+        positionMarker.setY(position.getY() + 1);
+        if (roomExists(positionMarker)) {
             directions.add(CardinalDirection.NORTH);
         }
-        if (roomExists(new Position(position.getX() - 1, position.getY()))) {
+        positionMarker.setX(position.getX() - 1);
+        positionMarker.setY(position.getY());
+        if (roomExists(positionMarker)) {
             directions.add(CardinalDirection.WEST);
         }
-        if (roomExists(new Position(position.getX(), position.getY() - 1))) {
+        positionMarker.setX(position.getX());
+        positionMarker.setY(position.getY() - 1);
+        if (roomExists(positionMarker)) {
             directions.add(CardinalDirection.SOUTH);
         }
         return directions;
     }
 
+    public TreeMap<Position, Room> getGameMap() {
+        return gameMap;
+    }
+
     public List<CardinalDirection> getUnavailableDirections(Position position) {
-        List<CardinalDirection> allDirections = new ArrayList<>(){{
+        List<CardinalDirection> allDirections = new ArrayList<>() {{
             add(CardinalDirection.SOUTH);
             add(CardinalDirection.NORTH);
             add(CardinalDirection.EAST);
@@ -55,13 +58,13 @@ public class MapController {
         return allDirections;
     }
 
-    public void setAvailableDirectionsInRooms(){
-        for (Map.Entry<Position, Room> e: gameMap.entrySet()){
+    public void setAvailableDirectionsInRooms() {
+        for (Map.Entry<Position, Room> e : gameMap.entrySet()) {
             e.getValue().setPossibleRoutes(getAvailableDirections(e.getKey()));
         }
     }
 
-    public Room getRoom(Position pos){
+    public Room getRoom(Position pos) {
         return gameMap.get(pos);
     }
 
@@ -111,5 +114,31 @@ public class MapController {
             counter++;
         }
         return sb.toString();
+    }
+
+    public String toLog() {
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<Position, Room> me : gameMap.entrySet()) {
+            sb.append(me.getKey().getX()).append(";").append(me.getKey().getY()).append(";");
+            sb.append(me.getValue().toLog());
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
+
+    public List<Room> getAdjacentRooms(Room r) {
+        List<CardinalDirection> dirs = r.getPossibleRoutes();
+        List<Room> adjacentRooms = new ArrayList<>();
+        for (CardinalDirection c : dirs) {
+            if (c == CardinalDirection.NORTH)
+                adjacentRooms.add(gameMap.get(new Position(r.getPosition().getX(), r.getPosition().getY() + 1)));
+            if (c == CardinalDirection.SOUTH)
+                adjacentRooms.add(gameMap.get(new Position(r.getPosition().getX(), r.getPosition().getY() - 1)));
+            if (c == CardinalDirection.WEST)
+                adjacentRooms.add(gameMap.get(new Position(r.getPosition().getX() - 1, r.getPosition().getY())));
+            if (c == CardinalDirection.EAST)
+                adjacentRooms.add(gameMap.get(new Position(r.getPosition().getX() + 1, r.getPosition().getY())));
+        }
+        return adjacentRooms;
     }
 }

@@ -1,6 +1,7 @@
+import java.util.Comparator;
 import java.util.Objects;
 
-public class Position {
+public class Position implements Comparable<Position> {
     private int x;
     private int y;
 
@@ -17,6 +18,14 @@ public class Position {
         return y;
     }
 
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
     public void translate(int xShift, int yShift){
         x = x + xShift;
         y = y + yShift;
@@ -25,8 +34,7 @@ public class Position {
     @Override
     public boolean equals(Object o){
         if (o instanceof Position p) {
-            if (p.getX() == x && p.getY() == y)
-                return true;
+            return p.getX() == x && p.getY() == y;
         }
         return false;
     }
@@ -41,6 +49,20 @@ public class Position {
     @Override
     public String toString(){
         return "Position [" + x + "." + y +"]";
+    }
+
+    @Override
+    public int compareTo(Position o) {
+        if (x > o.getX()) {
+            return 1;
+        } else if (x < o.getX()) {
+            return -1;
+        } else if (y > o.getY()){
+            return 1;
+        } else if (y < o.getY()) {
+            return -1;
+        }
+        return 0;
     }
 
 //    @Override
