@@ -32,14 +32,14 @@ public class MapBuilderTest {
             Interactable.InteractableAction.USE)
     );
 
-    private static final NPC TEST_NPC = new NPC("Testsson", 100, 10, new Position(0, 0), io);
+    private static final NPC TEST_NPC = new NPC("Testsson", 100, 10, 0, new Position(0, 0), io);
     private static final FoodItem TEST_FOOD_ITEM = new FoodItem("Bread", 10);
     private static final PotionItem TEST_POTION_ITEM = new PotionItem("HealthPotion", Equipment.Effect.HEALTH, 5);
     private static final Prop TEST_PROP = new Prop("Key", DEFAULT_INTERACTABLE_ACTIONS);
-    private static final Equipment TEST_EQUIPMENT = new Equipment("Stone Sword", DEFAULT_INTERACTABLE_ACTIONS, Equipment.Effect.DAMAGE, 10, new PhysicalAbility("Swipe", 10, 5));
+    private static final Equipment TEST_EQUIPMENT = new Equipment("Stone Sword", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE, 10, new PhysicalAbility("Swipe", 10, 5, "test"));
 
     private static final Position DEFAULT_VALID_PLAYER_POSITION = new Position(0, 0);
-    private static final Player DEFAULT_PLAYER = new Player("Spelarsson", 100, 10, DEFAULT_VALID_PLAYER_POSITION, io);
+    private static final Player DEFAULT_PLAYER = new Player("Spelarsson", 100, 10, 0, DEFAULT_VALID_PLAYER_POSITION, io);
 
     private HashMap<InteractableGenerator, Integer> positiveInteractableProbabilityMap;
 
