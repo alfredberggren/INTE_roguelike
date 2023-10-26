@@ -27,9 +27,7 @@ public abstract class Ability {
             throw new IllegalArgumentException("Required level cannot be negative");
         }
         if (type == AbilityType.PHYSICAL) {
-            if(requiredLevel < MINIMUM_LEVEL_REQUIRED_TO_USE_PHYSICAL){
-                throw new IllegalArgumentException("Required level for Physical Ability cannot be less than " + MINIMUM_LEVEL_REQUIRED_TO_USE_PHYSICAL);
-            }
+            requiredLevel = MINIMUM_LEVEL_REQUIRED_TO_USE_PHYSICAL;
         } else if (type == AbilityType.MAGICAL){
             if(requiredLevel < MINIMUM_LEVEL_REQUIRED_TO_USE_MAGIC) {
                 throw new IllegalArgumentException("Required level for Magical Ability cannot be less than " + MINIMUM_LEVEL_REQUIRED_TO_USE_MAGIC);
