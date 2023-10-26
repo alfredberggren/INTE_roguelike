@@ -74,6 +74,7 @@ public class MapController {
         return false;
     }
 
+    //TODO: Slight chance of this method causing trouble. If any other object shares the same position-object, their position will be changed as well.
     public void moveCharacter(CardinalDirection direction, Character character) {
         switch(direction){
             case NORTH -> {
