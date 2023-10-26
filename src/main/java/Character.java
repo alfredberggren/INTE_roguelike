@@ -196,32 +196,28 @@ public class Character implements Interactable {
     public void increaseMana(int add) {
         if (add <= 0) {
             throw new IllegalArgumentException("Mana increase value can not to be equal zero or be negative!");
-        }
-        else
+        } else
             setMana(mana + add);
     }
 
     public void decreaseMana(int decrease) {
         if (decrease <= 0) {
             throw new IllegalArgumentException("Mana decrease value can not to be equal zero or be negative!");
-        }
-        else
+        } else
             setMana(mana - decrease);
     }
 
     public void increaseHealth(int add) {
         if (add <= 0) {
             throw new IllegalArgumentException("Health increase value can not to be equal zero or be negative!");
-        }
-        else
-            setHealth(health+add);
+        } else
+            setHealth(health + add);
     }
 
     public void decreaseHealth(int decrease) {
         if (decrease <= 0) {
             throw new IllegalArgumentException("Health decrease value can not to be equal zero or be negative!");
-        }
-        else {
+        } else {
             setHealth(health - decrease);
         }
     }

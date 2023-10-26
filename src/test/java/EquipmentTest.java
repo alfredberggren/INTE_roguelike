@@ -21,7 +21,7 @@ public class EquipmentTest {
 
     @BeforeEach
     void setUp() {
-        equipment = new Equipment("Sword", EquipmentSlot.RIGHT_HAND, Equipment.Effect.DAMAGE, 10, new PhysicalAbility("Slash",10,1,"Physical Attack"));
+        equipment = new Equipment("Sword", EquipmentSlot.RIGHT_HAND, Equipment.Effect.DAMAGE, 10, new PhysicalAbility("Slash", 10, 1, "Physical Attack"));
     }
 
     @Test
@@ -40,7 +40,7 @@ public class EquipmentTest {
     @DisplayName("Test to create an equipment with effect equal to null")
     public void testConstructorWithEffectEqualToNull_ThrowsException() {
         assertThrows(IllegalArgumentException.class, () -> {
-            new Equipment("Dagger", EquipmentSlot.LEFT_HAND, null,1, new PhysicalAbility("Test ability", 10, 1, "test"));
+            new Equipment("Dagger", EquipmentSlot.LEFT_HAND, null, 1, new PhysicalAbility("Test ability", 10, 1, "test"));
         });
     }
 
@@ -48,7 +48,7 @@ public class EquipmentTest {
     @DisplayName("Test to create an equipment with ability equal to null")
     public void testConstructorWithAbilityEqualToNull_ThrowsException() {
         assertThrows(IllegalArgumentException.class, () -> {
-            new Equipment("Dagger", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE,1, null);
+            new Equipment("Dagger", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE, 1, null);
         });
     }
 
@@ -56,7 +56,7 @@ public class EquipmentTest {
     @DisplayName("Test to create an equipment with slot equal to null")
     public void testConstructorWithSlotEqualToNull_ThrowsException() {
         assertThrows(IllegalArgumentException.class, () -> {
-            new Equipment("Dagger", null, Equipment.Effect.DAMAGE,1, new PhysicalAbility("Test ability", 10, 1, "test"));
+            new Equipment("Dagger", null, Equipment.Effect.DAMAGE, 1, new PhysicalAbility("Test ability", 10, 1, "test"));
         });
     }
 
@@ -75,7 +75,7 @@ public class EquipmentTest {
     @Test
     @DisplayName("Checking that Equipment have Magic Ability")
     public void testEquipmentHaveMagicAbility() {
-        Equipment e = new Equipment("Test",EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE,10, new MagicAbility("Spell",10,1,"Spell",0,0,5));
+        Equipment e = new Equipment("Test", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE, 10, new MagicAbility("Spell", 10, 1, "Spell", 0, 0, 5));
         assertEquals("MAGICAL", e.getAbility().toString());
     }
 
@@ -94,7 +94,7 @@ public class EquipmentTest {
 
     @Test
     @DisplayName("Check if method throws exception when durability is 0 and equipment is destroyed")
-    public void testEquipmentIsDestroyedWhenDurabilityReachesZero(){
+    public void testEquipmentIsDestroyedWhenDurabilityReachesZero() {
         equipment.decreaseDurability(10);
         assertTrue(equipment.isBroken());
     }
@@ -123,20 +123,20 @@ public class EquipmentTest {
 
     @Test
     @DisplayName("Two unequal equipments have unequal hashCode")
-    public void testTwoUnequalEquipmentsHaveUnequalHashCode(){
-        assertNotEquals(new Equipment("Dagger", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE, 100, new PhysicalAbility("Slash",5,1,"Physical Attack")).hashCode(), new Equipment("Sword", EquipmentSlot.RIGHT_HAND, Equipment.Effect.HEALTH, 50, new MagicAbility("FireBall",10,1,"Shoots fire",2,1,5)).hashCode());
+    public void testTwoUnequalEquipmentsHaveUnequalHashCode() {
+        assertNotEquals(new Equipment("Dagger", EquipmentSlot.LEFT_HAND, Equipment.Effect.DAMAGE, 100, new PhysicalAbility("Slash", 5, 1, "Physical Attack")).hashCode(), new Equipment("Sword", EquipmentSlot.RIGHT_HAND, Equipment.Effect.HEALTH, 50, new MagicAbility("FireBall", 10, 1, "Shoots fire", 2, 1, 5)).hashCode());
     }
 
     @Test
     @DisplayName("Two equipments which are unequal")
     public void testTwoUnequalEquipments() {
-        assertNotEquals(new Equipment("Dagger", EquipmentSlot.RIGHT_HAND, Equipment.Effect.DAMAGE, 100, new PhysicalAbility("Slash",5,1,"Physical Attack")), new Equipment("Slash", EquipmentSlot.RIGHT_HAND, Equipment.Effect.HEALTH, 100, new MagicAbility("IceBall", 5,1,"Shoots ice",2,1,5)));
+        assertNotEquals(new Equipment("Dagger", EquipmentSlot.RIGHT_HAND, Equipment.Effect.DAMAGE, 100, new PhysicalAbility("Slash", 5, 1, "Physical Attack")), new Equipment("Slash", EquipmentSlot.RIGHT_HAND, Equipment.Effect.HEALTH, 100, new MagicAbility("IceBall", 5, 1, "Shoots ice", 2, 1, 5)));
     }
 
     @Test
     @DisplayName("Two equipments with same parameters have same hashCode")
-    public void testTwoEquipmentsWithSameParametersHaveSameHashCode(){
-        assertEquals(new Equipment("Slash", EquipmentSlot.RIGHT_HAND, Equipment.Effect.DAMAGE, 100, new PhysicalAbility("Slash",5,1, "Physical Attack")).hashCode(), new Equipment("Slash", EquipmentSlot.RIGHT_HAND, Equipment.Effect.DAMAGE, 100, new PhysicalAbility("Slash",5,1,"Physical Attack")).hashCode());
+    public void testTwoEquipmentsWithSameParametersHaveSameHashCode() {
+        assertEquals(new Equipment("Slash", EquipmentSlot.RIGHT_HAND, Equipment.Effect.DAMAGE, 100, new PhysicalAbility("Slash", 5, 1, "Physical Attack")).hashCode(), new Equipment("Slash", EquipmentSlot.RIGHT_HAND, Equipment.Effect.DAMAGE, 100, new PhysicalAbility("Slash", 5, 1, "Physical Attack")).hashCode());
     }
 
 
