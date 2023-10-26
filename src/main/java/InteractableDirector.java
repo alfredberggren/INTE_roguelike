@@ -1,8 +1,7 @@
 import java.util.*;
 import java.util.Map;
 
-/* TODO:
-
+/*
 Kristian:
 -   Bör egentligen inte själva skapandet av NPC/items eller vad som, hanteras av separata klasser? Som själva tar
     hand om randomisering av stats osv, och således bör denna klass döpas om till typ "InteractableDecider" eller ngt?

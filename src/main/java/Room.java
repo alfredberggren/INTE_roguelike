@@ -30,7 +30,10 @@ public class Room {
         return interactables;
     }
 
-    public void setPossibleRoutes(List<CardinalDirection> directions){
+    public void setPossibleRoutes(List<CardinalDirection> directions) {
+        if (possibleRoutes.equals(directions)) {
+            return;
+        }
         possibleRoutes = directions;
     }
 
