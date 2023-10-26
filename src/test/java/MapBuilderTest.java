@@ -167,7 +167,7 @@ public class MapBuilderTest {
     }
 
     @Test
-    @DisplayName("Ovanstående test, men testar kartans rum under pågående byggning av kartan.")
+    @DisplayName("Testar att alla rum har korrekta riktningar under pågående byggning av kartan.")
     public void test_whileBuildingMap_allRoomsHaveCorrectPossibleRoutes() {
         mapBuilder.setLogMap(true);
         mapBuilder.build();
