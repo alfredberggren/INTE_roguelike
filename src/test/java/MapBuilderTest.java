@@ -10,8 +10,6 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-//TODO: Testa att alla rum som har rum brevid sig har riktningar dit och rummet intill har riktning tillbaks till rummet man kom ifrån
-
 @ExtendWith(MockitoExtension.class)
 public class MapBuilderTest {
 
@@ -26,7 +24,7 @@ public class MapBuilderTest {
     @Mock
     InteractableGenerator mockedIG5;
 
-    static IO io = new TextIO();
+    private static IO io = new TextIO();
 
     private static final Set<Interactable.InteractableAction> DEFAULT_INTERACTABLE_ACTIONS = new HashSet<>(Arrays.asList(
             Interactable.InteractableAction.LOOT,
