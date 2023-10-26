@@ -10,8 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class RoomTest {
 
     //why is this mocking io? -simon
-    @Mock
-    static IO io;
+    static IO io = new TextIO();
 
     static final Position DEFAULT_POSITION = new Position(0,0);
     static final Set<Interactable.InteractableAction> DEFAULT_NPC_ACTIONS = new HashSet<>(Arrays.asList(Interactable.InteractableAction.FIGHT, Interactable.InteractableAction.TALK));
