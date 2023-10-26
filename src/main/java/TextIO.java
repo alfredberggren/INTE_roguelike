@@ -48,6 +48,7 @@ public class TextIO extends IO{
             case "wear": return Interactable.InteractableAction.WEAR;
             case "talk": return Interactable.InteractableAction.TALK;
             case "use": return Interactable.InteractableAction.USE;
+            case "unequip": return Interactable.InteractableAction.UNEQUIP;
             default: throw new IllegalArgumentException(input + " is not a valid action.");
         }
     }

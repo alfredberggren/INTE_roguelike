@@ -53,7 +53,7 @@ public class IOTest {
     public void testRequestTurnCommandsAllTurnCommands() {
         MapController tempMapController = new MapController();
 
-        String[] availableCommands = {"action", "move", "end turn"};
+        String[] availableCommands = {"end turn", "action", "move"};
         int correctCommand = 0;
         for (int i = 0; i < TurnSystem.TurnCommand.values().length; i++){
             InputStream tempInputStream = new ByteArrayInputStream(availableCommands[i].getBytes());
@@ -179,10 +179,10 @@ public class IOTest {
     public void testRequestActionAllActions() {
         FoodItem tempInteractableItem = new FoodItem("name", 1);
 
-        String[] movableDirections = {"loot", "drop", "fight", "wear", "talk", "use"};
+        String[] availableActions = {"loot", "drop", "fight", "wear", "talk", "use", "unequip"};
         int correctDirections = 0;
         for (int i = 0; i < Interactable.InteractableAction.values().length; i++){
-            InputStream tempInputStream = new ByteArrayInputStream(movableDirections[i].getBytes());
+            InputStream tempInputStream = new ByteArrayInputStream(availableActions[i].getBytes());
             System.setIn(tempInputStream);
 
             if(Interactable.InteractableAction.values()[i].equals(tempTextIO.requestAction(tempInteractableItem, tempCharacter))){
