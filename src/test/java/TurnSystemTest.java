@@ -115,8 +115,6 @@ public class TurnSystemTest {
     @Test
     @Timeout(value = 15, unit = TimeUnit.SECONDS)
     public void whenCommandEndTurnIsCalled_thenTurnEndedIsTrue() throws InterruptedException {
-        Thread.sleep(1_000);
-
         when(io.requestTurnCommand(worldMapController, character, character.getSpeed(), character.getSpeed())).thenReturn(TurnSystem.TurnCommand.END);
         
         turnSystem.startTurn(worldMapController, character, character.getSpeed());
@@ -126,8 +124,6 @@ public class TurnSystemTest {
     @Test
     @Timeout(value = 15, unit = TimeUnit.SECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     public void whenCommandMoveIsCalledWhenOutOfMoves_thenCommandIsReRequested() throws InterruptedException {
-        Thread.sleep(1_000);
-
         //when character has 0 speed it can do neither action or movement
         character = new Character("name", 1, 0, 0, characterPosition, io);
 
@@ -141,8 +137,6 @@ public class TurnSystemTest {
     @Test
     @Timeout(value = 15, unit = TimeUnit.SECONDS)
     public void whenCommandActionIsCalledWhenOutOfActions_thenCommandIsReRequested() throws InterruptedException {
-        Thread.sleep(5_000);
-
         //when character has 0 speed it can do neither action or movement
         character = new Character("name", 1, 0, 0, characterPosition, io);
 
@@ -156,8 +150,6 @@ public class TurnSystemTest {
     @Test
     @Timeout(value = 15, unit = TimeUnit.SECONDS)
     public void whenWrongInput_thenCommandIsReRequested() throws InterruptedException {
-        Thread.sleep(5_000);
-
         character = new Character("name", 1, 1, 0, characterPosition, io);
 
         when(io.requestTurnCommand(worldMapController, character, character.getSpeed(), character.getSpeed())).thenThrow(IllegalArgumentException.class);        
@@ -173,8 +165,6 @@ public class TurnSystemTest {
     @Test
     @Timeout(value = 15, unit = TimeUnit.SECONDS)
     public void whenCommandMoveAndCharacterMoved_thenMovesHasDecreased() throws InterruptedException {
-        Thread.sleep(1_000);
-
         when(io.requestTurnCommand(worldMapController, character, 1, 1)).thenReturn(TurnSystem.TurnCommand.MOVE);
         when(io.requestTurnCommand(worldMapController, character, 1, 0)).thenReturn(TurnSystem.TurnCommand.MOVE);
         when(io.requestAnotherTurnCommand(worldMapController, character, 1, 0)).thenReturn(TurnSystem.TurnCommand.END);
@@ -189,8 +179,6 @@ public class TurnSystemTest {
     @Test
     @Timeout(value = 15, unit = TimeUnit.SECONDS)
     public void whenCommandActionAndCharacterDoesAction_thenActionsHasDecreased() throws InterruptedException {
-        Thread.sleep(1_000);
-
         when(io.requestTurnCommand(eq(worldMapController), eq(character), anyInt(), anyInt())).thenReturn(TurnSystem.TurnCommand.ACTION);
         when(io.requestAnotherTurnCommand(worldMapController, character, 0, 1)).thenReturn(TurnSystem.TurnCommand.END);
 
@@ -208,8 +196,6 @@ public class TurnSystemTest {
     @Test
     @Timeout(value = 15, unit = TimeUnit.SECONDS)
     public void whenStartTurnAndHasDoneTurn_thenISEThrown() throws InterruptedException {
-        Thread.sleep(1_000);
-
         when(io.requestTurnCommand(worldMapController, character, character.getSpeed(), character.getSpeed())).thenReturn(TurnSystem.TurnCommand.END);
         turnSystem.startTurn(worldMapController, character, character.getSpeed());
 
@@ -220,9 +206,7 @@ public class TurnSystemTest {
 
     @Test
     @Timeout(value = 15, unit = TimeUnit.SECONDS)
-    public void whenStartTurnAndCharacterIdDead_thenISEThrown() throws InterruptedException {
-        Thread.sleep(1_000);
-        
+    public void whenStartTurnAndCharacterIdDead_thenISEThrown() throws InterruptedException {        
         character.decreaseHealth(character.getHealth());
 
         assertThrows(IllegalStateException.class, () -> {
