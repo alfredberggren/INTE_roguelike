@@ -190,8 +190,10 @@ public class TurnSystemTest {
     public void whenCommandActionAndCharacterDoesAction_thenActionsHasDecreased() throws InterruptedException {
         Thread.sleep(10_000);
 
-        when(io.requestTurnCommand(worldMapController, character, character.getSpeed(), character.getSpeed())).thenReturn(TurnSystem.TurnCommand.ACTION);
-        when(io.requestAnotherTurnCommand(worldMapController, character, character.getSpeed(), character.getSpeed())).thenReturn(TurnSystem.TurnCommand.END);
+        when(io.requestTurnCommand(worldMapController, character, character.getSpeed(), character.getSpeed()))
+                .thenReturn(TurnSystem.TurnCommand.ACTION);
+        when(io.requestAnotherTurnCommand(worldMapController, character, character.getSpeed(), character.getSpeed()))
+                .thenReturn(TurnSystem.TurnCommand.END);
 
         TurnSystem spyTurnSystem = spy(turnSystem);
         when(spyTurnSystem.action(worldMapController, character)).thenReturn(true);

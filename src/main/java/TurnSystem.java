@@ -38,7 +38,7 @@ public class TurnSystem {
 
         try {
             TurnCommand command = io.requestTurnCommand(worldMap, character, amountOfActions, amountOfMoves);
-            while (!character.isDead()) {
+            while (!character.isDead() || amountOfActions + amountOfMoves == 0) {
                 switch (command) {
                     case END:
                         doneTurn = true;
