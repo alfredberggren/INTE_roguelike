@@ -26,8 +26,7 @@ public class MapBuilderTest {
     @Mock
     InteractableGenerator mockedIG5;
 
-    @Mock
-    static IO io;
+    static IO io = new TextIO();
 
     private static final Set<Interactable.InteractableAction> DEFAULT_INTERACTABLE_ACTIONS = new HashSet<>(Arrays.asList(
             Interactable.InteractableAction.LOOT,
@@ -35,7 +34,7 @@ public class MapBuilderTest {
             Interactable.InteractableAction.USE)
     );
 
-    private static final NPC TEST_NPC = new NPC("Test Testsson", 100, 10, new Position(0, 0), io);
+    private static final NPC TEST_NPC = new NPC("Testsson", 100, 10, new Position(0, 0), io);
     private static final FoodItem TEST_FOOD_ITEM = new FoodItem("Bread", 10);
     private static final PotionItem TEST_POTION_ITEM = new PotionItem("HealthPotion", Equipment.Effect.HEALTH, 5);
     private static final Prop TEST_PROP = new Prop("Key", DEFAULT_INTERACTABLE_ACTIONS);
