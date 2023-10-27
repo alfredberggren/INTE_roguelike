@@ -14,14 +14,23 @@ public class MapControllerTest {
     private Character character;
 
     // För alfreds testfall
+    private MapController map2;
     private static final Room TEST_ROOM = new Room(new Position(15, 15), new InteractableInventory());
     private static final Position TEST_POSITION = new Position(15, 15);
     private static final Position NON_EXISTENT_TEST_POSITION = new Position(-100, 100);
-    private static final Set<Position> TEST_POSITIONS = new HashSet<>() {{
-        add(new Position(0, 0));
+    private static final Set<Position> TEST_POSITIONS_ORDER = new HashSet<>() {{
+        add(new Position(0, -1));
         add(new Position(1, 0));
-        add(new Position(2, 0));
-        add(new Position(1, 1));
+        add(new Position(0, 1));
+        add(new Position(-1, 0));
+        add(new Position(0, 0));
+    }};
+    private static final List<Position> ORDERED_EXPECTED_POSITIONS = new ArrayList<>(){{
+        add(new Position(-1, 0));
+        add(new Position(0, -1));
+        add(new Position(0, 0));
+        add(new Position(0, 1));
+        add(new Position(1, 0));
     }};
 
 
@@ -50,8 +59,9 @@ public class MapControllerTest {
         character = new Character("null", 1, 1, 0, centerPos, new TextIO());
         centerRoom.getInteractables().add(character);
 
-        for (Position p : TEST_POSITIONS) {
-            map.add(p, new Room(p, new InteractableInventory()));
+        map2 = new MapController();
+        for (Position p : TEST_POSITIONS_ORDER) {
+            map2.add(p, new Room(p));
         }
     }
 
@@ -174,7 +184,18 @@ public class MapControllerTest {
     @Test
     @DisplayName("Testar TreeMappen gameMap (compareTo i position) att positionsvärden inte skriver över varandra.")
     public void test_afterAddingPositionsToGameMap_gameMapHasAllPositions() {
-        TreeMap<Position, Room> gameMap = map.getGameMap();
-        assertEquals(TEST_POSITIONS, gameMap.keySet(), "Det verkar som att positionsvärden i gameMap har skrivit över varandra.");
+        TreeMap<Position, Room> gameMap = map2.getGameMap();
+        assertEquals(TEST_POSITIONS_ORDER, gameMap.keySet(), "Det verkar som att positionsvärden i gameMap har skrivit över varandra.");
+    }
+
+    @Test
+    @DisplayName("Testar att positionerna (nycklarna) i gameMap har rätt ordning")
+    public void test_afterAddingPositionsToGameMap_positionsAreOrderedCorrectly() {
+        TreeMap<Position, Room> gameMap = map2.getGameMap();
+        int index = 0;
+        for (Position p : gameMap.keySet()) {
+            assertEquals(p, ORDERED_EXPECTED_POSITIONS.get(index));
+            index++;
+        }
     }
 }
